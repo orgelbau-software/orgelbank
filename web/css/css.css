@@ -1,0 +1,952 @@
+/* CSS Document File for Orgelbau Krawinkel */ /* Basics */
+table {
+	border-collapse: collapse;
+	vertical-align: top;
+}
+
+th {
+	padding: 2px 5px 1px 1px;
+	font-weight: bold;
+	font-size: 8pt;
+	text-align: left;
+	vertical-align: top;
+}
+
+td {
+	padding: 2px 5px 1px 1px;
+	text-align: left;
+	vertical-align: top;
+}
+
+table {
+	font-size: 9pt;
+	font-family: Tahoma, Verdana, Arial;
+}
+
+h1,h2,h3,h4,h5 {
+	font-family: Tahoma, Verdana, Arial;
+	margin-bottom: 2px;
+}
+
+h1 {
+	font-size: 13pt;
+}
+
+h2 {
+	font-size: 12pt;
+}
+
+h3 {
+	font-size: 11pt;
+}
+
+h4 {
+	font-size: 10pt;
+}
+
+h5 {
+	font-size: 9pt;
+}
+
+a {
+	font-family: Arial;
+	font-size: 8pt;
+	color: #000000;
+}
+
+/* Structures*/
+body {
+	padding: 0px;
+	margin: 2px;
+}
+
+#orgelbau {
+	width: 960px;
+	margin: 10px;
+}
+
+#content {
+	padding: 10px 5px 30px 5px;
+}
+
+th {
+	padding: 2px 5px 2px 2px;
+	vertical-align: top;
+}
+
+table.rechnung {
+	width: 600px;
+}
+
+table.liste,table.orgel,table.rechnung {
+	border: 1px solid black;
+}
+
+table.liste th,table.orgel th,table.rechnung th {
+	padding: 2px 10px 2px 3px;
+}
+
+table.liste td,table.orgel td,table.rechnung td {
+	padding: 2px 10px 2px 3px;
+	vertical-align: top;
+}
+
+input,select,textarea,.fakeinput {
+	padding: 1px 2px 2px 2px;
+}
+
+.orgelimage {
+	width: 120px;
+	background-color: white;
+	padding: 3px;
+}
+
+a.orgelimagelink {
+	border: 0px solid white !important;
+}
+
+.orgelimage .remove {
+	float: right;
+	clear: both;
+}
+
+table.dispositionmenu td {
+	vertical-align: middle;
+}
+
+table.disposition td {
+	padding: 2px 20px 2px 2px;
+}
+
+table.liste td.rubrik {
+	padding-left: 8px;
+}
+
+.checkbox {
+	padding: 0px;
+}
+
+.button {
+	padding: 2px 10px 2px 10px;
+}
+
+.buttonlink {
+	padding: 4px 12px 3px 12px;
+	text-decoration: none;
+}
+
+table th.index {
+	margin: 0px;
+	padding: 0px;
+	border: 1px solid black;
+}
+
+#gemeindetailsrechnungen {
+	height: 80px;
+	overflow: auto;
+	border: 1px solid black;
+}
+
+#zeiterfassungScrollContainer {
+	height: 440px;
+	overflow: auto;
+}
+
+#iFrameAufgabenliste {
+	height: 600px;
+	overflow: auto;
+}
+
+#orgeldetailsdisposition {
+	width: 430px;
+	height: 150px;
+	overflow: auto;
+	border: 1px solid black;
+}
+
+#orgeldetailswartungen {
+	width: 430px;
+	height: 120px;
+	overflow: auto;
+	border: 1px solid black;
+}
+
+#orgeldetailswartungengesamt {
+	width: 100%;
+	height: 125px;
+	overflow: auto;
+	border: 1px solid black;
+}
+
+/* 
+	Colors 
+*/
+body {
+	font-size: 9pt;
+	font-family: Tahoma, Verdana, Arial;
+	background-color: #EEF0F0;
+}
+
+#orgelbau {
+	background-color: #EBFAFF;
+	border: 1px solid black;
+}
+
+#menu {
+	background-color: #6699FF;
+}
+
+#submenu {
+	background-color: #99CCFF;
+	border-bottom: 1px solid black;
+}
+
+#kopfzeile {
+	background-color: #3366FF;
+	font-weight: bold;
+}
+
+table.zweispalten {
+	
+}
+
+.zweispalten-links {
+	
+}
+
+.zweispalten-rechts {
+	
+}
+
+table.orgel th {
+	font-size: 10pt;
+}
+
+table.liste th,table.orgel th,table.rechnung th {
+	background-color: #6699CC;
+}
+
+table.liste th.th2 {
+	background-color: #6699CC;
+	border-top: 1px solid black;
+}
+
+table.liste td,table.orgel td,table.rechnung td {
+	background-color: #D8E8FF;
+}
+
+table.liste td.tdLabel {
+	font-weight: bold;
+}
+
+table.liste td.td1,rechnungContext_td1 table td {
+	background-color: #BFDBFF;
+}
+
+table.liste td.td2,rechnungContext_td2 table td {
+	background-color: #B3CDEF;
+}
+
+table.liste td.td3 {
+	background-color: #A7BFDF;
+}
+
+table.liste td.td4 {
+	background-color: #C3CFDF;
+}
+
+table.liste td.td5 {
+	background-color: #B5C7DF;
+}
+
+table.liste td.td6 {
+	background-color: #D1DEEF;
+}
+
+table.liste td.rubrik {
+	background-color: #DEECFE;
+	font-weight: bold;
+}
+
+table.orgel td.tdbez,table.rechnung td.tdbez {
+	font-weight: bold;
+	background-color: #D8E8FF;
+}
+
+input,select,textarea,.buttonlink,.inputKalender,.zeiteingabe,.fakeinput
+	{
+	border: 1px solid black;
+	background-color: #f0f0f0;
+	font-family: Arial;
+	font-size: 10pt;
+}
+
+.zeiteingabe {
+	text-align: right;
+}
+
+checkbox {
+	border: 2px solid red;
+}
+
+.alignRight {
+	text-align: right;
+}
+
+.alignCenter {
+	text-align: center;
+}
+
+hr {
+	width: 95%;
+	color: black;
+	height: 1px;
+	border: none;
+	border-top: 1px dotted #6699cc;
+	clear: both;
+	display: block;
+}
+
+img.orgelimage {
+	background-color: white;
+}
+
+#quickjump ul {
+	padding: 0px 0px 20px 0px;
+}
+
+#quickjump a:link,#quickjump a:visited {
+	font-weight: bold;
+	font-size: 10pt;
+	text-decoration: none;
+}
+
+#quickjump li:hover {
+	background-color: #6699cc;
+}
+
+#quickjump li {
+	float: left;
+	list-style: none;
+	list-style-type: none;
+	padding: 2px;
+	border: 1px solid black;
+	background-color: #d8e8ff;
+	margin: 2px;
+	min-width: 11px;
+	text-align: center;
+}
+
+#quickjump .notexists {
+	background-color: #818D9F;
+}
+
+#quickjump .exists {
+	background-color: #d8e8ff;
+}
+
+#quickjump li.desc {
+	border: 0px solid;
+	background-color: transparent;
+}
+
+iframe {
+	border: 1px solid black;
+}
+
+a:link,td a:link,#menu a:link,#submenu a:link,#kopfzeile a:link,#content a:link
+	{
+	color: black;
+}
+
+a:hover {
+	color: #0000CC;
+	text-decoration: none;
+}
+
+.button {
+	font-weight: bold;
+}
+
+.disabled,.readOnly {
+	border: 1px solid grey;
+	color: grey;
+	text-align: right;
+	background-color: #D4D4D4;
+}
+
+.inputzahl {
+	text-align: right;
+}
+
+table th.index {
+	font-size: 14pt;
+	font-weight: bold;
+	background-color: #CCCCCC;
+	text-align: center;
+}
+
+.statusok {
+	background-color: #DEFFDE;
+	border: 1px solid #009A00;
+}
+
+.statuserror {
+	background-color: #FFCFCE;
+	border: 1px solid #CE0000;
+}
+
+.statuswarning {
+	background-color: #FFFFCE;
+	border: 1px solid #F7C300;
+}
+
+.statusinfo {
+	background-color: #DEE7F7;
+	border: 1px solid #3979B5;
+}
+
+.statuserrorpic {
+	background: url('../images/forbidden.gif') no-repeat;
+}
+
+.statusokpic {
+	background: url('../images/check.gif') no-repeat;
+}
+
+.statusinfopic {
+	background: url('../images/information.gif') no-repeat;
+}
+
+.statuswarningpic {
+	background: url('../images/warning.gif') no-repeat;
+}
+
+.statusempty {
+	padding: 0px;
+}
+
+.statusmsg {
+	width: 85%;
+	padding: 10px 10px 10px 5px;
+	margin: 15px 0 15px 0;
+}
+
+.statuspic {
+	float: left;
+	width: 20px;
+	height: 20px;
+}
+
+.buttonlink {
+	font-weight: bold;
+	font-size: 13px;
+}
+
+.buttonlink:hover {
+	color: black;
+}
+
+#help {
+	border-top: 1px solid black;
+	padding: 2px;
+	background-color: #3979B5;
+}
+
+#help input {
+	font-size: 11px;
+	background-color: #DEE7F7;
+}
+
+.inputDatum {
+	border: 1px solid black;
+	display: block;
+	clear: both;
+	height: 22px;
+	background-color: #f0f0f0;
+	width: 95px;
+}
+
+.inputDatum input {
+	float: left;
+	width: 70px;
+	border: none;
+}
+
+.awStatusFertig {
+	background-color: #FFFFCE;
+	border: 1px solid #F7C300;
+	padding: 2px;
+}
+
+.awStatusOffen {
+	background-color: #FFCFCE;
+	border: 1px solid #CE0000;
+	padding: 2px;
+}
+
+.awStatusGebucht {
+	background-color: #DEFFDE;
+	border: 1px solid #009A00;
+	padding: 2px;
+}
+
+span.hideContent {
+	display: none;
+}
+
+.export {
+	float: right;
+}
+
+.export ul li {
+	list-style: none;
+	display: inline;
+}
+
+.export ul li img,.export ul li a {
+	border: 0px solid black;
+}
+
+.icon {
+	border: 0px solid black;
+}
+
+.iconButton,.smallIconButton {
+	background-repeat: no-repeat;
+	background-position: 2px 3px;
+	padding-left: 4px;
+}
+
+.iconButton {
+	padding-left: 23px;
+}
+
+.iconButton:hover {
+	background-color: #DFDFDF;
+}
+
+.backButton {
+	background-image: url(../images/icons/document_a4_back.png);
+}
+
+.forwardButton {
+	background-image: url(../images/icons/document_a4_forward.png);
+}
+
+.saveButton {
+	background-image: url(../images/icons/gem_okay.png);
+}
+
+.editButton {
+	background-image: url(../images/icons/application_windows_edit.png);
+}
+
+.calendarButton {
+	background-image: url(../images/icons/calendar_day_edit.png);
+}
+
+.deleteButton {
+	background-image: url(../images/icons/document_a4_remove.png);
+}
+
+.refreshButton {
+	background-image: url(../images/icons/refresh.png);
+}
+
+.archiveButton {
+	background-image: url(../images/icons/folder_classic_down.png);
+}
+
+.mailButton {
+	background-image: url(../images/icons/mail_light_right.png);
+}
+
+.searchButton {
+	background-image: url(../images/icons/search.png);
+}
+
+.resetButton {
+	background-image: url(../images/icons/refresh_backwards.png);
+}
+
+.openManyButton {
+	background-image: url(../images/icons/hcards_right.png);
+}
+
+.contactAdd {
+	background-image: url(../images/icons/contact_grey_add.png);
+}
+
+.contactEdit {
+	background-image: url(../images/icons/contact_grey_edit.png);
+}
+
+.contactRemove {
+	background-image: url(../images/icons/contact_grey_remove.png);
+}
+
+.contactDetails {
+	background-image: url(../images/icons/contact_grey.png);
+}
+
+.printButton {
+	background-image: url(../images/icons/printer.png);
+}
+
+.cancelButton {
+	background-image: url(../images/icons/gem_remove.png);
+}
+
+.cancelRechnungButton {
+	background-image: url(../images/icons/sprocket_light.png);
+}
+
+.imageButton {
+	background-image: url(../images/icons/image_cultured.png);
+}
+
+.dispositionAdd {
+	background-image: url(../images/icons/tag_add.png);
+}
+
+.createButton {
+	background-image: url(../images/icons/folder_classic_stuffed_add.png);
+}
+
+.dispositionRemove {
+	background-image: url(../images/icons/tag_remove.png);
+}
+
+.dispositionEdit {
+	background-image: url(../images/icons/tag_edit.png);
+}
+
+.routeStartButton {
+	background-image: url(../images/icons/marker_rounded_red.png);
+}
+
+.routeEndButton {
+	background-image: url(../images/icons/marker_rounded_green.png);
+}
+
+
+.projdesc {
+	font-size: 10pt;
+	border-top: 1px solid black !important;
+	border-bottom: none;
+}
+
+.projth {
+	border-top: 1px solid black !important;
+}
+
+.txt136 {
+	width: 136px;
+}
+
+.txt145 {
+	width: 145px;
+}
+
+.txt40 {
+	width: 40px;
+}
+
+.txt50 {
+	width: 50px;
+}
+
+.txt30 {
+	width: 30px;
+}
+
+.txt45 {
+	width: 45px;
+}
+
+.txt70 {
+	width: 70px;
+}
+
+.txt80 {
+	width: 80px;
+}
+
+.txt90 {
+	width: 90px;
+}
+
+.txt100 {
+	width: 100px;
+}
+
+.txt106 {
+	width: 106px;
+}
+
+.txt110 {
+	width: 110px;
+}
+
+.txt120 {
+	width: 120px;
+}
+
+.txt150 {
+	width: 150px;
+}
+
+.txt190 {
+	width: 190px;
+}
+
+.txt200 {
+	width: 200px;
+}
+
+.txt210 {
+	width: 210px;
+}
+
+.txt220 {
+	width: 220px;
+}
+
+.txt215 {
+	width: 215px;
+}
+
+.txt270 {
+	width: 270px;
+}
+
+.txt300 {
+	width: 300px;
+}
+
+.txt320 {
+	width: 320px;
+}
+
+.txt370 {
+	width: 370px;
+}
+
+.txt380 {
+	width: 380px;
+}
+
+.txt400 {
+	width: 400px;
+}
+
+.txt430 {
+	width: 430px;
+}
+
+.txt470 {
+	width: 470px;
+}
+
+.txt490 {
+	width: 490px;
+}
+
+.txt500 {
+	width: 500px;
+}
+
+.txt530 {
+	width: 530px;
+}
+
+.txt600 {
+	width: 600px;
+}
+
+.txt650 {
+	width: 650px;
+}
+
+.txtarea190 {
+	width: 190px;
+	height: 50px;
+}
+
+.txtarea435 {
+	width: 435px;
+	height: 70px;
+}
+
+.txtarea580 {
+	width: 580px;
+	height: 55px;
+}
+
+.txt450 {
+	width: 450px;
+}
+
+.int40,.int50,.int60,.int70 {
+	text-align: right;
+}
+
+.int40 {
+	width: 40px;
+}
+
+.int50 {
+	width: 50px;
+}
+
+.int60 {
+	width: 60px;
+}
+
+.int70 {
+	width: 70px;
+}
+
+.size100 {
+	width: 100%;
+}
+
+.summenzeile td {
+	border-top: 1px dashed black;
+	font-weight: bold;
+}
+
+.bottomMenuHR {
+	padding-bottom: 10px;
+}
+
+.bottomMenu {
+	float: right;
+}
+
+.pre {
+	background-color: #FFD7CF;
+	border: 1px solid #FF876F;
+	padding: 5px;
+}
+
+.projekkostenrechnungsumme {
+	border-top: 1px dashed black;
+}
+
+.zwischensumme {
+	font-style: italic;
+}
+
+.summePositiv {
+	color: green;
+}
+
+.summeUeberPlan {
+	color: orange;
+}
+
+.summeNegativ {
+	color: red;
+}
+
+.projektgewinnverlust {
+	padding-top: 10px !important;
+}
+
+.settingsTxtArea {
+	width: 100%;
+	height: 55px;
+}
+
+table.registerAuswahl td {
+	padding: 2px !important;
+}
+
+.width40 {
+	width: 40px;
+}
+
+.width80 {
+	width: 80px;
+}
+.width110 {
+	width: 110px;
+}
+
+.width120 {
+	width: 120px;
+}
+
+.width170 {
+	width: 170px;
+}
+
+.width80 {
+	width: 80px;
+}
+
+.fakeinput {
+	display: inline;
+	color: #000;
+	line-height: 15px;
+	min-height: 15px;
+	margin-right: 5px;
+	font-style: normal;
+	font-weight: normal;
+}
+
+.fakeinputDisabled {
+	border: 1px solid grey;
+	color: grey;
+	background-color: #D4D4D4;
+}
+
+.selectedRechnung {
+	border: 1px solid black;
+	background-color: red !important;
+}
+
+.selectedRechnung td {
+	background-color: #99ccff !important;
+}
+
+.rechnungContextMenu {
+	position: absolute;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	border-bottom: 1px solid black;
+	padding: 5px;
+	width: 300px;
+	background-color: #99ccff;
+}
+
+.ui-datepicker-trigger {
+	float: right;
+	padding: 2px 2px 2px 0px;
+}
+
+.onDrag {
+	font-weight: bold;
+	border: 1px solid black;
+}
+
+#gemeinde-karte {
+	border: 1px solid black;
+	width: 100%;
+	height: 550px;
+}
+
+#infowindowContent {
+	min-height: 180px;
+}
+
+.infowindowMassnahmeTh {
+	width: 90px;
+	min-width: 90px;	
+}
+.infowindowMassnahme {
+	width: 350px;
+	max-width: 350px;
+}

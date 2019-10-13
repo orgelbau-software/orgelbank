@@ -1,0 +1,2 @@
+<li><a title="&Ouml;ffnet die Ansprechpartnerverwaltung" href="index.php?page=3&do=40">Ansprechpartner Liste anzeigen</a></li>
+<li><a title="Einen neuen Ansprechpartner anlegen" href="index.php?page=3&do=40">Neuen Ansprechpartner erstellen</a></li>

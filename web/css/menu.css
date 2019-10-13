@@ -1,0 +1,48 @@
+#menu li {
+	display: inline;
+	list-style-type: none;
+	padding-right: 2px;
+}
+
+#submenu li {
+	display: inline;
+	list-style-type: none;
+	padding-right: 15px;
+}
+
+#menu a {
+	font-size: 11pt;
+	font-weight: bold;
+	font-family: 'Trebuchet MS', Arial;
+	text-decoration: none;
+	padding: 2px 5px 11px 2px;
+}
+
+#menu a:hover,a.aktiv {
+	border: 1px solid black;
+	border-bottom: none;
+	background-color: #99ccff;
+	color: black;
+}
+
+#submenu a {
+	font-size: 9pt;
+	font-weight: bold;
+	font-family: 'Trebuchet MS', Arial;
+	text-decoration: none;
+}
+
+#menu {
+	padding: 2px 5px 10px 5px;
+}
+
+#submenu {
+	border-top: 1px solid black;
+	padding: 4px 5px 4px 5px;
+}
+
+#kopfzeile {
+	font-family: 'Trebuchet MS', Arial;
+	text-align: right;
+	padding: 2px 5px 2px 0;
+}

@@ -1,0 +1,1 @@
+<script type="text/javascript" src="<!--InstanceUrl-->web/js/gemeindekarte.js"></script>

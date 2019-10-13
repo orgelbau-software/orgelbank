@@ -1,0 +1,1 @@
+<img class="icon" src="web/images/icons/warning_triangle.png" title="<!-- Title -->"/>

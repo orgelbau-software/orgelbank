@@ -1,0 +1,1 @@
+<li><a href="index.php?page=3&do=40&a=<!--Anfangszeichen-->" title="Zeige alle Ansprechpartner die mit '<!--Anfangszeichen-->' beginnen"><!--Anfangszeichen--></a></li>

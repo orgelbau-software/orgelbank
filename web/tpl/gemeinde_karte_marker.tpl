@@ -1,0 +1,2 @@
+var marker = new google.maps.Marker({ position: new google.maps.LatLng(<!-- Lat -->,<!-- Lng -->), map: theMap, name : <!-- AID -->, title: '<!-- Title -->'  });
+bindInfoWindow(marker, theMap, infowindow, createContent(<!-- OrgelId -->, '<!-- Kirche -->','<!-- Ort -->','<!-- Bezirk -->','<!-- Register -->','<!-- LetztePflege -->','<!-- NaechstePflege -->','<!-- Pflegevertrag -->','<!-- Zyklus -->','<!-- Massnahmen -->',<!-- Lat -->, <!-- Lng -->));

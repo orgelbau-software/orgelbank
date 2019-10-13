@@ -1,0 +1,11 @@
+.settings/
+.buildpath
+.project
+conf/*.conf.php
+lib/vcard
+lib/vcard-transliterator
+src/services/addressbook/out.log
+store/rechnungen
+lib/tFPDF/font/unifont/dejavusanscondensed-bold.cw.dat
+lib/tFPDF/font/unifont/dejavusanscondensed-bold.cw127.php
+lib/tFPDF/font/unifont/dejavusanscondensed-bold.mtx.php

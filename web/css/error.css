@@ -1,0 +1,61 @@
+.phperror {
+	background-color: #FFCFCE;
+	border: 1px solid #CE0000;
+	padding: 10px;
+	margin: 10px;
+}
+
+.kontext {
+	background-color: #FFEDED;
+	border: 1px solid #CE0000;
+	padding: 2px 5px 2px 5px;
+}
+
+.mailstatus {
+	background-color: #FFFFCE;
+	border: 1px solid #F7C300;
+	padding: 10px;
+	font-size: 12pt;
+	font-weight: bold;
+}
+
+.logSQL {
+	padding-left: 5px;
+	width: 95%;
+	background-color: #DEE7F7;
+	border-left: 1px solid #3979B5;
+	border-right: 1px solid #3979B5;
+}
+
+.logDebug {
+	padding-left: 5px;
+	width: 95%;
+	background-color: #FFFFCE;
+	border-left: 1px solid #F7C300;
+	border-right: 1px solid #F7C300;
+}
+
+.logError {
+	padding-left: 5px;
+	width: 95%;
+	background-color: #FFCFCE;
+	border-left: 1px solid #CE0000;
+	border-right: 1px solid #CE0000;
+}
+
+.logWarn {
+	padding-left: 5px;
+	width: 95%;
+	background-color: #FFFFCE;
+	border-left: 1px solid #F7C300;
+	border-right: 1px solid #F7C300;
+}
+
+.logDesc {
+	width: 60px;
+	float: left;
+}
+.statusok {
+	background-color: #DEFFDE;
+	border: 1px solid #009A00;
+}
