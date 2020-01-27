@@ -3,6 +3,8 @@
 class MSWordOutput extends Output
 {
 
+    public static $FILE_EXTENSTION = '.docx';
+    
     public function loadNewTemplate($pfadOrig)
     {
         $pfad = $pfadOrig . ".docx";
@@ -28,7 +30,7 @@ class MSWordOutput extends Output
 
     public function save($file)
     {
-        $this->template->save($file . ".docx");
-        return $file . ".docx";
+        $this->template->save($file . MSWordOutput::$FILE_EXTENSTION);
+        return $file . MSWordOutput::$FILE_EXTENSTION;
     }
 }

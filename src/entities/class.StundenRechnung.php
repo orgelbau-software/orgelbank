@@ -62,6 +62,7 @@ class StundenRechnung extends PositionsRechnung
         $kirche = str_replace("/", "-", $oGemeinde->getKirche());
         $ziel = parent::getSpeicherOrt() . "stunde/" . $kirche . "-" . $rechNr;
         $ziel = Utilities::ersetzeZeichen($ziel);
+        $ziel .= MSWordOutput::$FILE_EXTENSTION;
         return $ziel;
     }
 

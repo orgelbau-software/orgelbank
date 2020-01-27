@@ -21,6 +21,7 @@
 		<script type="text/javascript" src="<!--InstanceUrl-->lib/jquery/jquery.alphanumeric.pack.js"></script>
 		<script type="text/javascript" src="<!--InstanceUrl-->lib/jquery/jquery.delay.js"></script>
 		<script type="text/javascript" src="<!--InstanceUrl-->lib/jquery/autoresize.jquery.min.js"></script>
+		<script type="text/javascript" src="<!--InstanceUrl-->lib/javascript/dropdown.js"></script>
 
 		<script type="text/javascript" src="<!--InstanceUrl-->web/js/scripts.js"></script>
 		<script type="text/javascript" src="<!--InstanceUrl-->web/js/rechnung.js"></script>
