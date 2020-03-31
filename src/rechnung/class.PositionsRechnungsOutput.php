@@ -10,7 +10,7 @@ abstract class PositionsRechnungsOutput extends RechnungOutput
 
     public function ersetzeRechnungsTags()
     {
-        $col = RechnungsPositionUtilities::getRechnungsPositionen($this->rechnung->getID());
+        $col = RechnungsPositionUtilities::getRechnungsPositionen($this->rechnung->getID(), $this->rechnung->getType());
         
         $iPos = 1;
         foreach ($col as $currentPos) {

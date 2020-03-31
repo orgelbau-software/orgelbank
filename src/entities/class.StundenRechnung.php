@@ -137,5 +137,9 @@ class StundenRechnung extends PositionsRechnung
             $this->setChanged(true);
         }
     }
+    
+    public function getType() {
+        return 2;
+    }
 }
 ?>

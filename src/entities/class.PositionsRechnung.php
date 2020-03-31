@@ -72,5 +72,6 @@ abstract class PositionsRechnung extends Rechnung
     {
         $this->fahrtkosten = $fahrtkosten;
     }
+    
 }
 ?>

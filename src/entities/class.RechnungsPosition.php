@@ -4,6 +4,8 @@ class RechnungsPosition extends SimpleDatabaseStorageObjekt
 {
 
     private $rechnungsID;
+    
+    private $type;
 
     private $position;
 
@@ -20,6 +22,7 @@ class RechnungsPosition extends SimpleDatabaseStorageObjekt
         $ht->add("r_id", $this->getRechnungsID());
         $ht->add($this->tablePrefix . "position", $this->getPosition());
         $ht->add($this->tablePrefix . "text", $this->getText());
+        $ht->add($this->tablePrefix . "type", $this->getType());
         
         return $ht;
     }
@@ -30,6 +33,7 @@ class RechnungsPosition extends SimpleDatabaseStorageObjekt
         $this->setRechnungsID($rs["r_id"]);
         $this->setText($rs[$this->tablePrefix . 'text']);
         $this->setPosition($rs[$this->tablePrefix . 'position']);
+        $this->setType($rs[$this->tablePrefix . 'type']);
         $this->setChanged(true); // soll immer gespeichert werden
     }
 
@@ -47,6 +51,11 @@ class RechnungsPosition extends SimpleDatabaseStorageObjekt
     {
         return $this->text;
     }
+    
+    public function getType()
+    {
+        return $this->type;
+    }
 
     public function setRechnungsID($id)
     {
@@ -56,6 +65,11 @@ class RechnungsPosition extends SimpleDatabaseStorageObjekt
     public function setPosition($position)
     {
         $this->position = $position;
+    }
+    
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 
     public function setText($text)

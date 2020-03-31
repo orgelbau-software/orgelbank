@@ -12,7 +12,7 @@ class PflegeRechnungTemplateBuilder extends RechnungTemplateBuilder
     {
         $this->setFahrtkosten($this->rechnung->getFahrtkosten());
         
-        $colPositionen = RechnungsPositionUtilities::getRechnungsPositionen($this->rechnung->getID());
+        $colPositionen = RechnungsPositionUtilities::getRechnungsPositionen($this->rechnung->getID(), $this->rechnung->getType());
         $iPosCount = 1;
         foreach ($colPositionen as $currentPos) {
             $this->template->replace("Standardposition" . $iPosCount ++, stripslashes($currentPos->getText()));

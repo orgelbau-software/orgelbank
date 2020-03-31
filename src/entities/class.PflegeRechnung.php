@@ -74,5 +74,9 @@ class PflegeRechnung extends PositionsRechnung
     {
         $this->pflegekosten = $pflegekosten;
     }
+    
+    public function getType() {
+        return 1;
+    }
 }
 ?>

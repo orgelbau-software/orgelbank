@@ -266,6 +266,7 @@ class RechnungController
                 $p = new RechnungsPosition();
                 $p->setRechnungsID($oRechnung->getID());
                 $p->setText($val);
+                $p->setType(2);
                 $p->setPosition($iPosition ++);
                 $p->speichern();
             }
@@ -382,6 +383,7 @@ class RechnungController
             if (strpos($key, "osition_") > 0) {
                 $p = new RechnungsPosition();
                 $p->setRechnungsID($oRechnung->getID());
+                $p->setType(1);
                 $p->setText($val);
                 $p->setPosition($iPosition ++);
                 $p->speichern();

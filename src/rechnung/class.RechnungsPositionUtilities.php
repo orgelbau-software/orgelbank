@@ -3,9 +3,9 @@
 class RechnungsPositionUtilities
 {
 
-    public static function getRechnungsPositionen($iRechnungsID)
+    public static function getRechnungsPositionen($iRechnungsID, $iType)
     {
-        $sql = "SELECT * FROM rechnung_position WHERE r_id = " . $iRechnungsID;
+        $sql = "SELECT * FROM rechnung_position WHERE rpos_type = ".$iType." AND r_id = " . $iRechnungsID;
         return RechnungsPositionUtilities::queryDB($sql);
     }
 
