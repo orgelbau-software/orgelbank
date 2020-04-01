@@ -24,7 +24,7 @@
 <table class="liste size100">
 <tr>
     <td style="width: 200px;">&nbsp;</td>
-    <td style="font-weight: bold;">Summen (IST):</td>
+    <td style="font-weight: bold;">Summe Projekt (IST):</td>
     <td><input disabled class="disabled" style="font-weight: bold;" type="text" name="summe_summe" value="<!--Summe7-->" size="3" /></td>
     <td><input disabled class="disabled" type="text" name="summe_montag" value="<!--Summe1-->" size="3" /></td>
     <td><input disabled class="disabled" type="text" name="summe_dienstag" value="<!--Summe2-->" size="3" /></td>
@@ -34,6 +34,12 @@
     <td><input disabled class="disabled" type="text" name="summe_samstag" value="<!--Summe6-->" size="3" /></td>
     <td><input disabled class="disabled" type="text" name="summe_sonntag" value="<!--Summe0-->" size="3" /></td>
   </tr>
+  <tr>
+  	<td style="width: 200px;">&nbsp;</td>
+    <td style="font-weight: bold;">Summe Gesamt:</td>
+  	<td><input disabled class="disabled" style="font-weight: bold;" type="text" name="summe_alleprojekte" value="<!--SummeAlleProjekte-->" size="3" />
+  	<td colspan="6">&nbsp;</td>
+  </td>
   <tr>
     <td colspan="10"><hr/></td>
   </tr>

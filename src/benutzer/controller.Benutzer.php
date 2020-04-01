@@ -215,6 +215,7 @@ class BenutzerController
         $c = ProjektUtilities::getBenutzerAufgaben($benutzer->getID());
         $tplSelect = new BufferedTemplate("select_option.tpl");
         $bisherGeleisteteStundenProProjekt = ArbeitstagUtilities::getMitarbeiterZeitraumStundenProProjekt($benutzer->getID(), date("Y-m-d", $arWochentageTS[0]), date("Y-m-d", $arWochentageTS[6]));
+        $bisherStundenSumme = 0;
         foreach ($c as $projekt) {
             if (! $gemeindeCache->containsKey($projekt->getGemeindeID())) {
                 $gemeindeCache->put($projekt->getGemeindeID(), new Gemeinde($projekt->getGemeindeID()));
@@ -223,6 +224,7 @@ class BenutzerController
             $stundenZusatz = "";
             if (isset($bisherGeleisteteStundenProProjekt[$projekt->getID()])) {
                 $stundenZusatz = " (" . $bisherGeleisteteStundenProProjekt[$projekt->getID()] . " Std.)";
+                $bisherStundenSumme = $bisherStundenSumme + $bisherGeleisteteStundenProProjekt[$projekt->getID()];
             }
             $tplSelect->replace("Name", $gemeindeCache->getValueOf($projekt->getGemeindeID())
                 ->getKirche() . ", " . $projekt->getBezeichnung() . $stundenZusatz);
@@ -326,9 +328,7 @@ class BenutzerController
             
             foreach ($_POST as $key => $stunden) {
                 if (substr($key, 0, 2) == "TS" && trim($stunden) != "") {
-                    
 
-                    
                     // Stundenwert berichtigen
                     $stunden = str_replace(",", ".", $stunden);
                     $stunden = doubleval($stunden);
@@ -495,6 +495,7 @@ class BenutzerController
             $tpl->replace("Summe" . $key, $val == 0 ? $val = "" : $val);
         }
         
+        $tpl->replace("SummeAlleProjekte", $bisherStundenSumme);
         $tpl->replace("Datensaetze", $tplDS->getOutput());
         
         // Datensatz / Arbeitswoche gesperrt, dann Eingabemoeglichtkeit sperren
