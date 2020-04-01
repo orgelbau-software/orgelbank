@@ -727,6 +727,7 @@ class OrgelController
                 }
                 
                 $oOrgel->setMassnahmen($_POST['massnahmen']);
+                $oOrgel->setAnmerkung($_POST['anmerkungen']);
                 $oOrgel->speichern(false);
             } else {
                 // Wartung wurde geloescht
@@ -843,6 +844,7 @@ class OrgelController
         
         // Sachen die zur Orgel gehoeren
         $tplWartung->replace("NotwendigeMassnahmen", $oOrgel->getMassnahmen());
+        $tplWartung->replace("Anmerkungen", $oOrgel->getAnmerkung());
         
         // Orgel Ansprechpartner
         $tplWartung->replace("GemeindeId", $oOrgel->getGemeindeId());

@@ -111,6 +111,9 @@
 		<td>
 			<h3>Notwendige Ma&szlig;nahmen</h3>
 			<textarea name="massnahmen" class="txtarea435"><!--NotwendigeMassnahmen--></textarea>
+			
+			<h3>Allgemeine Anmerkungen</h3>
+			<textarea name="anmerkungen" class="txtarea435"><!--Anmerkungen--></textarea>
 		</td>
 	</tr>
 </table>
