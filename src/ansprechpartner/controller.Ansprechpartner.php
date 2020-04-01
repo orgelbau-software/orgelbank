@@ -19,8 +19,14 @@ class AnsprechpartnerController
             
             $o->loeschen();
             
+            $redirect = "index.php?page=3&do=40";
+            // Wenn eine Orgel uebergeben wurde, dann gehen wir davon aus, dass es aus den WartungsDetails her gemacht wurde
+            if(isset($_GET['oid'])) {
+                $redirect = "index.php?page=2&do=28&oid=" . $_GET['oid'];
+            }
+            
             $htmlStatus = new HTMLRedirect();
-            $htmlStatus->setLink("index.php?page=3&do=40");
+            $htmlStatus->setLink($redirect);
             $htmlStatus->setNachricht("Ansprechpartner erfolgreich gel&ouml;scht.");
             $htmlStatus->setSekunden(ConstantLoader::getDefaultRedirectSecondsTrue());
             
@@ -28,12 +34,21 @@ class AnsprechpartnerController
         } else {
             $o = new Ansprechpartner(intval($_GET['aid']));
             
+            $neinLink = "index.php?page=3&do=40";
+            $jaLink = "index.php?page=3&do=42";
+            if(isset($_GET['oid'])) {
+                $neinLink .= "&oid=".$_GET['oid'];
+                $jaLink .= "&oid=".$_GET['oid'];
+            }
+            
             $tpl = new HTMLSicherheitsAbfrage();
             $tpl->setText("M&ouml;chten Sie den Ansprechpartner \"" . $o->getVorname() . " " . $o->getNachname() . "\" wirklich endg&uuml;ltig l&ouml;schen? ");
             $tpl->setButtonJa("Ja, Ansprechpartner l&ouml;schen!");
             $tpl->setButtonNein("Nein, zur&uuml;ck");
-            $tpl->setButtonNeinLink("index.php?page=3&do=40");
-            $tpl->setFormLink("index.php?page=3&do=42");
+            
+            
+            $tpl->setButtonNeinLink($neinLink);
+            $tpl->setFormLink($jaLink);
             $tpl->setObjektID($o->getID());
             
             $tpl->anzeigen();
