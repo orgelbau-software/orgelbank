@@ -50,7 +50,13 @@ class AnsprechpartnerController
         $oA = new Ansprechpartner($_GET['aid']);
         $oG = new Gemeinde($_GET['gid']);
         
-        $htmlStatus = new HTMLRedirect($oA->getAnrede() . " " . $oA->getNachname() . " wurde der Gemeinde " . $oG->getKirche() . " als Ansprechpartner entfernt!", "index.php?page=3&do=40&aid=" . $oA->getID());
+        $redirect = "index.php?page=3&do=40&aid=" . $oA->getID();
+        
+        // Wenn eine Orgel uebergeben wurde, dann gehen wir davon aus, dass es aus den WartungsDetails her gemacht wurde
+        if(isset($_GET['oid'])) {
+            $redirect = "index.php?page=2&do=28&oid=" . $_GET['oid'];
+        }
+        $htmlStatus = new HTMLRedirect($oA->getAnrede() . " " . $oA->getNachname() . " wurde der Gemeinde " . $oG->getKirche() . " als Ansprechpartner entfernt!", $redirect);
         $htmlStatus->anzeigen();
     }
 
