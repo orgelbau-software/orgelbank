@@ -756,7 +756,7 @@ class RechnungController
                 break;
         }
         
-        $colPositionen = RechnungsPositionUtilities::getRechnungsPositionen($oRechnung->getID());
+        $colPositionen = RechnungsPositionUtilities::getRechnungsPositionen($oRechnung->getID(), $oRechnung->getType());
         if ($colPositionen->getSize() > 0) {
             $iPosCounter = 1;
             foreach ($colPositionen as $currentPos) {

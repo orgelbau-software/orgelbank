@@ -46,5 +46,9 @@ class RechnungView extends Rechnung
     {
         $this->rechnungsTypId = $rechnungsTypId;
     }
+    
+    public function getType() {
+        return $this->getRechnungsTypId();
+    }
 }
 ?>

@@ -3,6 +3,8 @@
 class StundenRechnung extends PositionsRechnung
 {
 
+    public static $TYPE_ID = 2;
+    
     protected $azubiLohn;
 
     protected $azubiStd;
@@ -139,7 +141,7 @@ class StundenRechnung extends PositionsRechnung
     }
     
     public function getType() {
-        return 2;
+        return StundenRechnung::TYPE_ID;
     }
 }
 ?>

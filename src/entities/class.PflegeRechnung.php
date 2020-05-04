@@ -5,6 +5,8 @@ class PflegeRechnung extends PositionsRechnung
 
     protected $pflegekosten;
 
+    public static $TYPE_ID = 1;
+    
     public function __construct($iRechnungsID = 0, $primaryKey = "rp_id", $tableName = "rechnung_pflege", $prefix = "rp_")
     {
         parent::__construct($iRechnungsID, $primaryKey, $tableName, $prefix);
@@ -76,7 +78,7 @@ class PflegeRechnung extends PositionsRechnung
     }
     
     public function getType() {
-        return 1;
+        return PflegeRechnung::TYPE_ID;
     }
 }
 ?>

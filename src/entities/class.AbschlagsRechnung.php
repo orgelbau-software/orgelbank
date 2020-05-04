@@ -3,6 +3,8 @@
 class AbschlagsRechnung extends Rechnung
 {
 
+    public static $TYPE_ID = 3;
+    
     protected $titel;
 
     protected $aNr;
@@ -162,6 +164,10 @@ class AbschlagsRechnung extends Rechnung
     {
         $this->gesamtMwSt = round($this->gesamtNetto * $this->MwStSatz, 2);
         $this->gesamtBrutto = $this->gesamtNetto + $this->gesamtMwSt;
+    }
+    
+    public function getType() {
+        return AbschlagsRechnung::$TYPE_ID;
     }
 }
 ?>

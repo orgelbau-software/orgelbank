@@ -33,6 +33,8 @@ abstract class Rechnung extends SimpleDatabaseStorageObjekt
 
     // Methoden
     public abstract function errechneGesamtBetrag($speichern = false);
+    
+    public abstract function getType();
 
     public function getSpeicherOrt()
     {
@@ -238,5 +240,6 @@ abstract class Rechnung extends SimpleDatabaseStorageObjekt
     {
         $this->eingangsAnmerkung = $eingangsAnmerkung;
     }
+    
 }
 ?>

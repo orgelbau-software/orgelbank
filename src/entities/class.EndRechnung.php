@@ -3,6 +3,8 @@
 class EndRechnung extends Rechnung
 {
 
+    public static $TYPE_ID = 4;
+    
     protected $abschlag1;
 
     protected $abschlag2;
@@ -130,6 +132,10 @@ class EndRechnung extends Rechnung
     {
         $this->gesamtMwSt = round($this->gesamtNetto * $this->MwStSatz, 2);
         $this->gesamtBrutto = $this->gesamtNetto + $this->gesamtMwSt;
+    }
+    
+    public function getType() {
+        return EndRechnung::$TYPE_ID;
     }
 }
 ?>
