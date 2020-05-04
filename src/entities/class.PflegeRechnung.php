@@ -78,7 +78,7 @@ class PflegeRechnung extends PositionsRechnung
     }
     
     public function getType() {
-        return PflegeRechnung::TYPE_ID;
+        return PflegeRechnung::$TYPE_ID;
     }
 }
 ?>

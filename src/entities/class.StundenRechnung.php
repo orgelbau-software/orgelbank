@@ -141,7 +141,7 @@ class StundenRechnung extends PositionsRechnung
     }
     
     public function getType() {
-        return StundenRechnung::TYPE_ID;
+        return StundenRechnung::$TYPE_ID;
     }
 }
 ?>
