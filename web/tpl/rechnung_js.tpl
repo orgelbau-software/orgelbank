@@ -1,4 +1,6 @@
 <script type="text/javascript">
+    var mwstSatz = <!--MwStSatz-->;
+    
 	function rechnungEinleitung(art, zielFeldId) {
 		var titel;
 		titel = document.getElementById("gemeindebezeichnung").value;

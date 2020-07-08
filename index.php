@@ -70,6 +70,7 @@ if($webUser != null && $webUser->login() && ! $webUser->isLoginExpired()) {
         $cssMenuAktiv = "Rechnung";
         $tplSubMenu = new Template("rechnung_menu.tpl");
         $tplJS = new Template("rechnung_js.tpl");
+        $tplJS->replace("MwStSatz", MWST_SATZ);
         RechnungUtilities::renderRechnungsJavaScripts($tplJS);
         $tplKopf->replace("JavaScript", $tplJS->getOutput());
         break;

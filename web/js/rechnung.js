@@ -58,17 +58,16 @@ function berechneAbschlag() {
 	gn = gn.replace((/,/g), ".");
 
 	if (satz == null || satz == "" || satz == 0) {
-		document.getElementById("asteuer").value = round(an * 0.19);
-		document.getElementById("asumme").value = round(an * 1.19);
+		document.getElementById("asteuer").value = round(an * mwstSatz);
+		document.getElementById("asumme").value = round(an * (1 + mwstSatz));
 	} else {
 		document.getElementById("anetto").value = round(gn * (satz / 100));
-		document.getElementById("asteuer").value = round((gn * (satz / 100)) * 0.19);
-		document.getElementById("asumme").value = round(gn * (satz / 100)
-				* 1.19);
+		document.getElementById("asteuer").value = round((gn * (satz / 100)) * mwstSatz);
+		document.getElementById("asumme").value = round(gn * (satz / 100) * (1 + mwstSatz));
 	}
 
-	document.getElementById("gsteuer").value = round(gn * 0.19);
-	document.getElementById("gsumme").value = round(gn * 1.19);
+	document.getElementById("gsteuer").value = round(gn * mwstSatz);
+	document.getElementById("gsumme").value = round(gn * (1 + mwstSatz));
 }
 
 function berechneAbschlag2() {
@@ -83,11 +82,11 @@ function berechneAbschlag2() {
 	gn = gn.replace((/,/g), ".");
 	an = an.replace((/,/g), ".");
 
-	document.getElementById("gsteuer").value = round(gn * 0.19);
-	document.getElementById("gsumme").value = round(gn * 1.19);
+	document.getElementById("gsteuer").value = round(gn * mwstSatz);
+	document.getElementById("gsumme").value = round(gn * (1 + mwstSatz));
 
-	document.getElementById("rsteuer").value = round(an * 0.19);
-	document.getElementById("rsumme").value = round(an * 1.19);
+	document.getElementById("rsteuer").value = round(an * mwstSatz);
+	document.getElementById("rsumme").value = round(an * (1 + mwstSatz));
 }
 
 function round(x) {
@@ -165,7 +164,7 @@ function summierePflegerechnung() {
 	fk = fk.replace((/,/g), ".");
 
 	var summe = (pk * 1 + fk * 1).toFixed(2);
-	var mwst = (summe * 0.19).toFixed(2);
+	var mwst = (summe * mwstSatz).toFixed(2);
 	var brutto = (summe * 1 + mwst * 1).toFixed(2);
 	jQuery("#summe").attr('value', summe.replace(".", ","));
 	jQuery("#jsBruttoBetrag").attr('value', brutto.replace(".", ","));

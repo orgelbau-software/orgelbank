@@ -114,7 +114,7 @@
 				<td colspan="2"><input disabled id="letztenetto" type="text" name="js_netto" value="<!--LetzteNetto-->" size="8" class="disabled inputzahl"/> EUR</td>
 			</tr>
 			<tr>
-				<td class="tdbez">MwSt. <!--MwSt-->%</td>
+				<td class="tdbez">MwSt. <!--MwStSatz-->%</td>
 				<td>+ <input id="mwst" disabled type="text" name="mwst" value="<!--MwSt-->" size="8" class="disabled inputzahl"/> EUR</td>
 				<td colspan="2"><input disabled id="letztemwst" type="text" name="js_mwst" value="<!--LetzteMwSt-->" size="8" class="disabled inputzahl"/> EUR</td>
 			</tr>
