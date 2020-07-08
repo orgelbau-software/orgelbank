@@ -57,6 +57,7 @@ class RechnungController
         $tplRechnung->replace("disableForm", "");
         $tplRechnung->replace("SubmitValue", "Rechnung erstellen");
         $tplRechnung->replace("KopfzeilenZusatz", "");
+        $tplRechnung->replace("MwSt", MWST_SATZ * 100);
         
         $k = new Template("rechnung_end_ajax_kopf.tpl");
         $t = new Template("rechnung_end_ajax_ds.tpl");
@@ -166,6 +167,7 @@ class RechnungController
         $tplRechnung->replace("disableForm", "");
         $tplRechnung->replace("SubmitValue", "Rechnung erstellen");
         $tplRechnung->replace("KopfzeilenZusatz", "");
+        $tplRechnung->replace("MwSt", MWST_SATZ * 100);
         
         $tplRechnung->replace("Titel", "");
         $tplRechnung->replace("GesamtNetto", "");
@@ -303,6 +305,7 @@ class RechnungController
         $tplRechnung->replace("SummeAzubi", "");
         $tplRechnung->replace("SummeGeselle", "");
         $tplRechnung->replace("Betrag", "");
+        $tplRechnung->replace("MwSt", MWST_SATZ * 100);
         $tplRechnung->replace("StandardZahlungsziel", ConstantLoader::getStandardZahlungsziel());
         
         if (isset($_GET['gid'])) {
@@ -414,6 +417,7 @@ class RechnungController
         $tplRechnung->replace("BruttoBetrag", "");
         $tplRechnung->replace("Fahrtkosten", "");
         $tplRechnung->replace("Pflegebetrag", "");
+        $tplRechnung->replace("MwSt", MWST_SATZ * 100);
         $tplRechnung->replace("StandardZahlungsziel", ConstantLoader::getStandardZahlungsziel());
         
         if (isset($_GET['gid'])) {

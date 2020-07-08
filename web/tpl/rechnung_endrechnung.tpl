@@ -48,7 +48,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tdbez" style="width: 120px">19% MwSt.:</td>
+				<td class="tdbez" style="width: 120px"><!--MwSt-->% MwSt.:</td>
 				<td><input type="text" name="gsteuer" id="gsteuer" value="<!--GesamtMwSt-->" size="8" disabled class="disabled"/> EUR</td>
 				<td><input type="text" name="rsteuer" id="rsteuer" value="<!--MwSt-->" size="8" disabled class="disabled"/> EUR</td>
 			</tr>
