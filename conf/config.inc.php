@@ -5,18 +5,8 @@ ob_start(); // FirePHP
 
 mb_internal_encoding( 'UTF-8' );
 
-
 // Providerspezifische Zugangsdaten laden
-// include_once 'krawinkel.lokal.conf.php';
-// include_once 'graser.allinkl.conf.php';
-// include_once 'graser.local.conf.php';
-//include_once 'demo.allinkl.conf.php';
-// include_once 'demo.lokal.conf.php';
-// include_once 'fo.all-inkl.conf.php';
- include_once 'fo.lokal.conf.php';
-//include_once 'remote.allinkl.conf.php';
-// include_once 'krawinkel.allinkl.conf.php';
-// include_once 'demo.orgelbau-software.de.conf.php';
+ include_once 'example.php';
 
 // Konstanten
 define('TRACEENABLED', false);
