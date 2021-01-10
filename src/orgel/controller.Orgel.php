@@ -120,6 +120,8 @@ class OrgelController
         $oOrgel->setStimmung($_POST['stimmung']);
         $oOrgel->setAnmerkung($_POST['anmerkung']);
         $oOrgel->setPflegevertrag($_POST['pflegevertrag']);
+        $oOrgel->setKostenHauptstimmung($_POST['kostenhauptstimmung']);
+        $oOrgel->setKostenTeilstimmung($_POST['kostenteilstimmung']);
         $oOrgel->setZyklus($_POST['zyklus']);
         $oOrgel->setMassnahmen($_POST['massnahmen']);
         $oOrgel->setGemeindeId($_POST['gemeindeid']);
@@ -257,6 +259,10 @@ class OrgelController
         
         $htmlZyklusSelect = new HTMLSelectForArray(Constant::getZyklus(), $oOrgel->getZyklus());
         $tplOrgelDetails->replace("ZyklusSelect", $htmlZyklusSelect->getOutput());
+        
+        // Kosten Haupt und Teilstimmung
+        $tplOrgelDetails->replace("KostenHauptstimmung", $oOrgel->getKostenHauptstimmung());
+        $tplOrgelDetails->replace("KostenTeilstimmung", $oOrgel->getKostenTeilstimmung());
         
         // Pflegevertrag
         $tplOrgelDetails->replace("SelectedPflege" . $oOrgel->getPflegevertrag(), Constant::$HTML_SELECTED_SELECTED);
@@ -412,7 +418,7 @@ class OrgelController
             $strSQLOrderBy = "o_zyklus";
         }
         
-        // Sortier�berschriften ausgeben
+        // Sortierueberschriften ausgeben
         if (! isset($_GET['dir']) || $_GET['dir'] == "asc") {
             $strSQLDir = "ASC";
             $strTPLDir = "desc";
@@ -1002,6 +1008,8 @@ class OrgelController
         $worksheet->write("K1", "Funktion", $frmFett);
         $worksheet->write("L1", "Name", $frmFett);
         $worksheet->write("M1", "Telefon", $frmFett);
+        $worksheet->write("N1", "KostenHS", $frmFett);
+        $worksheet->write("O1", "KostenTS", $frmFett);
         
         $iZeile = 2;
         if ($cOrgeln != null) {
@@ -1023,6 +1031,8 @@ class OrgelController
                 $worksheet->write("K" . $iZeile, $orgel->getFunktion());
                 $worksheet->write("L" . $iZeile, $name);
                 $worksheet->write("M" . $iZeile, $orgel->getTelefon());
+                $worksheet->write("N" . $iZeile, $orgel->getKostenHauptstimmung());
+                $worksheet->write("O" . $iZeile, $orgel->getKostenTeilstimmung());
                 $iZeile += 1;
             }
         }

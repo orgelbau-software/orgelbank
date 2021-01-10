@@ -76,6 +76,10 @@ class Orgel extends SimpleDatabaseStorageObjekt
     private $registerAnzahl;
 
     private $letztePflege;
+    
+    private $kostenHauptstimmung;
+    
+    private $kostenTeilstimmung;
 
     // Konstruktor
     public function __construct($iID = 0, $primaryKey = "o_id", $tableName = "orgel", $tablePrefix = "o_")
@@ -124,6 +128,8 @@ class Orgel extends SimpleDatabaseStorageObjekt
         $ht->add("o_anzahlregister", $this->getRegisterAnzahl());
         $ht->add("g_id", $this->getGemeindeId());
         $ht->add("o_letztepflege", $this->getLetztePflege());
+        $ht->add("o_kostenhauptstimmung", $this->getKostenHauptstimmung());
+        $ht->add("o_kostenteilstimmung", $this->getKostenTeilstimmung());
         
         return $ht;
     }
@@ -169,6 +175,8 @@ class Orgel extends SimpleDatabaseStorageObjekt
         $this->setAktiv($rs['o_aktiv']);
         $this->setRegisterAnzahl($rs['o_anzahlregister']);
         $this->setLetztePflege($rs['o_letztepflege']);
+        $this->setKostenHauptstimmung($rs['o_kostenhauptstimmung']);
+        $this->setKostenTeilstimmung($rs['o_kostenteilstimmung']);
         
         $this->isPersistent(true);
     }
@@ -694,5 +702,27 @@ class Orgel extends SimpleDatabaseStorageObjekt
             $retVal ++;
         return $retVal;
     }
+    
+    public function getKostenHauptstimmung()
+    {
+        return $this->kostenHauptstimmung;
+    }
+
+    public function setKostenHauptstimmung($pKostenHauptstimmung)
+    {
+        $this->kostenHauptstimmung = $pKostenHauptstimmung;
+    }
+    
+    public function getKostenTeilstimmung()
+    {
+        return $this->kostenTeilstimmung;
+    }
+
+    public function setKostenTeilstimmung($pKostenTeilstimmung)
+    {
+        $this->kostenTeilstimmung = $pKostenTeilstimmung;
+    }
+    
+    
 }
 ?>
