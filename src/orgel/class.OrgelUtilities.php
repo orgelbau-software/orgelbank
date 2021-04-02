@@ -24,7 +24,7 @@ class OrgelUtilities
     public static function getDruckAnsichtOrgeln($strOrderBy = null)
     {
         $sql = "SELECT
-    			o_id, g.g_id, o_baujahr, o_erbauer, o_manual1, o_manual2, o_manual3, o_manual4, o_manual5, o_pedal,
+    			o_id, g.g_id, o_baujahr, o_erbauer, o_manual1, o_manual2, o_manual3, o_manual4, o_manual5, o_pedal, o_kostenhauptstimmung, o_kostenteilstimmung,
 				o_zyklus, o_pflegevertrag, 
     			o_anzahlregister, o_letztepflege, g_kirche, b_id, ad_ort, ad_plz, a_vorname, a_name, a_funktion, a_telefon, a_id
 			FROM

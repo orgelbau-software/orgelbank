@@ -46,6 +46,10 @@ class OrgelListeBean
     private $ostID;
 
     private $zyklus;
+    
+    private $kostenHauptstimmung;
+    
+    private $kostenTeilstimmung;
 
     public function init($rs)
     {
@@ -61,6 +65,12 @@ class OrgelListeBean
         $this->setPedal($rs['o_pedal']);
         $this->setRegisterAnzahl($rs['o_anzahlregister']);
         $this->setLetztePflege($rs['o_letztepflege']);
+        if(isset($rs['o_kostenhauptstimmung'])) {
+            $this->setKostenHauptstimmung($rs['o_kostenhauptstimmung']);
+        }
+        if(isset($rs['o_kostenteilstimmung'])) {
+            $this->setKostenTeilstimmung($rs['o_kostenteilstimmung']);
+        }
         
         if ($rs['g_kirche'] != "") {
             $this->setGemeindeNamen($rs['g_kirche']);
@@ -249,6 +259,16 @@ class OrgelListeBean
     {
         return $this->pflegevertrag;
     }
+    
+    public function getKostenTeilstimmung()
+    {
+        return $this->kostenTeilstimmung;
+    }
+    
+    public function getKostenHauptstimmung()
+    {
+        return $this->kostenHauptstimmung;
+    }
 
     public function setGemeindeID($gemeindeID)
     {
@@ -313,5 +333,15 @@ class OrgelListeBean
     public function setPflegevertrag($pflegevertrag)
     {
         $this->pflegevertrag = $pflegevertrag;
+    }
+    
+    public function setKostenHauptstimmung($pValue)
+    {
+        $this->kostenHauptstimmung = $pValue;
+    }
+    
+    public function setKostenTeilstimmung($pValue)
+    {
+        $this->kostenTeilstimmung = $pValue;
     }
 }
