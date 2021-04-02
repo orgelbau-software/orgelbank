@@ -1003,6 +1003,11 @@ class OrgelController
         $worksheet->write("L1", "Name", $frmFett);
         $worksheet->write("M1", "Telefon", $frmFett);
         
+        // Temporaer
+        $worksheet->write("N1", "GemeindeID", $frmFett);
+        $worksheet->write("O1", "OrgelID", $frmFett);
+        $worksheet->write("P1", "AnsprechpartnerId", $frmFett);
+        
         $iZeile = 2;
         if ($cOrgeln != null) {
             foreach ($cOrgeln as $orgel) {
@@ -1023,6 +1028,10 @@ class OrgelController
                 $worksheet->write("K" . $iZeile, $orgel->getFunktion());
                 $worksheet->write("L" . $iZeile, $name);
                 $worksheet->write("M" . $iZeile, $orgel->getTelefon());
+                
+                $worksheet->write("N" . $iZeile, $orgel->getOrgelId());
+                $worksheet->write("O" . $iZeile, $orgel->getGemeindeId());
+                $worksheet->write("P" . $iZeile, $orgel->getAnsprechpartnerId());
                 $iZeile += 1;
             }
         }

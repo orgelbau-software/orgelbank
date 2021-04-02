@@ -6,7 +6,8 @@ ob_start(); // FirePHP
 mb_internal_encoding( 'UTF-8' );
 
 // Providerspezifische Zugangsdaten laden
- include_once 'example.php';
+//include_once 'example.php';
+include_once 'graser.lokal.conf.php';
 
 // Konstanten
 define('TRACEENABLED', false);

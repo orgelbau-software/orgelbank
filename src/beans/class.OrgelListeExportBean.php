@@ -10,6 +10,8 @@ class OrgelListeExportBean extends OrgelListeBean
     private $telefon;
 
     private $funktion;
+    
+    private $ansprechpartnerId;
 
     public function init($rs)
     {
@@ -18,6 +20,7 @@ class OrgelListeExportBean extends OrgelListeBean
         $this->setNachname($rs['a_name']);
         $this->setTelefon($rs['a_telefon']);
         $this->setFunktion($rs['a_funktion']);
+        $this->setAnsprechpartnerId($rs['a_id']);
     }
 
     public function getVorname()
@@ -58,5 +61,15 @@ class OrgelListeExportBean extends OrgelListeBean
     public function setFunktion($funktion)
     {
         $this->funktion = $funktion;
+    }
+    
+    public function getAnsprechpartnerId()
+    {
+        return $this->ansprechpartnerId;
+    }
+    
+    public function setAnsprechpartnerId($ansprechpartnerId)
+    {
+        $this->ansprechpartnerId = $ansprechpartnerId;
     }
 }

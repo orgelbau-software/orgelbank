@@ -26,7 +26,7 @@ class OrgelUtilities
         $sql = "SELECT
     			o_id, g.g_id, o_baujahr, o_erbauer, o_manual1, o_manual2, o_manual3, o_manual4, o_manual5, o_pedal,
 				o_zyklus, o_pflegevertrag, 
-    			o_anzahlregister, o_letztepflege, g_kirche, b_id, ad_ort, ad_plz, a_vorname, a_name, a_funktion, a_telefon
+    			o_anzahlregister, o_letztepflege, g_kirche, b_id, ad_ort, ad_plz, a_vorname, a_name, a_funktion, a_telefon, a_id
 			FROM
 				orgel o
   					LEFT JOIN (SELECT ge.*, ad.* FROM gemeinde ge, adresse ad WHERE ge.g_kirche_aid = ad.ad_id AND ge.g_aktiv = 1) g ON o.g_id = g.g_id

@@ -38,7 +38,7 @@ abstract class SimpleDatabaseStorageObjekt extends DatabaseStorageObjekt
     protected function doSave()
     {
         $ht = $this->generateHashtable();
-        if ($ht == null || count($ht) == 0) {
+        if ($ht == null || (is_array($ht) && count($ht) == 0)) {
             throw new Exception("No Hashtable returned by generateHashtable() Method");
         }
         $dbFelder = "";
