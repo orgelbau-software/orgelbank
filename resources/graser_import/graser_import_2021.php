@@ -42,7 +42,7 @@ if (($handle = fopen("Mapping.csv", "r")) !== FALSE) {
     }
     fclose($handle);
 }
-print_r($mapping);
+//print_r($mapping);
 
 // Eigentlicher Import
 $row = 1;
@@ -60,13 +60,25 @@ if (($handle = fopen("Graser2021_v1.csv", "r")) !== FALSE) {
             continue;
         }
         
-        $id = $data[0];
-        if($id != "" && $id > 0) {
-            echo "Update " .$id;
+        $nummer = $data[0];        
+        
+        if(isset($mapping[$nummer])) {
             
-            $gemeinde = new Gemeinde($id);
+            $item = $mapping[$nummer];
+        
+            $id = $item['gemeindeId'];
+        
+            echo "Update " .$id;
+            $gemeinde = new Gemeinde($item['gemeindeId']);
+            
+            $orgel = new Orgel($item['orgelId']);
+            
+            $betrag = str_replace("€", "", $data[14]);
+            $orgel->setKostenHauptstimmung($betrag);
+            $orgel->setKostenTeilstimmung($data[15]);
+            $orgel->speichern(false);
         } else {
-            echo "New " .$id;
+            echo "New " .$nummer;
         }
     }
     fclose($handle);

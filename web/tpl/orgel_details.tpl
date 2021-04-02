@@ -132,9 +132,9 @@
 			</tr>
             <tr>
 				<td class="tdLabel">Hauptstimmung:</td>
-				<td><input type="number" min="1" step="any"  name="kostenhauptstimmung" maxlength="50" class="width90" value="<!--KostenHauptstimmung-->"></td>
+				<td><input type="text" min="1" step="any"  name="kostenhauptstimmung" maxlength="50" class="width90" value="<!--KostenHauptstimmung-->"></td>
 				<td class="tdLabel">Teilstimmung:</td>
-				<td><input type="number" min="1" step="any" name="kostenteilstimmung" maxlength="50" class="width110" value="<!--KostenTeilstimmung-->"></td>
+				<td><input type="text" min="1" step="any" name="kostenteilstimmung" maxlength="50" class="width110" value="<!--KostenTeilstimmung-->"></td>
 			</tr>
 			<tr>
 				<td class="tdLabel" colspan="4">Notwendige Maßnahmen:</td>
