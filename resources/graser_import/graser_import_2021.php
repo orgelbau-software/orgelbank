@@ -30,7 +30,7 @@ error_reporting(E_ALL);
 $row = 1;
 
 $mapping = array();
-if (($handle = fopen("Mapping.csv", "r")) !== FALSE) {
+if (($handle = fopen("mapping.csv", "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
         $num = count($data);
         $item = array();
