@@ -184,22 +184,6 @@ class Gemeinde extends SimpleDatabaseStorageObjekt
         }
     }
 
-    public function setPLZ($iPLZ)
-    {
-        if ($this->iPLZ != $iPLZ) {
-            $this->iPLZ = $iPLZ;
-            $this->setChanged(true);
-        }
-    }
-
-    public function setRPLZ($iRPLZ)
-    {
-        if ($this->iRPLZ != $iRPLZ) {
-            $this->iRPLZ = $iRPLZ;
-            $this->setChanged(true);
-        }
-    }
-
     public function setAktiv($strAktiv)
     {
         if ($this->strAktiv != $strAktiv) {

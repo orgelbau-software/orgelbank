@@ -625,7 +625,7 @@ class OrgelController
                 $manual = $manual . "/Pedal";
             }
             
-            // Werte ins Template einf�gen
+            // Werte ins Template einfuegen
             $tplOrgellisteDs->replace("OID", $oOrgel->getOrgelID());
             $tplOrgellisteDs->replace("GID", $oOrgel->getGemeindeID());
             $tplOrgellisteDs->replace("Gemeinde", $oOrgel->getGemeindeNamen());

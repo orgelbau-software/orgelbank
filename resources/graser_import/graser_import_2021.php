@@ -63,26 +63,93 @@ if (($handle = fopen("Graser2021_v1.csv", "r")) !== FALSE) {
         $nummer = $data[0];        
         
         if(isset($mapping[$nummer])) {
-            
             $item = $mapping[$nummer];
-        
             $id = $item['gemeindeId'];
         
             echo "Update " .$id;
             $gemeinde = new Gemeinde($item['gemeindeId']);
-            
             $orgel = new Orgel($item['orgelId']);
+
             
-            $betrag = str_replace("€", "", $data[14]);
-            $orgel->setKostenHauptstimmung($betrag);
-            $orgel->setKostenTeilstimmung($data[15]);
-            $orgel->speichern(false);
         } else {
             echo "New " .$nummer;
+            $orgel = new Orgel();
+            $orgel->setAktiv(1);
+            $gemeinde = new Gemeinde();
+            $gemeinde->setAktiv(1);
+            
         }
+        
+        $orgel->setErbauer($data[2]);
+        $orgel->setBaujahr($data[3]);
+        
+        $letztePflege = $data[4];
+        $letztePflege = str_replace(" ", "", $letztePflege);
+        if(strpos($letztePflege, "/")) {
+            $letztePflege = str_replace("/",".", $letztePflege);
+            $letztePflege = "01.".$letztePflege;
+        }
+        $orgel->setLetztePflege($letztePflege);
+        
+        $anmerkung = $orgel->getAnmerkung();
+        if(strpos($anmerkung, "###") > 0) {
+            $anmerkung = substr($anmerkung, strpos($anmerkung, "###") + 3);
+        }
+        
+        $anmerkung = "Manuale: ".$data[5].", Register: " .$data[6].", STV: ".$data[13]."###";
+        $orgel->setAnmerkung($anmerkung);
+        
+        $orgel->setRegisterAnzahl($data[6]);
+        
+        $betrag1 = str_replace("€", "", $data[14]);
+        $betrag1 = str_replace(".", ",", $betrag1);
+        $betrag2 = str_replace("€", "", $data[15]);
+        $betrag2 = str_replace(".", ",", $betrag2);
+        $orgel->setKostenHauptstimmung($betrag1);
+        $orgel->setKostenTeilstimmung($betrag2);
+        $orgel->speichern(true);
+        
+        $gemeinde->setKirche($data[1]);
+        $gemeinde->getKircheAdresse()->setPLZ($data[7]);
+        $gemeinde->getKircheAdresse()->setOrt($data[8]);
+        $gemeinde->speichern(true);
+        
+        if(isset($mapping[$nummer])) {
+            unset($mapping[$nummer]);
+        } else {
+            if(strpos($data[1], "Kath.") >= 0) {
+                $gemeinde->setKID(2);
+            } else if (strpos($data[1], "Evang.") >= 0) {
+                $gemeinde->setKID(1);
+            } else {
+                $gemeinde->setKID(3);
+            }
+            $orgel->setGemeindeId($gemeinde->getID());
+            $orgel->speichern(false);
+            $gemeinde->speichern(false);
+            unset($mapping[$nummer]);
+        }
+            
     }
     fclose($handle);
 }
+
+// Uebrige Mappings loeschen
+foreach($mapping as $key => $val) {
+    if(isset($val['gemeindeId']) && $val['gemeindeId'] >= 0) {
+        $gemeinde = new Gemeinde($val['gemeindeId']);
+        $gemeinde->setAktiv(0);
+        $gemeinde->speichern(false);
+    }
+    
+    if(isset($val['orgelId']) && $val['orgelId'] >= 0) {
+        $orgel = new Orgel($val['orgelId']);
+        $orgel->setAktiv(0);
+        $orgel->speichern(false);
+    }
+}
+
+print_r($mapping);
 ?>
 </pre>
 </html>
