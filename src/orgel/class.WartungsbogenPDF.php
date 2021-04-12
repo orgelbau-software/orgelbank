@@ -467,7 +467,7 @@ abstract class WartungsbogenPDF extends tFPDFWithBookmark
                 $text = $row['o_m6wd'] . " mm/WS";
             } 
             if ($oOrgel->getGroesseM6() != "") {
-                $text = ($text == "" ? $oOrgel->getGroesseM6() : " / " . $text . " " . $oOrgel->getGroesseM6());
+                $text = ($text == "" ? $oOrgel->getGroesseM6() :  $text . " / " . $oOrgel->getGroesseM6());
             }
             $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
@@ -478,7 +478,7 @@ abstract class WartungsbogenPDF extends tFPDFWithBookmark
                 $text = $row['o_m1wd'] . " mm/WS";
             } 
             if ($oOrgel->getGroesseM1() != "") {
-                $text = ($text == "" ? $oOrgel->getGroesseM1() : " / " . $text . " " . $oOrgel->getGroesseM1());
+                $text = ($text == "" ? $oOrgel->getGroesseM1() :  $text . " / " . $oOrgel->getGroesseM1());
             }
             $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
@@ -489,7 +489,7 @@ abstract class WartungsbogenPDF extends tFPDFWithBookmark
                 $text = $row['o_m2wd'] . " mm/WS";
             } 
             if ($oOrgel->getGroesseM2() != "") {
-                $text = ($text == "" ? $oOrgel->getGroesseM2() : " x/ " . $text . " " . $oOrgel->getGroesseM2());
+                $text = ($text == "" ? $oOrgel->getGroesseM2() :  $text . " / " . $oOrgel->getGroesseM2());
             }
             $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
@@ -500,7 +500,7 @@ abstract class WartungsbogenPDF extends tFPDFWithBookmark
                 $text = $row['o_m3wd'] . " mm/WS";
             } 
             if ($oOrgel->getGroesseM3() != "") {
-                $text = ($text == "" ? $oOrgel->getGroesseM3() : " / " . $text . " " . $oOrgel->getGroesseM3());
+                $text = ($text == "" ? $oOrgel->getGroesseM3() :  $text . " / " . $oOrgel->getGroesseM3());
             }
             $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
@@ -512,7 +512,7 @@ abstract class WartungsbogenPDF extends tFPDFWithBookmark
                 $text = $row['o_m4wd'] . " mm/WS";
             } 
             if ($oOrgel->getGroesseM4() != "") {
-                $text = ($text == "" ? $oOrgel->getGroesseM4() : " / " . $text . " " . $oOrgel->getGroesseM4());
+                $text = ($text == "" ? $oOrgel->getGroesseM4() :  $text . " / " . $oOrgel->getGroesseM4());
             }
             $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
