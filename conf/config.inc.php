@@ -7,7 +7,7 @@ mb_internal_encoding( 'UTF-8' );
 
 // Providerspezifische Zugangsdaten laden
 //include_once 'example.php';
-include_once 'graser.lokal.conf.php';
+include_once 'graser.local.conf.php';
 
 // Konstanten
 define('TRACEENABLED', false);

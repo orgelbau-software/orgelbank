@@ -440,5 +440,22 @@ class ConstantLoader
     {
         return ConstantLoader::$htValues->getValueOf("geocode_api_service_endpoint");
     }
+    
+    /**
+    * @return true oder false wenn der Wartungsbogen alle Ansprechpartner enthalten soll.
+    */
+    public static function getWartungsBogenKompletteAnsprechpartner()
+    {
+        return ConstantLoader::$htValues->getValueOf("wartung_bogen_alle_ansprechpartner");
+    }
+    
+    /**
+    * @return true oder false wenn der Wartungsbogen die Checkliste enthalten soll.
+    */
+    public static function getWartungsBogenCheckliste()
+    {
+        return ConstantLoader::$htValues->getValueOf("wartung_bogen_checkliste");
+    }
+    
 }
 ?>

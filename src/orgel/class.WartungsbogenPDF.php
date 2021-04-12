@@ -41,12 +41,15 @@ abstract class WartungsbogenPDF extends tFPDFWithBookmark
     {
         $cellsize = 70;
         
+        
+        
         // Rand setzen
         $this->SetMargins($this->iRandLinks, 10, 10);
         $this->ln(1);
         
         $this->activateFontNormal();
         
+
         $this->Cell($cellsize, $this->cellheight, $this->arHeaderMeta->getValueOf(0), 0, 0, "C");
         $this->Cell($cellsize, $this->cellheight, $this->arHeaderMeta->getValueOf(1), 0, 0, "C");
         $this->ln($this->cellheight);
@@ -98,15 +101,25 @@ abstract class WartungsbogenPDF extends tFPDFWithBookmark
     public function addOrgel(Orgel $oOrgel)
     {
         $oGemeinde = new Gemeinde($oOrgel->getGemeindeId());
+        $cAnsprechpartner = AnsprechpartnerUtilities::getGemeindeAnsprechpartner($oGemeinde->getID(), " LIMIT 4");
+        $alleAnsprechpartner = AnsprechpartnerUtilities::getGemeindeAnsprechpartner($oGemeinde->getID());
+        
         $this->AliasNbPages();
         $this->AddPage();
-        $this->addGemeindeDaten($oGemeinde, $oOrgel);
+        $this->addGemeindeDaten($oGemeinde, $oOrgel, $cAnsprechpartner);
         $this->addOrgelDetails($oOrgel);
         $this->addDisposition($oOrgel);
-        $this->addCheckliste($oOrgel);
+        if(ConstantLoader::getWartungsBogenCheckliste() == "true") {
+            $this->addCheckliste($oOrgel);
+        }
+        
+        if(ConstantLoader::getWartungsBogenKompletteAnsprechpartner() == "true") {
+            $this->addKompletteKontaktdaten($alleAnsprechpartner);
+        }
+        
     }
 
-    private function addGemeindeDaten(Gemeinde $oGemeinde, Orgel $oOrgel)
+    private function addGemeindeDaten(Gemeinde $oGemeinde, Orgel $oOrgel, $pAnsprechpartner)
     {
         if ($oGemeinde == null || $oGemeinde->getID() == "" || $oGemeinde->getID() <= 0)
             return;
@@ -118,7 +131,6 @@ abstract class WartungsbogenPDF extends tFPDFWithBookmark
         // Rand setzen
         $this->SetMargins($this->iRandLinks, 10, 0);
         
-        $cAnsprechpartner = AnsprechpartnerUtilities::getGemeindeAnsprechpartner($oGemeinde->getID(), " LIMIT 4");
         $k = KonfessionUtilities::getKonfessionenAsArray();
         
         // Bookmark Kapitel
@@ -170,7 +182,7 @@ abstract class WartungsbogenPDF extends tFPDFWithBookmark
         $this->Cell(28, $this->cellheight, 'Mobil', $rahmen);
         $this->activateFontNormal();
         
-        foreach ($cAnsprechpartner as $oAnsprechpartner) {
+        foreach ($pAnsprechpartner as $oAnsprechpartner) {
             // Laufvariablen
             $starthoehe = 36;
             $counter = $counter + 1;
@@ -450,43 +462,59 @@ abstract class WartungsbogenPDF extends tFPDFWithBookmark
         $this->activateFontTextHeadlineSmall();
         $this->SetTextColor(0, 200, 0);
         if (count($manual6name) > 0) {
-            if ($row['o_m6wd'] != "" && $oOrgel->getGroesseM6() != "") {
-                $this->Cell($iSizeRegisterBez, $this->cellheight, $row['o_m6wd'] . " mm/WS / " . $oOrgel->getGroesseM6(), 0, 0);
-            } else {
-                $this->Cell($iSizeRegisterBez, $this->cellheight, "Unbekannt", 0, 0);
+            $text = "";
+            if ($row['o_m6wd'] != "" ) {
+                $text = $row['o_m6wd'] . " mm/WS";
+            } 
+            if ($oOrgel->getGroesseM6() != "") {
+                $text = ($text == "" ? $oOrgel->getGroesseM6() : " / " . $text . " " . $oOrgel->getGroesseM6());
             }
+            $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
         }
         if (count($manual1name) > 0) {
-            if ($row['o_m1wd'] != "" && $oOrgel->getGroesseM1() != "") {
-                $this->Cell($iSizeRegisterBez, $this->cellheight, $row['o_m1wd'] . " mm/WS " . $oOrgel->getGroesseM1(), 0, 0);
-            } else {
-                $this->Cell($iSizeRegisterBez, $this->cellheight, "Unbekannt", 0, 0);
+            $text = "";
+            if ($row['o_m1wd'] != "" ) {
+                $text = $row['o_m1wd'] . " mm/WS";
+            } 
+            if ($oOrgel->getGroesseM1() != "") {
+                $text = ($text == "" ? $oOrgel->getGroesseM1() : " / " . $text . " " . $oOrgel->getGroesseM1());
             }
+            $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
         }
         if (count($manual2name) > 0) {
-            if ($row['o_m2wd'] != "" && $oOrgel->getGroesseM2() != "") {
-                $this->Cell($iSizeRegisterBez, $this->cellheight, $row['o_m2wd'] . " mm/WS / " . $oOrgel->getGroesseM2(), 0, 0);
-            } else {
-                $this->Cell($iSizeRegisterBez, $this->cellheight, "Unbekannt", 0, 0);
+            $text = "";
+            if ($row['o_m2wd'] != "" ) {
+                $text = $row['o_m2wd'] . " mm/WS";
+            } 
+            if ($oOrgel->getGroesseM2() != "") {
+                $text = ($text == "" ? $oOrgel->getGroesseM2() : " x/ " . $text . " " . $oOrgel->getGroesseM2());
             }
+            $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
         }
-        if (count($manual3name) > 0) {
-            if ($row['o_m3wd'] != "" && $oOrgel->getGroesseM3() != "") {
-                $this->Cell($iSizeRegisterBez, $this->cellheight, $row['o_m3wd'] . " mm/WS / " . $oOrgel->getGroesseM3(), 0, 0);
-            } else {
-                $this->Cell($iSizeRegisterBez, $this->cellheight, "Unbekannt", 0, 0);
+        if (count($manual3name) > 0) {            
+            $text = "";
+            if ($row['o_m3wd'] != "" ) {
+                $text = $row['o_m3wd'] . " mm/WS";
+            } 
+            if ($oOrgel->getGroesseM3() != "") {
+                $text = ($text == "" ? $oOrgel->getGroesseM3() : " / " . $text . " " . $oOrgel->getGroesseM3());
             }
+            $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
         }
         if (count($manual4name) > 0) {
-            if ($row['o_m4wd'] != "" && $oOrgel->getGroesseM4() != "") {
-                $this->Cell($iSizeRegisterBez, $this->cellheight, $row['o_m4wd'] . " mm/WS / " . $oOrgel->getGroesseM4(), 0, 0);
-            } else {
-                $this->Cell($iSizeRegisterBez, $this->cellheight, "Unbekannt", 0, 0);
+            
+            $text = "";
+            if ($row['o_m4wd'] != "" ) {
+                $text = $row['o_m4wd'] . " mm/WS";
+            } 
+            if ($oOrgel->getGroesseM4() != "") {
+                $text = ($text == "" ? $oOrgel->getGroesseM4() : " / " . $text . " " . $oOrgel->getGroesseM4());
             }
+            $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
         }
         $this->activateFontBold();
@@ -607,6 +635,62 @@ abstract class WartungsbogenPDF extends tFPDFWithBookmark
             $iRegisterCount
         );
     }
+    
+    private function addKompletteKontaktdaten(DatabaseStorageObjektCollection $pAnsprechpartner)
+    {
+        $rahmen = 0;
+        $platzhalter = 0;
+        $iBreiteBeschreibung = 51;
+        $iBreiteWert = 40;
+        
+        // Spalten etwas hoeher machen, da ja manuell etwas eingetragen werden muss
+        $iHeight = $this->cellheight + 3;
+        
+        $this->Ln(3);
+        $this->activateFontTextHeadline();
+        $this->Cell(0, $this->cellheight, 'Kontakte:', 0, 1, "L");
+        $this->activateFontNormal();
+        $this->Ln(1);
+        
+        $rahmen = 0;
+        
+        $counter = 0;
+        foreach ($pAnsprechpartner as $oAnsprechpartner) {
+            $counter++;
+            
+            if($counter % 2 == 0) {
+                $breiteBezeichnung = $breiteBezeichnung +80;
+                $this->SetXY(10, $this->getY() - 24);
+            } else {
+                $breiteBezeichnung = 20;
+            }
+            
+            $this->Cell($breiteBezeichnung, $this->cellheight, "Funktion: ", $rahmen, 0, "R");
+            $this->Cell(60, $this->cellheight, $oAnsprechpartner->getFunktion(), $rahmen, 1);
+            
+            $this->Cell($breiteBezeichnung, $this->cellheight, "Name: ", $rahmen, 0, "R");
+            $this->Cell(60, $this->cellheight, $oAnsprechpartner->getAnzeigename(), $rahmen, 1);
+            
+            $this->Cell($breiteBezeichnung, $this->cellheight, "Telefon: ", $rahmen, 0, "R");
+            $this->Cell(60, $this->cellheight, $oAnsprechpartner->getTelefon(), $rahmen, 1);
+            
+            $this->Cell($breiteBezeichnung, $this->cellheight, "Mobil: ", $rahmen, 0, "R");
+            $this->Cell(60, $this->cellheight, $oAnsprechpartner->getMobil(), $rahmen, 1);
+            
+            $this->Cell($breiteBezeichnung, $this->cellheight, "Mail: ", $rahmen, 0, "R");
+            $this->Cell(60, $this->cellheight, $oAnsprechpartner->getEmail(), $rahmen, 1);
+            
+             // Abstandszeile
+            $this->Cell($breiteBezeichnung, $this->cellheight, "", $rahmen, 0);
+            $this->Cell(60, $this->cellheight, "", $rahmen, 1);
+            
+            
+            
+        }
+        
+        $this->Cell(1, $iHeight, '', 0, 1);
+    }
+    
 
     /**
      * Zeichnet einen Trennstrich ins aktuelle Dokument an die aktuelle Stelle des Cursors.
