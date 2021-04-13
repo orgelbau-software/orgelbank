@@ -118,6 +118,8 @@ abstract class WartungsbogenPDF extends tFPDFWithBookmark
         }
         
     }
+    
+    
 
     private function addGemeindeDaten(Gemeinde $oGemeinde, Orgel $oOrgel, $pAnsprechpartner)
     {
@@ -135,14 +137,8 @@ abstract class WartungsbogenPDF extends tFPDFWithBookmark
         
         // Bookmark Kapitel
         $this->Bookmark($oGemeinde->getKirche());
-        $this->SetXY(170, 9);
-        $this->activateFontNormal();
-        $this->SetTextColor(255, 0, 0);
-        $this->Cell($cellsize, 8, "Bezirk: " . $oGemeinde->getBID(), 0, 0, "L");
-        $this->SetXY(170, 16);
-        $this->SetTextColor(0, 0, 255);
-        $this->Cell($cellsize, 10, "Orgel:  " . $oOrgel->getID(), 0, 0, "L");
-        $this->SetXY($this->iRandLinks, 30);
+
+        //$this->SetXY($this->iRandLinks, 30);
         $this->SetTextColor(0, 0, 0);
         $this->activateFontNormal();
         $this->Cell($cellsize, 8, $k[$oGemeinde->getKID()] . "e Gemeinde", 0, 0, "L");
@@ -193,6 +189,18 @@ abstract class WartungsbogenPDF extends tFPDFWithBookmark
             $this->Cell(28, $this->cellheight, $oAnsprechpartner->getTelefon(), 1);
             $this->Cell(28, $this->cellheight, $oAnsprechpartner->getMobil(), 1);
         }
+        
+        // Header Bezirk & OrgelId
+        $this->SetXY(170, 9);
+        $this->activateFontNormal();
+        $this->SetTextColor(255, 0, 0);
+        $this->Cell($cellsize, 8, "Bezirk: " . $oGemeinde->getBID(), 0, 0, "L");
+        $this->SetXY(170, 16);
+        $this->SetTextColor(0, 0, 255);
+        $this->Cell($cellsize, 10, "Orgel:  " . $oOrgel->getID(), 0, 0, "L");
+        $this->activateFontNormal();
+        $this->SetTextColor(0, 0, 0);
+        
         // Trennstrich
         $this->SetXY($this->iRandLinks, 60);
         $this->zeichneTrennstrich();
@@ -347,7 +355,7 @@ abstract class WartungsbogenPDF extends tFPDFWithBookmark
                 $this->Cell(18, $this->cellheight, $stimmton, 1, 1, "R");
             }
         } else {
-            $this->activateFontNormal();
+            
             $this->Cell(21, $this->cellheight, "Keine Wartungen bisher", 0, 0, "L");
             $this->Ln(3);
         }
