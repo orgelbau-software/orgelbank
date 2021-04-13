@@ -120,6 +120,14 @@ class OrgelUtilities
             $sql .= $strOrderBy;
         return OrgelUtilities::queryDB($sql);
     }
+    
+    public static function getOrgeln($strOrderBy = null)
+    {
+        $sql = "SELECT * FROM orgel o WHERE o.o_aktiv = '1' ";
+        if ($strOrderBy == null)
+            $sql .= $strOrderBy;
+        return OrgelUtilities::queryDB($sql);
+    }
 
     public static function getAnzahlOrgeln()
     {

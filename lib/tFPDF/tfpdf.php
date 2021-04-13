@@ -8,8 +8,8 @@
 * License:  LGPL                                                               *
 *******************************************************************************/
 // if(! class_exists('tFPDF')) {
-define('tFPDF_VERSION','1.24');
-define('FPDF_FONTPATH',ROOTDIR.'lib/tFPDF/font');
+define('tFPDF_VERSION', '1.24');
+define('FPDF_FONTPATH', ROOTDIR.'lib/tFPDF/font');
 
 class tFPDF
 {
