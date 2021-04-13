@@ -323,25 +323,33 @@ abstract class WartungsbogenPDF extends tFPDFWithBookmark
         $this->Cell($th + $th + $td + $td, $this->cellheight, 'Letzte Wartungen:', 0, 1, "L");
         $this->activateFontBold();
         
-        $this->Cell(21, $this->cellheight, 'Datum', $thRamen, 0, "L");
-        $this->Cell(21, $this->cellheight, 'Mitarbeiter', $thRamen, 0, "L");
-        $this->Cell(23, $this->cellheight, 'Temperatur', $thRamen, 0, "L");
-        $this->Cell(23, $this->cellheight, 'Luftfeuchte', $thRamen, 0, "L");
-        $this->Cell(18, $this->cellheight, 'Stimmton', $thRamen, 1, "L");
-        
-        $this->activateFontNormal();
         $c = WartungUtilities::getOrgelWartungen($oOrgel->getID(), " ORDER BY w_datum DESC LIMIT 3");
-        foreach ($c as $oWartung) {
-            $b = new Benutzer($oWartung->getMitarbeiterId1());
-            $temperatur = ($oWartung->getTemperatur() != "" ? $oWartung->getTemperatur() . " °C" : "");
-            $luftfeuchte = ($oWartung->getLuftfeuchtigkeit() != "" ? $oWartung->getLuftfeuchtigkeit() . " %" : "");
-            $stimmton = ($oWartung->getStimmtonHoehe() != "" ? $oWartung->getStimmtonHoehe() . " Hz" : "");
+        if($c->getSize() > 0) {
             
-            $this->Cell(21, $this->cellheight, $oWartung->getDatum(true), 1, 0, "L");
-            $this->Cell(21, $this->cellheight, substr($b->getBenutzername(), 0, 10), 1, 0, "L");
-            $this->Cell(23, $this->cellheight, $temperatur, 1, 0, "R");
-            $this->Cell(23, $this->cellheight, $luftfeuchte, 1, 0, "R");
-            $this->Cell(18, $this->cellheight, $stimmton, 1, 1, "R");
+            $this->Cell(21, $this->cellheight, 'Datum', $thRamen, 0, "L");
+            $this->Cell(21, $this->cellheight, 'Mitarbeiter', $thRamen, 0, "L");
+            $this->Cell(23, $this->cellheight, 'Temperatur', $thRamen, 0, "L");
+            $this->Cell(23, $this->cellheight, 'Luftfeuchte', $thRamen, 0, "L");
+            $this->Cell(18, $this->cellheight, 'Stimmton', $thRamen, 1, "L");
+            
+            $this->activateFontNormal();
+        
+            foreach ($c as $oWartung) {
+                $b = new Benutzer($oWartung->getMitarbeiterId1());
+                $temperatur = ($oWartung->getTemperatur() != "" ? $oWartung->getTemperatur() . " °C" : "");
+                $luftfeuchte = ($oWartung->getLuftfeuchtigkeit() != "" ? $oWartung->getLuftfeuchtigkeit() . " %" : "");
+                $stimmton = ($oWartung->getStimmtonHoehe() != "" ? $oWartung->getStimmtonHoehe() . " Hz" : "");
+                
+                $this->Cell(21, $this->cellheight, $oWartung->getDatum(true), 1, 0, "L");
+                $this->Cell(21, $this->cellheight, substr($b->getBenutzername(), 0, 10), 1, 0, "L");
+                $this->Cell(23, $this->cellheight, $temperatur, 1, 0, "R");
+                $this->Cell(23, $this->cellheight, $luftfeuchte, 1, 0, "R");
+                $this->Cell(18, $this->cellheight, $stimmton, 1, 1, "R");
+            }
+        } else {
+            $this->activateFontNormal();
+            $this->Cell(21, $this->cellheight, "Keine Wartungen bisher", 0, 0, "L");
+            $this->Ln(3);
         }
     }
 
