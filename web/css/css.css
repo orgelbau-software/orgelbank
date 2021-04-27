@@ -574,6 +574,10 @@ span.hideContent {
 	background-image: url(../images/icons/hcards_right.png);
 }
 
+.openDeckblattButton {
+	background-image: url(../images/icons/hcards.png);
+}
+
 .contactAdd {
 	background-image: url(../images/icons/contact_grey_add.png);
 }

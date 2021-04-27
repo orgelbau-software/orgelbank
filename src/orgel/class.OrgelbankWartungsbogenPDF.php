@@ -22,7 +22,13 @@ class OrgelbankWartungsbogenPDF extends WartungsbogenPDF
             ->getPlz() . " " . $a->getAdresse()
             ->getOrt());
         $meta->add(ConstantLoader::getPDFUntertext2());
-        $meta->add("Tel. " . $a->getTelefon() . ", Fax " . $a->getFax());
+        
+        $text = "Tel. " . $a->getTelefon();
+        if($a->getFax() != "") {
+            $text .= ", Fax " . $a->getFax();
+        }
+        
+        $meta->add($text);
         $this->arHeaderMeta = $meta;
         
         foreach ($meta as $key => $val) {

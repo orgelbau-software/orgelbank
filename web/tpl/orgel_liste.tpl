@@ -31,5 +31,6 @@ Zeige <strong><!--OrgelAnzahlAnzeige--> von <!--OrgelAnzahlGesamt--></strong> Or
 </table>
 <hr class="bottomMenuHR" />
 <a name="drucken"></a> <input class="button iconButton openManyButton" type="submit" name="submit"
-  value="Pflegeb&ouml;gen anzeigen"> <input class="button iconButton resetButton" type="reset" name="reset" value="Marker l&ouml;schen">
+  value="Pflegeb&ouml;gen anzeigen"> <input class="button iconButton openDeckblattButton" type="submit" name="submit"
+  value="Deckbl&auml;tter anzeigen">  <input class="button iconButton resetButton" type="reset" name="reset" value="Marker l&ouml;schen">
 </form>
