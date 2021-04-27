@@ -112,13 +112,7 @@ abstract class WartungsbogenPDF extends tFPDFWithBookmark
         if(ConstantLoader::getWartungsBogenCheckliste() == "true") {
             $this->addCheckliste($oOrgel);
         }
-        
-        if(ConstantLoader::getWartungsBogenKompletteAnsprechpartner() == "true") {
-            $this->addKompletteKontaktdaten($alleAnsprechpartner);
-        }
-        
     }
-    
     
 
     private function addGemeindeDaten(Gemeinde $oGemeinde, Orgel $oOrgel, $pAnsprechpartner)
