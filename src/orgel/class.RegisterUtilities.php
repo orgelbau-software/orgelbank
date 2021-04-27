@@ -120,7 +120,7 @@ class RegisterUtilities
 
     public static function getRegisterAnzahl($iOrgelID)
     {
-        $sql = "SELECT count(*) as count FROM disposition WHERE o_id = " . $iOrgelID . " AND d_name <> 'Tremulant';
+        $sql = "SELECT count(*) as count FROM disposition WHERE o_id = " . $iOrgelID . " AND d_name <> 'Tremulant'";
         if (($r = DB::getInstance()->SelectQuery($sql)) !== false) {
             return $r[0]['count'] != "" ? $r[0]['count'] : 1;
         }
