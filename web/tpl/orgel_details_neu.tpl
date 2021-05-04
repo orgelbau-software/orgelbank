@@ -129,6 +129,12 @@
 				<td class="tdLabel">Stimmung nach:</td>
 				<td><input type="text" name="stimmung" size="16" maxlength="50" value=""></td>
 			</tr>
+            <tr>
+				<td class="tdLabel">Hauptstimmung:</td>
+				<td><input type="text" min="1" step="any"  name="kostenhauptstimmung" maxlength="50" class="width90" value=""></td>
+				<td class="tdLabel">Teilstimmung:</td>
+				<td><input type="text" min="1" step="any" name="kostenteilstimmung" maxlength="50" class="width110" value=""></td>
+			</tr>
 			<tr>
 				<td class="tdLabel" colspan="4">Notwendige Maßnahmen:</td>
 			</tr>
