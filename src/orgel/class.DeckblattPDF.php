@@ -1,37 +1,10 @@
 <?php
 
-abstract class DeckblattPDF extends tFPDFWithBookmark
+abstract class DeckblattPDF extends OrgelbankBasisPDF
 {
-
-    protected $iRandLinks = 10;
-
-    protected $iTrennstrichLaenge = 185;
-
-    protected $arHeaderMeta;
-
-    protected $cellheight = 4;
-
-    protected $mDBInstance;
-
-    /**
-     *
-     * @var string
-     */
-    protected $font = "DejaVu";
-
-    protected $fontBold = "DejaVu B";
-
-    /**
-     * Wether to use UTF-8 or not.
-     *
-     * @var boolean
-     */
-    protected $utf8 = true;
-
     function __construct()
     {
         parent::__construct();
-        $this->mDBInstance = DB::getInstance();
         
         $this->AddFont($this->font, '', 'DejaVuSansCondensed.ttf', true);
         $this->AddFont($this->fontBold, '', 'DejaVuSansCondensed-Bold.ttf', true);
@@ -39,12 +12,10 @@ abstract class DeckblattPDF extends tFPDFWithBookmark
 
     function Header()
     {
-        $cellsize = 70;
-        
-        
+        $cellsize = $this->getDefaultCellSize();
         
         // Rand setzen
-        $this->SetMargins($this->iRandLinks, 10, 10);
+        $this->SetMargins($this->getRandLinks(), 10, 10);
         $this->ln(1);
         
         $this->activateFontNormal();
@@ -61,34 +32,6 @@ abstract class DeckblattPDF extends tFPDFWithBookmark
         $this->ln(8);
         
         $this->zeichneTrennstrich();
-    }
-
-    /**
-     */
-    protected function activateFontNormal()
-    {
-        $this->SetFont($this->font, '', 10);
-    }
-
-    /**
-     */
-    protected function activateFontTextHeadlineSmall()
-    {
-        $this->SetFont($this->fontBold, "", 8);
-    }
-
-    /**
-     */
-    protected function activateFontTextHeadline()
-    {
-        $this->SetFont($this->fontBold, '', 11);
-    }
-
-    /**
-     */
-    protected function activateFontBold()
-    {
-        $this->SetFont($this->fontBold, '', 10);
     }
 
     function Footer()
@@ -111,10 +54,7 @@ abstract class DeckblattPDF extends tFPDFWithBookmark
         $this->addDisposition($oOrgel);
         
         $this->addKompletteKontaktdaten($alleAnsprechpartner);
-        
     }
-    
-    
 
     private function addGemeindeDaten(Gemeinde $oGemeinde, Orgel $oOrgel)
     {
@@ -122,60 +62,51 @@ abstract class DeckblattPDF extends tFPDFWithBookmark
             return;
         
         // Lokale Variablen
-        $cellsize = 70;
+        $cellsize = $this->getDefaultCellSize();
         $counter = 0;
         
         // Rand setzen
-        $this->SetMargins($this->iRandLinks, 10, 0);
+        $this->SetMargins($this->getRandLinks(), 10, 0);
         
         $k = KonfessionUtilities::getKonfessionenAsArray();
         
         // Bookmark Kapitel
         $this->Bookmark($oGemeinde->getKirche());
 
-        //$this->SetXY($this->iRandLinks, 30);
-        $this->SetTextColor(0, 0, 0);
+        $this->activateFontColorBlack();
         $this->activateFontNormal();
         
-        $this->activateFontBold();
-        $this->Cell($cellsize, 8, "Anschrift", 0, 0, "L");
+        $rahmen = 0;
+        
+        // Anschrift
+        $this->activateFontTextHeadline();
+        $this->Cell($cellsize, $this->cellheight, "Anschrift", $rahmen, 0, "L");
+        $this->Cell($cellsize, $this->cellheight, "Rechnungsanschrift", $rahmen, 0, "L");
         $this->ln($this->cellheight);
         $this->activateFontNormal();
         
-        $this->Cell($cellsize, 8, $k[$oGemeinde->getKID()] . "e Gemeinde", 0, 0, "L");
+        $this->Cell($cellsize, $this->cellheight, $k[$oGemeinde->getKID()] . "e Gemeinde", $rahmen, 0, "L");
+        $this->Cell($cellsize, $this->cellheight, $oGemeinde->getRAnschrift(), $rahmen, 0, "L");
+        
         $this->ln($this->cellheight);
-        $this->SetTextColor(255, 0, 0);
-        $this->Cell($cellsize, 8, $oGemeinde->getKirche(), 0, 0, "L", 0);
-        $this->SetTextColor(0, 0, 0);
+        $this->activateFontColorRed();
+        $this->Cell($cellsize, $this->cellheight, $oGemeinde->getKirche(), $rahmen, 0, "L", 0);
+        $this->Cell($cellsize, $this->cellheight, $oGemeinde->getRGemeinde(), $rahmen, 0, "L");
+        $this->activateFontColorBlack();
         $this->ln($this->cellheight);
-        $this->Cell($cellsize, 8, $oGemeinde->getKircheAdresse()
+        $this->Cell($cellsize, $this->cellheight, $oGemeinde->getKircheAdresse()
             ->getStrasse() . " " . $oGemeinde->getKircheAdresse()
-            ->getHausnummer(), 0, 0, "L");
-        $this->ln($this->cellheight);
-        $this->Cell($cellsize, 8, $oGemeinde->getKircheAdresse()
-            ->getPLZ() . " " . $oGemeinde->getKircheAdresse()
-            ->getOrt(), 0, 0, "L");
-        $this->ln($this->cellheight);
-        
-        // Rechnungsadresse
-        $this->ln($this->cellheight);
-        $this->ln($this->cellheight);
-        $this->activateFontBold();
-        $this->Cell($cellsize, 8, "Rechnungsanschrift", 0, 0, "L");
-        $this->activateFontNormal();
-        $this->ln($this->cellheight);
-        $this->Cell($cellsize, 8, $oGemeinde->getRAnschrift(), 0, 0, "L");
-        $this->ln($this->cellheight);
-        $this->Cell($cellsize, 8, $oGemeinde->getRGemeinde(), 0, 0, "L");
-        $this->ln($this->cellheight);
-        
-        $this->Cell($cellsize, 8, $oGemeinde->getRechnungAdresse()
+            ->getHausnummer(), $rahmen, 0, "L");
+        $this->Cell($cellsize, $this->cellheight, $oGemeinde->getRechnungAdresse()
             ->getStrasse() . " " . $oGemeinde->getRechnungAdresse()
-            ->getHausnummer(), 0, 0, "L");
+            ->getHausnummer(), $rahmen, 0, "L");
         $this->ln($this->cellheight);
-        $this->Cell($cellsize, 8, $oGemeinde->getRechnungAdresse()
+        $this->Cell($cellsize, $this->cellheight, $oGemeinde->getKircheAdresse()
+            ->getPLZ() . " " . $oGemeinde->getKircheAdresse()
+            ->getOrt(), $rahmen, 0, "L");
+        $this->Cell($cellsize, $this->cellheight, $oGemeinde->getRechnungAdresse()
             ->getPLZ() . " " . $oGemeinde->getRechnungAdresse()
-            ->getOrt(), 0, 0, "L");
+            ->getOrt(), $rahmen, 0, "L");
         $this->ln($this->cellheight);
         
         // Allgemein PDF Daten erstellen
@@ -185,18 +116,10 @@ abstract class DeckblattPDF extends tFPDFWithBookmark
         $this->SetKeywords($this->getKeywords() . $oGemeinde->getKirche() . ", ", $this->utf8);
         
         // Header Bezirk & OrgelId
-        $this->SetXY(170, 9);
-        $this->activateFontNormal();
-        $this->SetTextColor(255, 0, 0);
-        $this->Cell($cellsize, 8, "Bezirk: " . $oGemeinde->getBID(), 0, 0, "L");
-        $this->SetXY(170, 16);
-        $this->SetTextColor(0, 0, 255);
-        $this->Cell($cellsize, 10, "Orgel:  " . $oOrgel->getID(), 0, 0, "L");
-        $this->activateFontNormal();
-        $this->SetTextColor(0, 0, 0);
+        $this->addBezirkUndOrgelID($oOrgel->getID(), $oGemeinde->getBID());
         
         // Trennstrich
-        $this->SetXY($this->iRandLinks, 90);
+        $this->ln($this->cellheight);
         $this->zeichneTrennstrich();
     }
 
@@ -317,297 +240,6 @@ abstract class DeckblattPDF extends tFPDFWithBookmark
         // Trennstrich
         $this->zeichneTrennstrich();
     }
-
-    /**
-     * Neue Funktion zum ausprobieren
-     *
-     * @param Orgel $oOrgel            
-     */
-    private function addDisposition(Orgel $oOrgel)
-    {
-        $oid = $oOrgel->getID();
-        $strGroesstesManual = 0;
-        $iRegisterAnzahl = 0;
-        $strPedal = 1;
-        
-        RegisterUtilities::getDispositionAsArray($oOrgel->getID());
-        
-        $iGroesstesManual = 0;
-        
-        // Manual 1
-        $m = $this->handleManual($oid, 1);
-        $manual1name = $m[0];
-        $manual1fuss = $m[1];
-        $iGroesstesManual = ($iGroesstesManual < $m[2] ? $m[2] : $iGroesstesManual);
-        if ($m[2] > 0) {
-            $strGroesstesManual = "I";
-        }
-        
-        // Manual 2
-        $m = $this->handleManual($oid, 2);
-        $manual2name = $m[0];
-        $manual2fuss = $m[1];
-        $iGroesstesManual = ($iGroesstesManual < $m[2] ? $m[2] : $iGroesstesManual);
-        if ($m[2] > 0) {
-            $strGroesstesManual = "II";
-        }
-        
-        // Manual 3
-        $m = $this->handleManual($oid, 3);
-        $manual3name = $m[0];
-        $manual3fuss = $m[1];
-        $iGroesstesManual = ($iGroesstesManual < $m[2] ? $m[2] : $iGroesstesManual);
-        if ($m[2] > 0) {
-            $strGroesstesManual = "III";
-        }
-        
-        // Manual 4
-        $m = $this->handleManual($oid, 4);
-        $manual4name = $m[0];
-        $manual4fuss = $m[1];
-        $iGroesstesManual = ($iGroesstesManual < $m[2] ? $m[2] : $iGroesstesManual);
-        if ($m[2] > 0) {
-            $strGroesstesManual = "IV";
-        }
-        
-        // Manual 5
-        $m = $this->handleManual($oid, 5);
-        $manual5name = $m[0];
-        $manual5fuss = $m[1];
-        $iGroesstesManual = ($iGroesstesManual < $m[2] ? $m[2] : $iGroesstesManual);
-        if ($m[2] > 0) {
-            $strGroesstesManual = "V";
-        }
-        
-        // Manual 6
-        $m = $this->handleManual($oid, 6);
-        $manual6name = $m[0];
-        $manual6fuss = $m[1];
-        $iGroesstesManual = ($iGroesstesManual < $m[2] ? $m[2] : $iGroesstesManual);
-        if ($m[2] > 0) {
-            $strPedal = "/Pedal";
-        }
-        
-        $iRegisterAnzahl = $oOrgel->getRegisterAnzahl();
-        
-        // Dipositionsüberschrift
-        $cellsize = 70;
-        
-        $this->activateFontBold();
-        $this->Cell($cellsize, $this->cellheight, 'Disposition: ' . $strGroesstesManual . $strPedal . " " . $iRegisterAnzahl, 0, 0, "L");
-        $this->SetFont($this->font, '', 7);
-        $this->ln(5);
-        
-        // Tabelle erzeugen
-        $iSizeRegisterBez = 27;
-        
-        $this->activateFontBold();
-        if (count($manual6name) > 0) {
-            $this->Cell($iSizeRegisterBez, $this->cellheight, 'Pedal', 0, 0);
-            $this->Cell(10, $this->cellheight, '', 0, 0);
-        }
-        if (count($manual1name) > 0) {
-            $this->Cell($iSizeRegisterBez, $this->cellheight, 'Manual I', 0, 0);
-            $this->Cell(10, $this->cellheight, '', 0, 0);
-        }
-        if (count($manual2name) > 0) {
-            $this->Cell($iSizeRegisterBez, $this->cellheight, 'Manual II', 0, 0);
-            $this->Cell(10, $this->cellheight, '', 0, 0);
-        }
-        if (count($manual3name) > 0) {
-            $this->Cell($iSizeRegisterBez, $this->cellheight, 'Manual III', 0, 0);
-            $this->Cell(10, $this->cellheight, '', 0, 0);
-        }
-        if (count($manual4name) > 0) {
-            $this->Cell($iSizeRegisterBez, $this->cellheight, 'Manual IV', 0, 0);
-            $this->Cell(10, $this->cellheight, '', 0, 0);
-        }
-        $this->Cell(10, $this->cellheight, '', 0, 1);
-        
-        // Winddruck und Manualgröße ausgeben
-        $sql = "SELECT o_m1wd, o_m2wd, o_m3wd, o_m4wd, o_m5wd, o_m6wd,
-						o_m1groesse, o_m2groesse, o_m3groesse, o_m4groesse,
-						o_m5groesse, o_m6groesse
-				FROM orgel
-				WHERE o_id = '" . $oid . "'";
-        
-        $row = $this->mDBInstance->SelectQuery($sql)[0];
-        $this->activateFontTextHeadlineSmall();
-        $this->SetTextColor(0, 200, 0);
-        if (count($manual6name) > 0) {
-            $text = "";
-            if ($row['o_m6wd'] != "" ) {
-                $text = $row['o_m6wd'] . " mm/WS";
-            } 
-            if ($oOrgel->getGroesseM6() != "") {
-                $text = ($text == "" ? $oOrgel->getGroesseM6() :  $text . " / " . $oOrgel->getGroesseM6());
-            }
-            $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
-            $this->Cell(10, $this->cellheight, '', 0, 0);
-        }
-        if (count($manual1name) > 0) {
-            $text = "";
-            if ($row['o_m1wd'] != "" ) {
-                $text = $row['o_m1wd'] . " mm/WS";
-            } 
-            if ($oOrgel->getGroesseM1() != "") {
-                $text = ($text == "" ? $oOrgel->getGroesseM1() :  $text . " / " . $oOrgel->getGroesseM1());
-            }
-            $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
-            $this->Cell(10, $this->cellheight, '', 0, 0);
-        }
-        if (count($manual2name) > 0) {
-            $text = "";
-            if ($row['o_m2wd'] != "" ) {
-                $text = $row['o_m2wd'] . " mm/WS";
-            } 
-            if ($oOrgel->getGroesseM2() != "") {
-                $text = ($text == "" ? $oOrgel->getGroesseM2() :  $text . " / " . $oOrgel->getGroesseM2());
-            }
-            $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
-            $this->Cell(10, $this->cellheight, '', 0, 0);
-        }
-        if (count($manual3name) > 0) {            
-            $text = "";
-            if ($row['o_m3wd'] != "" ) {
-                $text = $row['o_m3wd'] . " mm/WS";
-            } 
-            if ($oOrgel->getGroesseM3() != "") {
-                $text = ($text == "" ? $oOrgel->getGroesseM3() :  $text . " / " . $oOrgel->getGroesseM3());
-            }
-            $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
-            $this->Cell(10, $this->cellheight, '', 0, 0);
-        }
-        if (count($manual4name) > 0) {
-            
-            $text = "";
-            if ($row['o_m4wd'] != "" ) {
-                $text = $row['o_m4wd'] . " mm/WS";
-            } 
-            if ($oOrgel->getGroesseM4() != "") {
-                $text = ($text == "" ? $oOrgel->getGroesseM4() :  $text . " / " . $oOrgel->getGroesseM4());
-            }
-            $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
-            $this->Cell(10, $this->cellheight, '', 0, 0);
-        }
-        $this->activateFontBold();
-        $this->SetTextColor(0, 0, 0);
-        $this->Cell(10, $this->cellheight, '', 0, 1);
-        $this->activateFontNormal();
-        
-        $platzhalter = 10;
-        for ($i = 0; $i < $iGroesstesManual; $i ++) {
-            
-            // Platzhalter
-            $leerzeile = $platzhalter + $iSizeRegisterBez;
-            $rahmen = 0;
-            
-            if (isset($manual6name[$i]) && $manual6name[$i] != "") {
-                $this->Cell($iSizeRegisterBez, $this->cellheight, substr($manual6name[$i], 0, 16), $rahmen, 0);
-                $this->Cell($platzhalter, $this->cellheight, $manual6fuss[$i] . "'", $rahmen, 0);
-            } else {
-                $this->Cell($leerzeile, $this->cellheight, '', $rahmen, 0);
-            }
-            
-            if (isset($manual1name[$i]) && $manual1name[$i] != "") {
-                $this->Cell($iSizeRegisterBez, $this->cellheight, substr($manual1name[$i], 0, 16), $rahmen, 0);
-                $this->Cell($platzhalter, $this->cellheight, $manual1fuss[$i] . "'", $rahmen, 0);
-            } else {
-                $this->Cell($leerzeile, $this->cellheight, '', $rahmen, 0);
-            }
-            if (isset($manual2name[$i]) && $manual2name[$i] != "") {
-                $this->Cell($iSizeRegisterBez, $this->cellheight, substr($manual2name[$i], 0, 16), $rahmen, 0);
-                $this->Cell($platzhalter, $this->cellheight, $manual2fuss[$i] . "'", $rahmen, 0);
-            } else {
-                $this->Cell($leerzeile, $this->cellheight, '', $rahmen, 0);
-            }
-            if (isset($manual3name[$i]) && $manual3name[$i] != "") {
-                $this->Cell($iSizeRegisterBez, $this->cellheight, substr($manual3name[$i], 0, 16), $rahmen, 0);
-                $this->Cell($platzhalter, $this->cellheight, $manual3fuss[$i] . "'", $rahmen, 0);
-            } else {
-                $this->Cell($leerzeile, $this->cellheight, '', $rahmen, 0);
-            }
-            if (isset($manual4name[$i]) && $manual4name[$i] != "") {
-                $this->Cell($iSizeRegisterBez, $this->cellheight, substr($manual4name[$i], 0, 16), $rahmen, 0);
-                $this->Cell($platzhalter, $this->cellheight, $manual4fuss[$i] . "'", $rahmen, 0);
-            } else {
-                $this->Cell($leerzeile, $this->cellheight, '', $rahmen, 0);
-            }
-            
-            $this->Cell($platzhalter, $this->cellheight, '', 0, 1);
-        }
-        $this->Cell($platzhalter, $this->cellheight, '', 0, 1);
-        $this->zeichneTrennstrich();
-    }
-
-    private function addCheckliste(Orgel $oOrgel)
-    {
-        $rahmen = 0;
-        $platzhalter = 0;
-        $iBreiteBeschreibung = 51;
-        $iBreiteWert = 40;
-        
-        // Spalten etwas hoeher machen, da ja manuell etwas eingetragen werden muss
-        $iHeight = $this->cellheight + 3;
-        
-        $this->Ln(3);
-        $this->activateFontTextHeadline();
-        $this->Cell(0, $this->cellheight, 'Checkliste:', 0, 1, "L");
-        $this->activateFontNormal();
-        $this->Ln(1);
-        $this->Cell($iBreiteBeschreibung, $iHeight, "Traktur reguliert:", $rahmen, 0);
-        $this->Cell($iBreiteWert, $iHeight, '[  ]', 0, 0);
-        $this->Cell($iBreiteBeschreibung, $iHeight, "Temperatur:", $rahmen, 0);
-        $this->Cell($iBreiteWert, $iHeight, "_____________ °C", $rahmen, 1);
-        
-        $this->Cell($iBreiteBeschreibung, $iHeight, "Winddruck gemessen:", $rahmen, 0);
-        $this->Cell($iBreiteWert, $iHeight, "[  ] ", $rahmen, 0);
-        $this->Cell($iBreiteBeschreibung, $iHeight, "Luftfeuchte:", $rahmen, 0);
-        $this->Cell($iBreiteWert, $iHeight, "_____________ %", $rahmen, 1);
-        
-        $this->Cell($iBreiteBeschreibung, $iHeight, "Pedal/Spieltisch gereinigt:", $rahmen, 0);
-        $this->Cell($iBreiteWert, $iHeight, "[  ] ", $rahmen, 0);
-        $this->Cell($iBreiteBeschreibung, $iHeight, "Stimmtonhöhe:", $rahmen, 0);
-        $this->Cell($iBreiteWert, $iHeight, "_____________ Hz", $rahmen, 1);
-        
-        $this->Cell($iBreiteBeschreibung, $iHeight, "Schimmelbefall:", $rahmen, 0);
-        $this->Cell($iBreiteWert, $iHeight, '[ Ja ]  [ Nein ]', 0, 0);
-        $this->Cell($iBreiteBeschreibung, $iHeight, "Datum der Pflege:", $rahmen, 0);
-        $this->Cell($iBreiteWert, $iHeight, "___________ ." . date("Y"), $rahmen, 1);
-        
-        $this->Cell($iBreiteBeschreibung, $iHeight, "Holzwurmbefall:", $rahmen, 0);
-        $this->Cell($iBreiteWert, $iHeight, '[ Ja ]  [ Nein ]', 0, 0);
-        $this->Cell($iBreiteBeschreibung, $iHeight, "Ausführender Mitarbeiter:", $rahmen, 0);
-        $this->Cell($iBreiteWert, $iHeight, "_____________ ", $rahmen, 0);
-        
-        $this->Cell(1, $iHeight, '', 0, 1);
-    }
-
-    private function handleManual($pOID, $pManualID)
-    {
-        $sqldisp = "SELECT d_id, o_id, m_id, d_name, d_fuss
-					FROM disposition
-					WHERE o_id = '" . $pOID . "' AND m_id = '" . $pManualID . "'
-					ORDER BY m_id";
-        
-        $manualName = array();
-        $manualFuss = array();
-        
-        $iRegisterCount = 0;
-        if (($resultdisp = $this->mDBInstance->SelectQuery($sqldisp)) !== false) {
-            foreach ($resultdisp as $row) {
-                $manualName[] = $row['d_name'];
-                $manualFuss[] = $row['d_fuss'];
-                $iRegisterCount ++;
-            }
-        }
-        
-        return array(
-            $manualName,
-            $manualFuss,
-            $iRegisterCount
-        );
-    }
     
     private function addKompletteKontaktdaten(DatabaseStorageObjektCollection $pAnsprechpartner)
     {
@@ -619,21 +251,23 @@ abstract class DeckblattPDF extends tFPDFWithBookmark
         // Spalten etwas hoeher machen, da ja manuell etwas eingetragen werden muss
         $iHeight = $this->cellheight + 3;
         
+        $rahmen = 0;
+        
         $this->Ln(3);
         $this->activateFontTextHeadline();
-        $this->Cell(0, $this->cellheight, 'Kontakte:', 0, 1, "L");
+        $this->Cell(50, $this->cellheight, 'Kontakte:', $rahmen, 1, "L");
         $this->activateFontNormal();
         $this->Ln(1);
         
-        $rahmen = 0;
+        
         
         $counter = 0;
         foreach ($pAnsprechpartner as $oAnsprechpartner) {
             $counter++;
             
             if($counter % 2 == 0) {
-                $breiteBezeichnung = $breiteBezeichnung +80;
-                $this->SetXY(10, $this->getY() - 24);
+                $breiteBezeichnung = $breiteBezeichnung + 80;
+                $this->SetXY($this->getRandLinks(), $this->getY() - 24);
             } else {
                 $breiteBezeichnung = 20;
             }
@@ -644,13 +278,13 @@ abstract class DeckblattPDF extends tFPDFWithBookmark
             $this->Cell($breiteBezeichnung, $this->cellheight, "Name: ", $rahmen, 0, "R");
             $this->Cell(60, $this->cellheight, $oAnsprechpartner->getAnzeigename(), $rahmen, 1);
             
-            $this->Cell($breiteBezeichnung, $this->cellheight, "Telefon: ", $rahmen, 0, "R");
+            $this->Cell($breiteBezeichnung, $this->cellheight, ($oAnsprechpartner->getTelefon() == "" ? "" : "Telefon: "), $rahmen, 0, "R");
             $this->Cell(60, $this->cellheight, $oAnsprechpartner->getTelefon(), $rahmen, 1);
             
-            $this->Cell($breiteBezeichnung, $this->cellheight, "Mobil: ", $rahmen, 0, "R");
+            $this->Cell($breiteBezeichnung, $this->cellheight, ($oAnsprechpartner->getMobil() == "" ? "" : "Mobil: "), $rahmen, 0, "R");
             $this->Cell(60, $this->cellheight, $oAnsprechpartner->getMobil(), $rahmen, 1);
             
-            $this->Cell($breiteBezeichnung, $this->cellheight, "Mail: ", $rahmen, 0, "R");
+            $this->Cell($breiteBezeichnung, $this->cellheight, ($oAnsprechpartner->getEmail() == "" ? "" : "Mail: "), $rahmen, 0, "R");
             $this->Cell(60, $this->cellheight, $oAnsprechpartner->getEmail(), $rahmen, 1);
             
              // Abstandszeile
@@ -662,29 +296,6 @@ abstract class DeckblattPDF extends tFPDFWithBookmark
         }
         
         $this->Cell(1, $iHeight, '', 0, 1);
-    }
-    
-
-    /**
-     * Zeichnet einen Trennstrich ins aktuelle Dokument an die aktuelle Stelle des Cursors.
-     *
-     * Die Länge kann in der Objektvariablen bestimmt werden
-     */
-    private function zeichneTrennstrich()
-    {
-        $this->Cell($this->iTrennstrichLaenge, 0, '', 1, 0, "C");
-        $this->ln(3);
-    }
-
-    protected function getKeywords()
-    {
-        // return $this->metadata['Keywords'];
-        return $this->keywords;
-    }
-
-    public function Output($dest = '', $name = '', $utf8 = true)
-    {
-        parent::Output($dest, $name, $this->utf8);
     }
 }
 ?>

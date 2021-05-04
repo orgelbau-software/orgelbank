@@ -6,10 +6,14 @@ include_once '../../conf/config.inc.php';
 // include_once '../../lib/fpdf/fpdfbookmark.php';
 include_once '../../lib/tFPDF/tfpdf.php';
 include_once '../../lib/tFPDF/tfpdfbookmark.php';
+include_once 'class.OrgelbankBasisPDF.php';
 include_once 'class.WartungsbogenPDF.php';
 include_once 'class.OrgelbankWartungsbogenPDF.php';
 include_once 'class.DeckblattPDF.php';
 include_once 'class.OrgelbankDeckblattPDF.php';;
+
+// Kunden spezifisch
+include_once 'class.GraserOrgelbankDeckblattPDF.php';;
 
 $db = DB::getInstance();
 $db->connect();
@@ -33,7 +37,7 @@ if(isset($_POST['submit'])) {
 
 
 if(strpos($action, "deckbl") === 0) {
-    $pdf = new OrgelbankDeckblattPDF();
+    $pdf = new GraserOrgelbankDeckblattPDF();
 
     if (isset($_POST['orgelliste'])) {
         SeitenStatistik::count("deckblatt.php?oid=X,Y,Z", "PDF::printManyOrgel");

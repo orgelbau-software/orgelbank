@@ -181,7 +181,7 @@ class Ansprechpartner extends SimpleDatabaseStorageObjekt
         if ($this->getVorname() != "") {
             $retVal .= ", " . $this->getVorname();
         }
-        return $retVal;
+        return trim($retVal);
     }
 
     public function setAktiv($aktiv)
