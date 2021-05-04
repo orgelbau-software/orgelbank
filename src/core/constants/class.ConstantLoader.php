@@ -442,14 +442,6 @@ class ConstantLoader
     }
     
     /**
-    * @return true oder false wenn der Wartungsbogen alle Ansprechpartner enthalten soll.
-    */
-    public static function getWartungsBogenKompletteAnsprechpartner()
-    {
-        return ConstantLoader::$htValues->getValueOf("wartung_bogen_alle_ansprechpartner");
-    }
-    
-    /**
     * @return true oder false wenn der Wartungsbogen die Checkliste enthalten soll.
     */
     public static function getWartungsBogenCheckliste()
