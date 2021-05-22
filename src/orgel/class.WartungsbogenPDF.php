@@ -312,7 +312,17 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
         $this->Cell($iBreiteBeschreibung, $iHeight, "Holzwurmbefall:", $rahmen, 0);
         $this->Cell($iBreiteWert, $iHeight, '[ Ja ]  [ Nein ]', 0, 0);
         $this->Cell($iBreiteBeschreibung, $iHeight, "Ausführender Mitarbeiter:", $rahmen, 0);
-        $this->Cell($iBreiteWert, $iHeight, "_____________ ", $rahmen, 0);
+        $this->Cell($iBreiteWert, $iHeight, "_____________ ", $rahmen, 1);
+        
+        $this->Cell($iBreiteBeschreibung, $iHeight, "Reisezeit:", $rahmen, 0);
+        $this->Cell($iBreiteWert, $iHeight, '___ Std. ___ Min.', 0, 0);
+        $this->Cell($iBreiteBeschreibung, $iHeight, "Gefahrene KM:", $rahmen, 0);
+        $this->Cell($iBreiteWert, $iHeight, "_____________ km", $rahmen, 1);
+        
+        $this->Cell($iBreiteBeschreibung, $iHeight, "Arbeitszeit:", $rahmen, 0);
+        $this->Cell($iBreiteWert, $iHeight, '___ Std. ___ Min.', 0, 0);
+        $this->Cell($iBreiteBeschreibung, $iHeight, "", $rahmen, 0);
+        $this->Cell($iBreiteWert, $iHeight, " ", $rahmen, 1);
         
         $this->Cell(1, $iHeight, '', 0, 1);
     }

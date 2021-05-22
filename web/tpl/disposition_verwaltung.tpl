@@ -10,7 +10,7 @@
       <!--Manuale-->
     </select></td>
     <td>Register:</td>
-    <td><input type="text" id="register" name="register" size="30" maxlength="50" value="<!--Register-->" <!--disabled-->/></td>
+    <td><input type="text" id="register" name="register" size="30" maxlength="50" value="<!--Register-->" <!--disabled--> autofocus/></td>
     <td>Fu&szlig;:</td>
     <td><select name="fuss"
       <!--disabled-->
