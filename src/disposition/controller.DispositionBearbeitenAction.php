@@ -141,9 +141,14 @@ class DispositionBearbeitenAction
         $htmlSelect = new HTMLSelectForArray($c, $this->oRegister->getManual());
         $tplDisposition->replace("Manuale", $htmlSelect->getOutput());
         
+        if($this->oRegister->getID() == -1) {
+            $ausgewaehlteFussGroesse = 8; // Standard bei neuen Registern
+        } else {
+            $ausgewaehlteFussGroesse = $this->oRegister->getFuss();
+        }
         // Register Groessen
         $c = RegisterUtilities::getRegisterGroessen();
-        $htmlSelect = new HTMLSelectForKey($c, "getBezeichnung", "getBezeichnungsText", $this->oRegister->getFuss());
+        $htmlSelect = new HTMLSelectForKey($c, "getBezeichnung", "getBezeichnungsText", $ausgewaehlteFussGroesse);
         $tplDisposition->replace("Fuss", $htmlSelect->getOutput());
         
         // Disposition aus der Datenbank lesen
