@@ -70,11 +70,9 @@
     <h3>Aufgabenliste</h3>
     <br />
     <br />
-    <div id="iFrameAufgabenliste">
     <table class="liste">
       <!--Aufgabenliste-->
     </table>
-    </div>
     </td>
   </tr>
 </table>
