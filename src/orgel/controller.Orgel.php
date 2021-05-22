@@ -791,6 +791,10 @@ class OrgelController
                     $tplWartungDS->replace("Stimmung", "Nebenstimmung");
                 } elseif ($wartung->getStimmung() == 2) {
                     $tplWartungDS->replace("Stimmung", "Hauptstimmung");
+                } elseif ($wartung->getStimmung() == 3) {
+                    $tplWartungDS->replace("Stimmung", "Zungenstimmung");
+                } else {
+                    $tplWartungDS->replace("Stimmung", "Keine");
                 }
                 $tplWartungDS->next();
             }
@@ -819,19 +823,25 @@ class OrgelController
             $tplWartung->replace("AbrVertrag", Constant::$HTML_SELECTED_SELECTED);
         } elseif ($oWartung->getAbrechnungsArtId() == 2) {
             $tplWartung->replace("AbrAufwand", Constant::$HTML_SELECTED_SELECTED);
+        } elseif ($oWartung->getAbrechnungsArtId() == 3) {
+            $tplWartung->replace("AbrGarantie", Constant::$HTML_SELECTED_SELECTED);
         }
         $tplWartung->replace("AbrVertrag", "");
         $tplWartung->replace("AbrAufwand", "");
+        $tplWartung->replace("AbrGarantie", "");
         
         if ($oWartung->getStimmung() == 2) {
             $tplWartung->replace("Hauptstimmung", Constant::$HTML_SELECTED_SELECTED);
         } elseif ($oWartung->getStimmung() == 1) {
             $tplWartung->replace("Nebenstimmung", Constant::$HTML_SELECTED_SELECTED);
-        } elseif ($oWartung->getStimmung() == 1) {
+        } elseif ($oWartung->getStimmung() == 3) {
+            $tplWartung->replace("Zungenstimmung", Constant::$HTML_SELECTED_SELECTED);
+        } elseif ($oWartung->getStimmung() == 0) {
             $tplWartung->replace("NichtDurchgefuehrt", Constant::$HTML_SELECTED_SELECTED);
         }
         $tplWartung->replace("Hauptstimmung", "");
         $tplWartung->replace("Nebenstimmung", "");
+        $tplWartung->replace("Zungenstimmung", "");
         $tplWartung->replace("NichtDurchgefuehrt", "");
         
         $tplWartung->replace("Material", $oWartung->getMaterial());

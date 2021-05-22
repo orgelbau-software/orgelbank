@@ -34,6 +34,7 @@
 				<option value="0" >---</option>
 				<option value="1" <!--AbrVertrag-->>nach Pflegevertrag</option>
 				<option value="2" <!--AbrAufwand-->>nach Aufwand</option>
+				<option value="3" <!--AbrGarantie-->>Garantie</option>
 			</select>
 		</td>
 		<th>Luftfeuchte:</th>
@@ -47,6 +48,7 @@
 				<option value="0" <!--NichtDurchgefuehrt-->>keine Stimmung</option>
 				<option value="1" <!--Nebenstimmung-->>Nebenstimmung</option>
 				<option value="2" <!--Hauptstimmung-->>Hauptstimmung</option>
+				<option value="3" <!--Zungenstimmung-->>Zungenstimmung</option>
 			</select>
 		</td>
 		<th>Stimmtonh&ouml;he</th>
