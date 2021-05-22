@@ -170,6 +170,16 @@ class ConstantLoader
         return ConstantLoader::$htValues->getValueOf("rechnung_angebot_text");
     }
 
+    public static function getPflegeRechnungSchlusstext()
+    {
+        return ConstantLoader::$htValues->getValueOf("rechnung_pflege_schlusstext");
+    }
+    
+    public static function getStundenRechnungSchlusstext()
+    {
+        return ConstantLoader::$htValues->getValueOf("rechnung_stunden_schlusstext");
+    }
+    
     public static function getRechnungStandardZahlungsziele()
     {
         return ConstantLoader::$htValues->getValueOf("rechnung_zahlungsziele");

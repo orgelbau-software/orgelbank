@@ -327,7 +327,7 @@ class RechnungController
         $tplRechnung->replace("GemeindeBezeichnung", "GEMEINDE");
         
         $tplRechnung->replace("Bemerkung1", "");
-        $tplRechnung->replace("Bemerkung2", "");
+        $tplRechnung->replace("Bemerkung2", ConstantLoader::getStundenRechnungSchlusstext());
         
         // Rechnungsdatum & Zahlungsziel
         $tplRechnung->replace("Rechnungsdatum", date("d.m.Y"));
@@ -455,7 +455,7 @@ class RechnungController
         $tplRechnung->replace("GID", 0);
         $tplRechnung->replace("GemeindeBezeichnung", "GEMEINDE");
         $tplRechnung->replace("Bemerkung1", "");
-        $tplRechnung->replace("Bemerkung2", "");
+        $tplRechnung->replace("Bemerkung2", ConstantLoader::getPflegeRechnungSchlusstext());
         
         // Rechnungsdatum & Zahlungsziel
         $iZahlungsZiel = ConstantLoader::getStandardZahlungsziel();
