@@ -58,10 +58,19 @@ class GemeindeRequestHandler
                     break;
             }
         } else {
-            $retVal->put("SQLORDER", "g_kirche");
-            $retVal->put("TPLORDER", "gemeinde");
-            $retVal->put("GETTER", "getKirche");
-            $retVal->put("SKALA", "ALPHA");
+            $standardSortierung = ConstantLoader::getGemeindeListeStandardSortierung();
+            if($standardSortierung == "ort") {
+                $retVal->put("SQLORDER", "ad_ort");
+                $retVal->put("SKALA", "ALPHA");
+                $retVal->put("GETTER", "getGemeindeOrt");
+                $retVal->put("TPLORDER", "ort");
+            } else {
+                $retVal->put("SQLORDER", "g_kirche");
+                $retVal->put("GETTER", "getKirche");
+                $retVal->put("SKALA", "ALPHA");
+                $retVal->put("TPLORDER", "gemeinde");
+            }
+
         }
         
         if (isset($_GET['index'])) {

@@ -459,5 +459,10 @@ class ConstantLoader
         return ConstantLoader::$htValues->getValueOf("wartung_bogen_checkliste");
     }
     
+    public static function getGemeindeListeStandardSortierung()
+    {
+        return ConstantLoader::$htValues->getValueOf("gemeinde_liste_standard_sortierung");
+    }
+    
 }
 ?>

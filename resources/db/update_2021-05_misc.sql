@@ -4,3 +4,5 @@ INSERT INTO `option_meta` (`option_id`, `option_modul`, `option_name`, `option_v
 
 
 ALTER TABLE `projekt_aufgabe` ADD `pa_reihenfolge` INT NOT NULL AFTER `au_id`;
+
+INSERT INTO `option_meta` (`option_id`, `option_modul`, `option_name`, `option_value`, `option_autoload`, `option_comment`, `option_editable`, `option_lastchange`, `option_createdate`) VALUES (NULL, 'Gemeinde', 'gemeinde_liste_standard_sortierung', 'g_kirche', '1', 'Entweder "kirche" oder "ort"', '1', '', '');
