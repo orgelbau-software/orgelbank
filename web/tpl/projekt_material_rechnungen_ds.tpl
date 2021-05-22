@@ -2,7 +2,7 @@
   <td class="<!--CSS-->"><!--Datum--></td>
   <td class="<!--CSS-->"><!--Nummer--></td>
   <td class="<!--CSS-->"><!--Lieferant--></td>
-  <td class="<!--CSS-->"><!--Nummer--></td>
+  <td class="<!--CSS-->"><!--Kommentar--></td>
   <td class="<!--CSS--> alignRight"><!--Betrag--> &euro;</td>
   <td class="<!--CSS-->"><!--Kostenstelle--></td>
   <td class="<!--CSS-->"><!--Projekt--></td>

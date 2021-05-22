@@ -11,6 +11,7 @@
 		<th>Datum</th>
 		<th>Nr.</th>
 		<th>Lieferant</th>
+		<th>Kommentar</th>
 		<th>Betrag<th>
 		<th>Aufgabe</th>
 		<th>Projekt</th>

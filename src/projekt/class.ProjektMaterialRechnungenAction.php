@@ -57,6 +57,7 @@ class ProjektMaterialRechnungenAction implements GetRequestHandler, PostRequestH
             $sqlClause .=" OR au_bezeichnung LIKE '%".$this->suchbegriff."%'"; 
             $sqlClause .=" OR pr_lieferant LIKE '%".$this->suchbegriff."%'"; 
             $sqlClause .=" OR pr_nummer LIKE '%".$this->suchbegriff."%'"; 
+            $sqlClause .=" OR pr_kommentar LIKE '%".$this->suchbegriff."%'"; 
                 
             $sqlClause .= ") ";
         }
@@ -69,7 +70,8 @@ class ProjektMaterialRechnungenAction implements GetRequestHandler, PostRequestH
             $tplDS->replace("Datum", $eintrag->getDatum(true));
             $tplDS->replace("Nummer", $eintrag->getNummer());
             $tplDS->replace("Lieferant", $eintrag->getLieferant());
-            $tplDS->replace("Betrag", $eintrag->getBetrag());
+            $tplDS->replace("Betrag", WaehrungUtil::formatDoubleToWaehrung($eintrag->getBetrag()));
+            $tplDS->replace("Kommentar", $eintrag->getKommentar());
             $tplDS->replace("Kostenstelle", $eintrag->getAufgabenBezeichnung());
             $tplDS->replace("Projekt", $eintrag->getProjektBezeichnung());
             $tplDS->replace("ProjektID", $eintrag->getProjektId());
