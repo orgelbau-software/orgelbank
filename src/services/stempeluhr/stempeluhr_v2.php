@@ -19,9 +19,9 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
         $retVal = array();
         $retVal['status'] = "ok";
         
-        $messages[] = "Guten Morgen ". $benutzer->getVorname()."! Einen guten Start in den Tag!";
-        $messages[] = "Mahlzeit ". $benutzer->getVorname()."! Du bist seit 7 Uhr eingestempelt und hast nun 4.5 Stunden an der Aufgabe 'Gehäusebau' für das Projekt 'Neubau Aachen' gearbeitet";
-        $messages[] = "Hallo ". $benutzer->getVorname()."! Du bist seit 7 Uhr eingestempelt und hast nun 8 Stunden an der Aufgabe 'Pfeifen' für das Projekt 'Reinigung Münster' gearbeitet'";
+        $messages[] = "Guten Morgen ". $benutzer->getVorname()."! Einen guten Start in den Tag! Du musst noch 30 Stunden diese Woche buchen.";
+        $messages[] = "Mahlzeit ". $benutzer->getVorname()."!  Du musst noch 2 Stunden diese Woche buchen.";
+        $messages[] = "Hallo ". $benutzer->getVorname()."!  Du musst noch 9 Stunden diese Woche buchen.";
         $retVal['msg'] = $messages[rand(0,2)];
     } else if ($_GET['action'] == "projekte") {
         $cProjekte = ProjektUtilities::getProjekte();
@@ -63,7 +63,8 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
     } else if (isset($_GET['unteraufgabeId'], $_GET['projektId']) && $_GET['action'] == "login") {
         
         // Alten Eintrag updaten
-        $letzteStempelzeit = StempeluhrUtilities::hatOffenenStempeluhrEintrag($benutzer->getId());
+        //$letzteStempelzeit = StempeluhrUtilities::hatOffenenStempeluhrEintrag($benutzer->getId());
+        $letzteStempelzeit = null;
         $now = new DateTime('NOW');
         $letzteDauer = 0;
         if($letzteStempelzeit != null) {
@@ -86,7 +87,7 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
         $eintrag->setAufgabeId($hauptaufgabe->getId());
         $eintrag->setZeit($now->format(DatabaseStorageObjekt::MYSQL_DATETIME_FORMAT));
         $eintrag->setMitarbeiterId($benutzer->getID());
-        $eintrag->speichern(true);
+        //$eintrag->speichern(true);
         $retVal = array(
             "status" => "ok",
             "text" => "Los gehts, " .$benutzer->getVorname()."!",
