@@ -668,6 +668,8 @@ class ProjektController
             $tplAufgaben->replace("readOnlyClass", "readOnly");
             $tplAufgaben->replace("PaID", $oAufgabe->getPKAufgabeID());
             $tplAufgaben->replace("Betrag", WaehrungUtil::formatDoubleToWaehrung($oAufgabe->getPlankosten()));
+            $tplAufgaben->replace("SollStd", "0"); // DEMO
+            $tplAufgaben->replace("SollMaterial", "0,00"); // DEMO
             $tplAufgaben->next();
         }
         
@@ -916,7 +918,7 @@ class ProjektController
             }
             $pRechnung = new ProjektRechnung(); // dummy
         }
-        $tpl->replace("Datum", ($pRechnung->getID() < 0 ? "" : $pRechnung->getDatum(true)));
+        $tpl->replace("Datum", ($pRechnung->getID() < 0 ? date("d.m.Y") : $pRechnung->getDatum(true)));
         $tpl->replace("Kommentar", $pRechnung->getKommentar());
         $tpl->replace("Betrag", WaehrungUtil::formatDoubleToWaehrung($pRechnung->getBetrag()));
         $tpl->replace("PRID", $pRechnung->getID());

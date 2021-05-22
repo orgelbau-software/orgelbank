@@ -3,7 +3,7 @@
 <h3>Projekt <!--Titel--></h3>
 <table>
   <tr>
-    <td style="padding-right: 40px;">
+    <td style="padding-right: 30px;">
     <table class="liste">
       <tr>
         <th>Bezeichnung:</th>
@@ -43,7 +43,7 @@
     <br />
     <h3>Keine Zeitberechnungen f&uuml;r</h3>
     <span>F&uuml;r ausgew&auml;hlte Mitarbeiter, <b>keine Ber&uuml;cksichtigung</b> der erfassten Arbeitsstunden.</span>
-    <table class="liste size100">
+    <table class="liste txt250">
      <tr>
       <th colspan="6">Keine Zeitberechnung f&uuml;r</th>
      </tr>
@@ -57,7 +57,9 @@
     	<thead>
       		<tr>
 	        	<th colspan="2">Projektaufgaben:</th>
-	    	    <th colspan="2">Plankosten:</th>
+	    	    <th colspan="1">Plankosten:</th>
+	    	    <th colspan="1">Soll Std:</th>
+	    	    <th colspan="2">Material:</th>
       		</tr>
       	</thead>
       	<tbody>
