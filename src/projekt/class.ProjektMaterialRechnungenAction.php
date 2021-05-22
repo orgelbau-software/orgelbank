@@ -62,7 +62,7 @@ class ProjektMaterialRechnungenAction implements GetRequestHandler, PostRequestH
             $sqlClause .= ") ";
         }
         
-        $sqlClause .= "ORDER BY pr_datum";
+        $sqlClause .= "ORDER BY pr_datum DESC";
         $all = ProjektRechnungUtilities::getAlleProjektRechnungen($sqlClause);
         
         $tplDS = new BufferedTemplate("projekt_material_rechnungen_ds.tpl", "CSS", "td1", "td2");
