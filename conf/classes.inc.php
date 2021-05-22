@@ -117,7 +117,9 @@ include_once ROOTDIR . 'src/projekt/class.ArbeitstagUtilities.php';
 include_once ROOTDIR . 'src/entities/class.Arbeitswoche.php';
 include_once ROOTDIR . 'src/projekt/class.ArbeitswocheUtilities.php';
 include_once ROOTDIR . 'src/beans/class.ZeiterfassungDTO.php';
+include_once ROOTDIR . 'src/beans/class.ProjektRechnungsListeBean.php';
 include_once ROOTDIR . 'src/projekt/class.ZeiterfassungUtilities.php';
+include_once ROOTDIR . 'src/projekt/class.ProjektMaterialRechnungenAction.php';
 
 include_once ROOTDIR . 'src/projekt/class.BasisPDF.php';
 include_once ROOTDIR . 'src/projekt/class.StundenzettelPDF.php';

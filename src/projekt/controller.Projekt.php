@@ -1144,5 +1144,11 @@ class ProjektController
     public static function zeigeStempeluhr() {
         RequestHandler::handle(new ProjektStempeluhrAction());
     }
+    
+    public static function zeigeMaterialRechnungen() {
+        RequestHandler::handle(new ProjektMaterialRechnungenAction());
+    }
+    
+    
 }
 ?>
