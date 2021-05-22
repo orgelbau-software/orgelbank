@@ -16,3 +16,4 @@
 		}
 	}
 </script>
+<script type="text/javascript" src="<!--InstanceUrl-->lib/javascript/dropdown.js"></script>
