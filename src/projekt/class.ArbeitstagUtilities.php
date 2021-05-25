@@ -5,6 +5,37 @@ class ArbeitstagUtilities
 
     private static $dbInstance;
 
+    /**
+     * Im Rahmen der mobilen Zeiterfassung hierhin ausgelagert.
+     */
+    public static function speicherNeuenArbeitstag($pTimeStamp, $awArbeitswocheId, $pBenutzerID, $pProjektID, $pAufgabeID, $pIstStunden, $pSollStunden, $pEingabeKomplett) {
+        $at = new Arbeitstag();
+        $at->setArbeitswocheID($awArbeitswocheId);
+        $at->setAufgabeID($pAufgabeID);
+        $at->setBenutzerID($pBenutzerID);
+        $at->setDatum(date("Y-m-d", $pTimeStamp));
+        $at->setProjektID($pProjektID);
+        $at->setIstStunden($pIstStunden);
+        
+        $date = new Date();
+        if ($date->isFeiertag($pTimeStamp)) {
+            $at->setSollStunden(0);
+        } else {
+            $at->setSollStunden($pSollStunden);
+        }
+        
+        if ($pEingabeKomplett) {
+            Log::debug("Setze Arbeitstag KOMPLETT: " . $at->getDatum());
+            $at->setKomplett(1);
+        } else {
+            Log::debug("Setze Arbeitstag NICHT KOMPLETT: " . $at->getDatum());
+            $at->setKomplett(0);
+        }
+        
+        $at->speichern(true);
+        return $at;
+    }
+    
     public static function getMitarbeiterArbeitstagProUnteraufgabe($pBenutzerId, $pUnteraufgabeId, $pKalenderjahr)
     {
         $sql = "SELECT
@@ -205,6 +236,35 @@ class ArbeitstagUtilities
 					at_datum >= '" . $sqlDatumStart . "' AND 
 					at_datum <= '" . $sqlDatumEnde . "'";
         return ArbeitstagUtilities::queryDB($sql);
+    }
+    
+    /**
+     * 
+     * @param unknown $benutzerID
+     * @param unknown $projektID
+     * @param unknown $aufgabeID
+     * @param unknown $pDatum
+     * @return DatabaseStorageObjektCollection
+     */
+    public static function getMitarbeiterProjektAufgabenArbeitstag($benutzerID, $projektID, $aufgabeID, $pTimestamp)
+    {
+        $datum = date("Y-m-d", $pTimestamp);
+        
+        $sql = "SELECT
+					*
+				FROM
+					arbeitstag
+				WHERE
+					be_id = " . $benutzerID . " AND
+					au_id = " . $aufgabeID . " AND
+					proj_id = " . $projektID . " AND
+					at_datum = '" . $datum . "'";
+        $results = ArbeitstagUtilities::queryDB($sql);
+        if($results->getSize() == 1) {
+            return $results->getValueOf(0);
+        } else {
+            return null;
+        }
     }
 
     public static function resetMitarbeiterZeitraumAufgabe($benutzerID, $sqlDatumStart, $sqlDatumEnde, $projektID, $aufgabeID)

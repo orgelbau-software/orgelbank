@@ -5,6 +5,40 @@ class ArbeitswocheUtilities
 
     private static $dbInstance;
 
+    
+    
+    /**
+     * Zentralisiert bei der Einführung der mobilen Zeiterfassung. 
+     * 
+     * @param unknown $pBenutzerId Die benutzerId
+     * @param unknown $pTimeStamp das Timestamp der Woche
+     * @return Arbeitswoche|NULL|DatabaseStorageObjekt
+     */
+    public static function getOrCreateArbeitswoche($pBenutzerId, $pTimeStamp, $pid = 0) {
+        $arWochentageTS = Date::berechneArbeitswocheTimestamp($pTimeStamp);
+        
+        $kw = date("W", $arWochentageTS[4]); // ISO 8601 Der Donnerstag der Woche ist entscheidend. Problemfall 2019
+        $jahr = date("Y", $arWochentageTS[4]); // ISO 8601 Der Donnerstag der Woche ist entscheidend. Problemfall 2019
+        
+        $retVal = ArbeitswocheUtilities::ladeArbeitswoche($pBenutzerId, $kw, $jahr);
+        if ($retVal == null) {
+            
+            $benSollStunden = BenutzerUtilities::getBenutzerSollWochenStunden($pBenutzerId, $pTimeStamp);
+            $tmpSollStundenAbzglFeiertage = 0;
+            foreach ($benSollStunden as $key => $val) {
+                $tmpSollStundenAbzglFeiertage += $val;
+            }
+            
+            $retVal = ArbeitswocheUtilities::createArbeitswoche($arWochentageTS[4]); // ISO-8601 - Der Donnerstag ist entscheinded. Problem 2019
+            $retVal->setBenutzerID($pBenutzerId);
+            $retVal->setWochenStundenSoll($tmpSollStundenAbzglFeiertage);
+            $retVal->speichern(true);
+        } else {
+//             $summeStunden = ArbeitstagUtilities::berechneSummeWochenIstStundenProProjekt($arWochentageTS[1], $pBenutzerId, $pid);
+//             $awArbeitswoche->setWochenStundenIst($awArbeitswoche->getWochenStundenIst() - $summeStunden);
+        }
+        return $retVal;
+    }
     /**
      * Laedt die entsprechende Arbeitswoche
      *

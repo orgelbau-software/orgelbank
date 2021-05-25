@@ -303,26 +303,11 @@ class BenutzerController
             
             unset($_POST['submit']);
             
-            // Sollstunden des Benutzers laden & berechnen
-            $benSollStunden = BenutzerUtilities::getBenutzerSollWochenStunden($benutzer->getID(), $woche);
-            $tmpSollStundenAbzglFeiertage = 0;
-            foreach ($benSollStunden as $key => $val) {
-                $tmpSollStundenAbzglFeiertage += $val;
-            }
-            
-            $awArbeitswoche = ArbeitswocheUtilities::ladeArbeitswoche($benutzer->getID(), $kw, $jahr);
-            if ($awArbeitswoche == null) {
-                $awArbeitswoche = ArbeitswocheUtilities::createArbeitswoche($arWochentageTS[4]); // ISO-8601 - Der Donnerstag ist entscheinded. Problem 2019
-                $awArbeitswoche->setBenutzerID($benutzer->getID());
-                $awArbeitswoche->setWochenStundenSoll($tmpSollStundenAbzglFeiertage);
-                $awArbeitswoche->speichern(true);
-            } else {
-                $summeStunden = ArbeitstagUtilities::berechneSummeWochenIstStundenProProjekt($arWochentageTS[1], $benutzer->getID(), $pid);
-                $awArbeitswoche->setWochenStundenIst($awArbeitswoche->getWochenStundenIst() - $summeStunden);
-            }
-            
+            $awArbeitswoche = ArbeitswocheUtilities::getOrCreateArbeitswoche($benutzer->getID(), $arWochentageTS[4], $pid);
             // ArbeitswocheUtilities::deletePreviousArbeitswoche($awArbeitswoche);
 
+            $benSollStunden = BenutzerUtilities::getBenutzerSollWochenStunden($benutzer->getID(), $arWochentageTS[4]);
+            
             // Urlaub wird neu berechnet
             $awArbeitswoche->setWochenStundenUrlaub(0);
             
@@ -352,31 +337,7 @@ class BenutzerController
                     
                     // Stunden speichern
                     if (trim($stunden != "")) {
-                        $at = new Arbeitstag();
-                        $at->setArbeitswocheID($awArbeitswoche->getID());
-                        $at->setAufgabeID($aufgabeID);
-                        $at->setBenutzerID($benutzer->getID());
-                        $at->setDatum(date("Y-m-d", $timestamp));
-                        $at->setProjektID($projektID);
-                        $at->setIstStunden($stunden);
-                        
-                        $date = new Date();
-                        if ($date->isFeiertag($timestamp)) {
-                            $at->setSollStunden(0);
-                        } else {
-                            $at->setSollStunden($benSollStunden[Date::getTagDerWoche($timestamp)]);
-                        }
-                        
-                        if ($boSollKomplett) {
-                            Log::debug("Setze Arbeitstag KOMPLETT: " . $at->getDatum());
-                            $at->setKomplett(1);
-                        } else {
-                            Log::debug("Setze Arbeitstag NICHT KOMPLETT: " . $at->getDatum());
-                            $at->setKomplett(0);
-                        }
-                        
-                        $at->speichern(true);
-                        
+                        $at = ArbeitstagUtilities::speicherNeuenArbeitstag($timestamp, $awArbeitswoche->getID(), $benutzer->getID(), $projektID, $aufgabeID, $stunden, $benSollStunden[Date::getTagDerWoche($timestamp)], $boSollKomplett);
                         $awArbeitswoche->addArbeitstag($at);
                     }
                 }

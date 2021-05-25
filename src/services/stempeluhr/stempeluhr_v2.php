@@ -52,6 +52,27 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
                 "unteraufgaben" => $retValUnteraufgaben
             );
         }
+    } else if (isset($_GET['projektId']) && $_GET['action'] == "unteraufgabedatum") {
+        $retVal = array();
+        setlocale(LC_TIME, "de_DE");
+        for($i = -14; $i <= 7; $i++) {
+            $theDate = strtotime($i." days");
+            $plainFormatteddate = strftime("%Y-%m-%d", $theDate);
+            $derTagAlsText = strftime("%a., %d.%m.%y", $theDate);
+            if($i == -1) {
+                $derTagAlsText = "Gestern, ".$derTagAlsText;
+            } else if($i == 0) {
+                $derTagAlsText = "Heute, ".$derTagAlsText;
+            } else if($i == 1) {
+                $derTagAlsText = "Morgen, ".$derTagAlsText;
+            }
+            $retVal[$plainFormatteddate] = $derTagAlsText;
+        }
+    } else if (isset($_GET['projektId'], $_GET['aufgabeId']) && $_GET['action'] == "aufgabedatumdetails") {
+        $unteraufgabe = $_GET['aufgabeId'];
+        $kalenderjahr = date("Y");
+        $tage = ArbeitstagUtilities::getMitarbeiterArbeitstagProUnteraufgabe($benutzer->getID(), $unteraufgabe, $kalenderjahr);
+        $retVal = $tage; 
     } else if ($_GET['action'] == "logout") {
         $retVal = array(
             "status" => "ok",
@@ -60,39 +81,46 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
             "logout" => date("d.m.Y H:i"),
             "duration" => "8 Stunden"
         );
-    } else if (isset($_GET['unteraufgabeId'], $_GET['projektId']) && $_GET['action'] == "login") {
+    } else if (isset($_GET['unteraufgabeId'], $_GET['projektId'], $_GET['datum'], $_GET['stunden']) && $_GET['action'] == "login") {
+        $timestamp = strtotime($_GET['datum']);
+        $projektId = $_GET['projektId'];
+        $aufgabeId = $_GET['unteraufgabeId'];
+        $stunden = $_GET['stunden'];
+        $kommentar = $_GET['kommentar'];
         
-        // Alten Eintrag updaten
-        //$letzteStempelzeit = StempeluhrUtilities::hatOffenenStempeluhrEintrag($benutzer->getId());
-        $letzteStempelzeit = null;
-        $now = new DateTime('NOW');
-        $letzteDauer = 0;
-        if($letzteStempelzeit != null) {
-            $letzteStempelzeit->setStatus(1);
-            
-            $letzterCheckin = date_create_from_format(DatabaseStorageObjekt::MYSQL_DATETIME_FORMAT, $letzteStempelzeit->getZeit());
-            $dauer = $now->diff($letzterCheckin);
-            $letzteDauer = $dauer->format('%i');
-            $letzteStempelzeit->setDauer($letzteDauer);
-            $letzteStempelzeit->speichern(false);
+        $benSollStunden = BenutzerUtilities::getBenutzerSollWochenStunden($benutzer->getID(), $timestamp);
+        $awArbeitswoche = ArbeitswocheUtilities::getOrCreateArbeitswoche($benutzer->getID(), $timestamp, $projektId);
+        $arbeitstag = ArbeitstagUtilities::getMitarbeiterProjektAufgabenArbeitstag($benutzer->getID(), $projektId, $aufgabeId , $timestamp);
+        
+        if($arbeitstag == null) {
+            $arbeitstag = ArbeitstagUtilities::speicherNeuenArbeitstag($timestamp, $awArbeitswoche->getID(), $benutzer->getID(), $projektId, $aufgabeId, $stunden, $benSollStunden[Date::getTagDerWoche($timestamp)], false);
+        } else {
+            $arbeitstag->setIstStunden($stunden);
         }
+        $arbeitstag->setKommentar($kommentar);
+        $arbeitstag->speichern(true);
         
-        // Neuer Eintrag
-        $unteraufgabe = new Aufgabe($_GET['unteraufgabeId']);
-        $hauptaufgabe = new Aufgabe($unteraufgabe->getParentID());
+        // neu
+        $awArbeitswoche->addArbeitstag($arbeitstag);
         
-        $eintrag = new Stempeluhr();
-        $eintrag->setProjektId($_GET['projektId']);
-        $eintrag->setUnteraufgabeId($unteraufgabe->getId());
-        $eintrag->setAufgabeId($hauptaufgabe->getId());
-        $eintrag->setZeit($now->format(DatabaseStorageObjekt::MYSQL_DATETIME_FORMAT));
-        $eintrag->setMitarbeiterId($benutzer->getID());
+        $istStunden = ArbeitstagUtilities::berechneSummeWochenIstStunden($timestamp, $benutzer->getID());
+        $awArbeitswoche->setWochenStundenIst($istStunden);
+        $awArbeitswoche->setWochenStundenDif($awArbeitswoche->getWochenStundenIst() - $awArbeitswoche->getWochenStundenSoll());
+
+        $awArbeitswoche->speichern(true);
+        if($awArbeitswoche->getWochenStundenDif() == 0) {
+            $text = "du hast alle Stunden erfasst.";
+        } else if($awArbeitswoche->getWochenStundenDif() < 0) {
+            $text = "es fehlen noch ".($awArbeitswoche->getWochenStundenDif() * -1)." Stunden diese Woche";
+        } else {
+            $text = "du hast diese Woche bereits " . $awArbeitswoche->getWochenStundenDif(). " Überstunden.";
+        }
         //$eintrag->speichern(true);
         $retVal = array(
             "status" => "ok",
-            "text" => "Los gehts, " .$benutzer->getVorname()."!",
-            "st_id" => $eintrag->getID(),
-            "duration_in_minutes" => $letzteDauer
+            "text" => $benutzer->getVorname().", ".$text,
+            "arbeitstag_id" => $arbeitstag->getID(),
+            "arbeitswoche_id" => $awArbeitswoche->getID()
         );
     } else {
         $retVal = array(
