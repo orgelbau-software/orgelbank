@@ -53,6 +53,7 @@ class ArbeitstagUtilities
         }
         
         $sql .= ") AND at_datum between CAST('" . $pKalenderjahr . "-01-01' AS DATE) AND CAST('" . $pKalenderjahr . "-12-31' AS DATE)";
+        echo $sql;
         $res = ArbeitstagUtilities::queryDB($sql);
         return $res;
     }
@@ -244,12 +245,16 @@ class ArbeitstagUtilities
      * @param unknown $projektID
      * @param unknown $aufgabeID
      * @param unknown $pDatum
-     * @return DatabaseStorageObjektCollection
+     * @return Arbeitstag
      */
     public static function getMitarbeiterProjektAufgabenArbeitstag($benutzerID, $projektID, $aufgabeID, $pTimestamp)
     {
-        $datum = date("Y-m-d", $pTimestamp);
         
+        if (DateTime::createFromFormat('Y-m-d', $pTimestamp) !== false) {
+            $datum = $pTimestamp;
+        } else {
+            $datum = date("Y-m-d", $pTimestamp);
+        }
         $sql = "SELECT
 					*
 				FROM
@@ -267,6 +272,26 @@ class ArbeitstagUtilities
         }
     }
 
+    public static function resetMitarbeiterProjektAufgabeArbeitstag($benutzerID, $projektID, $aufgabeID, $pTimestamp)
+    {
+        if (DateTime::createFromFormat('Y-m-d', $pTimestamp) !== false) {
+            $datum = $pTimestamp;
+        } else {
+            $datum = date("Y-m-d", $pTimestamp);
+        }
+        
+        $sql = "DELETE
+				FROM
+					arbeitstag
+				WHERE
+					be_id = " . $benutzerID . " AND
+					proj_id = " . $projektID . " AND
+					au_id = " . $aufgabeID . " AND
+					at_datum = '" . $datum . "'";
+        // echo $sql."<br><br>";
+        ArbeitstagUtilities::getDB()->NonSelectQuery($sql);
+    }
+    
     public static function resetMitarbeiterZeitraumAufgabe($benutzerID, $sqlDatumStart, $sqlDatumEnde, $projektID, $aufgabeID)
     {
         $sql = "DELETE 
@@ -281,6 +306,7 @@ class ArbeitstagUtilities
         // echo $sql."<br><br>";
         ArbeitstagUtilities::getDB()->NonSelectQuery($sql);
     }
+    
 
     public static function resetMitarbeiterArbeitstagAufgabe($benutzerID, $sqlDatum, $projektID, $aufgabeID)
     {

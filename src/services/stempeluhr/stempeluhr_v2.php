@@ -68,11 +68,19 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
             }
             $retVal[$plainFormatteddate] = $derTagAlsText;
         }
-    } else if (isset($_GET['projektId'], $_GET['aufgabeId']) && $_GET['action'] == "aufgabedatumdetails") {
+    } else if (isset($_GET['projektId'], $_GET['aufgabeId'], $_GET['datum']) && $_GET['action'] == "aufgabedatumdetails") {
         $unteraufgabe = $_GET['aufgabeId'];
-        $kalenderjahr = date("Y");
-        $tage = ArbeitstagUtilities::getMitarbeiterArbeitstagProUnteraufgabe($benutzer->getID(), $unteraufgabe, $kalenderjahr);
-        $retVal = $tage; 
+        $datum = $_GET['datum'];
+        $projektId = $_GET['projektId'];
+        
+        $arbeitstag = ArbeitstagUtilities::getMitarbeiterProjektAufgabenArbeitstag($benutzer->getID(), $projektId, $unteraufgabe , $datum);
+        if($arbeitstag == null) {
+            $retVal['stunden'] = ""; // leer, nicht 0
+            $retVal['kommentar'] = "";
+        } else {
+            $retVal['stunden'] = $arbeitstag->getIstStunden();
+            $retVal['kommentar'] = $arbeitstag->getKommentar();
+        }
     } else if ($_GET['action'] == "logout") {
         $retVal = array(
             "status" => "ok",
@@ -90,19 +98,25 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
         
         $benSollStunden = BenutzerUtilities::getBenutzerSollWochenStunden($benutzer->getID(), $timestamp);
         $awArbeitswoche = ArbeitswocheUtilities::getOrCreateArbeitswoche($benutzer->getID(), $timestamp, $projektId);
+        
         $arbeitstag = ArbeitstagUtilities::getMitarbeiterProjektAufgabenArbeitstag($benutzer->getID(), $projektId, $aufgabeId , $timestamp);
-        
-        if($arbeitstag == null) {
-            $arbeitstag = ArbeitstagUtilities::speicherNeuenArbeitstag($timestamp, $awArbeitswoche->getID(), $benutzer->getID(), $projektId, $aufgabeId, $stunden, $benSollStunden[Date::getTagDerWoche($timestamp)], false);
-        } else {
-            $arbeitstag->setIstStunden($stunden);
+        $arbeitstagId = "";
+        if($stunden > 0) {
+            if($arbeitstag == null) {
+                $arbeitstag = ArbeitstagUtilities::speicherNeuenArbeitstag($timestamp, $awArbeitswoche->getID(), $benutzer->getID(), $projektId, $aufgabeId, $stunden, $benSollStunden[Date::getTagDerWoche($timestamp)], false);
+            } else {
+                $arbeitstag->setIstStunden($stunden);
+            }
+            $arbeitstag->setKommentar($kommentar);
+            $arbeitstag->speichern(true);
+            $arbeitstagId = $arbeitstag->getID();
+            // neu
+            $awArbeitswoche->addArbeitstag($arbeitstag);
+        } else if($arbeitstag != null) {
+            // die stunden auf 0 gesetzt, der Tag wird geloescht
+            ArbeitstagUtilities::resetMitarbeiterProjektAufgabeArbeitstag($benutzer->getID(), $projektId, $aufgabeId , $timestamp);
+            $arbeitstagId = "deleted";
         }
-        $arbeitstag->setKommentar($kommentar);
-        $arbeitstag->speichern(true);
-        
-        // neu
-        $awArbeitswoche->addArbeitstag($arbeitstag);
-        
         $istStunden = ArbeitstagUtilities::berechneSummeWochenIstStunden($timestamp, $benutzer->getID());
         $awArbeitswoche->setWochenStundenIst($istStunden);
         $awArbeitswoche->setWochenStundenDif($awArbeitswoche->getWochenStundenIst() - $awArbeitswoche->getWochenStundenSoll());
@@ -111,15 +125,15 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
         if($awArbeitswoche->getWochenStundenDif() == 0) {
             $text = "du hast alle Stunden erfasst.";
         } else if($awArbeitswoche->getWochenStundenDif() < 0) {
-            $text = "es fehlen noch ".($awArbeitswoche->getWochenStundenDif() * -1)." Stunden diese Woche";
+            $text = "es fehlen noch ".($awArbeitswoche->getWochenStundenDif() * -1)." Stunde(n) diese Woche";
         } else {
-            $text = "du hast diese Woche bereits " . $awArbeitswoche->getWochenStundenDif(). " Überstunden.";
+            $text = "du hast diese Woche bereits " . $awArbeitswoche->getWochenStundenDif(). " Überstunde(n).";
         }
         //$eintrag->speichern(true);
         $retVal = array(
             "status" => "ok",
             "text" => $benutzer->getVorname().", ".$text,
-            "arbeitstag_id" => $arbeitstag->getID(),
+            "arbeitstag_id" => $arbeitstagId,
             "arbeitswoche_id" => $awArbeitswoche->getID()
         );
     } else {
