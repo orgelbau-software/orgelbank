@@ -19,16 +19,39 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
         $retVal = array();
         $retVal['status'] = "ok";
         
-        $messages[] = "Guten Morgen ". $benutzer->getVorname()."! Einen guten Start in den Tag! Du musst noch 30 Stunden diese Woche buchen.";
-        $messages[] = "Mahlzeit ". $benutzer->getVorname()."!  Du musst noch 2 Stunden diese Woche buchen.";
-        $messages[] = "Hallo ". $benutzer->getVorname()."!  Du musst noch 9 Stunden diese Woche buchen.";
-        $retVal['msg'] = $messages[rand(0,2)];
+        $datum = time();
+        
+        $benSollStunden = BenutzerUtilities::getBenutzerSollWochenStunden($benutzer->getID(), $datum);
+        $tmpSollStundenAbzglFeiertage = 0;
+        foreach ($benSollStunden as $key => $val) {
+            $tmpSollStundenAbzglFeiertage += $val;
+        }
+        $istStunden = ArbeitstagUtilities::berechneSummeWochenIstStunden($datum, $benutzer->getID());
+        
+        if($benSollStunden == $istStunden) {
+            $text = "Du hast alle Stunden erfasst.";
+        } else if($benSollStunden < $istStunden) {
+            $text = "Es fehlen noch ".($benSollStunden - $istStunden)." Stunde(n) diese Woche";
+        } else {
+            $text = "Du hast diese Woche bereits " . ($istStunden - $tmpSollStundenAbzglFeiertage ). " Überstunde(n).";
+        }
+        
+        $retVal['msg'] = "Hallo ". $benutzer->getVorname()."! ". $text;
     } else if ($_GET['action'] == "projekte") {
         $cProjekte = ProjektUtilities::getProjekte();
         $projekte = array();
+        
+        if(isset($_GET['datum'])) {
+            $datum = strtotime($_GET['datum']);
+        } else {
+            $datum = time(); // Heute
+        }
+        
         foreach ($cProjekte as $currentProjekt) {
             $gemeinde = new Gemeinde($currentProjekt->getGemeindeId());
-            $projekte[$currentProjekt->getId()] = array("bezeichnung" => $currentProjekt->getBezeichnung(), "ort" => $gemeinde->getKirche());
+            $istStunden = ArbeitstagUtilities::berechneSummeWochenIstStundenProProjekt($datum, $benutzer->getID(), $currentProjekt->getID());
+            $istStunden = ($istStunden == null ? 0 : $istStunden);
+            $projekte[$currentProjekt->getId()] = array("bezeichnung" => $currentProjekt->getBezeichnung(), "ort" => $gemeinde->getKirche(), "istStunden" => $istStunden);
         }
         
         $retVal = array(
@@ -38,12 +61,21 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
     } else if (isset($_GET['projektId']) && $_GET['action'] == "unteraufgaben") {
         $cAufgaben = ProjektAufgabeUtilities::getAlleProjektAufgaben($_GET['projektId']);
         $retVal = array();
+        
+        if(isset($_GET['datum'])) {
+            $datum =strtotime($_GET['datum']);
+        } else {
+            $datum = time();
+        }
+        
         foreach ($cAufgaben as $currentAufgabe) {
             $retValUnteraufgaben = array();
             $cUnteraufgaben = AufgabeUtilities::loadChildrenAufgaben($currentAufgabe->getId());
             
             foreach ($cUnteraufgaben as $currentUnteraufgabe) {
-                $retValUnteraufgaben[$currentUnteraufgabe->getId()] = $currentUnteraufgabe->getBezeichnung();
+                $istStunden = ArbeitstagUtilities::berechneSummeWochenIstStundenProProjektAufgabe($datum, $benutzer->getID(), $_GET['projektId'], $currentUnteraufgabe->getID());
+                $istStunden = ($istStunden == null ? "0" : $istStunden);
+                $retValUnteraufgaben[$currentUnteraufgabe->getId()] = array("id" => $currentUnteraufgabe->getId(), "bezeichnung" => $currentUnteraufgabe->getBezeichnung(), "wochenIstStd" => $istStunden);
             }
             
             $retVal[] = array(
@@ -52,7 +84,7 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
                 "unteraufgaben" => $retValUnteraufgaben
             );
         }
-    } else if (isset($_GET['projektId']) && $_GET['action'] == "unteraufgabedatum") {
+    } else if (isset($_GET['projektId'], $_GET['aufgabeId']) && $_GET['action'] == "unteraufgabedatum") {
         $retVal = array();
         setlocale(LC_TIME, "de_DE");
         for($i = -14; $i <= 7; $i++) {
@@ -66,7 +98,11 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
             } else if($i == 1) {
                 $derTagAlsText = "Morgen, ".$derTagAlsText;
             }
-            $retVal[$plainFormatteddate] = $derTagAlsText;
+            
+            // 
+            $istStunden = ArbeitstagUtilities::getMitarbeiterProjektAufgabenArbeitstag($benutzer->getID(), $_GET['projektId'], $_GET['aufgabeId'], $plainFormatteddate);
+            $istStunden = ($istStunden == null ? "" : " (".$istStunden->getIstStunden()." Std.)");
+            $retVal[$plainFormatteddate] = $derTagAlsText.$istStunden;
         }
     } else if (isset($_GET['projektId'], $_GET['aufgabeId'], $_GET['datum']) && $_GET['action'] == "aufgabedatumdetails") {
         $unteraufgabe = $_GET['aufgabeId'];

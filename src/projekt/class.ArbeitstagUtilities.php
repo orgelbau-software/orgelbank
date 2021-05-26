@@ -224,6 +224,29 @@ class ArbeitstagUtilities
         return $at;
     }
 
+    public static function getMitarbeiterProjektAufgabenDatum($benutzerID, $projektID, $aufgabeID, $pDatum)
+    {
+        $sql = "SELECT
+					*
+				FROM
+					arbeitstag
+				WHERE
+					be_id = " . $benutzerID . " AND
+					au_id = " . $aufgabeID . " AND
+					proj_id = " . $projektID . " AND
+					at_datum = '" . $pDatum . "'";
+        return ArbeitstagUtilities::queryDB($sql);
+    }
+    
+    /**
+     * 
+     * @param unknown $benutzerID
+     * @param unknown $sqlDatumStart
+     * @param unknown $sqlDatumEnde
+     * @param unknown $projektID
+     * @param unknown $aufgabeID
+     * @return DatabaseStorageObjektCollection
+     */
     public static function getMitarbeiterProjektAufgabenZeitraumStunde($benutzerID, $sqlDatumStart, $sqlDatumEnde, $projektID, $aufgabeID)
     {
         $sql = "SELECT
@@ -337,6 +360,25 @@ class ArbeitstagUtilities
     {
         $arWochentageTS = Date::berechneArbeitswocheTimestamp($timestamp);
         $sql = "SELECT sum(at_stunden_ist) as summe FROM arbeitstag WHERE be_id = " . $benutzerId . " AND at_datum >= '" . date("Y-m-d", $arWochentageTS[0]) . "' AND at_datum <= '" . date("Y-m-d", $arWochentageTS[6]) . "' AND proj_id = " . $pid;
+        Log::sql($sql);
+        $r = DB::getInstance()->SelectQuery($sql);
+        if (($r = DB::getInstance()->SelectQuery($sql)) != false) {
+            return $r[0]['summe'];
+        }
+        return - 1;
+    }
+    
+    public static function berechneSummeWochenIstStundenProProjektAufgabe($timestamp, $benutzerId, $pProjektId, $pAufgabeId)
+    {
+        $arWochentageTS = Date::berechneArbeitswocheTimestamp($timestamp);
+        $sql = "SELECT sum(at_stunden_ist) as summe 
+                FROM arbeitstag 
+                WHERE 
+                    be_id = " . $benutzerId . " AND 
+                    at_datum >= '" . date("Y-m-d", $arWochentageTS[0]) . "' AND 
+                    at_datum <= '" . date("Y-m-d", $arWochentageTS[6]) . "' AND 
+                    proj_id = " . $pProjektId. " AND
+                    au_id = ".$pAufgabeId;
         Log::sql($sql);
         $r = DB::getInstance()->SelectQuery($sql);
         if (($r = DB::getInstance()->SelectQuery($sql)) != false) {
