@@ -30,8 +30,8 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
         
         if($benSollStunden == $istStunden) {
             $text = "Du hast alle Stunden erfasst.";
-        } else if($benSollStunden < $istStunden) {
-            $text = "Es fehlen noch ".($benSollStunden - $istStunden)." Stunde(n) diese Woche";
+        } else if($tmpSollStundenAbzglFeiertage > $istStunden) {
+            $text = "Es fehlen noch ".($tmpSollStundenAbzglFeiertage - $istStunden)." Stunde(n) diese Woche";
         } else {
             $text = "Du hast diese Woche bereits " . ($istStunden - $tmpSollStundenAbzglFeiertage ). " Überstunde(n).";
         }
@@ -104,7 +104,7 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
             $istStunden = ($istStunden == null ? "" : " (".$istStunden->getIstStunden()." Std.)");
             $retVal[$plainFormatteddate] = $derTagAlsText.$istStunden;
         }
-    } else if (isset($_GET['projektId'], $_GET['aufgabeId'], $_GET['datum']) && $_GET['action'] == "aufgabedatumdetails") {
+    } else if (isset($_GET['projektId'], $_GET['aufgabeId'], $_GET['datum']) && $_GET['action'] == "arbeitstag") {
         $unteraufgabe = $_GET['aufgabeId'];
         $datum = $_GET['datum'];
         $projektId = $_GET['projektId'];
