@@ -2,6 +2,7 @@
 use Sabre\VObject\DateTimeParser;
 
 include "../../../conf/config.inc.php";
+$httpResponseCode = 200;
 DB::getInstance()->connect();
 if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
     $cBenutzer = BenutzerUtilities::getZeiterfassungsBenutzer();
@@ -84,7 +85,7 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
                 "unteraufgaben" => $retValUnteraufgaben
             );
         }
-    } else if (isset($_GET['projektId'], $_GET['aufgabeId']) && $_GET['action'] == "unteraufgabedatum") {
+    } else if (isset($_GET['projektId'], $_GET['aufgabeId']) && $_GET['action'] == "datumsauswahl") {
         $retVal = array();
         setlocale(LC_TIME, "de_DE");
         for($i = -14; $i <= 7; $i++) {
@@ -125,7 +126,7 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
             "logout" => date("d.m.Y H:i"),
             "duration" => "8 Stunden"
         );
-    } else if (isset($_GET['unteraufgabeId'], $_GET['projektId'], $_GET['datum'], $_GET['stunden']) && $_GET['action'] == "login") {
+    } else if (isset($_GET['unteraufgabeId'], $_GET['projektId'], $_GET['datum'], $_GET['stunden']) && $_GET['action'] == "buchen") {
         $timestamp = strtotime($_GET['datum']);
         $projektId = $_GET['projektId'];
         $aufgabeId = $_GET['unteraufgabeId'];
@@ -135,39 +136,56 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
         $benSollStunden = BenutzerUtilities::getBenutzerSollWochenStunden($benutzer->getID(), $timestamp);
         $awArbeitswoche = ArbeitswocheUtilities::getOrCreateArbeitswoche($benutzer->getID(), $timestamp, $projektId);
         
-        $arbeitstag = ArbeitstagUtilities::getMitarbeiterProjektAufgabenArbeitstag($benutzer->getID(), $projektId, $aufgabeId , $timestamp);
-        $arbeitstagId = "";
-        if($stunden > 0) {
-            if($arbeitstag == null) {
-                $arbeitstag = ArbeitstagUtilities::speicherNeuenArbeitstag($timestamp, $awArbeitswoche->getID(), $benutzer->getID(), $projektId, $aufgabeId, $stunden, $benSollStunden[Date::getTagDerWoche($timestamp)], false);
-            } else {
-                $arbeitstag->setIstStunden($stunden);
+        $projekt = new Projekt($projektId);
+        $projektStart = strtotime($projekt->getStart());
+        $projektEnde = strtotime($projekt->getEnde());
+        if($timestamp < $projektStart || $timestamp > $projektEnde) {
+            $status = "error";
+            $text = "Auf dieses Projekt kann nur vom ".$projekt->getStart(true). " bis ".$projekt->getEnde(true)." gebucht werden.";
+            $arbeitstagId = "error";
+            $httpResponseCode = 406;
+        } else if($awArbeitswoche->getEingabeKomplett() == 0) { 
+            $arbeitstag = ArbeitstagUtilities::getMitarbeiterProjektAufgabenArbeitstag($benutzer->getID(), $projektId, $aufgabeId , $timestamp);
+            $arbeitstagId = "";
+            if($stunden > 0) {
+                if($arbeitstag == null) {
+                    $arbeitstag = ArbeitstagUtilities::speicherNeuenArbeitstag($timestamp, $awArbeitswoche->getID(), $benutzer->getID(), $projektId, $aufgabeId, $stunden, $benSollStunden[Date::getTagDerWoche($timestamp)], false);
+                } else {
+                    $arbeitstag->setIstStunden($stunden);
+                }
+                $arbeitstag->setKommentar($kommentar);
+                $arbeitstag->speichern(true);
+                $arbeitstagId = $arbeitstag->getID();
+                // neu
+                $awArbeitswoche->addArbeitstag($arbeitstag);
+            } else if($arbeitstag != null) {
+                // die stunden auf 0 gesetzt, der Tag wird geloescht
+                ArbeitstagUtilities::resetMitarbeiterProjektAufgabeArbeitstag($benutzer->getID(), $projektId, $aufgabeId , $timestamp);
+                $arbeitstagId = "deleted";
             }
-            $arbeitstag->setKommentar($kommentar);
-            $arbeitstag->speichern(true);
-            $arbeitstagId = $arbeitstag->getID();
-            // neu
-            $awArbeitswoche->addArbeitstag($arbeitstag);
-        } else if($arbeitstag != null) {
-            // die stunden auf 0 gesetzt, der Tag wird geloescht
-            ArbeitstagUtilities::resetMitarbeiterProjektAufgabeArbeitstag($benutzer->getID(), $projektId, $aufgabeId , $timestamp);
-            $arbeitstagId = "deleted";
-        }
-        $istStunden = ArbeitstagUtilities::berechneSummeWochenIstStunden($timestamp, $benutzer->getID());
-        $awArbeitswoche->setWochenStundenIst($istStunden);
-        $awArbeitswoche->setWochenStundenDif($awArbeitswoche->getWochenStundenIst() - $awArbeitswoche->getWochenStundenSoll());
+            $istStunden = ArbeitstagUtilities::berechneSummeWochenIstStunden($timestamp, $benutzer->getID());
+            $awArbeitswoche->setWochenStundenIst($istStunden);
+            $awArbeitswoche->setWochenStundenDif($awArbeitswoche->getWochenStundenIst() - $awArbeitswoche->getWochenStundenSoll());
 
-        $awArbeitswoche->speichern(true);
-        if($awArbeitswoche->getWochenStundenDif() == 0) {
-            $text = "du hast alle Stunden erfasst.";
-        } else if($awArbeitswoche->getWochenStundenDif() < 0) {
-            $text = "es fehlen noch ".($awArbeitswoche->getWochenStundenDif() * -1)." Stunde(n) diese Woche";
+            $awArbeitswoche->speichern(true);
+            if($awArbeitswoche->getWochenStundenDif() == 0) {
+                $text = "du hast alle Stunden erfasst.";
+            } else if($awArbeitswoche->getWochenStundenDif() < 0) {
+                $text = "es fehlen noch ".($awArbeitswoche->getWochenStundenDif() * -1)." Stunde(n) diese Woche";
+            } else {
+                $text = "du hast diese Woche bereits " . $awArbeitswoche->getWochenStundenDif(). " Überstunde(n).";
+            }
+            $status = "ok";
+            $httpResponseCode = 201;
         } else {
-            $text = "du hast diese Woche bereits " . $awArbeitswoche->getWochenStundenDif(). " Überstunde(n).";
+            $status = "error";
+            $text = "Für diese Arbeitswoche ist die Eingabe bereits gesperrt.";    
+            $arbeitstagId = "error";
+            $httpResponseCode = 403;
         }
         //$eintrag->speichern(true);
         $retVal = array(
-            "status" => "ok",
+            "status" => $status,
             "text" => $benutzer->getVorname().", ".$text,
             "arbeitstag_id" => $arbeitstagId,
             "arbeitswoche_id" => $awArbeitswoche->getID()
@@ -184,4 +202,5 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
 }
 DB::getInstance()->disconnect();
 header('Content-Type: application/json');
+http_response_code($httpResponseCode);
 echo json_encode($retVal);

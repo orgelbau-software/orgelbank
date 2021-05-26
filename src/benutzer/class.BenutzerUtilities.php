@@ -111,7 +111,8 @@ class BenutzerUtilities
 					benutzer
 				WHERE
 					be_passwort = '" . $passwort . "' AND
-					be_aktiviert = 1;";
+					be_aktiviert = 1 AND
+                    be_zeiterfassung = 1;";
         if(DB::getInstance()->getMysqlNumRows($sql) > 1) {
             // Fehler, es sollte nicht mehr Benutzer mit dem gleichen Passwort geben.
             return false;
