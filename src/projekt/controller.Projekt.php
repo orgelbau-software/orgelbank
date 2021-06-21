@@ -201,7 +201,7 @@ class ProjektController
         $col = AufgabeUtilities::getHauptAufgaben();
         foreach ($col as $o) {
             $tplAufgDS->replace("Aufgabe", $o->getBezeichnung());
-            $desc = count($o->getBeschreibung()) > 55 ? substr($o->getBeschreibung(), 0, 55) . "..." : $o->getBeschreibung();
+            $desc = strlen($o->getBeschreibung()) > 55 ? substr($o->getBeschreibung(), 0, 55) . "..." : $o->getBeschreibung();
             $tplAufgDS->replace("Beschreibung", $desc);
             $tplAufgDS->replace("PaID", $o->getID());
             $tplAufgDS->next();
