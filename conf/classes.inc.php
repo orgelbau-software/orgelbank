@@ -62,6 +62,7 @@ include_once ROOTDIR . 'src/core/db/class.DatabaseStorageObjektCollection.php';
 include_once ROOTDIR . 'src/entities/class.Gemeinde.php';
 include_once ROOTDIR . 'src/gemeinde/class.GemeindeUtilities.php';
 include_once ROOTDIR . 'src/gemeinde/class.GemeindeRequestHandler.php';
+include_once ROOTDIR . 'src/gemeinde/controller.GemeindeListeAction.php';
 include_once ROOTDIR . 'src/entities/class.Adresse.php';
 include_once ROOTDIR . 'src/entities/class.Ansprechpartner.php';
 include_once ROOTDIR . 'src/ansprechpartner/class.AnsprechpartnerUtilities.php';

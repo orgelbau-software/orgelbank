@@ -430,7 +430,9 @@ class BenutzerController
                 }
             }
             $tplDS->replace("summe_" . $z->getProjektID() . "_" . $z->getUnteraufgabeID(), $iStunden == 0 ? $iStunden = "" : $iStunden);
-            $wochentagsStunden[7] += $iStunden;
+            if($iStunden > 0) {
+                $wochentagsStunden[7] += $iStunden;
+            }
             
             // Felder mit überflüssigen Platzhaltern leeren
             for ($i = 0; $i < 7; $i ++) {
