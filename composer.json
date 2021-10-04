@@ -1,6 +1,7 @@
 {
     "require": {
         "phpoffice/phpspreadsheet": "^1.18",
-        "firephp/firephp-core": "^0.5.3"
+        "firephp/firephp-core": "^0.5.3",
+        "phpoffice/phpword": "^0.18.2"
     }
 }

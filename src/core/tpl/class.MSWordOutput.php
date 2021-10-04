@@ -10,8 +10,7 @@ class MSWordOutput extends Output
         $pfad = $pfadOrig . ".docx";
         $pfad = $this->aenderePfad($pfad);
         
-        $PHPWord = new PHPWord();
-        $this->template = $PHPWord->loadTemplate($pfad);
+        $this->template =  new \PhpOffice\PhpWord\TemplateProcessor($pfad);
         $this->file = $pfad;
     }
 
@@ -30,7 +29,7 @@ class MSWordOutput extends Output
 
     public function save($file)
     {
-        $this->template->save($file . MSWordOutput::$FILE_EXTENSTION);
-        return $file . MSWordOutput::$FILE_EXTENSTION;
+        $this->template->saveAs($file);
+        return $file;
     }
 }
