@@ -11,3 +11,4 @@ lib/tFPDF/font/unifont/dejavusanscondensed-bold.cw127.php
 lib/tFPDF/font/unifont/dejavusanscondensed-bold.mtx.php
 resources/graser_import/*.xlsx
 resources/graser_import/*.csv
+vendor/*

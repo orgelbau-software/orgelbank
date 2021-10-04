@@ -9,10 +9,14 @@ include_once ROOTDIR . 'src/core/security/class.IntrusionNotificationMailer.php'
 include_once ROOTDIR . 'lib/FirePHPCore/FirePHP.class.php';
 include_once ROOTDIR . 'lib/FirePHPCore/fb.php';
 
+// Composer Stuff
+require_once ROOTDIR . 'vendor/autoload.php';
+
+
 //include_once ROOTDIR . 'lib/odf/odf.php';
 //include_once ROOTDIR . 'lib/PHPWord/PHPWord.php';
 //include_once ROOTDIR . 'lib/PHPExcel/PHPExcel.php';
-include_once ROOTDIR . 'lib/PHPExcel/OrgelbankExcelWriter.php';
+include_once ROOTDIR . 'src/core/excel/OrgelbankPHPSpreadsheetWriter.php';
 
 include_once ROOTDIR . 'src/core/log/class.Trace.php';
 include_once ROOTDIR . 'src/core/log/interface.Logger.php';

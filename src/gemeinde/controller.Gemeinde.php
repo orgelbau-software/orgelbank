@@ -319,7 +319,7 @@ class GemeindeController
         $handledRequest = $requestHandler->prepareGemeindeListRequest();
         error_reporting(E_ALL); // gibt sonst haessliche Fehler im Code
         
-        $workbook = new OrgelbankExcelWriter();
+        $workbook = new OrgelbankPHPSpreadsheetWriter();
         $workbook->setTempDir(TMPDIR);
         $worksheet = $workbook->addWorksheet();
         
