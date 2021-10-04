@@ -1,6 +1,6 @@
 <?php
 
-class GemeindeListeAction implements GetRequestHandler
+class GemeindeListeAction implements GetRequestHandler, PostRequestHandler
 {
 
     /**
@@ -164,7 +164,30 @@ class GemeindeListeAction implements GetRequestHandler
         
         $q = new Quickjump($x, $handledRequest->getValueOf("GETTER"), "index.php?page=1&do=1&order=" . $handledRequest->getValueOf("TPLORDER") . "&dir=asc&index=<!--Index-->", $handledRequest->getValueOf("SKALA"), $lblArray);
         $tplGemeindeListe->replace("Quickjump", $q->getOutput());
+        
         // Template ausgeben
-        $tplGemeindeListe->anzeigen();
+        return $tplGemeindeListe;
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see PostRequestHandler::preparePost()
+     */
+    public function preparePost()
+    {
+        return $this->prepareGet();
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see PostRequestHandler::executePost()
+     */
+    public function executePost()
+    {
+        return $this->executeGet();
     }
 }

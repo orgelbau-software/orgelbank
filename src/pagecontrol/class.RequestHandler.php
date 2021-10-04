@@ -44,6 +44,7 @@ class RequestHandler
                     $tpl = $c->executeGet();
                 }
             }
+            
         }
         if ($tpl == null) {
             throw new Exception("Die Methode liefert NULL als Template zurück", 1024);

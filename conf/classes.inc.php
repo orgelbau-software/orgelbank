@@ -10,8 +10,8 @@ include_once ROOTDIR . 'lib/FirePHPCore/FirePHP.class.php';
 include_once ROOTDIR . 'lib/FirePHPCore/fb.php';
 
 //include_once ROOTDIR . 'lib/odf/odf.php';
-include_once ROOTDIR . 'lib/PHPWord/PHPWord.php';
-include_once ROOTDIR . 'lib/PHPExcel/PHPExcel.php';
+//include_once ROOTDIR . 'lib/PHPWord/PHPWord.php';
+//include_once ROOTDIR . 'lib/PHPExcel/PHPExcel.php';
 include_once ROOTDIR . 'lib/PHPExcel/OrgelbankExcelWriter.php';
 
 include_once ROOTDIR . 'src/core/log/class.Trace.php';

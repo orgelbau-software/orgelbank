@@ -1,8 +1,14 @@
 <?php
+/**
+ * Class utilizing PHPExcel, which is deprecated.
+ * 
+ * @author Stephan
+ *
+ */
 class OrgelbankExcelWriter {
 	private $mExcel;
 	public function __construct() {
-		$this->mExcel = new PHPExcel ();
+// 		$this->mExcel = new PHPExcel ();
 		$this->mExcel->setActiveSheetIndex ( 0 );
 	}
 	public function setTempDir($pDir) {
@@ -32,7 +38,7 @@ class OrgelbankExcelWriter {
  		return $this->downloadInner($pName);
 	}
 	public function downloadInner($pName) {
-			// Redirect output to a client’s web browser (Excel2007)
+			// Redirect output to a clientï¿½s web browser (Excel2007)
 		header ( 'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' );
 		header ( 'Content-Disposition: attachment;filename="' . $pName . '"' );
 		header ( 'Cache-Control: max-age=0' );
