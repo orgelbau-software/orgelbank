@@ -991,7 +991,7 @@ class OrgelController
         $handledRequest = $requestHandler->prepareOrgelListe();
         // error_reporting ( null ); // gibt sonst h�ssliche Fehler im Code
         
-        $workbook = new OrgelbankExcelWriter();
+        $workbook = new OrgelbankPHPSpreadsheetWriter();
         $workbook->setTempDir(TMPDIR);
         $worksheet = $workbook->addWorksheet("Orgelliste");
         
