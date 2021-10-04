@@ -90,7 +90,8 @@ class Constant
         return array(
             "" => "keine",
             "Herr" => "Herr",
-            "Frau" => "Frau"
+            "Frau" => "Frau",
+            "HerrFrau" => "Herr und Frau"
         );
     }
 
