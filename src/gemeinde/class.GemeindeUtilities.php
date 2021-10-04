@@ -123,6 +123,7 @@ class GemeindeUtilities
   			        g_kirche_aid = ad.ad_id AND 
 					g_aktiv = 1 AND (
 					g_kirche LIKE '%" . $suchstring . "%' OR
+					ad_ort LIKE '%" . $suchstring . "%' OR
 					ad_plz LIKE '" . $suchstring . "%' OR
 					b_id LIKE '" . $suchstring . "' OR
 					k_id LIKE '" . $suchstring . "'
