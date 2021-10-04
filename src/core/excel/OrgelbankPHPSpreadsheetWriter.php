@@ -18,13 +18,13 @@ class OrgelbankPHPSpreadsheetWriter
         $this->mExcel = new Spreadsheet();
         $this->mExcel->setActiveSheetIndex(0);
         $this->mExcel->getProperties()
-            ->setCreator('Maarten Balliauw')
-            ->setLastModifiedBy('Maarten Balliauw')
-            ->setTitle('Office 2007 XLSX Test Document')
-            ->setSubject('Office 2007 XLSX Test Document')
-            ->setDescription('Test document for Office 2007 XLSX, generated using PHP classes.')
-            ->setKeywords('office 2007 openxml php')
-            ->setCategory('Test result file');
+            ->setCreator('Stephan Watermeyer')
+            ->setLastModifiedBy('Stephan Watermeyer')
+            ->setTitle('Orgelbank Export')
+            ->setSubject('Orgelbank Export')
+            ->setDescription('Orgelbank Export.')
+            ->setKeywords('Keine Schlagwörter')
+            ->setCategory('Kategorie');
     }
 
     public function setTempDir($pDir)
