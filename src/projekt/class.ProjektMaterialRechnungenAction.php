@@ -25,7 +25,10 @@ class ProjektMaterialRechnungenAction implements GetRequestHandler, PostRequestH
      */
     public function handleInvalidGet()
     {
-        // TODO Auto-generated method stub
+        $htmlStatus = new HTMLRedirect();
+        $htmlStatus->setNachricht("Keine gültige ProjektID übergeben");
+        $htmlStatus->setLink("index.php?page=1&do=1");
+        return $htmlStatus;
     }
 
     /**

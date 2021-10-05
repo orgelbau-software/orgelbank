@@ -4,7 +4,9 @@ class ProjektAufgabe extends AdvancedDatabaseStorageObjekt
 {
 
     private $plankosten;
-
+    private $sollStunden;
+    private $sollMaterial;
+    
     private $reihenfolge;
     private $bezeichnung;
     
@@ -27,6 +29,8 @@ class ProjektAufgabe extends AdvancedDatabaseStorageObjekt
         $rs = $this->result;
         $this->planlkosten = $rs["pa_plankosten"];
         $this->reihenfolge = $rs["pa_reihenfolge"];
+        $this->sollStunden = $rs["pa_sollstunden"];
+        $this->sollMaterial = $rs["pa_sollmaterial"];
     }
 
     protected function doNew()
@@ -37,6 +41,8 @@ class ProjektAufgabe extends AdvancedDatabaseStorageObjekt
         $ht = new HashTable();
         $ht->add("pa_plankosten", $this->getPlankosten());
         $ht->add("pa_reihenfolge", $this->getReihenfolge());
+        $ht->add("pa_sollstunden", $this->getSollStunden());
+        $ht->add("pa_sollmaterial", $this->getSollMaterial());
         return $ht;
     }
 
@@ -98,6 +104,26 @@ class ProjektAufgabe extends AdvancedDatabaseStorageObjekt
     public function setBezeichnung($bezeichnung)
     {
         $this->bezeichnung = $bezeichnung;
+    }
+    
+    public function getSollStunden()
+    {
+        return $this->sollStunden;
+    }
+    
+    public function setSollStunden($pSollStunden)
+    {
+        $this->sollStunden = $pSollStunden;
+    }
+    
+    public function getSollMaterial()
+    {
+        return $this->sollMaterial;
+    }
+    
+    public function setSollMaterial($pSollMaterial)
+    {
+        $this->sollMaterial = $pSollMaterial;
     }
 }
 ?>

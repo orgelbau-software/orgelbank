@@ -58,8 +58,8 @@
       		<tr>
 	        	<th colspan="2">Projektaufgaben:</th>
 	    	    <th colspan="1">Plankosten:</th>
-	    	    <th colspan="1">Soll Std:</th>
-	    	    <th colspan="2">Material:</th>
+	    	    <th colspan="1">Material:</th>
+	    	    <th colspan="2">Soll Std:</th>
       		</tr>
       	</thead>
       	<tbody>

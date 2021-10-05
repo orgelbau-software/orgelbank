@@ -45,7 +45,7 @@ class ProjektAufgabeUtilities
     public static function getSelectedProjektAufgaben($iProjektID)
     {
         $sql = "SELECT
-					a.*, pa.pa_plankosten, pa.proj_id, 
+					a.*, pa.pa_plankosten, pa_sollstunden, pa.proj_id, pa_sollmaterial,
                     CASE WHEN pa.au_id > 0 THEN 1 ELSE 0 END as selected,
                     CASE WHEN pa.pa_reihenfolge IS NULL THEN 99 ELSE pa_reihenfolge END as pa_reihenfolge
 				FROM 
@@ -71,6 +71,8 @@ class ProjektAufgabeUtilities
                 $tmp->setBeschreibung($objekt['au_beschreibung']);
                 $tmp->setBezeichnung($objekt['au_bezeichnung']);
                 $tmp->setPlankosten($objekt['pa_plankosten']);
+                $tmp->setSollStunden($objekt['pa_sollstunden']);
+                $tmp->setSollMaterial($objekt['pa_sollmaterial']);
                 
                 if (isset($objekt['selected'])) {
                     $tmp->setSelected($objekt['selected']);
@@ -92,6 +94,7 @@ class ProjektAufgabeUtilities
         $retVal->setBeschreibung($a->getBeschreibung());
         $retVal->setBezeichnung($a->getBezeichnung());
         $retVal->setPlankosten(0);
+        $retVal->setSollStunden(0);
         $retVal->setPersistent(false);
         return $retVal;
     }

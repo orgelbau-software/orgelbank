@@ -6,6 +6,8 @@ if (isset($_GET['action'], $_GET['request']) && $_GET['action'] == "ajax") {
     if (isset($_GET['request'], $_GET['a'], $_GET['p']) && $_GET['request'] == "unteraufgaben") {
         
         $ha = AufgabeUtilities::loadChildrenAufgaben(intval($_GET['a']));
+        $projektAufgabe = new ProjektAufgabe($_GET['p'], $_GET['a']);
+        print_r($projektAufgabe);
         $tpl = new BufferedTemplate("projekt_details_uaufgabe_ds.tpl", "CSS", "td3", "td4");
         
         $lohnKosten = ZeiterfassungUtilities::getProjektAufgabeLohnkosten($_GET['p'], $_GET['a'], true);
@@ -31,7 +33,11 @@ if (isset($_GET['action'], $_GET['request']) && $_GET['action'] == "ajax") {
             $tpl->replace("ProjektID", $p->getID());
             $tpl->replace("AufgabeID", $haufgabe->getID());
             $tpl->replace("ParentID", $_GET['a']);
-            $tpl->replace("Stunden", $tmpStunden);
+            if($projektAufgabe->getSollStunden() > 0) {
+                $tpl->replace("Stunden", $tmpStunden . "/" .$projektAufgabe->getSollStunden());
+            } else {
+                $tpl->replace("Stunden", $tmpStunden);
+            }
             $tpl->replace("Kosten", WaehrungUtil::formatDoubleToWaehrung($tmpLohnKosten));
             $tpl->next();
         }

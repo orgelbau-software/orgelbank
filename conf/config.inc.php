@@ -29,7 +29,6 @@ define("ERROR_REPORTING_LVL", E_ALL); // also used in class.DB.php
 error_reporting(ERROR_REPORTING_LVL);
 
 include_once ROOTDIR . 'conf/classes.inc.php';
-include_once ROOTDIR . 'conf/pear.inc.php';
 
 include_once ROOTDIR . 'src/core/error/class.ExceptionHandler.php';
 include_once ROOTDIR . 'src/core/error/class.ErrorHandler.php';

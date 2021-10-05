@@ -176,6 +176,7 @@ include_once ROOTDIR . 'src/gemeinde/controller.Gemeinde.php';
 include_once ROOTDIR . 'src/orgel/controller.Disposition.php';
 include_once ROOTDIR . 'src/rechnung/controller.Rechnung.php';
 include_once ROOTDIR . 'src/projekt/controller.Projekt.php';
+include_once ROOTDIR . 'src/projekt/controller.ProjektBearbeitenAction.php';
 include_once ROOTDIR . 'src/controller/controller.Einstellung.php';
 include_once ROOTDIR . 'src/benutzer/controller.Benutzer.php';
 
