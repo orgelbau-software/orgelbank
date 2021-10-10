@@ -197,6 +197,9 @@ class DispositionBearbeitenAction
         $tplTOPRegister3 = new BufferedTemplate("disposition_top_ds.tpl");
         $tplTOPRegisterCurrent = $tplTOPRegister1;
         $iCounter = 0;
+        
+        $eintraegeProSpalte = ConstantLoader::getDefaultTOPRegister() / 3;
+        
         foreach ($c as $topRegister) {
             $iCounter ++;
             $tplTOPRegisterCurrent->replace("Name", $topRegister->getName());
@@ -205,9 +208,11 @@ class DispositionBearbeitenAction
             $tplTOPRegisterCurrent->replace("DID", $topRegister->getID());
             $tplTOPRegisterCurrent->next();
             
-            if ($iCounter == ConstantLoader::getDefaultTOPRegister() / 3) {
+            if ($iCounter < $eintraegeProSpalte) {
+                $tplTOPRegisterCurrent = $tplTOPRegister1;
+            } elseif ($iCounter < (2*$eintraegeProSpalte)) {
                 $tplTOPRegisterCurrent = $tplTOPRegister2;
-            } elseif ($iCounter == ConstantLoader::getDefaultTOPRegister() / 3 * 2) {
+            } else {
                 $tplTOPRegisterCurrent = $tplTOPRegister3;
             }
         }
