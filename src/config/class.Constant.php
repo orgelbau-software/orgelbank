@@ -7,6 +7,15 @@ class Constant
 
     public static $HTML_SELECTED_SELECTED = "selected=\"selected\"";
 
+    public static function getDispositionTyp()
+    {
+        return array(
+            1 => "Register",
+            2 => "Transmissionen",
+            3 => "Extensionen"
+        );
+    }
+    
     public static function getRegisterTrakturen()
     {
         return array(

@@ -9,7 +9,12 @@
       >
       <!--Manuale-->
     </select></td>
-    <td>Register:</td>
+    <td><select name="typ"
+      <!--disabled-->
+      >
+      <!--Typ-->
+    </select>
+    </td>
     <td><input type="text" id="register" name="register" size="30" maxlength="50" value="<!--Register-->" <!--disabled--> autofocus/></td>
     <td>Fu&szlig;:</td>
     <td><select name="fuss"

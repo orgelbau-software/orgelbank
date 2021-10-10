@@ -146,6 +146,11 @@ class DispositionBearbeitenAction
         } else {
             $ausgewaehlteFussGroesse = $this->oRegister->getFuss();
         }
+        
+        // Register Typ / Transmission
+        $htmlSelect = new HTMLSelectForArray(Constant::getDispositionTyp());
+        $tplDisposition->replace("Typ", $htmlSelect->getOutput());
+        
         // Register Groessen
         $c = RegisterUtilities::getRegisterGroessen();
         $htmlSelect = new HTMLSelectForKey($c, "getBezeichnung", "getBezeichnungsText", $ausgewaehlteFussGroesse);
