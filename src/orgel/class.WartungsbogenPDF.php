@@ -42,7 +42,8 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
         
         if($oOrgel->getWartungsprotokollID() > 0) {
             $protokoll = new Wartungsprotokoll($oOrgel->getWartungsprotokollID());
-            $this->AddPage();
+            $this->addWartungsprotokoll($protokoll);
+            
         }
     }
     
@@ -62,7 +63,7 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
         $k = KonfessionUtilities::getKonfessionenAsArray();
         
         // Bookmark Kapitel
-        $this->Bookmark($oGemeinde->getKirche());
+        // FIXME: $this->Bookmark($oGemeinde->getKirche());
 
         //$this->SetXY($this->iRandLinks, 30);
         $this->activateFontColorBlack();

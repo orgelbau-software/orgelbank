@@ -1,6 +1,9 @@
 <?php
 
-abstract class OrgelbankBasisPDF extends tFPDFWithBookmark
+use setasign\Fpdi\Tfpdf\Fpdi;
+use setasign\Fpdi\PdfReader;
+
+abstract class OrgelbankBasisPDF extends Fpdi 
 {
 
     protected $iRandLinks = 15;
@@ -45,28 +48,32 @@ abstract class OrgelbankBasisPDF extends tFPDFWithBookmark
         $this->mVariante = $pVariante;
     }
 
+    private $printHeader = true;
+    
     function Header()
     {
-        $cellsize = 70;
+        if($this->printHeader == true) {
+            $cellsize = 70;
         
-        // Rand setzen
-        $this->SetMargins($this->getRandLinks(), 10, 10);
-        $this->ln(1);
+            // Rand setzen
+            $this->SetMargins($this->getRandLinks(), 10, 10);
+            $this->ln(1);
         
-        $this->activateFontNormal();
+            $this->activateFontNormal();
         
 
-        $this->Cell($cellsize, $this->cellheight, $this->arHeaderMeta->getValueOf(0), 0, 0, "C");
-        $this->Cell($cellsize, $this->cellheight, $this->arHeaderMeta->getValueOf(1), 0, 0, "C");
-        $this->ln($this->cellheight);
-        $this->Cell($cellsize, $this->cellheight, $this->arHeaderMeta->getValueOf(2), 0, 0, "C");
-        $this->Cell($cellsize, $this->cellheight, $this->arHeaderMeta->getValueOf(3), 0, 0, "C");
-        $this->ln($this->cellheight);
-        $this->Cell($cellsize, $this->cellheight, $this->arHeaderMeta->getValueOf(4), 0, 0, "C");
-        $this->Cell($cellsize, $this->cellheight, $this->arHeaderMeta->getValueOf(5), 0, 0, "C");
-        $this->ln(8);
+            $this->Cell($cellsize, $this->cellheight, $this->arHeaderMeta->getValueOf(0), 0, 0, "C");
+            $this->Cell($cellsize, $this->cellheight, $this->arHeaderMeta->getValueOf(1), 0, 0, "C");
+            $this->ln($this->cellheight);
+            $this->Cell($cellsize, $this->cellheight, $this->arHeaderMeta->getValueOf(2), 0, 0, "C");
+            $this->Cell($cellsize, $this->cellheight, $this->arHeaderMeta->getValueOf(3), 0, 0, "C");
+            $this->ln($this->cellheight);
+            $this->Cell($cellsize, $this->cellheight, $this->arHeaderMeta->getValueOf(4), 0, 0, "C");
+            $this->Cell($cellsize, $this->cellheight, $this->arHeaderMeta->getValueOf(5), 0, 0, "C");
+            $this->ln(8);
         
-        $this->zeichneTrennstrich();
+            $this->zeichneTrennstrich();
+        } 
     }
 
     /**
@@ -443,6 +450,17 @@ abstract class OrgelbankBasisPDF extends tFPDFWithBookmark
             $manualFuss,
             $iRegisterCount
         );
+    }
+    
+    protected function addWartungsprotokoll(Wartungsprotokoll $pProtokoll) {
+        $pageCount = $this->setSourceFile(ROOTDIR . $pProtokoll->getDateiname());
+        $pageId = $this->importPage(1, PdfReader\PageBoundaries::MEDIA_BOX);
+        
+        $this->printHeader = false;
+        $this->addPage();
+        //             $this->useImportedPage($pageId, $this->iRandLinks, 30, 180);
+        $this->useImportedPage($pageId, 0, 0);
+        $this->printHeader = true;
     }
     
 }
