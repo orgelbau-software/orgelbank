@@ -39,6 +39,11 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
         if(ConstantLoader::getWartungsBogenCheckliste() == "true") {
             $this->addCheckliste($oOrgel);
         }
+        
+        if($oOrgel->getWartungsprotokollID() > 0) {
+            $protokoll = new Wartungsprotokoll($oOrgel->getWartungsprotokollID());
+            $this->AddPage();
+        }
     }
     
 

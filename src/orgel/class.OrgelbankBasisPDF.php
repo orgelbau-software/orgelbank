@@ -16,6 +16,8 @@ abstract class OrgelbankBasisPDF extends tFPDFWithBookmark
     protected $iDefaultCellSize = 70;
     
     protected $mVariante;
+    
+    protected $keywords;
 
     /**
      *

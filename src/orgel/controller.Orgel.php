@@ -125,6 +125,7 @@ class OrgelController
         $oOrgel->setZyklus($_POST['zyklus']);
         $oOrgel->setMassnahmen($_POST['massnahmen']);
         $oOrgel->setGemeindeId($_POST['gemeindeid']);
+        $oOrgel->setWartungsprotokollID($_POST['wartungsprotokollId']);
         
         if (isset($_POST['manual1'])) {
             $oOrgel->setManual1(1);
@@ -307,6 +308,11 @@ class OrgelController
         if ($oOrgel->getAnzahlManuale() == 0)
             $tplOrgelDetails->replace("CSSSpanHide", "hideContent");
         
+        // Wartungsprotokolle
+        $cWartungsprotokolle = WartungsprotokollUtilities::getWartungsprotokolle();
+        $htmlSelectProtokolle = new HTMLSelectForDSOC($cWartungsprotokolle, "getName", $oOrgel->getWartungsprotokollID());
+        $tplOrgelDetails->replace("Wartungsprotokolle", $htmlSelectProtokolle->getOutput());
+            
         // Gemeindenamen
         $htmlGemeinden = new HTMLSelect(GemeindeUtilities::getGemeinden(" ORDER BY g_kirche"), "getKirche", $oGemeinde->getID());
         $tplOrgelDetails->replace("Gemeinden", $htmlGemeinden->getOutput());

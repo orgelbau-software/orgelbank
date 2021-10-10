@@ -177,6 +177,11 @@
 		<a href="index.php?page=4&do=61&oid=<!--OID-->">Disposition bearbeiten</a>
 		</span>
 		<br/>
+		<h3>Wartungsprotokoll</h3>
+		<select name="wartungsprotokollId">
+			<option value="0">Kein spezifisches</option>
+		<!--Wartungsprotokolle--></select>
+		<br/>
 		<h3>Wartungen</h3>
 		<div id="orgeldetailswartungen" class="txt430">
 			<table class="liste" style="width:100%; border: 0px solid black;">
