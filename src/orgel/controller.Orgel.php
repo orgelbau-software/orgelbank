@@ -1068,5 +1068,9 @@ class OrgelController
     {
         RequestHandler::handle(new OrgelWartungAction());
     }
+    
+    public static function zeigeWartungsprotokolle() {
+        RequestHandler::handle(new WartungsprotokolleAction());
+    }
 }
 ?>

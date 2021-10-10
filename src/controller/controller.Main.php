@@ -33,6 +33,7 @@ $pcOrgel->addChild(new SubPage(27, "loescheOrgel", 10));
 $pcOrgel->addChild(new SubPage(28, "zeigeWartungsListe", 5));
 $pcOrgel->addChild(new SubPage(29, "zeigeOffeneWartungen", 5));
 $pcOrgel->addChild(new SubPage(30, "deleteOrgelPicture", 5));
+$pcOrgel->addChild(new SubPage(31, "zeigeWartungsprotokolle", 5));
 $pageApplication->addController($pcOrgel);
 
 /**
