@@ -75,7 +75,7 @@ class WartungsprotokolleAction implements PostRequestHandler, GetRequestHandler
         $htmlStatus = null;
         
         if ($_POST) {
-            // $protokoll = new WartungsProtokoll($protokollId);
+            $protokoll = new WartungsProtokoll($protokollId);
             if (isset($_FILES['protokoll']) && $_FILES['protokoll']['name'] != "") {
                 
                 $filetemp = $_FILES['protokoll']['tmp_name'];
@@ -85,10 +85,9 @@ class WartungsprotokolleAction implements PostRequestHandler, GetRequestHandler
                 
                 $protokollPfad = ROOTDIR . "store/protokolle/" . $protokollId . "_" . $filename;
                 
-                
                 // Backup
-                if(file_exists($protokollPfad)) {
-                    copy($protokollPfad, $protokollPfad."_".time());
+                if (file_exists($protokollPfad)) {
+                    copy($protokollPfad, $protokollPfad . "_" . time());
                 }
                 
                 if ($fileendung == "pdf") {
@@ -96,7 +95,12 @@ class WartungsprotokolleAction implements PostRequestHandler, GetRequestHandler
                 } else {
                     $htmlStatus = new HTMLStatus("Die Datei muss eine PDF Datei sein, gefunden wurde eine: " . $fileendung, HTMLStatus::$STATUS_ERROR);
                 }
-            } else {}
+                $protokoll->setDateiname($protokollPfad);
+            }
+            
+            $protokoll->setName($_POST['name']);
+            $protokoll->speichern(true);
+            $protokollId = $protokoll->getID();
         }
         
         if (isset($_GET['action']) && $_GET['action'] == "edit") {
@@ -106,6 +110,24 @@ class WartungsprotokolleAction implements PostRequestHandler, GetRequestHandler
         } else {
             $tpl->replace("SubmitValue", "Erstellen");
         }
+        
+        $col = WartungsprotokollUtilities::getWartungsprotokolle();
+        $tplProtokollDS = new BufferedTemplate("orgel_wartung_details_ds.tpl", "CSS", "td1", "td2");
+        
+        if ($col != null && $col->getSize() > 0) {
+            foreach ($col as $protokoll) {
+                $tplProtokollDS->replace("ProtokollId", $protokoll->getID());
+                $tplProtokollDS->replace("Name", $protokoll->getName());
+                $tplProtokollDS->replace("Dateiname", $protokoll->getDateiname());
+                $tplProtokollDS->replace("Bemerkung", $protokoll->getBemerkung());
+                
+                $tplProtokollDS->next();
+            }
+        } else {
+            $tplProtokollDS = new BufferedTemplate("orgel_wartungsprotokolle_keine.tpl");
+            $tplProtokollDS->next();
+        }
+        $tpl->replace("Protokolle", $tplProtokollDS->getOutput());
         
         $tpl->replace("Name", "XXX");
         $tpl->replace("Bemerkung", "YYY");
