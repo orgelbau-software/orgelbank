@@ -7,11 +7,12 @@ class WartungsprotokollUtilities
     {
         $sql = "SELECT * FROM wartungsprotokolle";
         $r = WartungsprotokollUtilities::queryDB($sql);
-        if ($r->getSize() > 0) {
-            return $r[0];
-        } else {
-            return null;
-        }
+        return $r;
+    }
+    
+    public static function deleteWartungsprotokoll($pProtokollId) {
+        $sql = "DELETE FROM wartungsprotokolle WHERE wp_id = ".$pProtokollId;
+        DB::getInstance()->NonSelectQuery($sql);
     }
 
     private static function queryDB($sql)

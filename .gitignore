@@ -6,6 +6,7 @@ lib/vcard
 lib/vcard-transliterator
 src/services/addressbook/out.log
 store/rechnungen
+store/protokolle/*.pdf
 lib/tFPDF/font/unifont/dejavusanscondensed-bold.cw.dat
 lib/tFPDF/font/unifont/dejavusanscondensed-bold.cw127.php
 lib/tFPDF/font/unifont/dejavusanscondensed-bold.mtx.php

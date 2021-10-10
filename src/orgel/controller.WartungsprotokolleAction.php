@@ -74,37 +74,69 @@ class WartungsprotokolleAction implements PostRequestHandler, GetRequestHandler
         
         $htmlStatus = null;
         
+        $protokoll = new Wartungsprotokoll($protokollId);
         if ($_POST) {
-            $protokoll = new WartungsProtokoll($protokollId);
-            if (isset($_FILES['protokoll']) && $_FILES['protokoll']['name'] != "") {
-                
-                $filetemp = $_FILES['protokoll']['tmp_name'];
-                $filename = $_FILES['protokoll']['name'];
-                $filesize = $_FILES['protokoll']['size'];
-                $fileendung = strtolower(substr(strchr($filename, "."), 1, 5));
-                
-                $protokollPfad = ROOTDIR . "store/protokolle/" . $protokollId . "_" . $filename;
-                
-                // Backup
-                if (file_exists($protokollPfad)) {
-                    copy($protokollPfad, $protokollPfad . "_" . time());
-                }
-                
-                if ($fileendung == "pdf") {
-                    copy($filetemp, $protokollPfad);
-                } else {
-                    $htmlStatus = new HTMLStatus("Die Datei muss eine PDF Datei sein, gefunden wurde eine: " . $fileendung, HTMLStatus::$STATUS_ERROR);
-                }
-                $protokoll->setDateiname($protokollPfad);
-            }
             
-            $protokoll->setName($_POST['name']);
-            $protokoll->speichern(true);
-            $protokollId = $protokoll->getID();
+            // Lade das Protokoll
+            $protokoll = new Wartungsprotokoll($protokollId);
+            
+            if ($_POST['submit'] == "Erstellen" || $_POST['submit'] == "Bearbeiten") {
+
+                // Datei nur ggf. updaten
+                $dateiSpeichern = false;
+                $protokoll->setName($_POST['name']);
+                $protokoll->setBemerkung($_POST['bemerkung']);
+                $protokoll->speichern(true);
+                $protokollId = $protokoll->getID(); // fuer neue Protokolle brauchen wir noch die ID.
+                
+                if (isset($_FILES['protokoll']) && $_FILES['protokoll']['name'] != "") {
+                    $filename = $_FILES['protokoll']['name'];
+                    $fileendung = strtolower(substr(strchr($filename, "."), 1, 5));
+                    
+                    if ($fileendung == "pdf") {
+                        $dateiSpeichern = true;
+                    } else {
+                        $htmlStatus = new HTMLStatus("Die Datei muss eine PDF Datei sein, gefunden wurde eine: " . $fileendung, HTMLStatus::$STATUS_ERROR);
+                    }
+                }
+                
+                $protokoll->speichern(true);
+                $protokollId = $protokoll->getID(); // fuer neue Protokolle brauchen wir noch die ID.
+                
+                if ($dateiSpeichern) {
+                    
+                    $filetemp = $_FILES['protokoll']['tmp_name'];
+                    $filename = $_FILES['protokoll']['name'];
+                    $filesize = $_FILES['protokoll']['size'];
+                    $fileendung = strtolower(substr(strchr($filename, "."), 1, 5));
+                    
+                    $relativerPfad = "store/protokolle/" . $protokollId . "_" . $filename;
+                    $protokollPfad = ROOTDIR . $relativerPfad;
+                    
+                    // Backup
+                    if (file_exists($protokollPfad)) {
+                        copy($protokollPfad, $protokollPfad . "_" . time());
+                    }
+                    copy($filetemp, $protokollPfad);
+                    $protokoll->setDateiname($relativerPfad);
+                    $protokoll->speichern(true);
+                }
+                                
+                $htmlStatus = new HTMLStatus();
+                $htmlStatus->setText("Wartungsprotokoll gespeichert.");
+                
+            } else if ($_POST['submit'] == "Löschen") {
+                WartungsprotokollUtilities::deleteWartungsprotokoll($protokollId);
+                $htmlStatus = new HTMLStatus();
+                $htmlStatus->setText("Wartungsprotokoll erfolgreich gel&ouml;scht.");
+            } else {
+                $htmlStatus = new HTMLStatus();
+                $htmlStatus->setText("Unbekannte Action: " .$_POST['submit']);
+            }
         }
         
         if (isset($_GET['action']) && $_GET['action'] == "edit") {
-            $tpl->replace("SubmitValue", "bearbeien");
+            $tpl->replace("SubmitValue", "Bearbeiten");
         } else if (isset($_GET['action']) && $_GET['action'] == "delete") {
             $tpl->replace("SubmitValue", "Löschen");
         } else {
@@ -112,15 +144,14 @@ class WartungsprotokolleAction implements PostRequestHandler, GetRequestHandler
         }
         
         $col = WartungsprotokollUtilities::getWartungsprotokolle();
-        $tplProtokollDS = new BufferedTemplate("orgel_wartung_details_ds.tpl", "CSS", "td1", "td2");
+        $tplProtokollDS = new BufferedTemplate("orgel_wartungsprotokolle_ds.tpl", "CSS", "td1", "td2");
         
         if ($col != null && $col->getSize() > 0) {
-            foreach ($col as $protokoll) {
-                $tplProtokollDS->replace("ProtokollId", $protokoll->getID());
-                $tplProtokollDS->replace("Name", $protokoll->getName());
-                $tplProtokollDS->replace("Dateiname", $protokoll->getDateiname());
-                $tplProtokollDS->replace("Bemerkung", $protokoll->getBemerkung());
-                
+            foreach ($col as $currProtokoll) {
+                $tplProtokollDS->replace("ProtokollId", $currProtokoll->getID());
+                $tplProtokollDS->replace("Name", $currProtokoll->getName());
+                $tplProtokollDS->replace("Dateiname", $currProtokoll->getDateiname());
+                $tplProtokollDS->replace("Bemerkung", $currProtokoll->getBemerkung());
                 $tplProtokollDS->next();
             }
         } else {
@@ -129,9 +160,9 @@ class WartungsprotokolleAction implements PostRequestHandler, GetRequestHandler
         }
         $tpl->replace("Protokolle", $tplProtokollDS->getOutput());
         
-        $tpl->replace("Name", "XXX");
-        $tpl->replace("Bemerkung", "YYY");
-        $tpl->replace("Dateiname", "ZZZ");
+        $tpl->replace("Name", $protokoll->getName());
+        $tpl->replace("Bemerkung", $protokoll->getBemerkung());
+        $tpl->replace("Dateiname", $protokoll->getDateiname());
         
         if ($protokollId > 0) {
             $tpl->replace("ProtokollId", $protokollId);

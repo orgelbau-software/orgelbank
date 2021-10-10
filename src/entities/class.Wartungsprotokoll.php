@@ -18,7 +18,7 @@ class Wartungsprotokoll extends SimpleDatabaseStorageObjekt
      * @param String $tableName            
      * @param String $tablePrefix            
      */
-    public function __construct($iID = 0, $primaryKey = "wp_id", $tableName = "wartungsprotokoll", $tablePrefix = "wp_")
+    public function __construct($iID = 0, $primaryKey = "wp_id", $tableName = "wartungsprotokolle", $tablePrefix = "wp_")
     {
         parent::__construct($iID, $primaryKey, $tableName, $tablePrefix);
     }

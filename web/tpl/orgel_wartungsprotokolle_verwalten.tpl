@@ -5,6 +5,8 @@
 	<table class="liste" style="width: 100%; border: 0px solid black;">
 		<tr>
 			<th>Name</th>
+			<th>Dateinamen</th>
+			<th>Bemerkung</th>
 			<th colspan="2">Aktionen</th>
 		</tr>
 		<!--Protokolle-->
@@ -30,7 +32,7 @@
 				</tr>
 				<tr>
 					<th>Bemerkung:</th>
-					<td><textarea name="massnahmen" class="txtarea435"><!--Bemerkung--></textarea></td>
+					<td><textarea name="bemerkung" class="txtarea435"><!--Bemerkung--></textarea></td>
 				</tr>
 			</table>
 		</td>
