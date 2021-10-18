@@ -428,7 +428,7 @@ abstract class OrgelbankBasisPDF extends Fpdi
     
     protected function handleManual($pOID, $pManualID)
     {
-        $sqldisp = "SELECT d_id, o_id, m_id, d_name, d_fuss
+        $sqldisp = "SELECT d_id, d_typ, o_id, m_id, d_name, d_fuss
 					FROM disposition
 					WHERE o_id = '" . $pOID . "' AND m_id = '" . $pManualID . "'
 					ORDER BY m_id";
@@ -439,7 +439,14 @@ abstract class OrgelbankBasisPDF extends Fpdi
         $iRegisterCount = 0;
         if (($resultdisp = $this->mDBInstance->SelectQuery($sqldisp)) !== false) {
             foreach ($resultdisp as $row) {
-                $manualName[] = $row['d_name'];
+                $suffix = "";
+                if($row['d_typ'] == 2) {
+                    $suffix = " (T)";
+                } else if($row['d_typ'] == 2) {
+                    $suffix = " (E)";
+                }
+                
+                $manualName[] = $row['d_name'] . $suffix;
                 $manualFuss[] = $row['d_fuss'];
                 $iRegisterCount ++;
             }

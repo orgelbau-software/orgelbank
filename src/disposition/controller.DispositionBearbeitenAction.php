@@ -59,6 +59,7 @@ class DispositionBearbeitenAction
             $this->oRegister->setFuss($copyFrom->getFuss());
             $this->oRegister->setName($copyFrom->getName());
             $this->oRegister->setManual($tmp->getManual());
+            $this->oRegister->setTyp($tmp->getTyp());
         } elseif ($_POST && isset($_POST['did']) && $_POST['did'] > 0) {
             $this->oRegister = new Register(intval($_POST['did']));
         } else {
@@ -80,6 +81,7 @@ class DispositionBearbeitenAction
                 $this->oRegister->setManual($this->iManualID);
                 $this->oRegister->setName($_POST['register']);
                 $this->oRegister->setFuss($_POST['fuss']);
+                $this->oRegister->setTyp($_POST['typ']);
                 // $this->oRegister->setReihenfolge($_POST['position']);
                 $this->oRegister->speichern(false);
                 
@@ -148,7 +150,7 @@ class DispositionBearbeitenAction
         }
         
         // Register Typ / Transmission
-        $htmlSelect = new HTMLSelectForArray(Constant::getDispositionTyp());
+        $htmlSelect = new HTMLSelectForArray(Constant::getDispositionTyp(), $this->oRegister->getTyp() );
         $tplDisposition->replace("Typ", $htmlSelect->getOutput());
         
         // Register Groessen
@@ -173,7 +175,13 @@ class DispositionBearbeitenAction
                 $tplManual->reset();
             }
             
-            $tplRegister->replace("Name", $this->oRegister->getName());
+            $name = $this->oRegister->getName();
+            if($this->oRegister->getTyp() == 2) {
+                $name .= " (T)";
+            } elseif($this->oRegister->getTyp() == 3) {
+                $name .= " (E)";
+            }
+            $tplRegister->replace("Name", $name."");
             $tplRegister->replace("Fuss", $this->oRegister->getFuss());
             $tplRegister->replace("MID", $this->oRegister->getManual());
             $tplRegister->replace("DID", $this->oRegister->getID());

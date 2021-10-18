@@ -15,6 +15,8 @@ class Register extends SimpleDatabaseStorageObjekt
 
     private $name;
 
+    private $typ;
+
     private $fuss;
 
     private $reihenfolge;
@@ -34,6 +36,7 @@ class Register extends SimpleDatabaseStorageObjekt
         $ht->add($this->tablePrefix . "name", $this->getName());
         $ht->add($this->tablePrefix . "fuss", $this->getFuss());
         $ht->add($this->tablePrefix . "reihenfolge", $this->getReihenfolge());
+        $ht->add($this->tablePrefix . "typ", $this->getTyp());
         $ht->add("o_id", $this->getOrgelID());
         $ht->add("m_id", $this->getManual());
         
@@ -48,6 +51,7 @@ class Register extends SimpleDatabaseStorageObjekt
         $this->setName($rs[$this->tablePrefix . 'name']);
         $this->setFuss($rs[$this->tablePrefix . 'fuss']);
         $this->setReihenfolge($rs[$this->tablePrefix . 'reihenfolge']);
+        $this->setTyp($rs[$this->tablePrefix . 'typ']);
     }
 
     /**
@@ -173,6 +177,29 @@ class Register extends SimpleDatabaseStorageObjekt
     public function setAnzahl($anzahl)
     {
         $this->anzahl = $anzahl;
+    }
+
+    /**
+     * Register / Extension / Transmission
+     *
+     * @param int $reihenfolge            
+     */
+    public function setTyp($typ)
+    {
+        if ($this->typ != $typ) {
+            $this->typ = $typ;
+            $this->setChanged(true);
+        }
+    }
+
+    /**
+     * Register / Extension / Transmission
+     *
+     * @return int
+     */
+    public function getTyp()
+    {
+        return $this->typ;
     }
 }
 ?>

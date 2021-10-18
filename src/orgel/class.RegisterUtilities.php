@@ -168,14 +168,16 @@ class RegisterUtilities
         if (($res = DB::getInstance()->SelectQuery($sql)) !== false) {
             foreach ($res as $rs) {
                 $tmp = new Register();
-                $tmp->setID($rs['d_id']);
-                $tmp->setOrgelID($rs['o_id']);
-                $tmp->setManual($rs['m_id']);
-                $tmp->setName($rs['d_name']);
-                $tmp->setFuss($rs['d_fuss']);
-                $tmp->setReihenfolge($rs['d_reihenfolge']);
-                $tmp->setChangeAt($rs['d_lastchange']);
-                $tmp->setCreatedAt($rs['d_createdate']);
+                $tmp->doLoadFromArray($rs);
+//                 $tmp->setID($rs['d_id']);
+//                 $tmp->setOrgelID($rs['o_id']);
+//                 $tmp->setManual($rs['m_id']);
+//                 $tmp->setName($rs['d_name']);
+//                 $tmp->setFuss($rs['d_fuss']);
+//                 $tmp->setTyp($rs['d_typ']);
+//                 $tmp->setReihenfolge($rs['d_reihenfolge']);
+//                 $tmp->setChangeAt($rs['d_lastchange']);
+//                 $tmp->setCreatedAt($rs['d_createdate']);
                 
                 if (isset($rs['anzahl']))
                     $tmp->setAnzahl($rs['anzahl']);

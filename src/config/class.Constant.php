@@ -11,8 +11,8 @@ class Constant
     {
         return array(
             1 => "Register",
-            2 => "Transmissionen",
-            3 => "Extensionen"
+            2 => "Transmission",
+            3 => "Extension"
         );
     }
     
@@ -155,5 +155,6 @@ class Constant
         $retVal .= " (" . $pKey . ")";
         return $retVal;
     }
+    
 }
 ?>
