@@ -338,7 +338,16 @@ class OrgelController
                     $strContent .= $tplManual->getOutputAndRestore();
                 }
                 
-                $tplRegister->replace("Spalte1", $oRegister->getName());
+                $suffix = "";
+                if($oRegister->getTyp() == 2) {
+                    $suffix = " (T)";
+                } else if($oRegister->getTyp() == 3) {
+                    $suffix = " (E)";
+                } else {
+                    $suffix = "";
+                }
+                
+                $tplRegister->replace("Spalte1", $oRegister->getName(). $suffix);
                 $tplRegister->replace("Spalte2", $oRegister->getFuss() . "'");
                 $tplRegister->replace("Spalte3", $oRegister->getReihenfolge());
                 $strContent .= $tplRegister->getOutputAndRestore();

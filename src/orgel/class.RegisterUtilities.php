@@ -120,11 +120,21 @@ class RegisterUtilities
 
     public static function getRegisterAnzahl($iOrgelID)
     {
-        $sql = "SELECT count(*) as count FROM disposition WHERE o_id = " . $iOrgelID . " AND d_name <> 'Tremulant'";
+        $sql = "SELECT count(*) as count FROM disposition WHERE o_id = " . $iOrgelID . " AND d_name <> 'Tremulant' and d_typ = 1";
+        
+        $anzahlRegister = 1;
         if (($r = DB::getInstance()->SelectQuery($sql)) !== false) {
-            return $r[0]['count'] != "" ? $r[0]['count'] : 1;
+            $anzahlRegister = $r[0]['count'] != "" ? $r[0]['count'] : 1;
         }
-        return 1;
+        
+        $sql = "SELECT count(*) as count FROM disposition WHERE o_id = " . $iOrgelID . " AND (d_typ = 2 or d_typ = 3)";
+        
+        $anzahlTransmissionExtension = 0;
+        if (($r = DB::getInstance()->SelectQuery($sql)) !== false) {
+            $anzahlTransmissionExtension = $r[0]['count'] != "" ? $r[0]['count'] : 0;
+        }
+        
+        return $anzahlRegister .($anzahlTransmissionExtension == 0 ? "" : "+".$anzahlTransmissionExtension);
     }
 
     public static function ladeOrgelRegister($iOrgelID, $strOrderBy = null)
