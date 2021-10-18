@@ -18,7 +18,7 @@ define("ORGELBILD_BILD_PFAD", ROOTDIR . "store/orgelpics/");
 define("ORGELBILD_THUMB_PFAD", ORGELBILD_BILD_PFAD . "thumbs/");
 define('RECHNUNGDIR', ROOTDIR . 'store/rechnungen/');
 
-define('MWST_SATZ', 0.16);
+define('MWST_SATZ', 0.19);
 define('STARTRECHNUNGSNUMMER', 1000);
 
 define('SESSION_DEFAULT_EXPIRE', 1800); // halbe stunde

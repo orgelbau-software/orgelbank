@@ -95,9 +95,13 @@ class ArbeitswocheUtilities
         return ArbeitswocheUtilities::queryDB($sql);
     }
 
-    public static function ladeArbeitswochen()
+    public static function ladeArbeitswochen($strWhere = "")
     {
-        $sql = "SELECT * FROM arbeitswoche ORDER BY aw_jahr DESC, aw_kw DESC";
+        $sql = "SELECT * FROM arbeitswoche";
+        if($strWhere != "") {
+            $sql .= " ".$strWhere;
+        }
+        $sql .=" ORDER BY aw_jahr DESC, aw_kw DESC";
         return ArbeitswocheUtilities::queryDB($sql);
     }
     

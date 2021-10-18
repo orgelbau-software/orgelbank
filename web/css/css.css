@@ -546,6 +546,15 @@ span.hideContent {
 	background-image: url(../images/icons/calendar_day_edit.png);
 }
 
+.dayButton {
+	background-image: url(../images/icons/calendar_day.png);
+}
+
+.monthButton {
+	background-image: url(../images/icons/calendar_month.png);
+}
+
+
 .deleteButton {
 	background-image: url(../images/icons/document_a4_remove.png);
 }
