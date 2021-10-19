@@ -82,6 +82,16 @@ class Constant
         );
     }
 
+    public static function getIntervallHauptstimmung()
+    {
+        return array(
+            0 => "Niemals",
+            1 => "Jedesmal",
+            2 => "Jedes 2. Mal",
+            3 => "Jedes 3. Mal"
+        );
+    }
+    
     public static function getZyklus()
     {
         return array(

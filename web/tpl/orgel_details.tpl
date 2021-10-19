@@ -108,6 +108,7 @@
 				<th colspan="4">
 					Pflegedaten:
 				</th>
+			</tr>
 			<tr>
 				<td class="tdLabel">Pflegevertrag:</td>
 				<td>
@@ -127,14 +128,24 @@
 			<tr>
 				<td class="tdLabel">Register:</td>
 				<td><!--Register--></td>
+				<td class="tdLabel">Hauptstimmung:</td>
+				<td>
+					<select name="intervall_hauptstimmung" class="width110">
+						<!--IntervallHaupstimmungSelect-->
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="tdLabel">&nbsp;</td>
+				<td>&nbsp;</td>
 				<td class="tdLabel">Stimmung nach:</td>
 				<td><input type="text" name="stimmung" maxlength="50" class="width110" value="<!--StimmungNach-->"></td>
 			</tr>
             <tr>
 				<td class="tdLabel">Hauptstimmung:</td>
-				<td><input type="text" min="1" step="any"  name="kostenhauptstimmung" maxlength="50" class="width90" value="<!--KostenHauptstimmung-->"></td>
+				<td><input type="text" min="1" step="any"  name="kostenhauptstimmung" maxlength="50" class="width80" value="<!--KostenHauptstimmung-->"> &euro;</td>
 				<td class="tdLabel">Teilstimmung:</td>
-				<td><input type="text" min="1" step="any" name="kostenteilstimmung" maxlength="50" class="width110" value="<!--KostenTeilstimmung-->"></td>
+				<td><input type="text" min="1" step="any" name="kostenteilstimmung" maxlength="50" class="width90" value="<!--KostenTeilstimmung-->">  &euro;</td>
 			</tr>
 			<tr>
 				<td class="tdLabel" colspan="4">Notwendige Maßnahmen:</td>

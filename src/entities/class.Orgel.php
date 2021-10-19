@@ -82,6 +82,8 @@ class Orgel extends SimpleDatabaseStorageObjekt
     private $kostenTeilstimmung;
     
     private $wartungsprotokollId;
+    
+    private $intervallHauptstimmung;
 
     // Konstruktor
     public function __construct($iID = 0, $primaryKey = "o_id", $tableName = "orgel", $tablePrefix = "o_")
@@ -133,6 +135,7 @@ class Orgel extends SimpleDatabaseStorageObjekt
         $ht->add("o_kostenhauptstimmung", $this->getKostenHauptstimmung());
         $ht->add("o_kostenteilstimmung", $this->getKostenTeilstimmung());
         $ht->add("wp_id", $this->getWartungsprotokollID());
+        $ht->add("o_intervallhaupstimmung", $this->getIntervallHauptstimmung());
         
         return $ht;
     }
@@ -181,6 +184,7 @@ class Orgel extends SimpleDatabaseStorageObjekt
         $this->setKostenHauptstimmung($rs['o_kostenhauptstimmung']);
         $this->setKostenTeilstimmung($rs['o_kostenteilstimmung']);
         $this->setWartungsprotokollID($rs['wp_id']);
+        $this->setIntervallHauptstimmung($rs['o_intervallhaupstimmung']);
         
         $this->isPersistent(true);
     }
@@ -714,7 +718,10 @@ class Orgel extends SimpleDatabaseStorageObjekt
 
     public function setKostenHauptstimmung($pKostenHauptstimmung)
     {
-        $this->kostenHauptstimmung = $pKostenHauptstimmung;
+        if ($this->kostenHauptstimmung != $pKostenHauptstimmung) {
+            $this->kostenHauptstimmung = $pKostenHauptstimmung;
+            $this->setChanged(true);
+        }
     }
     
     public function getKostenTeilstimmung()
@@ -724,7 +731,10 @@ class Orgel extends SimpleDatabaseStorageObjekt
 
     public function setKostenTeilstimmung($pKostenTeilstimmung)
     {
-        $this->kostenTeilstimmung = $pKostenTeilstimmung;
+        if ($this->kostenTeilstimmung != $pKostenTeilstimmung) {
+            $this->kostenTeilstimmung = $pKostenTeilstimmung;
+            $this->setChanged(true);
+        }
     }
     
     public function getWartungsprotokollID()
@@ -734,9 +744,24 @@ class Orgel extends SimpleDatabaseStorageObjekt
     
     public function setWartungsprotokollID($pProtokollId)
     {
-        $this->wartungsprotokollId = $pProtokollId;
+        if ($this->wartungsprotokollId != $pProtokollId) {
+            $this->wartungsprotokollId = $pProtokollId;
+            $this->setChanged(true);
+        }
     }
     
+    public function getIntervallHauptstimmung()
+    {
+        return $this->intervallHauptstimmung;
+    }
+    
+    public function setIntervallHauptstimmung($pIntervallHauptstimmung)
+    {
+        if ($this->intervallHauptstimmung != $pIntervallHauptstimmung) {
+            $this->intervallHauptstimmung = $pIntervallHauptstimmung;
+            $this->setChanged(true);
+        }
+    }
     
 }
 ?>

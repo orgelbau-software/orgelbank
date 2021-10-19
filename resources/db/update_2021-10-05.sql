@@ -6,3 +6,5 @@ CREATE TABLE `wartungsprotokolle` ( `wp_id` INT NOT NULL AUTO_INCREMENT , `wp_na
 ALTER TABLE `orgel` ADD `wp_id` INT NULL DEFAULT NULL AFTER `o_kostenteilstimmung`;
 
 ALTER TABLE `disposition` ADD `d_typ` INT(1) NOT NULL DEFAULT '1' AFTER `d_id`;
+
+ALTER TABLE `orgel` ADD `o_intervallhaupstimmung` INT(1) NOT NULL DEFAULT '0' AFTER `wp_id`;

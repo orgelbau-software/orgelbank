@@ -122,6 +122,7 @@ class OrgelController
         $oOrgel->setPflegevertrag($_POST['pflegevertrag']);
         $oOrgel->setKostenHauptstimmung($_POST['kostenhauptstimmung']);
         $oOrgel->setKostenTeilstimmung($_POST['kostenteilstimmung']);
+        $oOrgel->setIntervallHauptstimmung($_POST['intervall_hauptstimmung']);
         $oOrgel->setZyklus($_POST['zyklus']);
         $oOrgel->setMassnahmen($_POST['massnahmen']);
         $oOrgel->setGemeindeId($_POST['gemeindeid']);
@@ -260,6 +261,9 @@ class OrgelController
         
         $htmlZyklusSelect = new HTMLSelectForArray(Constant::getZyklus(), $oOrgel->getZyklus());
         $tplOrgelDetails->replace("ZyklusSelect", $htmlZyklusSelect->getOutput());
+        
+        $htmlIntervalHauptstimmung = new HTMLSelectForArray(Constant::getIntervallHauptstimmung(), $oOrgel->getIntervallHauptstimmung());
+        $tplOrgelDetails->replace("IntervallHaupstimmungSelect", $htmlIntervalHauptstimmung->getOutput());
         
         // Kosten Haupt und Teilstimmung
         $tplOrgelDetails->replace("KostenHauptstimmung", $oOrgel->getKostenHauptstimmung());
