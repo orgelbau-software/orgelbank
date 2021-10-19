@@ -7,6 +7,16 @@ class Constant
 
     public static $HTML_SELECTED_SELECTED = "selected=\"selected\"";
 
+    public static function getStimmung()
+    {
+        return array(
+            0 => "Keine",
+            1 => "Nebenstimmung",
+            2 => "Hauptstimmung",
+            3 => "Zungenstimmung"
+        );
+    }
+    
     public static function getDispositionTyp()
     {
         return array(

@@ -251,13 +251,15 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
         $this->activateFontBold();
         
         $c = WartungUtilities::getOrgelWartungen($oOrgel->getID(), " ORDER BY w_datum DESC LIMIT 3");
+        $stimmungen = Constant::getStimmung();
         if($c->getSize() > 0) {
             
             $this->Cell(21, $this->cellheight, 'Datum', $thRamen, 0, "L");
             $this->Cell(21, $this->cellheight, 'Mitarbeiter', $thRamen, 0, "L");
             $this->Cell(23, $this->cellheight, 'Temperatur', $thRamen, 0, "L");
             $this->Cell(23, $this->cellheight, 'Luftfeuchte', $thRamen, 0, "L");
-            $this->Cell(18, $this->cellheight, 'Stimmton', $thRamen, 1, "L");
+            $this->Cell(18, $this->cellheight, 'Stimmton', $thRamen, 0, "L");
+            $this->Cell(30, $this->cellheight, 'Stimmung', $thRamen, 1, "L");
             
             $this->activateFontNormal();
         
@@ -266,12 +268,14 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
                 $temperatur = ($oWartung->getTemperatur() != "" ? $oWartung->getTemperatur() . " °C" : "");
                 $luftfeuchte = ($oWartung->getLuftfeuchtigkeit() != "" ? $oWartung->getLuftfeuchtigkeit() . " %" : "");
                 $stimmton = ($oWartung->getStimmtonHoehe() != "" ? $oWartung->getStimmtonHoehe() . " Hz" : "");
+                $stimmung = $stimmungen[$oWartung->getStimmung()];
                 
                 $this->Cell(21, $this->cellheight, $oWartung->getDatum(true), 1, 0, "L");
                 $this->Cell(21, $this->cellheight, substr($b->getBenutzername(), 0, 10), 1, 0, "L");
                 $this->Cell(23, $this->cellheight, $temperatur, 1, 0, "R");
                 $this->Cell(23, $this->cellheight, $luftfeuchte, 1, 0, "R");
-                $this->Cell(18, $this->cellheight, $stimmton, 1, 1, "R");
+                $this->Cell(18, $this->cellheight, $stimmton, 1, 0, "R");
+                $this->Cell(30, $this->cellheight, $stimmung, 1, 1, "R");
             }
         } else {
             

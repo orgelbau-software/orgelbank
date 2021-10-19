@@ -693,7 +693,7 @@ class OrgelController
                     $oOrgel = new Orgel(intval($_POST['goto']));
                     $redirectURL = "index.php?page=2&do=28&oid=";
                     if ($oOrgel->getID() == - 1) {
-                        $tplInnerStatus = new HTMLStatus("Die Orgel mit der ID " . $_POST['goto'] . "existiert nicht. Bitte geben Sie eine g�ltige OrgelID ein.", 1);
+                        $tplInnerStatus = new HTMLStatus("Die Orgel mit der ID " . $_POST['goto'] . "existiert nicht. Bitte geben Sie eine gültige OrgelID ein.", 1);
                         $tplStatus = new HTMLRedirect($tplInnerStatus, $redirectURL . $_POST['orgelId'], 3);
                     } else {
                         $tplStatus = new HTMLRedirect("Sie werden weitergeleitet", $redirectURL . $oOrgel->getID());
@@ -778,7 +778,7 @@ class OrgelController
                     $letzteWartung->getStimmung() == "0" ? $oWartung->setStimmung("1") : $oWartung->setStimmung("2");
                 }
             } else {
-                throw new Exception("Keine OrgelID �bergeben!");
+                throw new Exception("Keine OrgelID übergeben!");
             }
         }
         
@@ -789,6 +789,7 @@ class OrgelController
         
         // Wartungsdatensaetze
         $col = WartungUtilities::getOrgelWartungen($oWartung->getOrgelId(), "ORDER BY w_datum DESC");
+        $stimmungen = Constant::getStimmung();
         if ($col->getSize() > 0) {
             foreach ($col as $wartung) {
                 $benutzer = new Benutzer($wartung->getMitarbeiterId1());
@@ -800,17 +801,10 @@ class OrgelController
                 $tplWartungDS->replace("Temperatur", ($wartung->getTemperatur() != "" ? $wartung->getTemperatur() . " �C" : ""));
                 $tplWartungDS->replace("Stimmtonhoehe", ($wartung->getStimmtonHoehe() != "" ? $wartung->getStimmtonHoehe() . " HZ" : ""));
                 $tplWartungDS->replace("Luftfeuchtigkeit", ($wartung->getLuftfeuchtigkeit() != "" ? $wartung->getLuftfeuchtigkeit() . " %" : ""));
-                if ($wartung->getStimmung() == 0) {
-                    $tplWartungDS->replace("Stimmung", "Keine");
-                } elseif ($wartung->getStimmung() == 1) {
-                    $tplWartungDS->replace("Stimmung", "Nebenstimmung");
-                } elseif ($wartung->getStimmung() == 2) {
-                    $tplWartungDS->replace("Stimmung", "Hauptstimmung");
-                } elseif ($wartung->getStimmung() == 3) {
-                    $tplWartungDS->replace("Stimmung", "Zungenstimmung");
-                } else {
-                    $tplWartungDS->replace("Stimmung", "Keine");
-                }
+                
+                $stimmung = $stimmungen[$wartung->getStimmung()];
+                $tplWartungDS->replace("Stimmung", $stimmung);
+               
                 $tplWartungDS->next();
             }
         } else {
