@@ -392,7 +392,15 @@ class ProjektController
                         foreach ($aufgaben as $currentAufgabe) {
                             AufgabeUtilities::addMitarbeiterAufgabeFreischalten($currentAufgabe->getID(), $benutzer->getID());
                         }
+                    } else {
+                        AufgabeUtilities::resetMitarbeiterAufgabeZuordnung($benutzer->getID());
+                        foreach($_POST as $key => $val) {
+                            if(strpos($key, "aufgabe_") === 0) {
+                                AufgabeUtilities::addMitarbeiterAufgabeFreischalten($val, $benutzer->getID());
+                            }
+                        }
                     }
+                    
                     
                     $tplStatus->setText("Benutzer gespeichert. <b>Ggf. Aufgabenverwaltung anpassen!</b>");
                     $tplStatus->setStatusclass(2);
@@ -471,6 +479,35 @@ class ProjektController
         $tpl->replace("Eintrittsdatum", ($benutzer->getEintrittsDatum(false) != 0 ? $benutzer->getEintrittsDatum(true) : ""));
         $tpl->replace("Lohn", WaehrungUtil::formatDoubleToWaehrung($benutzer->getStdLohn()));
         $tpl->replace("VerrechnungsSatz", WaehrungUtil::formatDoubleToWaehrung($benutzer->getVerrechnungsSatz()));
+        
+        // Benutzer Aufgabe
+        $mitarbeiterAufgaben = AufgabeUtilities::getMitarbeiterAufgaben($benutzer->getID());
+        $maAufgaben = array();
+        foreach($mitarbeiterAufgaben as $currentAufgabe) {
+            $maAufgaben[$currentAufgabe->getID()] = $currentAufgabe;
+        }
+        
+        $alleAufgaben = AufgabeUtilities::getHauptAufgaben();
+        $tplAufgaben = new BufferedTemplate("projekt_mitarbeiter_aufgaben_ds.tpl", "CSS", "td1", "td2");
+        foreach($alleAufgaben as $currentAufgabe) {
+            if(isset($maAufgaben[$currentAufgabe->getID()])) {
+                $tplAufgaben->replace("Checked", "checked=\"checked\"");
+            } else {
+                $tplAufgaben->replace("Checked", "");
+            }
+            $tplAufgaben->replace("Bezeichnung", $currentAufgabe->getBezeichnung());
+            $tplAufgaben->replace("AufgabeID", $currentAufgabe->getID());
+            
+            if($benutzer->getID() > 0) {
+                $tplAufgaben->replace("Disabled", "");
+            } else {
+                $tplAufgaben->replace("Disabled", "disabled=\"disabled\"");
+            }
+            $tplAufgaben->next();
+        }
+        
+        $tpl->replace("Aufgaben", $tplAufgaben->getOutput());
+        
         
         // Urlaubstage
         $dblUrlaubstage = ConstantLoader::getStandardUrlaubstage();

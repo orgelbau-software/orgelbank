@@ -129,6 +129,15 @@
       <!--Aufgabenliste-->
       	</tbody>
     </table>
+    
+    <h3>Aufgaben pro Mitarbeiter</h3>
+    <table class="liste" id="aufgabenTable">
+    	<tr>
+    		<th></th>
+    		<th>Bezeichnung</th>
+    	</tr>
+    	<!--Aufgaben-->
+    </table>
     <!--Status--><br/>
     <!--Status2-->
     </td>

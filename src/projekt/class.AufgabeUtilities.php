@@ -54,6 +54,17 @@ class AufgabeUtilities
         $sql = "DELETE FROM aufgabe_mitarbeiter WHERE au_id = " . $iAufgabeID;
         DB::getInstance()->NonSelectQuery($sql);
     }
+    
+    public static function resetMitarbeiterAufgabeZuordnung($iMitarbeiterID)
+    {
+        $sql = "DELETE FROM aufgabe_mitarbeiter WHERE be_id = " . $iMitarbeiterID;
+        DB::getInstance()->NonSelectQuery($sql);
+    }
+    
+    public static function getMitarbeiterAufgaben($iMitarbeiterID) {
+        $sql = "SELECT * FROM aufgabe a, aufgabe_mitarbeiter am WHERE a.au_id = am.au_id and am.be_id = ".$iMitarbeiterID;
+        return AufgabeUtilities::queryDB($sql);
+    }
 
     public static function aufgabeExists($aufgabe)
     {
