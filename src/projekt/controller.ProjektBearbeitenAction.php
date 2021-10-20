@@ -96,7 +96,7 @@ class ProjektBearbeitenAction implements GetRequestHandler, PostRequestHandler, 
                         $pa->setPKprojektID($p->getID());
                         $pa->setPlankosten(WaehrungUtil::formatWaehrungToDB($_POST['aufgabe_betrag_' . $iAufgabeID]));
                         $pa->setReihenfolge($projektAufgabeReihenfolge ++);
-                        $pa->setSollMaterial($_POST['aufgabe_sollmaterial_'. $iAufgabeID]);
+                        $pa->setSollMaterial(WaehrungUtil::formatWaehrungToDB($_POST['aufgabe_sollmaterial_'. $iAufgabeID]));
                         $pa->setSollStunden($_POST['aufgabe_sollstd_'. $iAufgabeID]);
                         $pa->speichern(false);
                     }
