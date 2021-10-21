@@ -7,7 +7,7 @@ mb_internal_encoding( 'UTF-8' );
 
 // Providerspezifische Zugangsdaten laden
 //include_once 'example.php';
-include_once 'krawinkel.lokal.conf.php';
+include_once 'graser.allinkl.conf.php';
 
 // Konstanten
 define('TRACEENABLED', false);
@@ -25,6 +25,7 @@ define('SESSION_DEFAULT_EXPIRE', 1800); // halbe stunde
 
 
 // Fehlerbehandlung
+// ini_set('display_errors', 1); // Bei HTTP-500 Fehlern + try/catch
 define("ERROR_REPORTING_LVL", E_ALL); // also used in class.DB.php
 error_reporting(ERROR_REPORTING_LVL);
 
