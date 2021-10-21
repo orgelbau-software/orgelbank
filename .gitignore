@@ -10,6 +10,7 @@ store/protokolle/*
 lib/tFPDF/font/unifont/dejavusanscondensed-bold.cw127.php
 lib/tFPDF/font/unifont/dejavusanscondensed-bold.mtx.php
 lib/tFPDF/font/unifont/dejavusanscondensed.mtx.php
+lib/tFPDF/font/unifont/dejavusanscondensed.cw127.php
 lib/tFPDF/font/unifont/*.dat
 resources/graser_import/*.xlsx
 resources/graser_import/*.csv
