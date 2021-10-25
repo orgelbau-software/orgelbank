@@ -1078,6 +1078,12 @@ class ProjektController
         RequestHandler::handle(new ProjektMaterialRechnungenAction());
     }
     
+    public static function zeigeStundenFreigabe() {
+        RequestHandler::handle(new ProjektStundenFreigabeAction());
+    }
+    
+    
+    
     
 }
 ?>

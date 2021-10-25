@@ -317,7 +317,10 @@ class BenutzerController
                     // Stundenwert berichtigen
                     $stunden = str_replace(",", ".", $stunden);
                     $stunden = doubleval($stunden);
-                    $stunden = abs($stunden); // stellt sicher, dass $stunden positiv ist
+                    
+                    // Geaendert fuer Orgelbau Bente, dass man Stunden entnehmen kann.
+                    //$stunden = abs($stunden); // stellt sicher, dass $stunden positiv ist
+                    $stunden = intval($stunden); // muss auch negativ sein um Überstunden abbuchen zu können
                                               
                     // Timestamp parsen
                     $timestamp = substr($key, 2, strpos($key, "_") - 2);
