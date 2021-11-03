@@ -13,7 +13,8 @@ class Constant
             0 => "Keine",
             1 => "Nebenstimmung",
             2 => "Hauptstimmung",
-            3 => "Zungenstimmung"
+            3 => "Zungenstimmung",
+            4 => "Wartung"
         );
     }
     

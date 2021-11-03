@@ -8,6 +8,17 @@
 class ProjektAufgabeUtilities
 {
 
+    public static function berechnenIstStunden($projektID)
+    {
+        // Stephan: Die Erstellung dieses Update Statement hat 2 Stunden gedauert. Es lag vor allem an der Struktur und der parent_id. 
+        $sql = "UPDATE projekt_aufgabe pa INNER JOIN ( 
+                    SELECT sum(at_stunden_ist) as ist, a.proj_id, au.au_parentid FROM arbeitstag a, aufgabe au WHERE a.proj_id = ".$projektID." AND a.au_id = au.au_id GROUP BY a.proj_id, au.au_parentid ) 
+                    x on pa.au_id = x.au_parentid and pa.proj_id = x.proj_id 
+                SET pa_iststunden = x.ist 
+                WHERE pa.proj_id = ".$projektID;
+        DB::getInstance()->NonSelectQuery($sql);
+    }
+
     public static function addAufgabeToProjekt($aufgabeID, $projektID)
     {
         $sql = "INSERT INTO projekt_aufgabe VALUES	(" . $projektID . ", " . $aufgabeID . ")";
@@ -45,7 +56,7 @@ class ProjektAufgabeUtilities
     public static function getSelectedProjektAufgaben($iProjektID)
     {
         $sql = "SELECT
-					a.*, pa.pa_plankosten, pa_sollstunden, pa.proj_id, pa_sollmaterial,
+					a.*, pa.pa_plankosten, pa_sollstunden, pa_iststunden, pa.proj_id, pa_sollmaterial,
                     CASE WHEN pa.au_id > 0 THEN 1 ELSE 0 END as selected,
                     CASE WHEN pa.pa_reihenfolge IS NULL THEN 99 ELSE pa_reihenfolge END as pa_reihenfolge
 				FROM 
@@ -72,6 +83,7 @@ class ProjektAufgabeUtilities
                 $tmp->setBezeichnung($objekt['au_bezeichnung']);
                 $tmp->setPlankosten($objekt['pa_plankosten']);
                 $tmp->setSollStunden($objekt['pa_sollstunden']);
+                $tmp->setIstStunden($objekt['pa_iststunden']);
                 $tmp->setSollMaterial($objekt['pa_sollmaterial']);
                 
                 if (isset($objekt['selected'])) {

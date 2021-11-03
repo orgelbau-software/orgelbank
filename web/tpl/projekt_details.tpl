@@ -113,6 +113,63 @@
         title="Abbrechen">Abbrechen</a></td>
       </tr>
     </table>
+    
+    <h3>Nebenkosten</h3>
+    <form method="post" action="index.php?page=6&do=110&pid=<!--ProjektID-->"> <input type="hidden" name="pr_id"
+      value="<!--PRID-->" />
+    <table class="liste txt320">
+      <tr>
+        <th>Datum:</th>
+        <td>
+        <div class="inputDatum"><input type="text" class="datePicker" name="datum" value="<!--Datum-->"
+        size="8" /></div>
+        </td>
+      </tr>
+      <tr>
+        <th>Dienstleistung:</th>
+        <td><select name="kostenstelle" class="txt210">
+          <option>Hotel</option>
+          <option>Spesen</option>
+          <option>Fahrtkosten</option>
+          <option>LKW</option>
+          <option>Anhänger</option>
+        </select></td>
+      </tr>
+      <tr>
+        <th>Dienstleister:</th>
+        <td><input type="text" name="lieferant" value="<!--Lieferant-->" class="txt210"/></td>
+      </tr>
+      <tr>
+        <th>Mitarbeiter:</th>
+        <td><select name="kostenstelle" class="txt210">
+          <option></option>
+          <option>Hotel</option>
+          <option>Spesen</option>
+          <option>Fahrtkosten</option>
+          <option>LKW</option>
+          <option>Anhänger</option>
+        </select></td>
+      </tr>
+      <tr>
+        <th>Nummer:</th>
+        <td><input type="text" name="nummer" value="<!--Nummer-->" class="txt210"/></td>
+      </tr>
+      <tr>
+        <th>Kommentar:</th>
+        <td><textarea name="kommentar" class="txt210"><!--Kommentar--></textarea></td>
+      </tr>
+      <tr>
+        <th>Betrag:</th>
+        <td><input type="text" name="betrag" class="int70 jsFormatNumber" value="<!--Betrag-->"/> EUR</td>
+      </tr>
+      <tr>
+        <th>&nbsp;</th>
+        <td><input type="submit" name="submit" class="button iconButton saveButton" value="<!--SubmitButton-->"
+        /> <a class="buttonLink iconButton cancelButton" href="index.php?page=6&do=110&pid=<!--ProjektID-->"
+        title="Abbrechen">Abbrechen</a></td>
+      </tr>
+    </table>
+    
     </form>
     </td>
     <td>

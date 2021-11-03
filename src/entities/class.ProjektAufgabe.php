@@ -5,6 +5,7 @@ class ProjektAufgabe extends AdvancedDatabaseStorageObjekt
 
     private $plankosten;
     private $sollStunden;
+    private $istStunden;
     private $sollMaterial;
     
     private $reihenfolge;
@@ -30,6 +31,7 @@ class ProjektAufgabe extends AdvancedDatabaseStorageObjekt
         $this->planlkosten = $rs["pa_plankosten"];
         $this->reihenfolge = $rs["pa_reihenfolge"];
         $this->sollStunden = $rs["pa_sollstunden"];
+        $this->istStunden = $rs["pa_iststunden"];
         $this->sollMaterial = $rs["pa_sollmaterial"];
     }
 
@@ -42,6 +44,7 @@ class ProjektAufgabe extends AdvancedDatabaseStorageObjekt
         $ht->add("pa_plankosten", $this->getPlankosten());
         $ht->add("pa_reihenfolge", $this->getReihenfolge());
         $ht->add("pa_sollstunden", $this->getSollStunden());
+        $ht->add("pa_iststunden", $this->getIstStunden());
         $ht->add("pa_sollmaterial", $this->getSollMaterial());
         return $ht;
     }
@@ -114,6 +117,16 @@ class ProjektAufgabe extends AdvancedDatabaseStorageObjekt
     public function setSollStunden($pSollStunden)
     {
         $this->sollStunden = $pSollStunden;
+    }
+    
+    public function getIstStunden()
+    {
+        return $this->istStunden;
+    }
+    
+    public function setIstStunden($pIstStunden)
+    {
+        $this->istStunden = $pIstStunden;
     }
     
     public function getSollMaterial()

@@ -152,7 +152,9 @@ class ZeiterfassungUtilities
 					CASE WHEN ISNULL(a2.au_id) THEN a.au_id ELSE a2.au_id END as unter_id,
 					CASE WHEN ISNULL(a2.au_bezeichnung) THEN '' ELSE a2.au_bezeichnung END as unter_bez,
 					g.g_id,
-					g.g_kirche
+					g.g_kirche,
+                    pa.pa_sollstunden,
+                    pa.pa_iststunden
 				FROM
 					benutzer b, 
 					aufgabe_mitarbeiter am, 
@@ -194,7 +196,9 @@ class ZeiterfassungUtilities
 					CASE WHEN ISNULL(a2.au_id) THEN a.au_id ELSE a2.au_id END as unter_id,
 					CASE WHEN ISNULL(a2.au_bezeichnung) THEN '' ELSE a2.au_bezeichnung END as unter_bez,
 					g.g_id,
-					g.g_kirche
+					g.g_kirche,
+                    pa.pa_sollstunden,
+                    pa.pa_iststunden
 				FROM
 					benutzer b, 
 					aufgabe_mitarbeiter am, 
@@ -235,6 +239,8 @@ class ZeiterfassungUtilities
                 $tmp->setUnteraufgabeBezeichnung($o['unter_bez']);
                 $tmp->setProjektID($o['proj_id']);
                 $tmp->setProjektBezeichnung($o['proj_bezeichnung']);
+                $tmp->setSollStunden($o['pa_sollstunden']);
+                $tmp->setIstStunden($o['pa_iststunden']);
                 $oDSOC->add($tmp);
             }
         }

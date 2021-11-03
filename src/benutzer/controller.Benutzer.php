@@ -365,6 +365,10 @@ class BenutzerController
             $awArbeitswoche->setWochenStundenIst($istStunden);
             $awArbeitswoche->setWochenStundenDif($awArbeitswoche->getWochenStundenIst() - $awArbeitswoche->getWochenStundenSoll());
             $awArbeitswoche->speichern(true);
+            
+            // Projekt Aufgabe Stunden berechnen
+            ProjektAufgabeUtilities::berechnenIstStunden($projektID);
+            
         } else {
             Log::debug("Daten werden nicht gespeichert.");
         }
@@ -406,11 +410,27 @@ class BenutzerController
             }
             $tplDS->replace("ProjektBezeichnung", "");
             
-            if ($tmpHaupt != $z->getHauptaufgabeBezeichnung())
+            // Stunden Information START
+            if($z->getSollStunden() > 0) {
+                $stundenInfo = " (".($z->getSollStunden() - $z->getIstStunden())." von ".intval($z->getSollStunden()) . " Std.)";
+            } else {
+                $stundenInfo = "";
+            }
+            
+            
+            $tplDS->replace("IstStunden", $z->getIstStunden());
+            // Stunden Information ENDE
+            
+            if ($tmpHaupt != $z->getHauptaufgabeBezeichnung()) {
                 $tplDS->replace("Hauptaufgabe", $z->getHauptaufgabeBezeichnung());
-            $tplDS->replace("Hauptaufgabe", "");
+                $tplDS->replace("StundenInfo", $stundenInfo);
+            } else {
+                $tplDS->replace("Hauptaufgabe", "");
+                $tplDS->replace("StundenInfo", "");
+            }
             
             $tplDS->replace("Unteraufgabe", $z->getUnteraufgabeBezeichnung());
+            
             $tplDS->replace("UAID", $z->getUnteraufgabeID());
             $tplDS->replace("PID", $z->getProjektID());
             
@@ -492,6 +512,8 @@ class BenutzerController
         $tpl->anzeigen();
         
         BenutzerUtilities::berechneUeberstunden($benutzer->getID());
+        
+        
     }
 
     public static function doHilfeRufen()

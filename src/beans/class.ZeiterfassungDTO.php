@@ -25,6 +25,10 @@ class ZeiterfassungDTO
 
     private $stunden;
 
+    private $sollStunden;
+
+    private $istStunden;
+
     public function getBenutzerID()
     {
         return $this->benutzerID;
@@ -133,6 +137,42 @@ class ZeiterfassungDTO
     public function setStunden($stunden)
     {
         $this->stunden = $stunden;
+    }
+
+    /**
+     *
+     * @return the $sollStunden
+     */
+    public function getSollStunden()
+    {
+        return $this->sollStunden;
+    }
+
+    /**
+     *
+     * @return the $istStunden
+     */
+    public function getIstStunden()
+    {
+        return $this->istStunden;
+    }
+
+    /**
+     *
+     * @param field_type $sollStunden            
+     */
+    public function setSollStunden($sollStunden)
+    {
+        $this->sollStunden = $sollStunden;
+    }
+
+    /**
+     *
+     * @param field_type $istStunden            
+     */
+    public function setIstStunden($istStunden)
+    {
+        $this->istStunden = $istStunden;
     }
 }
 ?>

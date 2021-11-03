@@ -1,5 +1,5 @@
 <tr>
-	<td class="<!--cssklasse-->"><!--Hauptaufgabe--></td>
+	<td class="<!--cssklasse-->"><!--Hauptaufgabe--> <!--StundenInfo--></td>
 	<td class="<!--cssklasse-->"><!--Unteraufgabe--></td>
 	<td class="<!--cssklasse-->"><input disabled class="disabled" type="text" name="summe_<!--PID-->_<!--UAID-->" value="<!--summe_<!--PID-->_<!--UAID-->-->" size="3" /></td>
 	<td class="<!--cssklasse-->"><input class="zeiteingabe" type="text" name="TS<!--TS0-->_P<!--PID-->_A<!--UAID-->" value="<!--D<!--Datum0-->_P<!--PID-->_A<!--UAID-->-->" <!--Disabled--> size="3" /></td>
