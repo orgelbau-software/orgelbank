@@ -1,4 +1,4 @@
-<h3>Stundenfreigabe - <!--Benutzername--> - <!--Wochen--></h3>
+<h3>Stundenfreigabe - <!--Benutzername--> - KW <!--KW-->/<!--Jahr--> - <!--DatumVon--> - <!--DatumBis--></h3>
 <!--Statusmeldung-->
 <!--HTMLStatus-->
 <form method="post" action="<!--FormTarget-->">
@@ -17,12 +17,6 @@
     <td><input disabled class="disabled" type="text" name="summe_sonntag" value="<!--Summe0-->" size="3" /></td>
   </tr>
   <tr>
-  	<td style="width: 200px;">&nbsp;</td>
-    <td style="font-weight: bold;">Summe Gesamt:</td>
-  	<td><input disabled class="disabled" style="font-weight: bold;" type="text" name="summe_alleprojekte" value="<!--SummeAlleProjekte-->" size="3" />
-  	<td colspan="7">&nbsp;</td>
-  </td>
-  <tr>
     <td colspan="10"><hr/></td>
   </tr>
   <tr>
@@ -38,18 +32,13 @@
     <td><input disabled type="text" id="rk" name="rk" value="<!--RK-->" class="disabled int60 jsFormatNumber"/></td>
   </tr>
   <tr>
-    <th colspan="3"><input type="checkbox" name="woche_komplett" <!--WocheKomplettChecked--> <!--WocheKomplettDisabled--> id="woche_komplett"/><label for="woche_komplett">Eingabe vollst&auml;ndig</label> </th>
+    <th colspan="3">&nbsp;</th>
     <th>&nbsp;</td>
-    <th colspan="4"></th>
-    <th>&nbsp;</td>
-    <th style="text-align: right"><input class="button iconButton saveButton"  type="submit" name="submit" value="Speichern" <!--SpeichernDisabled-->/></th>
-  </tr>
-  <tr>
-    <th colspan="3"><input class="button iconButton backButton" type="submit" name="submit" value="Vorherige Woche" /></th>
-    <th>&nbsp;</td>
-    <th colspan="3"><input class="button iconButton refreshButton"  type="submit" name="submit" value="Aktuelle Woche" /></th>
-    <th>&nbsp;</td>
-    <th style="text-align: right" colspan="2"><input class="button iconButton forwardButton"  type="submit" name="submit" value="N&auml;chste Woche" /></th>
+    <th colspan="3"></th>
+    <th colspan="3" style="text-align: right">
+    	<input class="button iconButton cancelButton"  type="submit" name="submit" value="Ablehnen" <!--AblehnenDisabled-->/>
+    	<input class="button iconButton saveButton"  type="submit" name="submit" value="Freigeben" <!--FreigebenDisabled-->/>
+   	 </th>
   </tr>
   </table>
 

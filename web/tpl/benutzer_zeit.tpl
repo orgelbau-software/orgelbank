@@ -55,8 +55,7 @@
     <th colspan="3"><input type="checkbox" name="woche_komplett" <!--WocheKomplettChecked--> <!--WocheKomplettDisabled--> id="woche_komplett"/><label for="woche_komplett">Eingabe vollst&auml;ndig</label> </th>
     <th>&nbsp;</td>
     <th colspan="4"></th>
-    <th>&nbsp;</td>
-    <th style="text-align: right"><input class="button iconButton saveButton"  type="submit" name="submit" value="Speichern" <!--SpeichernDisabled-->/></th>
+    <th colspan="2"style="text-align: right"><input class="button iconButton saveButton"  type="submit" name="submit" value="Speichern" <!--SpeichernDisabled-->/></th>
   </tr>
   <tr>
     <th colspan="3"><input class="button iconButton backButton" type="submit" name="submit" value="Vorherige Woche" /></th>

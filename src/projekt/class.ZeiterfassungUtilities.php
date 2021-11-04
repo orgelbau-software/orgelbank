@@ -140,6 +140,51 @@ class ZeiterfassungUtilities
         return $retVal;
     }
 
+    
+    public static function getBenutzerProjektAufgabenImZeitraum($iBenutzerID, $startDatum, $endDatum) {
+        
+        
+        $sql = "SELECT
+					p.proj_id,
+                    g.g_id,  
+                    g.g_kirche, 
+                    p.proj_bezeichnung,
+                    b.be_id,  
+                    b.be_benutzername,
+                    a.au_id as unter_id, 
+                    a.au_bezeichnung as unter_bez, 
+                    CASE WHEN ISNULL(a2.au_id) THEN a.au_id ELSE a2.au_id END as haupt_id, 
+                    CASE WHEN ISNULL(a2.au_bezeichnung) THEN '' ELSE a2.au_bezeichnung END as haupt_bez, 
+                    pa.pa_sollstunden, 
+                    pa.pa_iststunden
+				FROM 
+                    arbeitstag t, 
+                    projekt p, 
+                    gemeinde g, 
+                    benutzer b, 
+                    projekt_aufgabe pa, 
+                    aufgabe a left join aufgabe a2 on a.au_parentid = a2.au_id 
+                WHERE 
+                    (t.at_datum BETWEEN CAST('".$startDatum."' AS DATE) AND CAST('".$endDatum."' AS DATE)) 
+                    AND t.be_id = 2 
+                    and p.proj_id = t.proj_id 
+                    and p.g_id = g.g_id 
+                    and t.be_id = b.be_id 
+                    and t.au_id = a.au_id 
+                    and pa.proj_id = p.proj_id 
+                    and pa.au_id = a2.au_id";
+        
+        // Fuehrt dazu, dass nur Aufgaben angezeigt werden, die auch eine Unteraufgabe haben
+        //$sql .= " AND a2.au_parentid <> 0 ";
+        
+        $sql .= " ORDER BY
+					g_kirche,
+					p.proj_bezeichnung,
+					a2.au_bezeichnung,
+					a.au_bezeichnung";
+        return ZeiterfassungUtilities::queryDB($sql);
+        
+    }
     public static function getBenutzerProjektAufgaben($iBenutzerID, $iProjektID)
     {
         $sql = "SELECT
@@ -173,7 +218,7 @@ class ZeiterfassungUtilities
 					AND p.proj_geloescht = 0
 					AND p.proj_archiviert = 0";
         
-        // Fuehr dazu, dass nur Aufgaben angezeigt werden, die auch eine Unteraufgabe haben
+        // Fuehrt dazu, dass nur Aufgaben angezeigt werden, die auch eine Unteraufgabe haben
         $sql .= " AND a2.au_parentid <> 0 ";
         
         $sql .= "ORDER BY

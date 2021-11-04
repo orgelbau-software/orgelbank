@@ -56,8 +56,9 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
         // Ab Hier Copy & Paste
         $gemeindeCache = new HashTable();
         $pid = 132;
-        $tplDSRubrik = new BufferedTemplate("projekt_stundenfreigabe_rubrik.tpl");
-        $c = ZeiterfassungUtilities::getBenutzerProjektAufgaben($benutzer->getID(), $pid);
+        $tplDSRubrikFirst = new BufferedTemplate("projekt_stundenfreigabe_rubrik.tpl");
+        $tplDSRubrikAfter = new BufferedTemplate("projekt_stundenfreigabe_rubrik_2.tpl");
+        $tplDSRubrik = $tplDSRubrikFirst;
         $tplDS = new BufferedTemplate("benutzer_zeit_ds.tpl", "cssklasse", "td1", "td2");
         $bisherStundenSumme = 0;
         
@@ -70,9 +71,18 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
         }
         
         $arWochentage = Date::berechneArbeitswoche($woche);
+        $arWochentageHeadline = Date::berechneArbeitswoche($woche, "d.m");
+        $arWochentageTechFormat = Date::berechneArbeitswoche($woche, "Y-m-d");
         $arWochentageTS = Date::berechneArbeitswocheTimestamp($woche);
         $kw = date("W", $arWochentageTS[4]); // ISO 8601 Der Donnerstag der Woche ist entscheidend. Problemfall 2019
         $jahr = date("Y", $arWochentageTS[4]); // ISO 8601 Der Donnerstag der Woche ist entscheidend. Problemfall 2019
+        
+        $tpl->replace("KW", $kw);
+        $tpl->replace("Jahr", $jahr);
+        $tpl->replace("DatumVon", $arWochentage[0]);
+        $tpl->replace("DatumBis", $arWochentage[6]);
+        
+        $c = ZeiterfassungUtilities::getBenutzerProjektAufgabenImZeitraum($benutzer->getID(), $arWochentageTechFormat[0], $arWochentageTechFormat[6]);
         
         $tmpProj = "";
         $tmpHaupt = "";
@@ -97,12 +107,49 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
             if ($tmpProj != $z->getProjektBezeichnung()) {
                 $tplDSRubrik->replace("ProjektBezeichnung", $gemeindeCache->getValueOf($z->getGemeindeID())
                     ->getKirche() . ", " . $z->getProjektBezeichnung());
+                
+                // Wochentagsausgabe
+                for ($i = 0; $i < 7; $i ++) {
+                    $feiertagsZusatz = $arWochentageHeadline[$i];
+                    
+                    $feiertag = Date::getFeiertagsBezeichnung($arWochentage[$i]);
+                    if ($feiertag != "") {
+                        $feiertagsZusatz = "<span style=\"color: #CE0000;\">" . $feiertagsZusatz . "<br/>" . $feiertag . "</font>";
+                    }
+                    $tplDSRubrik->replace("Datum" . ($i + 1), $feiertagsZusatz);
+                }
+                $tplDSRubrik->perceive();
+                
                 $tplDS->addToBuffer($tplDSRubrik);
-                $tplDSRubrik->forget();
+                $tplDSRubrik->next();
+                
+                $tplDSRubrik = $tplDSRubrikAfter;
                 
                 $tmpHaupt = null;
             }
             $tplDS->replace("ProjektBezeichnung", "");
+            
+            // Stunden Information START
+            if (($z->getSollStunden() - $z->getIstStunden()) < 0) {
+                $stundenInfo = "(" . ($z->getSollStunden() - $z->getIstStunden()) . " von " . intval($z->getSollStunden()) . " Std.)";
+                $tplDS->replace("cssklasse", "red");
+            } else if ($z->getSollStunden() > 0) {
+                $stundenInfo = " (" . ($z->getSollStunden() - $z->getIstStunden()) . " von " . intval($z->getSollStunden()) . " Std.)";
+            } else {
+                // Keine SollStunden fuer dieses Projekt eingegeben
+                $stundenInfo = "";
+            }
+            
+            $tplDS->replace("IstStunden", $z->getIstStunden());
+            // Stunden Information ENDE
+            
+            if ($tmpHaupt != $z->getHauptaufgabeBezeichnung()) {
+                $tplDS->replace("Hauptaufgabe", $z->getHauptaufgabeBezeichnung());
+                $tplDS->replace("StundenInfo", $stundenInfo);
+            } else {
+                $tplDS->replace("Hauptaufgabe", "");
+                $tplDS->replace("StundenInfo", "");
+            }
             
             if ($tmpHaupt != $z->getHauptaufgabeBezeichnung())
                 $tplDS->replace("Hauptaufgabe", $z->getHauptaufgabeBezeichnung());
@@ -161,6 +208,10 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
         
         $tpl->replace("SummeAlleProjekte", $bisherStundenSumme);
         $tpl->replace("Datensaetze", $tplDS->getOutput());
+        
+        $tpl->replace("Disabled", "");
+        $tpl->replace("FreigebenDisabled", "");
+        $tpl->replace("AblehnenDisabled", "");
         
         return $tpl;
     }
