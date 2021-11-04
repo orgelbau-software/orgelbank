@@ -204,6 +204,7 @@ class BenutzerController
         
         // Arbeitswoche berechnen
         $arWochentage = Date::berechneArbeitswoche($woche);
+        $arWochentageHeadline = Date::berechneArbeitswoche($woche, "d.m");
         $arWochentageTS = Date::berechneArbeitswocheTimestamp($woche);
         $_SESSION['request']['woche'] = $woche;
         
@@ -259,7 +260,8 @@ class BenutzerController
         // Wochentagsausgabe
         $tplDSRubrik = new BufferedTemplate("benutzer_zeit_rubrik.tpl");
         for ($i = 0; $i < 7; $i ++) {
-            $feiertagsZusatz = $arWochentage[$i];
+            $feiertagsZusatz = $arWochentageHeadline[$i];
+            
             $feiertag = Date::getFeiertagsBezeichnung($arWochentage[$i]);
             if ($feiertag != "") {
                 $feiertagsZusatz = "<span style=\"color: #CE0000;\">" . $feiertagsZusatz . "<br/>" . $feiertag . "</font>";
@@ -411,9 +413,13 @@ class BenutzerController
             $tplDS->replace("ProjektBezeichnung", "");
             
             // Stunden Information START
-            if($z->getSollStunden() > 0) {
+            if(($z->getSollStunden() - $z->getIstStunden()) < 0) {
+                $stundenInfo = "(".($z->getSollStunden() - $z->getIstStunden())." von ".intval($z->getSollStunden()) . " Std.)";
+                $tplDS->replace("cssklasse", "red");
+            } else if($z->getSollStunden() > 0) {
                 $stundenInfo = " (".($z->getSollStunden() - $z->getIstStunden())." von ".intval($z->getSollStunden()) . " Std.)";
             } else {
+                // Keine SollStunden fuer dieses Projekt eingegeben
                 $stundenInfo = "";
             }
             

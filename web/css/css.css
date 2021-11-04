@@ -247,20 +247,28 @@ table.liste td.td2,rechnungContext_td2 table td {
 	background-color: #B3CDEF;
 }
 
+/* Dunkelblau / Grau*/
 table.liste td.td3 {
 	background-color: #A7BFDF;
 }
 
+/* Grau */
 table.liste td.td4 {
 	background-color: #C3CFDF;
 }
 
+/* Blau/Grau*/
 table.liste td.td5 {
 	background-color: #B5C7DF;
 }
 
+/* Blau*/
 table.liste td.td6 {
 	background-color: #D1DEEF;
+}
+
+table.liste td.red {
+	background-color: #FFB0AD;
 }
 
 table.liste td.rubrik {
