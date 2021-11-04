@@ -212,6 +212,7 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
         $tpl->replace("Disabled", "");
         $tpl->replace("FreigebenDisabled", "");
         $tpl->replace("AblehnenDisabled", "");
+        $tpl->replace("BearbeitenDisabled", "");
         
         return $tpl;
     }

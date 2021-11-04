@@ -34,9 +34,10 @@
   <tr>
     <th colspan="3">&nbsp;</th>
     <th>&nbsp;</td>
-    <th colspan="3"></th>
-    <th colspan="3" style="text-align: right">
+    <th colspan="1"></th>
+    <th colspan="5" style="text-align: right">
     	<input class="button iconButton cancelButton"  type="submit" name="submit" value="Ablehnen" <!--AblehnenDisabled-->/>
+    	<input class="button iconButton editButton"  type="submit" name="submit" value="Bearbeiten" <!--BearbeitenDisabled-->/>
     	<input class="button iconButton saveButton"  type="submit" name="submit" value="Freigeben" <!--FreigebenDisabled-->/>
    	 </th>
   </tr>
