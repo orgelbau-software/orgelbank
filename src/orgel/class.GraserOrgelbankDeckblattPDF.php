@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Spezfifische Implementierung für Orgelbau Graser. Um Farbe/Toner beim Drucken zu sparen, keine fette und farbige Hervorhebung. Der Trennstrich ist kuerzer und auf das Briefpapier der Firma angepasst.
+ * @author Stephan
+ *
+ */
 class GraserOrgelbankDeckblattPDF extends OrgelbankDeckblattPDF
 {
 
@@ -7,34 +12,33 @@ class GraserOrgelbankDeckblattPDF extends OrgelbankDeckblattPDF
     {
         parent::__construct();
     }
-    
-    protected function activateFontColorRed() 
+
+    protected function activateFontColorRed()
     {
         $this->activateFontColorBlack();
     }
-    
-    protected function activateFontColorBlue() 
+
+    protected function activateFontColorBlue()
     {
         $this->activateFontColorBlack();
     }
-    
-    protected function activateFontColorGreen() 
+
+    protected function activateFontColorGreen()
     {
         $this->activateFontColorBlack();
     }
-    
-    
+
     protected function getFontBold()
     {
         return $this->font;
     }
-    
+
     protected function getTrennstrichLaenge()
     {
         return 150;
     }
-    
-    protected function addBezirkUndOrgelID($pOrgelID, $pBezirk) 
+
+    protected function addBezirkUndOrgelID($pOrgelID, $pBezirk)
     {
         $tmpX = $this->getX();
         $tmpY = $this->getY();

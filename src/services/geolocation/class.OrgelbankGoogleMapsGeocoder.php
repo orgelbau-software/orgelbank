@@ -25,6 +25,7 @@ class OrgelbankGoogleMapsGeocoder extends GoogleMapsGeocoderService implements I
     {
         parent::__construct($address, $format, $sensor);
         $this->setLanguage("de");
+        $this->setApiKey(GOOGLE_MAPS_API_KEY);
     }
 
     public function geocode($https = false, $raw = false)
@@ -33,6 +34,7 @@ class OrgelbankGoogleMapsGeocoder extends GoogleMapsGeocoderService implements I
             // return $this->doGeocode($https, $raw);
             return $this->doGeocodeWithRetry($https, $raw);
         } catch (Exception $e) {
+//             pre($e);
             return self::SERVICE_NOT_AVAILABLE;
         }
     }
@@ -92,9 +94,13 @@ class OrgelbankGoogleMapsGeocoder extends GoogleMapsGeocoderService implements I
                     $retVal = self::SERVICE_STATUS_FAILED;
                 }
             } else {
-                // echo count($response);
-                // pre($response);
-                $retVal = self::SERVICE_INVALID_RESPONSE;
+//                 echo count($response);
+//                 pre($response);
+                if(isset($response['error_message'])) {
+                    throw new Exception("Orgelbank Geocoding failed with: " . $response['error_message']);
+                } else {
+                    $retVal = self::SERVICE_INVALID_RESPONSE;
+                }
             }
             return $retVal;
         }

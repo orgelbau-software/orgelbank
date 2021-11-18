@@ -13,6 +13,7 @@ class OrgelbankGoogleMapsDirectionsService extends GoogleMapsDirectionsService i
     {
         parent::__construct($format, $sensor);
         $this->setLanguage("de");
+        $this->setApiKey(GOOGLE_MAPS_API_KEY);
     }
 
     public function getDirections($https = false, $raw = false)
@@ -77,7 +78,8 @@ class OrgelbankGoogleMapsDirectionsService extends GoogleMapsDirectionsService i
                     // echo "-->".$this->getAddress()."<br/>";
                     return GoogleMapsGeocoder::STATUS_INVALID_REQUEST;
                 } else {
-                    echo "-->" . $response['status'];
+//                     echo "-->" . $response['status'];
+//                     pre($response);
                     $retVal = IGeolocationConstants::SERVICE_NOT_OK;
                 }
             }

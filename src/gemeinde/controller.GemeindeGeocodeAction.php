@@ -42,7 +42,7 @@ class GemeindeGeocodeAction implements GetRequestHandler
                     $geocodeResult = $srvGeocode->geocode();
                     $o->getKircheAdresse()->setGeoStatus($geocodeResult);
                     if ($geocodeResult != IGeolocationConstants::OK) {
-                        $msg = Constant::getGeoStatusUserMessage($geocodeResult, "Kirchen-Adresse");
+                        $msg = Constant::getGeoStatusUserMessage($geocodeResult, "Kirchen-Adresse: ");
                     } else {
                         $o->getKircheAdresse()->setLat($srvGeocode->getAdresse()
                             ->getLat());

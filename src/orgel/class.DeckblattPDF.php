@@ -71,7 +71,7 @@ abstract class DeckblattPDF extends OrgelbankBasisPDF
         $k = KonfessionUtilities::getKonfessionenAsArray();
         
         // Bookmark Kapitel
-        $this->Bookmark($oGemeinde->getKirche());
+        //$this->Bookmark($oGemeinde->getKirche());
 
         $this->activateFontColorBlack();
         $this->activateFontNormal();

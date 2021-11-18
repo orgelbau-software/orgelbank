@@ -172,11 +172,11 @@ class Ansprechpartner extends SimpleDatabaseStorageObjekt
     public function getAnzeigeName()
     {
         $retVal = "";
-        $retVal .= $this->getAnrede();
-        if ($this->getTitel() != "") {
-            $retVal .= " ";
-            $retVal .= $this->getTitel();
-        }
+//         $retVal .= $this->getAnrede();
+//         if ($this->getTitel() != "") {
+//             $retVal .= " ";
+//             $retVal .= $this->getTitel();
+//         }
         $retVal .= " " . $this->getNachname();
         if ($this->getVorname() != "") {
             $retVal .= ", " . $this->getVorname();
