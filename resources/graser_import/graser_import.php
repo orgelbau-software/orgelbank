@@ -1,4 +1,3 @@
-
 <?php
 include "../../conf/config.inc.php";
 

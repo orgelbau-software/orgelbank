@@ -14,4 +14,5 @@ lib/tFPDF/font/unifont/dejavusanscondensed.cw127.php
 lib/tFPDF/font/unifont/*.dat
 resources/graser_import/*.xlsx
 resources/graser_import/*.csv
+resources/bente_import/*.csv
 vendor/*

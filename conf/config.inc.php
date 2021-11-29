@@ -7,7 +7,8 @@ mb_internal_encoding( 'UTF-8' );
 
 // Providerspezifische Zugangsdaten laden
 //include_once 'example.php';
-include_once 'bente.allinkl.conf.php';
+//include_once 'bente.allinkl.conf.php';
+include_once 'krawinkel.lokal.conf.php';
 
 // Konstanten
 define('TRACEENABLED', false);

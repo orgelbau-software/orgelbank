@@ -240,14 +240,6 @@ class Ansprechpartner extends SimpleDatabaseStorageObjekt
         }
     }
 
-    public function setHausnummer($hausnummer)
-    {
-        if ($this->hausnummer != $hausnummer) {
-            $this->hausnummer = $hausnummer;
-            $this->setChanged(true);
-        }
-    }
-
     public function setMobil($mobil)
     {
         if ($this->mobil != $mobil) {
