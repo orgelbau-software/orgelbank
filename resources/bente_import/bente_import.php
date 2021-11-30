@@ -4,47 +4,6 @@ include "../../conf/config.inc.php";
 $db = DB::getInstance();
 $db->connect();
 $sql = array();
-// $sql[] = "TRUNCATE TABLE benutzer;";
-// //$sql[] = "TRUNCATE TABLE adresse;";
-// $sql[] = "TRUNCATE TABLE ansprechpartner;";
-// $sql[] = "TRUNCATE TABLE disposition;";
-// //$sql[] = "TRUNCATE TABLE gemeinde;";
-// //$sql[] = "TRUNCATE TABLE orgel;";
-// $sql[] = "TRUNCATE TABLE wartung;";
-// $sql[] = "TRUNCATE TABLE gemeindeansprechpartner;";
-// foreach ($sql as $key => $val) {
-// echo $val . "<br>";
-// $db->NonSelectQuery($val);
-// }
-
-// error_reporting(E_ALL);
-
-// // Firma
-// $oFirma = new Ansprechpartner();
-// $oFirma->setAktiv(1);
-// $oFirma->setNachname("Freiburger Orgelbau");
-// $oFirma->getAdresse()->setStrasse("Herrenstraße");
-// $oFirma->getAdresse()->setHausnummer("9");
-// $oFirma->getAdresse()->setPlz("79232");
-// $oFirma->getAdresse()->setOrt("March");
-// $oFirma->getAdresse()->setGeoStatus(IGeolocationConstants::OK);
-// $oFirma->getAdresse()->setLat("48.0522");
-// $oFirma->getAdresse()->setLng("7.7815809");
-// $oFirma->setAnrede("keine");
-// $oFirma->setFunktion("Firma");
-// $oFirma->speichern(true);
-
-// // Benutzer
-// $oSWA = new Benutzer();
-// $oSWA->setBenutzername("swatermeyer");
-// $oSWA->setVorname("Stephan");
-// $oSWA->setNachname("Watermeyer");
-// $oSWA->setBenutzerlevel(10);
-// $oSWA->setAktiviert(1);
-// $oSWA->setDemo(1);
-// $oSWA->setGeloescht(0);
-// $oSWA->setPasswort(md5(MYSQL_PASS));
-// $oSWA->speichern(false);
 
 $row = 1;
 
@@ -246,7 +205,7 @@ if (($handle = fopen("kontakte.original.csv", "r")) !== FALSE) {
         $bemerkung .= $ansprechpartner->getBemerkung();
         $ansprechpartner->setBemerkung($bemerkung);
         
-        echo $bemerkung;
+        //echo $bemerkung;
         
         fwrite($exportfile, $ansprechpartner->export());
         fwrite($exportfile, "\r\n\r\n");
@@ -256,6 +215,7 @@ if (($handle = fopen("kontakte.original.csv", "r")) !== FALSE) {
 }
 
 fclose($exportfile);
+echo "SQL File generated.";
 
 class CSVBenteEntity
 {
