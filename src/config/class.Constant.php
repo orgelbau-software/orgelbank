@@ -89,7 +89,10 @@ class Constant
             0 => "Niemals",
             1 => "Jedesmal",
             2 => "Jedes 2. Mal",
-            3 => "Jedes 3. Mal"
+            3 => "Jedes 3. Mal",
+            4 => "Jedes 4. Mal",
+            5 => "Jedes 5. Mal",
+            6 => "Jedes 6. Mal"
         );
     }
     
