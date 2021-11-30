@@ -47,6 +47,11 @@
         <td class="alignRight"><!--GesamtReisekosten--> EUR</td>
       </tr>
       <tr>
+        <th>Nebenkosten:</th>
+        <td>+</td>
+        <td class="alignRight"><!--GesamtNebenkosten--> EUR</td>
+      </tr>
+      <tr>
         <th>Gesamtkosten:</th>
         <td class="projekkostenrechnungsumme">=</td>
         <td class="alignRight projekkostenrechnungsumme zwischensumme"><!--Gesamtkosten--> EUR</td>
@@ -108,65 +113,62 @@
       </tr>
       <tr>
         <th>&nbsp;</th>
-        <td><input type="submit" name="submit" class="button iconButton saveButton" value="<!--SubmitButton-->"
-        /> <a class="buttonLink iconButton cancelButton" href="index.php?page=6&do=110&pid=<!--ProjektID-->"
+        <td>
+        	<input type="submit" name="submit" class="button iconButton saveButton" value="<!--SubmitButtonPR-->" />
+        	<a class="buttonLink iconButton cancelButton" href="index.php?page=6&do=110&pid=<!--ProjektID-->"
         title="Abbrechen">Abbrechen</a></td>
       </tr>
     </table>
+    </form>
     
     <h3>Nebenkosten</h3>
-    <form method="post" action="index.php?page=6&do=110&pid=<!--ProjektID-->"> <input type="hidden" name="pr_id"
-      value="<!--PRID-->" />
+    <form method="post" action="index.php?page=6&do=110&pid=<!--ProjektID-->"> 
+    	<input type="hidden" name="nk_id" value="<!--NKID-->" />
     <table class="liste txt320">
       <tr>
         <th>Datum:</th>
         <td>
-        <div class="inputDatum"><input type="text" class="datePicker" name="datum" value="<!--Datum-->"
+        <div class="inputDatum"><input type="text" class="datePicker" name="nk_datum" value="<!--NKDatum-->"
         size="8" /></div>
         </td>
       </tr>
       <tr>
         <th>Dienstleistung:</th>
-        <td><select name="kostenstelle" class="txt210">
-          <option>Hotel</option>
-          <option>Spesen</option>
-          <option>Fahrtkosten</option>
-          <option>LKW</option>
-          <option>Anhänger</option>
-        </select></td>
+        <td>
+        <input type="text" name="nk_leistung" class="txt210" list="nebenkostenarten" value="<!--NKLeistung-->"/>
+			<datalist id="nebenkostenarten">
+  				<!--NebenkostenDatalist-->
+			</datalist>
+        </td>
       </tr>
       <tr>
         <th>Dienstleister:</th>
-        <td><input type="text" name="lieferant" value="<!--Lieferant-->" class="txt210"/></td>
+        <td><input type="text" name="nk_lieferant" value="<!--NKLieferant-->" class="txt210"/></td>
       </tr>
       <tr>
         <th>Mitarbeiter:</th>
-        <td><select name="kostenstelle" class="txt210">
-          <option></option>
-          <option>Hotel</option>
-          <option>Spesen</option>
-          <option>Fahrtkosten</option>
-          <option>LKW</option>
-          <option>Anhänger</option>
+        <td><select name="nk_mitarbeiter" class="txt210">
+          <!--SelectMitarbeiter-->
         </select></td>
       </tr>
       <tr>
         <th>Nummer:</th>
-        <td><input type="text" name="nummer" value="<!--Nummer-->" class="txt210"/></td>
+        <td><input type="text" name="nk_nummer" value="<!--NKNummer-->" class="txt210"/></td>
       </tr>
       <tr>
         <th>Kommentar:</th>
-        <td><textarea name="kommentar" class="txt210"><!--Kommentar--></textarea></td>
+        <td><textarea name="nk_kommentar" class="txt210"><!--NKKommentar--></textarea></td>
       </tr>
       <tr>
         <th>Betrag:</th>
-        <td><input type="text" name="betrag" class="int70 jsFormatNumber" value="<!--Betrag-->"/> EUR</td>
+        <td><input type="text" name="nk_betrag" class="int70 jsFormatNumber" value="<!--NKBetrag-->"/> EUR</td>
       </tr>
       <tr>
         <th>&nbsp;</th>
-        <td><input type="submit" name="submit" class="button iconButton saveButton" value="<!--SubmitButton-->"
-        /> <a class="buttonLink iconButton cancelButton" href="index.php?page=6&do=110&pid=<!--ProjektID-->"
-        title="Abbrechen">Abbrechen</a></td>
+        <td>
+        	<input type="submit" name="submit" class="button iconButton saveButton" value="<!--SubmitButtonNK-->" /> 
+        	<a class="buttonLink iconButton cancelButton" href="index.php?page=6&do=110&pid=<!--ProjektID-->" title="Abbrechen">Abbrechen</a>
+        </td>
       </tr>
     </table>
     
@@ -205,16 +207,28 @@
     <h3>Alle Eingangsrechnungen</h3>
     <table class="liste size100">
       <tr>
-        <th><a href="index.php?page=6&do=110&pid=<!--ProjektID-->&order=datum&dir=<!--TPLDIR-->">Datum</a></th>
-        <th><a href="index.php?page=6&do=110&pid=<!--ProjektID-->&order=lieferant&dir=<!--TPLDIR-->">Lieferant</a></th>
-        <th><a href="index.php?page=6&do=110&pid=<!--ProjektID-->&order=nummer&dir=<!--TPLDIR-->">Nummer</a></th>
-        <th><a href="index.php?page=6&do=110&pid=<!--ProjektID-->&order=betrag&dir=<!--TPLDIR-->">Betrag</a></th>
-        <th><a href="index.php?page=6&do=110&pid=<!--ProjektID-->&order=aufgab&dir=<!--TPLDIR-->">Kostenstelle</a></th>
+        <th><a href="index.php?page=6&do=110&pid=<!--ProjektID-->&prorder=datum&prdir=<!--TPLPRDIR-->">Datum</a></th>
+        <th><a href="index.php?page=6&do=110&pid=<!--ProjektID-->&prorder=lieferant&prdir=<!--TPLPRDIR-->">Lieferant</a></th>
+        <th><a href="index.php?page=6&do=110&pid=<!--ProjektID-->&prorder=nummer&prdir=<!--TPLPRDIR-->">Nummer</a></th>
+        <th><a href="index.php?page=6&do=110&pid=<!--ProjektID-->&prorder=betrag&prdir=<!--TPLPRDIR-->">Betrag</a></th>
+        <th><a href="index.php?page=6&do=110&pid=<!--ProjektID-->&prorder=aufgab&prdir=<!--TPLPRDIR-->">Kostenstelle</a></th>
         <th colspan="2">&nbsp;</th>
       </tr>
       <!--ProjektRechnungen-->
     </table>
 
+    <h3>Alle Nebenkosten</h3>
+    <table class="liste size100">
+      <tr>
+        <th><a href="index.php?page=6&do=110&pid=<!--ProjektID-->&nkorder=datum&nkdir=<!--TPLNKDIR-->">Datum</a></th>
+        <th><a href="index.php?page=6&do=110&pid=<!--ProjektID-->&nkorder=lieferant&nkdir=<!--TPLNKDIR-->">Dienstleister</a></th>
+        <th><a href="index.php?page=6&do=110&pid=<!--ProjektID-->&nkorder=nummer&nkdir=<!--TPLNKDIR-->">Nummer</a></th>
+        <th><a href="index.php?page=6&do=110&pid=<!--ProjektID-->&nkorder=betrag&nkdir=<!--TPLNKDIR-->">Betrag</a></th>
+        <th><a href="index.php?page=6&do=110&pid=<!--ProjektID-->&nkorder=leistung&nkdir=<!--TPLNKDIR-->">Leistung</a></th>
+        <th colspan="2">&nbsp;</th>
+      </tr>
+      <!--NebenkostenRechnungen-->
+    </table>
     </td>
   </tr>
 </table>

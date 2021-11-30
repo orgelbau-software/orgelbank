@@ -3,7 +3,7 @@
 class ProjektKostenRechner
 {
 
-    public function calculate($angebotspreis, $ha, $projektRechnungenProAufgabe, $projektLohnkostenProHauptaufgabe, $reisekostenZusammenfassung)
+    public function calculate($angebotspreis, $ha, $projektRechnungenProAufgabe, $projektLohnkostenProHauptaufgabe, $reisekostenZusammenfassung, $dblNebenkostenSumme = 0)
     {
         $gesPlankosten = $gesRechnungen = $gesLohn = 0;
         if (count($projektRechnungenProAufgabe) > 0) {
@@ -40,7 +40,7 @@ class ProjektKostenRechner
             
             $gesPlankosten += $haufgabe->getPlankosten();
         }
-        $gesamtkosten = $gesLohn + $gesRechnungen + $reisekostenZusammenfassung['gesamt'];
+        $gesamtkosten = $gesLohn + $gesRechnungen + $dblNebenkostenSumme + $reisekostenZusammenfassung['gesamt'];
         $differenzPlanGesamt = $gesPlankosten - $gesamtkosten;
         return array(
             "aufgaben" => $ha,
@@ -48,6 +48,7 @@ class ProjektKostenRechner
             "lohnkosten" => $gesLohn,
             "rechnungen" => $gesRechnungen,
             "reisekosten" => $reisekostenZusammenfassung['gesamt'],
+            "nebenkosten" => $dblNebenkostenSumme,
             "gesamtkosten" => $gesamtkosten,
             "differenz_plan_gesamt" => $differenzPlanGesamt,
             "gewinn_oder_verlust" => ($angebotspreis - $gesamtkosten)

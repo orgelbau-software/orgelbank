@@ -463,6 +463,17 @@ class ConstantLoader
     {
         return ConstantLoader::$htValues->getValueOf("gemeinde_liste_standard_sortierung");
     }
+  
+    public static function getAuswahlNebenkosten()
+    {
+        $a = explode(",", ConstantLoader::$htValues->getValueOf("nebenkosten"));
+        $retVal = array();
+        foreach ($a as $val) {
+            $val = trim($val);
+            $retVal[$val] = $val;
+        }
+        return $retVal;
+    }
     
 }
 ?>

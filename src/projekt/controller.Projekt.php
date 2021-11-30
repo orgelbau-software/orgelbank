@@ -367,10 +367,9 @@ class ProjektController
                     }
                     
                     // wurde bereits von einenem anderen nutzer gewaehlt
-                    if(BenutzerUtilities::loadByPin($_POST['passwort'], true) != null) {
+                    if (BenutzerUtilities::loadByPin($_POST['passwort'], true) != null) {
                         $strText .= "<li>Dieses Passwort wird bereits verwendet. Bitte ein anderes waehlen.</li>";
                     }
-                    
                 }
                 $isBenutzernameChanged = $oldBenutzername != $benutzer->getBenutzername();
                 if ($_POST['submit'] != "Bearbeiten" && BenutzerUtilities::exists($benutzer->getBenutzername())) {
@@ -394,13 +393,12 @@ class ProjektController
                         }
                     } else {
                         AufgabeUtilities::resetMitarbeiterAufgabeZuordnung($benutzer->getID());
-                        foreach($_POST as $key => $val) {
-                            if(strpos($key, "aufgabe_") === 0) {
+                        foreach ($_POST as $key => $val) {
+                            if (strpos($key, "aufgabe_") === 0) {
                                 AufgabeUtilities::addMitarbeiterAufgabeFreischalten($val, $benutzer->getID());
                             }
                         }
                     }
-                    
                     
                     $tplStatus->setText("Benutzer gespeichert. <b>Ggf. Aufgabenverwaltung anpassen!</b>");
                     $tplStatus->setStatusclass(2);
@@ -483,14 +481,14 @@ class ProjektController
         // Benutzer Aufgabe
         $mitarbeiterAufgaben = AufgabeUtilities::getMitarbeiterAufgaben($benutzer->getID());
         $maAufgaben = array();
-        foreach($mitarbeiterAufgaben as $currentAufgabe) {
+        foreach ($mitarbeiterAufgaben as $currentAufgabe) {
             $maAufgaben[$currentAufgabe->getID()] = $currentAufgabe;
         }
         
         $alleAufgaben = AufgabeUtilities::getHauptAufgaben();
         $tplAufgaben = new BufferedTemplate("projekt_mitarbeiter_aufgaben_ds.tpl", "CSS", "td1", "td2");
-        foreach($alleAufgaben as $currentAufgabe) {
-            if(isset($maAufgaben[$currentAufgabe->getID()])) {
+        foreach ($alleAufgaben as $currentAufgabe) {
+            if (isset($maAufgaben[$currentAufgabe->getID()])) {
                 $tplAufgaben->replace("Checked", "checked=\"checked\"");
             } else {
                 $tplAufgaben->replace("Checked", "");
@@ -498,7 +496,7 @@ class ProjektController
             $tplAufgaben->replace("Bezeichnung", $currentAufgabe->getBezeichnung());
             $tplAufgaben->replace("AufgabeID", $currentAufgabe->getID());
             
-            if($benutzer->getID() > 0) {
+            if ($benutzer->getID() > 0) {
                 $tplAufgaben->replace("Disabled", "");
             } else {
                 $tplAufgaben->replace("Disabled", "disabled=\"disabled\"");
@@ -507,7 +505,6 @@ class ProjektController
         }
         
         $tpl->replace("Aufgaben", $tplAufgaben->getOutput());
-        
         
         // Urlaubstage
         $dblUrlaubstage = ConstantLoader::getStandardUrlaubstage();
@@ -688,16 +685,16 @@ class ProjektController
         $tpl = new Template("projekt_zeiten.tpl");
         
         $filter = "";
-        if(isset($_GET['filter'])) {
-            if($_GET['filter'] == "alle") {
+        if (isset($_GET['filter'])) {
+            if ($_GET['filter'] == "alle") {
                 $filter = "";
-            } else if($_GET['filter'] == "aktuell") {
-                $filter = "WHERE aw_wochenstart >= \"".date("Y-m-d", strtotime("-8 weeks"))."\"";
+            } else if ($_GET['filter'] == "aktuell") {
+                $filter = "WHERE aw_wochenstart >= \"" . date("Y-m-d", strtotime("-8 weeks")) . "\"";
             } else {
-                $filter = "WHERE aw_jahr = ".intval($_GET['filter']);
+                $filter = "WHERE aw_jahr = " . intval($_GET['filter']);
             }
         } else {
-            $filter = "WHERE aw_wochenstart >= \"".date("Y-m-d", strtotime("-8 weeks"))."\"";
+            $filter = "WHERE aw_wochenstart >= \"" . date("Y-m-d", strtotime("-8 weeks")) . "\"";
         }
         
         $c = ArbeitswocheUtilities::ladeArbeitswochen($filter);
@@ -719,7 +716,7 @@ class ProjektController
         $aufgeklappteWochen = 2;
         $jsArrayInput = "";
         
-        if($c->getSize() > 0) {
+        if ($c->getSize() > 0) {
             foreach ($c as $kw) {
                 if ($mitarbeiter[$kw->getBenutzerId()]->getGeloescht() != 1 || ($mitarbeiter[$kw->getBenutzerId()]->getGeloescht() == 1 && $kw->getWochenStundenIst() > 0)) {
                     if ($tmpKW != $kw->getKalenderWoche()) {
@@ -780,7 +777,6 @@ class ProjektController
                 $tplDS->replaceInBuffer("WocheGesamtStatusClass", "awStatusOffen");
             }
             $tplDS->replaceInBuffer("BuchenDisabled", "");
-            
         } else {
             $tplDS = new Template("projekt_zeiten_ds_keine.tpl");
             $tplDS->replace("x", ""); // dummy
@@ -820,12 +816,22 @@ class ProjektController
         
         // Rechnungs Eingabe Formular
         $pRechnung = new ProjektRechnung(); // dummy
+        $pNKRechnung = new NebenkostenRechnung(); // dummy
+        
         if (isset($_GET['prid'], $_GET['action'])) {
             $pRechnung = new ProjektRechnung($_GET['prid']);
             if ($_GET['action'] == "delete") {
-                $tpl->replace("SubmitButton", "Stornieren");
+                $tpl->replace("SubmitButtonPR", "Stornieren");
             }
         }
+        
+        if (isset($_GET['nkid'], $_GET['action'])) {
+            $pNKRechnung = new NebenkostenRechnung($_GET['nkid']);
+            if ($_GET['action'] == "delete") {
+                $tpl->replace("SubmitButtonNK", "Stornieren");
+            }
+        }
+        
         if ($_POST && isset($_POST['pr_id'])) {
             if ($_POST['submit'] == "Buchen") {
                 if ($_POST['pr_id'] > 0) {
@@ -846,7 +852,30 @@ class ProjektController
                 $pRechnung->loeschen();
             }
             $pRechnung = new ProjektRechnung(); // dummy
+        } else if ($_POST && isset($_POST['nk_id'])) {
+            if ($_POST['submit'] == "Buchen") {
+                if ($_POST['nk_id'] > 0) {
+                    $pNKRechnung = new NebenkostenRechnung($_POST['nk_id']);
+                } else {
+                    $pNKRechnung = new NebenkostenRechnung();
+                }
+                $pNKRechnung->setProjektID($p->getID());
+                $pNKRechnung->setKommentar($_POST['nk_kommentar']);
+                $pNKRechnung->setBetrag(WaehrungUtil::formatWaehrungToDB($_POST['nk_betrag']));
+                $pNKRechnung->setDatum(date("Y-m-d", strtotime($_POST['nk_datum'])));
+                $pNKRechnung->setLieferant($_POST['nk_lieferant']);
+                $pNKRechnung->setLeistung($_POST['nk_leistung']);
+                $pNKRechnung->setNummer($_POST['nk_nummer']);
+                $pNKRechnung->setBenutzerID($_POST['nk_mitarbeiter']);
+                $pNKRechnung->speichern();
+            } else if ($_POST['submit'] == "Stornieren") {
+                $pNKRechnung = new NebenkostenRechnung($_POST['nk_id']);
+                $pNKRechnung->loeschen();
+            }
+            $pNKRechnung = new NebenkostenRechnung(); // dummy
         }
+        
+        // Projekt Rechnung
         $tpl->replace("Datum", ($pRechnung->getID() < 0 ? date("d.m.Y") : $pRechnung->getDatum(true)));
         $tpl->replace("Kommentar", $pRechnung->getKommentar());
         $tpl->replace("Betrag", WaehrungUtil::formatDoubleToWaehrung($pRechnung->getBetrag()));
@@ -854,6 +883,23 @@ class ProjektController
         $tpl->replace("Lieferant", $pRechnung->getLieferant());
         $tpl->replace("Nummer", $pRechnung->getNummer());
         $select = new HTMLSelect($ha, "getBezeichnung", $pRechnung->getAufgabeID());
+        
+        // Nebenkosten Rechnung
+        $tpl->replace("NKDatum", ($pNKRechnung->getID() < 0 ? date("d.m.Y") : $pNKRechnung->getDatum(true)));
+        $tpl->replace("NKKommentar", $pNKRechnung->getKommentar());
+        $tpl->replace("NKBetrag", WaehrungUtil::formatDoubleToWaehrung($pNKRechnung->getBetrag()));
+        $tpl->replace("NKID", $pNKRechnung->getID());
+        $tpl->replace("NKLieferant", $pNKRechnung->getLieferant());
+        $tpl->replace("NKLeistung", $pNKRechnung->getLeistung());
+        $tpl->replace("NKNummer", $pNKRechnung->getNummer());
+        
+        $nebenkostenArten = ConstantLoader::getAuswahlNebenkosten();
+        $tplNebenkostenDL = new HTMLDatalistForArray($nebenkostenArten);
+        $tpl->replace("NebenkostenDatalist", $tplNebenkostenDL->getOutput());
+        
+        $cBenutzer = BenutzerUtilities::getBenutzer();
+        $tplMitarbeiter = new HTMLSelect($cBenutzer, "getBenutzername", $pNKRechnung->getBenutzerID());
+        $tpl->replace("SelectMitarbeiter", $tplMitarbeiter->getOutput());
         
         // Projektdetails
         $tpl->replace("Start", $p->getStart(true));
@@ -864,12 +910,15 @@ class ProjektController
         $tpl->replace("Angebotspreis", WaehrungUtil::formatDoubleToWaehrung($p->getAngebotsPreis()));
         $tpl->replace("GID", $g->getID());
         
-        // Rechnungen ausgeben
+        // Request Parameter Handling
         $handler = new ProjektRequestHandler();
         $handledRequest = $handler->prepareProjektDetails();
-        $tpl->replace("TPLDIR", $handledRequest['TPLDIR']);
         
-        $rechnungen = ProjektRechnungUtilities::getProjektRechnungen($p->getID(), $handledRequest['SQLADD']);
+        // Projekt Rechnungen ausgeben
+        $tpl->replace("TPLPRDIR", $handledRequest['PR']['TPLDIR']);
+        $tpl->replace("TPLNKDIR", $handledRequest['NK']['TPLDIR']);
+        
+        $rechnungen = ProjektRechnungUtilities::getProjektRechnungen($p->getID(), $handledRequest['PR']['SQLADD']);
         $tplRechnungen = new BufferedTemplate("projekt_details_projrechnung_ds.tpl", "CSS", "td1", "td2");
         $alleAufgabenArray = AufgabeUtilities::getAlleAufgabenAsArray();
         foreach ($rechnungen as $projRechnung) {
@@ -879,17 +928,37 @@ class ProjektController
             $tplRechnungen->replace("Lieferant", $projRechnung->getLieferant());
             $tplRechnungen->replace("Datum", $projRechnung->getDatum(true));
             $tplRechnungen->replace("Betrag", WaehrungUtil::formatDoubleToWaehrung($projRechnung->getBetrag()));
-            $tplRechnungen->replace("Kostenstelle", $alleAufgabenArray[$projRechnung->getAufgabeID()]['bezeichnung']);
+            if (isset($alleAufgabenArray[$projRechnung->getAufgabeID()])) {
+                $tplRechnungen->replace("Kostenstelle", $alleAufgabenArray[$projRechnung->getAufgabeID()]['bezeichnung']);
+            } else {
+                $tplRechnungen->replace("Kostenstelle", "Fehler");
+            }
             $tplRechnungen->next();
         }
         $tpl->replace("ProjektRechnungen", $tplRechnungen->getOutput());
         
+        // Nebenkosten Rechnungen ausgeben
+        $rechnungen = NebenkostenRechnungUtilities::getNebenkostenRechnungen($p->getID(), $handledRequest['NK']['SQLADD']);
+        $tplNKRechnungen = new BufferedTemplate("projekt_details_nkrechnung_ds.tpl", "CSS", "td1", "td2");
+        foreach ($rechnungen as $nkRechnung) {
+            $tplNKRechnungen->replace("NKID", $nkRechnung->getID());
+            $tplNKRechnungen->replace("ProjektID", $p->getID());
+            $tplNKRechnungen->replace("Nummer", $nkRechnung->getNummer());
+            $tplNKRechnungen->replace("Lieferant", $nkRechnung->getLieferant());
+            $tplNKRechnungen->replace("Leistung", $nkRechnung->getLeistung());
+            $tplNKRechnungen->replace("Datum", $nkRechnung->getDatum(true));
+            $tplNKRechnungen->replace("Betrag", WaehrungUtil::formatDoubleToWaehrung($nkRechnung->getBetrag()));
+            $tplNKRechnungen->next();
+        }
+        $tpl->replace("NebenkostenRechnungen", $tplNKRechnungen->getOutput());
+        
         // Berechnung durchführen
         $aufgabenKosten = ProjektRechnungUtilities::getProjektRechnungssummenByAufgabe($p->getID());
+        $nebenkostenSumme = NebenkostenRechnungUtilities::getNebenkostenRechnungenSumme($p->getID());
         $lohnKosten = ZeiterfassungUtilities::getProjektLohnkostenByHauptaufgabe($p->getID());
         $arRK = ReisekostenUtilities::getProjektReisekosten($p->getID());
         $rechner = new ProjektKostenRechner();
-        $ergebnis = $rechner->calculate($p->getAngebotsPreis(), $ha, $aufgabenKosten, $lohnKosten, $arRK);
+        $ergebnis = $rechner->calculate($p->getAngebotsPreis(), $ha, $aufgabenKosten, $lohnKosten, $arRK, $nebenkostenSumme);
         $ha = $ergebnis['aufgaben'];
         
         // Aufgaben / Kosten Übersicht
@@ -909,9 +978,11 @@ class ProjektController
             
             $tplHADS->replace("ProjektID", $p->getID());
             $tplHADS->replace("AufgabeID", $haufgabe->getID());
-            $tplHADS->replace("ParentID", $alleAufgabenArray[$haufgabe->getID()]['parentid']);
-            if ($haufgabe->getID() != - 1) {} else {
-                print_r($haufgabe);
+            if (isset($alleAufgabenArray[$haufgabe->getID()])) {
+                $tplHADS->replace("ParentID", $alleAufgabenArray[$haufgabe->getID()]['parentid']);
+                if ($haufgabe->getID() != - 1) {} else {
+                    print_r($haufgabe);
+                }
             }
             $tplHADS->replace("Lohnkosten", WaehrungUtil::formatDoubleToWaehrung($tmpLohnKosten));
             $tplHADS->replace("Materialkosten", WaehrungUtil::formatDoubleToWaehrung($tmpRech));
@@ -936,6 +1007,7 @@ class ProjektController
         // Kostenzusammenfassung
         $tpl->replace("GesamtReisekosten", WaehrungUtil::formatDoubleToWaehrung($arRK['gesamt']));
         $tpl->replace("GesamtMaterialkosten", WaehrungUtil::formatDoubleToWaehrung($ergebnis['rechnungen']));
+        $tpl->replace("GesamtNebenkosten", WaehrungUtil::formatDoubleToWaehrung($ergebnis['nebenkosten']));
         $tpl->replace("GesamtLohnkosten", WaehrungUtil::formatDoubleToWaehrung($ergebnis['lohnkosten']));
         $tpl->replace("Gesamtkosten", WaehrungUtil::formatDoubleToWaehrung($ergebnis['gesamtkosten']));
         $tpl->replace("GesamtPlankosten", WaehrungUtil::formatDoubleToWaehrung($ergebnis['plankosten']));
@@ -958,7 +1030,8 @@ class ProjektController
         $tpl->replace("Hauptaufgaben", $select->getOutput());
         $tpl->replace("Projektaufgaben", $tplHADS->getOutput());
         $tpl->replace("ProjektID", $p->getID());
-        $tpl->replace("SubmitButton", "Buchen");
+        $tpl->replace("SubmitButtonPR", "Buchen");
+        $tpl->replace("SubmitButtonNK", "Buchen");
         
         $tpl->anzeigen();
     }
@@ -1069,21 +1142,20 @@ class ProjektController
         ConstantLoader::performAutoload();
         RequestHandler::handle(new MitarbeiterStundenzettelAction());
     }
-    
-    public static function zeigeStempeluhr() {
+
+    public static function zeigeStempeluhr()
+    {
         RequestHandler::handle(new ProjektStempeluhrAction());
     }
-    
-    public static function zeigeMaterialRechnungen() {
+
+    public static function zeigeMaterialRechnungen()
+    {
         RequestHandler::handle(new ProjektMaterialRechnungenAction());
     }
-    
-    public static function zeigeStundenFreigabe() {
+
+    public static function zeigeStundenFreigabe()
+    {
         RequestHandler::handle(new ProjektStundenFreigabeAction());
     }
-    
-    
-    
-    
 }
 ?>
