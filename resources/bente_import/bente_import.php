@@ -200,7 +200,9 @@ if (($handle = fopen("kontakte.original.csv", "r")) !== FALSE) {
         $entity->LandRegion_geschäftlich = "";
         
         $bemerkung = $entity->createAttributeList();
-        $bemerkung .= "---\r\n";
+        if($bemerkung != "") {
+            $bemerkung .= "---\r\n";
+        }
         
         $bemerkung .= $ansprechpartner->getBemerkung();
         $ansprechpartner->setBemerkung($bemerkung);

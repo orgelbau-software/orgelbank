@@ -722,8 +722,20 @@ span.hideContent {
 	width: 165px;
 }
 
+.txt170 {
+	width: 170px;
+}
+
+.txt186 {
+	width: 186px;
+}
+
 .txt190 {
 	width: 190px;
+}
+
+.txt195 {
+	width: 195px;
 }
 
 .txt200 {
@@ -734,8 +746,16 @@ span.hideContent {
 	width: 210px;
 }
 
+.txt215 {
+	width: 215px;
+}
+
 .txt220 {
 	width: 220px;
+}
+
+.txt240 {
+	width: 240px;
 }
 
 .txt215 {
@@ -800,7 +820,7 @@ span.hideContent {
 }
 
 .txtareaBemerkungAnsprechpartner {
-	width: 190px;
+	width: 340px;
 	height: 120px;
 }
 
