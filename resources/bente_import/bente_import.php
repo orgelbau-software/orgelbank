@@ -48,10 +48,14 @@ $sql = array();
 
 $row = 1;
 
+$exportfile = fopen("export_bente.sql", "w+");
+fwrite($exportfile, "DELETE FROM ansprechpartner WHERE a_id > 927;");
+fwrite($exportfile, "DELETE FROM adresse WHERE ad_id > 1965;");
+
 if (($handle = fopen("kontakte.original.csv", "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
         $num = count($data);
-        echo "<p> $num Felder in Zeile $row: <br /></p>\n";
+        // echo "<p> $num Felder in Zeile $row: <br /></p>\n";
         
         $entity = new CSVBenteEntity();
         
@@ -83,7 +87,7 @@ if (($handle = fopen("kontakte.original.csv", "r")) !== FALSE) {
         $entity->Weitere_Straße_2 = $data[$fieldCounter ++];
         $entity->Weitere_Straße_3 = $data[$fieldCounter ++];
         $entity->Weiterer_Ort = $data[$fieldCounter ++];
-        //$entity->Weiteresr_BundeslandKanton = $data[$fieldCounter ++];
+        // $entity->Weiteresr_BundeslandKanton = $data[$fieldCounter ++];
         $fieldCounter ++;
         $entity->Weitere_Postleitzahl = $data[$fieldCounter ++];
         $entity->Weiterese_LandRegion = $data[$fieldCounter ++];
@@ -128,16 +132,20 @@ if (($handle = fopen("kontakte.original.csv", "r")) !== FALSE) {
         $entity->Beruf = $data[$fieldCounter ++];
         $entity->Büro = $data[$fieldCounter ++];
         $entity->EMailAdresse = $data[$fieldCounter ++];
-        //$entity->EMailTyp = $data[$fieldCounter ++];
+        // $entity->EMailTyp = $data[$fieldCounter ++];
         $fieldCounter ++;
         
-        $entity->EMail_Angezeigter_Name = $data[$fieldCounter ++];
+        // $entity->EMail_Angezeigter_Name = $data[$fieldCounter ++];
+        $fieldCounter ++;
         $entity->EMail_2_Adresse = $data[$fieldCounter ++];
         $entity->EMail_2_Typ = $data[$fieldCounter ++];
-        $entity->EMail_2_Angezeigter_Name = $data[$fieldCounter ++];
+        // $entity->EMail_2_Angezeigter_Name = $data[$fieldCounter ++];
+        $fieldCounter ++;
         $entity->EMail_3_Adresse = $data[$fieldCounter ++];
         $entity->EMail_3_Typ = $data[$fieldCounter ++];
-        $entity->EMail_3_Angezeigter_Name = $data[$fieldCounter ++];
+        // $entity->EMail_3_Angezeigter_Name = $data[$fieldCounter ++];
+        $fieldCounter ++;
+        
         // $entity->Empfohlen_von = $data[$fieldCounter ++];
         $fieldCounter ++;
         
@@ -172,7 +180,7 @@ if (($handle = fopen("kontakte.original.csv", "r")) !== FALSE) {
         
         $entity->Priorität = $data[$fieldCounter ++];
         $entity->Privat = $data[$fieldCounter ++];
-        //$entity->Reisekilometer = $data[$fieldCounter ++];
+        // $entity->Reisekilometer = $data[$fieldCounter ++];
         $fieldCounter ++;
         // $entity->Sozialversicherungsnr = $data[$fieldCounter ++];
         $fieldCounter ++;
@@ -190,32 +198,64 @@ if (($handle = fopen("kontakte.original.csv", "r")) !== FALSE) {
             $entity->Webseite = $data[$fieldCounter ++];
         }
         if ($num > 91) {
-//             $entity->Weiteres_Postfach = $data[$fieldCounter ++];
+            // $entity->Weiteres_Postfach = $data[$fieldCounter ++];
             $fieldCounter ++;
         }
         
-        print_r($entity);
-        
-        
+        // print_r($entity);
         
         $ansprechpartner = new Ansprechpartner();
         $ansprechpartner->setAktiv(1);
         $ansprechpartner->setAndere($entity->Telefon_geschäftlich);
+        $entity->Telefon_geschäftlich = "";
         $ansprechpartner->setBemerkung($entity->Notizen);
+        $entity->Notizen = "";
         $ansprechpartner->setEmail($entity->EMailAdresse);
+        $entity->EMailAdresse = "";
         $ansprechpartner->setFax($entity->Fax_geschäftlich);
-        $ansprechpartner->setFunktion("");
+        $entity->Fax_geschäftlich = "";
+        $ansprechpartner->setFunktion($entity->Position);
+        $entity->Position = "";
         $ansprechpartner->setMobil($entity->Mobiltelefon);
+        $entity->Mobiltelefon = "";
         $ansprechpartner->setNachname($entity->Nachname);
+        $entity->Nachname = "";
         $ansprechpartner->setTelefon($entity->Telefon_geschäftlich);
+        $entity->Telefon_geschäftlich = "";
         $ansprechpartner->setTitel($entity->Anrede);
-        $ansprechpartner->setVorname($entity->Vorname) && $entity->Vorname = "";
+        $entity->Anrede = "";
+        $ansprechpartner->setVorname($entity->Vorname);
+        $entity->Vorname = "";
+        $ansprechpartner->setFirma($entity->Firma);
+        $entity->Firma = "";
+        $ansprechpartner->setWebseite($entity->Webseite);
+        $entity->Webseite = "";
         
+        $ansprechpartner->getAdresse()->setStrasse($entity->Straße_geschäftlich);
+        $entity->Straße_geschäftlich = "";
+        $ansprechpartner->getAdresse()->setPlz($entity->Postleitzahl_geschäftlich);
+        $entity->Postleitzahl_geschäftlich = "";
+        $ansprechpartner->getAdresse()->setOrt($entity->Ort_geschäftlich);
+        $entity->Ort_geschäftlich = "";
+        $ansprechpartner->getAdresse()->setLand($entity->LandRegion_geschäftlich);
+        $entity->LandRegion_geschäftlich = "";
         
+        $bemerkung = $entity->createAttributeList();
+        $bemerkung .= "---\r\n";
+        
+        $bemerkung .= $ansprechpartner->getBemerkung();
+        $ansprechpartner->setBemerkung($bemerkung);
+        
+        echo $bemerkung;
+        
+        fwrite($exportfile, $ansprechpartner->export());
+        fwrite($exportfile, "\r\n\r\n");
         $row ++;
     }
     fclose($handle);
 }
+
+fclose($exportfile);
 
 class CSVBenteEntity
 {
@@ -330,21 +370,20 @@ class CSVBenteEntity
 
     public $EMailAdresse;
 
-    //public $EMailTyp;
-
-    public $EMail_Angezeigter_Name;
+    // public $EMailTyp;
+//     public $EMail_Angezeigter_Name;
 
     public $EMail_2_Adresse;
 
-    public $EMail_2_Typ;
+//     public $EMail_2_Typ;
 
-    public $EMail_2_Angezeigter_Name;
+//     public $EMail_2_Angezeigter_Name;
 
     public $EMail_3_Adresse;
 
-    public $EMail_3_Typ;
+//     public $EMail_3_Typ;
 
-    public $EMail_3_Angezeigter_Name;
+//     public $EMail_3_Angezeigter_Name;
 
     // public $Empfohlen_von;
     public $Geburtstag;
@@ -378,8 +417,8 @@ class CSVBenteEntity
 
     public $Privat;
 
-    //public $Reisekilometer;
-
+    // public $Reisekilometer;
+    
     // public $Sozialversicherungsnr;
     
     // public $Sprache;
@@ -390,8 +429,7 @@ class CSVBenteEntity
     // public $Verzeichnisserver;
     public $Webseite;
 
-    //public $Weiteres_Postfach;
-
+    // public $Weiteres_Postfach;
     public function __toString()
     {
         $retVal = "CSVBenteEntity [";
@@ -399,6 +437,276 @@ class CSVBenteEntity
         $retVal = $this->Vorname . ", ";
         $retVal .= "]";
         return $retVal;
+    }
+
+    public function createAttributeList()
+    {
+        $content = "";
+        if ("" != $this->Anrede) {
+            $content .= "Anrede: " . $this->Anrede . "\r\n";
+        }
+        if ("" != $this->Vorname) {
+            $content .= "Vorname: " . $this->Vorname . "\r\n";
+        }
+        if ("" != $this->Weitere_Vornamen) {
+            $content .= "Weitere_Vornamen: " . $this->Weitere_Vornamen . "\r\n";
+        }
+        if ("" != $this->Nachname) {
+            $content .= "Nachname: " . $this->Nachname . "\r\n";
+        }
+        if ("" != $this->Suffix) {
+            $content .= "Suffix: " . $this->Suffix . "\r\n";
+        }
+        if ("" != $this->Firma) {
+            $content .= "Firma: " . $this->Firma . "\r\n";
+        }
+        if ("" != $this->Abteilung) {
+            $content .= "Abteilung: " . $this->Abteilung . "\r\n";
+        }
+        if ("" != $this->Position) {
+            $content .= "Position: " . $this->Position . "\r\n";
+        }
+        if ("" != $this->Straße_geschäftlich) {
+            $content .= "Straße_geschäftlich: " . $this->Straße_geschäftlich . "\r\n";
+        }
+        if ("" != $this->Straße_geschäftlich_2) {
+            $content .= "Straße_geschäftlich_2: " . $this->Straße_geschäftlich_2 . "\r\n";
+        }
+        if ("" != $this->Straße_geschäftlich_3) {
+            $content .= "Straße_geschäftlich_3: " . $this->Straße_geschäftlich_3 . "\r\n";
+        }
+        if ("" != $this->Ort_geschäftlich) {
+            $content .= "Ort_geschäftlich: " . $this->Ort_geschäftlich . "\r\n";
+        }
+        if ("" != $this->Region_geschäftlich) {
+            $content .= "Region_geschäftlich: " . $this->Region_geschäftlich . "\r\n";
+        }
+        if ("" != $this->Postleitzahl_geschäftlich) {
+            $content .= "Postleitzahl_geschäftlich: " . $this->Postleitzahl_geschäftlich . "\r\n";
+        }
+        if ("" != $this->LandRegion_geschäftlich) {
+            $content .= "LandRegion_geschäftlich: " . $this->LandRegion_geschäftlich . "\r\n";
+        }
+        if ("" != $this->Straße_privat) {
+            $content .= "Straße_privat: " . $this->Straße_privat . "\r\n";
+        }
+        if ("" != $this->Straße_privat_2) {
+            $content .= "Straße_privat_2: " . $this->Straße_privat_2 . "\r\n";
+        }
+        if ("" != $this->Straße_privat_3) {
+            $content .= "Straße_privat_3: " . $this->Straße_privat_3 . "\r\n";
+        }
+        if ("" != $this->Ort_privat) {
+            $content .= "Ort_privat: " . $this->Ort_privat . "\r\n";
+        }
+        if ("" != $this->BundeslandKanton_privat) {
+            $content .= "BundeslandKanton_privat: " . $this->BundeslandKanton_privat . "\r\n";
+        }
+        if ("" != $this->Postleitzahl_privat) {
+            $content .= "Postleitzahl_privat: " . $this->Postleitzahl_privat . "\r\n";
+        }
+        if ("" != $this->LandRegion_privat) {
+            $content .= "LandRegion_privat: " . $this->LandRegion_privat . "\r\n";
+        }
+        if ("" != $this->Weitere_Straße) {
+            $content .= "Weitere_Straße: " . $this->Weitere_Straße . "\r\n";
+        }
+        if ("" != $this->Weitere_Straße_2) {
+            $content .= "Weitere_Straße_2: " . $this->Weitere_Straße_2 . "\r\n";
+        }
+        if ("" != $this->Weitere_Straße_3) {
+            $content .= "Weitere_Straße_3: " . $this->Weitere_Straße_3 . "\r\n";
+        }
+        if ("" != $this->Weiterer_Ort) {
+            $content .= "Weiterer_Ort: " . $this->Weiterer_Ort . "\r\n";
+        }
+        // if ("" != $this->Weiteresr_BundeslandKanton) {
+        // $content .= ": " . $this->Weiteresr_BundeslandKanton . "\r\n";
+        // }
+        if ("" != $this->Weitere_Postleitzahl) {
+            $content .= "Weitere_Postleitzahl: " . $this->Weitere_Postleitzahl . "\r\n";
+        }
+        if ("" != $this->Weiterese_LandRegion) {
+            $content .= "Weiterese_LandRegion: " . $this->Weiterese_LandRegion . "\r\n";
+        }
+        if ("" != $this->Telefon_Assistent) {
+            $content .= "Telefon_Assistent: " . $this->Telefon_Assistent . "\r\n";
+        }
+        if ("" != $this->Fax_geschäftlich) {
+            $content .= "Fax_geschäftlich: " . $this->Fax_geschäftlich . "\r\n";
+        }
+        if ("" != $this->Telefon_geschäftlich) {
+            $content .= "Telefon_geschäftlich: " . $this->Telefon_geschäftlich . "\r\n";
+        }
+        if ("" != $this->Telefon_geschäftlich_2) {
+            $content .= "Telefon_geschäftlich_2: " . $this->Telefon_geschäftlich_2 . "\r\n";
+        }
+        // if ("" != $this->Rückmeldung) {
+        // $content .= ": " . $this->Rückmeldung . "\r\n";
+        // }
+        // if ("" != $this->Autotelefon) {
+        // $content .= ": " . $this->Autotelefon . "\r\n";
+        // }
+        if ("" != $this->Telefon_Firma) {
+            $content .= "Telefon_Firma: " . $this->Telefon_Firma . "\r\n";
+        }
+        if ("" != $this->Fax_privat) {
+            $content .= "Fax_privat: " . $this->Fax_privat . "\r\n";
+        }
+        if ("" != $this->Telefon_privat) {
+            $content .= "Telefon_privat: " . $this->Telefon_privat . "\r\n";
+        }
+        if ("" != $this->Telefon_privat_2) {
+            $content .= "Telefon_privat_2: " . $this->Telefon_privat_2 . "\r\n";
+        }
+        if ("" != $this->ISDN) {
+            $content .= "ISDN: " . $this->ISDN . "\r\n";
+        }
+        if ("" != $this->Mobiltelefon) {
+            $content .= "Mobiltelefon: " . $this->Mobiltelefon . "\r\n";
+        }
+        if ("" != $this->Weiteres_Fax) {
+            $content .= "Weiteres_Fax: " . $this->Weiteres_Fax . "\r\n";
+        }
+        if ("" != $this->Weiteres_Telefon) {
+            $content .= "Weiteres_Telefon: " . $this->Weiteres_Telefon . "\r\n";
+        }
+        if ("" != $this->Pager) {
+            $content .= "Pager: " . $this->Pager . "\r\n";
+        }
+        if ("" != $this->Haupttelefon) {
+            $content .= "Haupttelefon: " . $this->Haupttelefon . "\r\n";
+        }
+        if ("" != $this->Mobiltelefon_2) {
+            $content .= "Mobiltelefon_2: " . $this->Mobiltelefon_2 . "\r\n";
+        }
+        // if ("" != $this->Telefon_für_Hörbehinderte) {
+        // $content .= ": " . $this->Telefon_für_Hörbehinderte . "\r\n";
+        // }
+        // if ("" != $this->Telex) {
+        // $content .= ": " . $this->Telex . "\r\n";
+        // }
+        // if ("" != $this->Abrechnungsinformation) {
+        // $content .= ": " . $this->Abrechnungsinformation . "\r\n";
+        // }
+        // if ("" != $this->Assistentin) {
+        // $content .= ": " . $this->Assistentin . "\r\n";
+        // }
+        if ("" != $this->Beruf) {
+            $content .= "Beruf: " . $this->Beruf . "\r\n";
+        }
+        if ("" != $this->Büro) {
+            $content .= "Büro: " . $this->Büro . "\r\n";
+        }
+        if ("" != $this->EMailAdresse) {
+            $content .= "EMailAdresse: " . $this->EMailAdresse . "\r\n";
+        }
+        // if ("" != $this->EMailTyp) {
+        // $content .= ": " . $this->EMailTyp . "\r\n";
+        // }
+        // if ("" != $this->EMail_Angezeigter_Name) {
+        // $content .= "EMail_Angezeigter_Name: " . $this->EMail_Angezeigter_Name . "\r\n";
+        // }
+        if ("" != $this->EMail_2_Adresse) {
+            $content .= "EMail_2_Adresse: " . $this->EMail_2_Adresse . "\r\n";
+        }
+//         if ("" != $this->EMail_2_Typ) {
+//             $content .= "EMail_2_Typ: " . $this->EMail_2_Typ . "\r\n";
+//         }
+        // if ("" != $this->EMail_2_Angezeigter_Name) {
+        // $content .= "EMail_2_Angezeigter_Name: " . $this->EMail_2_Angezeigter_Name . "\r\n";
+        // }
+        if ("" != $this->EMail_3_Adresse) {
+            $content .= "EMail_3_Adresse: " . $this->EMail_3_Adresse . "\r\n";
+        }
+//         if ("" != $this->EMail_3_Typ) {
+//             $content .= "EMail_3_Typ: " . $this->EMail_3_Typ . "\r\n";
+//         }
+        // if ("" != $this->EMail_3_Angezeigter_Name) {
+        // $content .= "EMail_3_Angezeigter_Name: " . $this->EMail_3_Angezeigter_Name . "\r\n";
+        // }
+        // if ("" != $this->Empfohlen_von) {
+        // $content .= ": " . $this->Empfohlen_von . "\r\n";
+        // }
+        if ("0.0.00" != $this->Geburtstag) {
+            $content .= "Geburtstag: " . $this->Geburtstag . "\r\n";
+        }
+        // if ("" != $this->Geschlecht) {
+        // $content .= ": " . $this->Geschlecht . "\r\n";
+        // }
+        // if ("" != $this->Hobby) {
+        // $content .= ": " . $this->Hobby . "\r\n";
+        // }
+        if ("" != $this->Initialen) {
+            $content .= "Initialen: " . $this->Initialen . "\r\n";
+        }
+        // if ("" != $this->Internet_FreiGebucht) {
+        // $content .= ": " . $this->Internet_FreiGebucht . "\r\n";
+        // }
+        if ("0.0.00" != $this->Jahrestag) {
+            $content .= "Jahrestag: " . $this->Jahrestag . "\r\n";
+        }
+        if ("" != $this->Kategorien) {
+            $content .= "Kategorien: " . $this->Kategorien . "\r\n";
+        }
+        // if ("" != $this->Kinder) {
+        // $content .= ": " . $this->Kinder . "\r\n";
+        // }
+        // if ("" != $this->Konto) {
+        // $content .= ": " . $this->Konto . "\r\n";
+        // }
+        // if ("" != $this->Name_desr_Vorgesetzten) {
+        // $content .= ": " . $this->Name_desr_Vorgesetzten . "\r\n";
+        // }
+        if ("" != $this->Notizen) {
+            $content .= "Notizen: " . $this->Notizen . "\r\n";
+        }
+        if ("" != $this->Organisationsnr) {
+            $content .= "Organisationsnr: " . $this->Organisationsnr . "\r\n";
+        }
+        if ("" != $this->Ort) {
+            $content .= "Ort: " . $this->Ort . "\r\n";
+        }
+        // if ("" != $this->Partnerin) {
+        // $content .= ": " . $this->Partnerin . "\r\n";
+        // }
+        // if ("" != $this->Postfach_geschäftlich) {
+        // $content .= ": " . $this->Postfach_geschäftlich . "\r\n";
+        // }
+        // if ("" != $this->Postfach_privat) {
+        // $content .= ": " . $this->Postfach_privat . "\r\n";
+        // }
+        if ("" != $this->Priorität && "Normal" != $this->Priorität) {
+            $content .= "Priorität: " . $this->Priorität . "\r\n";
+        }
+        if ("" != $this->Privat && "Aus" != $this->Privat) {
+            $content .= "Privat: " . $this->Privat . "\r\n";
+        }
+        // if ("" != $this->Reisekilometer) {
+        // $content .= ": " . $this->Reisekilometer . "\r\n";
+        // }
+        // if ("" != $this->Sozialversicherungsnr) {
+        // $content .= ": " . $this->Sozialversicherungsnr . "\r\n";
+        // }
+        // if ("" != $this->Sprache) {
+        // $content .= ": " . $this->Sprache . "\r\n";
+        // }
+        // if ("" != $this->Stichwörter) {
+        // $content .= ": " . $this->Stichwörter . "\r\n";
+        // }
+        if ("" != $this->Vertraulichkeit && "Normal" != $this->Vertraulichkeit) {
+            $content .= "Vertraulichkeit: " . $this->Vertraulichkeit . "\r\n";
+        }
+        // if ("" != $this->Verzeichnisserver) {
+        // $content .= ": " . $this->Verzeichnisserver . "\r\n";
+        // }
+        if ("" != $this->Webseite) {
+            $content .= "Webseite: " . $this->Webseite . "\r\n";
+        }
+        // if ("" != $this->Weiteres_Postfach) {
+        // $content .= ": " . $this->Weiteres_Postfach . "\r\n";
+        // }
+        return $content;
     }
 }
 

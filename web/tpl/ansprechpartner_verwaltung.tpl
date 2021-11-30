@@ -52,6 +52,10 @@
 					*Pflicht</td>
 				</tr>
 				<tr>
+					<th>Firma:</th>
+					<td><input type="text" name="firma" maxlength="50" value="<!--Firma-->" class="txt190"></td>
+				</tr>
+				<tr>
 					<th>Straße:</th>
 					<td>
 						<input type="text" name="strasse" maxlength="50" value="<!--Strasse-->" class="txt145">
@@ -91,11 +95,25 @@
 				</tr>
 				<tr>
 					<th>EMail:</th>
-					<td><input type="text" name="email" maxlength="50" value="<!--EMail-->" class="txt190"></td>
+					<td>
+						<input type="text" name="email" maxlength="50" value="<!--EMail-->" class="txt165">
+						<a href="mailto:<!--EMail-->" title="Neue Email an <!--EMail-->">
+							<img src="web/images/icons/mail_light_new_1.png" alt="Neue Email"/>
+						</a>
+					</td>
+				</tr>
+				<tr>
+					<th>Webseite:</th>
+					<td>
+						<input type="text" name="webseite" maxlength="50" value="<!--AnsprechpartnerWebseite-->" class="txt165">
+						<a href="<!--AnsprechpartnerWebseite-->" target="_blank" title="Gehe zu <!--AnsprechpartnerWebseite-->">
+							<img src="web/images/icons/application_osx_right.png" alt="Gehe zu Webseite"/>
+						</a>
+					</td>
 				</tr>
 				<tr>
 					<th>Bemerkung:</th>
-					<td><textarea class="textarea txtarea190" name="bemerkung"><!--Bemerkung--></textarea></td>
+					<td><textarea class="textarea txtareaBemerkungAnsprechpartner" name="bemerkung"><!--Bemerkung--></textarea></td>
 				</tr>
 				<tr>
 				  	<th>&nbsp;</th>

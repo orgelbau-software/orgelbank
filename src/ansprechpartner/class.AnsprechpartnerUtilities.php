@@ -50,7 +50,12 @@ class AnsprechpartnerUtilities
     public static function getSuchAnsprechpartner($strSuchbegriff, $strOrderBy = null)
     {
         $sql = "SELECT 
-					a.*
+					a.*,
+                    CASE
+                        WHEN a_name <> \"\" THEN a_name
+                        WHEN a_firma <> \"\" THEN a_firma
+                        ELSE a_name
+                    END anzeigename
 				FROM 
 					ansprechpartner a LEFT JOIN adresse ad ON a.ad_id = ad.ad_id
 				WHERE
@@ -60,7 +65,7 @@ class AnsprechpartnerUtilities
 					a_funktion LIKE '%" . $strSuchbegriff . "%' OR
 					a_vorname LIKE '%" . $strSuchbegriff . "%' OR
 					a_name LIKE '%" . $strSuchbegriff . "%' OR
-					ad_plz LIKE '%" . $strSuchbegriff . "%' OR
+                    a_firma LIKE '%" . $strSuchbegriff . "%' OR
 					ad_plz LIKE '%" . $strSuchbegriff . "%') ";
         if ($strOrderBy != null)
             $sql .= $strOrderBy;

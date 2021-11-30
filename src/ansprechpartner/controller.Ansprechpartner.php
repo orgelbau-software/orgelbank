@@ -147,7 +147,7 @@ class AnsprechpartnerController
         
         // Sortierung
         if (! isset($_GET['order']) || $_GET['order'] == "name") {
-            $strSQLOrderBy = "a_name";
+            $strSQLOrderBy = "anzeigename ";
         } else {
             $strSQLOrderBy = "a_funktion";
         }
@@ -280,6 +280,7 @@ class AnsprechpartnerController
         $tplAnsprechpartner->replace("Laender", $selectLand->getOutput());
         
         $tplAnsprechpartner->replace("Funktion", $oAnsprechpartner->getFunktion());
+        $tplAnsprechpartner->replace("Firma", $oAnsprechpartner->getFirma());
         $tplAnsprechpartner->replace("Anrede", $oAnsprechpartner->getAnrede());
         $tplAnsprechpartner->replace("Vorname", $oAnsprechpartner->getVorname());
         $tplAnsprechpartner->replace("Nachname", $oAnsprechpartner->getNachname());
@@ -297,6 +298,7 @@ class AnsprechpartnerController
         $tplAnsprechpartner->replace("EMail", $oAnsprechpartner->getEmail());
         $tplAnsprechpartner->replace("Bemerkung", $oAnsprechpartner->getBemerkung());
         $tplAnsprechpartner->replace("Andere", $oAnsprechpartner->getAndere());
+        $tplAnsprechpartner->replace("AnsprechpartnerWebseite", $oAnsprechpartner->getWebseite());
         
         // AnsprechpartnerDetails Ende
         
@@ -361,6 +363,7 @@ class AnsprechpartnerController
         if (isset($_POST['name']) && $_POST['name'] != "") {
             Utilities::escapePost();
             $oAnsprechpartner->setAnrede($_POST['anrede']);
+            $oAnsprechpartner->setFirma($_POST['firma']);
             $oAnsprechpartner->setTitel($_POST['titel']);
             $oAnsprechpartner->setVorname($_POST['vorname']);
             $oAnsprechpartner->setFunktion($_POST['funktion']);
@@ -379,6 +382,11 @@ class AnsprechpartnerController
             $oAnsprechpartner->setEmail($_POST['email']);
             $oAnsprechpartner->setBemerkung($_POST['bemerkung']);
             $oAnsprechpartner->setAktiv(1);
+            $webseite = $_POST['webseite'];
+            if(strpos($webseite, "http") !== 0) {
+                $webseite = "http://".$webseite;
+            }
+            $oAnsprechpartner->setWebseite($webseite);
             
             // war auskommentiert, wegen Speichern der Firmendaten wieder einkommentiert
             $oAnsprechpartner->setAndere($_POST['andere']);

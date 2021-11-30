@@ -5,6 +5,8 @@ class Ansprechpartner extends SimpleDatabaseStorageObjekt
 
     private $funktion;
 
+    private $firma;
+
     private $stelle;
 
     private $anrede;
@@ -31,8 +33,11 @@ class Ansprechpartner extends SimpleDatabaseStorageObjekt
 
     private $adressId;
 
+    private $webseite;
+
     private $adresse = null;
- // not persistent
+
+    // not persistent
     
     /**
      *
@@ -65,6 +70,8 @@ class Ansprechpartner extends SimpleDatabaseStorageObjekt
         $ht->add($this->tablePrefix . "bemerkung", $this->getBemerkung());
         $ht->add($this->tablePrefix . "aktiv", $this->getAktiv());
         $ht->add($this->tablePrefix . "andere", $this->getAndere());
+        $ht->add($this->tablePrefix . "firma", $this->getFirma());
+        $ht->add($this->tablePrefix . "webseite", $this->getWebseite());
         $ht->add("ad_id", $this->getAdressId());
         
         return $ht;
@@ -88,6 +95,8 @@ class Ansprechpartner extends SimpleDatabaseStorageObjekt
         $this->setAktiv($rs['a_aktiv']);
         $this->setAndere($rs['a_andere']);
         $this->setAdressId($rs['ad_id']);
+        $this->setFirma($rs['a_firma']);
+        $this->setWebseite($rs['a_webseite']);
     }
 
     public function speichern($boolean = false)
@@ -172,13 +181,16 @@ class Ansprechpartner extends SimpleDatabaseStorageObjekt
     public function getAnzeigeName()
     {
         $retVal = "";
-//         $retVal .= $this->getAnrede();
-//         if ($this->getTitel() != "") {
-//             $retVal .= " ";
-//             $retVal .= $this->getTitel();
-//         }
-        $retVal .= " " . $this->getNachname();
-        if ($this->getVorname() != "") {
+        // $retVal .= $this->getAnrede();
+        // if ($this->getTitel() != "") {
+        // $retVal .= " ";
+        // $retVal .= $this->getTitel();
+        // }
+        
+        $retVal = $this->getNachname();
+        if ($this->getFirma() != "") {
+            $retVal .= ", ".$this->getFirma();
+        } else if ($this->getVorname() != "") {
             $retVal .= ", " . $this->getVorname();
         }
         return trim($retVal);
@@ -310,6 +322,32 @@ class Ansprechpartner extends SimpleDatabaseStorageObjekt
     {
         if ($this->adressId != $adressId) {
             $this->adressId = $adressId;
+            $this->setChanged(true);
+        }
+    }
+
+    public function getFirma()
+    {
+        return $this->firma;
+    }
+
+    public function setFirma($firma)
+    {
+        if ($this->firma != $firma) {
+            $this->firma = $firma;
+            $this->setChanged(true);
+        }
+    }
+
+    public function getWebseite()
+    {
+        return $this->webseite;
+    }
+
+    public function setWebseite($webseite)
+    {
+        if ($this->webseite != $webseite) {
+            $this->webseite = $webseite;
             $this->setChanged(true);
         }
     }

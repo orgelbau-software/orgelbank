@@ -9,3 +9,7 @@ ALTER TABLE `orgel` ADD `wp_id` INT NULL DEFAULT NULL AFTER `o_kostenteilstimmun
 ALTER TABLE `disposition` ADD `d_typ` INT(1) NOT NULL DEFAULT '1' AFTER `d_id`;
 
 ALTER TABLE `orgel` ADD `o_intervallhaupstimmung` INT(1) NOT NULL DEFAULT '0' AFTER `wp_id`;
+
+ALTER TABLE `ansprechpartner` ADD `a_firma` VARCHAR(100) NOT NULL AFTER `a_id`;
+ALTER TABLE `ansprechpartner` ADD `a_webseite` VARCHAR(200) NULL AFTER `a_aktiv`;
+ALTER TABLE `ansprechpartner` CHANGE `a_bemerkung` `a_bemerkung` VARCHAR(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
