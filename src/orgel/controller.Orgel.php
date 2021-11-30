@@ -80,6 +80,19 @@ class OrgelController
         $htmlZyklusSelect = new HTMLSelectForArray(Constant::getZyklus(), 0);
         $tplOrgelDetails->replace("ZyklusSelect", $htmlZyklusSelect->getOutput());
         
+        // Kosten Haupt und Teilstimmung
+        $tplOrgelDetails->replace("KostenHauptstimmung", "");
+        $tplOrgelDetails->replace("KostenTeilstimmung", "");
+        
+        $htmlIntervalHauptstimmung = new HTMLSelectForArray(Constant::getIntervallHauptstimmung());
+        $tplOrgelDetails->replace("IntervallHaupstimmungSelect", $htmlIntervalHauptstimmung->getOutput());
+        
+        // Pflegevertrag
+        foreach (Constant::getPflegevertrag() as $zahl => $text) {
+            $tplOrgelDetails->replace("SelectedPflege" . $zahl, "");
+        }
+        
+        $tplOrgelDetails->replace("StimmungNach", "");
         $tplOrgelDetails->anzeigen();
     }
 
@@ -126,7 +139,9 @@ class OrgelController
         $oOrgel->setZyklus($_POST['zyklus']);
         $oOrgel->setMassnahmen($_POST['massnahmen']);
         $oOrgel->setGemeindeId($_POST['gemeindeid']);
-        $oOrgel->setWartungsprotokollID($_POST['wartungsprotokollId']);
+        if(isset($_POST['wartungsprotokollId'])) {
+            $oOrgel->setWartungsprotokollID($_POST['wartungsprotokollId']);
+        }
         
         if (isset($_POST['manual1'])) {
             $oOrgel->setManual1(1);
