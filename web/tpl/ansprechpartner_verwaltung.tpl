@@ -117,7 +117,12 @@
 				</tr>
 				<tr>
 				  	<th>&nbsp;</th>
-				  	<td style="text-align: right;"><input type="submit" class="button iconButton contactAdd txt120" name="submit" value="<!--ButtonTitle-->"/></th>
+				  	<td style="text-align: right;">
+				  		<input type="submit" class="button iconButton contactAdd txt120" name="submit" value="<!--ButtonTitle-->"/>
+				  		<div style="float: left; padding-top:3px;">
+				  		<a class="buttonlink iconButton contactRemove " href="index.php?page=3&do=42&aid=<!--AID-->" title="Anspechpartner l&ouml;schen">L&ouml;schen</a>
+				  		</div>
+				  	</td>
 			  	</tr>
 			</table>
 			

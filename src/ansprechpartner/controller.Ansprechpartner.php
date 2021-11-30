@@ -383,7 +383,7 @@ class AnsprechpartnerController
             $oAnsprechpartner->setBemerkung($_POST['bemerkung']);
             $oAnsprechpartner->setAktiv(1);
             $webseite = $_POST['webseite'];
-            if(strpos($webseite, "http") !== 0) {
+            if("" != $webseite && strpos($webseite, "http") !== 0) {
                 $webseite = "http://".$webseite;
             }
             $oAnsprechpartner->setWebseite($webseite);
