@@ -11,6 +11,7 @@
 <form action="index.php?page=3&do=43" method="post">
 	<input type="hidden" name="aid" value="<!--AID-->">
 	<select name="gemeinde" <!--GemeindeHinzufuegenDisabled-->>
+		<option value="">Keine</option>
 		<!--GemeindeListe-->
 	</select>
 	<br/>

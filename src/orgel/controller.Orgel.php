@@ -60,7 +60,7 @@ class OrgelController
         }
         
         $htmlGemeinden = new HTMLSelect(GemeindeUtilities::getGemeinden(" ORDER BY g_kirche"), "getKirche", $gid);
-        $tplOrgelDetails->replace("<!--Gemeinden-->", $htmlGemeinden->getOutput());
+        $tplOrgelDetails->replace("Gemeinden", $htmlGemeinden->getOutput());
         
         $htmlSelectStatus = new HTMLSelectForArray(Constant::getOrgelStatus(), 0);
         $tplOrgelDetails->replace("Orgelstatus", $htmlSelectStatus->getOutput());

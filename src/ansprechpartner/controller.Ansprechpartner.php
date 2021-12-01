@@ -21,7 +21,7 @@ class AnsprechpartnerController
             
             $redirect = "index.php?page=3&do=40";
             // Wenn eine Orgel uebergeben wurde, dann gehen wir davon aus, dass es aus den WartungsDetails her gemacht wurde
-            if(isset($_GET['oid'])) {
+            if (isset($_GET['oid'])) {
                 $redirect = "index.php?page=2&do=28&oid=" . $_GET['oid'];
             }
             
@@ -36,16 +36,15 @@ class AnsprechpartnerController
             
             $neinLink = "index.php?page=3&do=40";
             $jaLink = "index.php?page=3&do=42";
-            if(isset($_GET['oid'])) {
-                $neinLink .= "&oid=".$_GET['oid'];
-                $jaLink .= "&oid=".$_GET['oid'];
+            if (isset($_GET['oid'])) {
+                $neinLink .= "&oid=" . $_GET['oid'];
+                $jaLink .= "&oid=" . $_GET['oid'];
             }
             
             $tpl = new HTMLSicherheitsAbfrage();
             $tpl->setText("M&ouml;chten Sie den Ansprechpartner \"" . $o->getVorname() . " " . $o->getNachname() . "\" wirklich endg&uuml;ltig l&ouml;schen? ");
             $tpl->setButtonJa("Ja, Ansprechpartner l&ouml;schen!");
             $tpl->setButtonNein("Nein, zur&uuml;ck");
-            
             
             $tpl->setButtonNeinLink($neinLink);
             $tpl->setFormLink($jaLink);
@@ -68,7 +67,7 @@ class AnsprechpartnerController
         $redirect = "index.php?page=3&do=40&aid=" . $oA->getID();
         
         // Wenn eine Orgel uebergeben wurde, dann gehen wir davon aus, dass es aus den WartungsDetails her gemacht wurde
-        if(isset($_GET['oid'])) {
+        if (isset($_GET['oid'])) {
             $redirect = "index.php?page=2&do=28&oid=" . $_GET['oid'];
         }
         $htmlStatus = new HTMLRedirect($oA->getAnrede() . " " . $oA->getNachname() . " wurde der Gemeinde " . $oG->getKirche() . " als Ansprechpartner entfernt!", $redirect);
@@ -77,20 +76,23 @@ class AnsprechpartnerController
 
     public static function neueVerbindungZuGemeinde()
     {
-        if (! $_POST || ! isset($_POST['aid']))
-            return;
-        
-        $oA = new Ansprechpartner(intval($_POST['aid']));
-        $oG = new Gemeinde(intval($_POST['gemeinde']));
-        
-        if (AnsprechpartnerController::addAnsprechpartnerZuGemeinde($oA->getID(), $oG->getID())) {
-            $htmlStatus = new HTMLStatus("Der Gemeinde " . $oG->getKirche() . " wurde " . $oA->getAnrede() . " " . $oA->getNachname() . " (" . $oA->getFunktion() . ") als Ansprechpartner hinzugef&uuml;gt!", HTMLStatus::$STATUS_OK);
-            $html = new HTMLRedirect($htmlStatus->getOutput(), "index.php?page=3&do=40&aid=" . $oA->getID());
+        if (! $_POST || ! isset($_POST['aid'], $_POST['gemeinde']) || "" == $_POST['gemeinde']) {
+            $htmlStatus = new HTMLStatus("Fehlerhafte Auswahl!", HTMLStatus::$STATUS_ERROR);
+            $aid = (isset($_POST['aid']) ? $_POST['aid'] : "");
+            $html = new HTMLRedirect($htmlStatus->getOutput(), "index.php?page=3&do=40&aid=" .$aid);
         } else {
-            $htmlStatus = new HTMLStatus("Der Gemeinde " . $oG->getKirche() . " wurde zuvor bereits " . $oA->getAnrede() . " " . $oA->getNachname() . " (" . $oA->getFunktion() . ") als Ansprechpartner hinzugef&uuml;gt!", HTMLStatus::$STATUS_ERROR);
-            $html = new HTMLRedirect($htmlStatus->getOutput(), "index.php?page=3&do=40&aid=" . $oA->getID(), ConstantLoader::getDefaultRedirectSecondsFalse());
+            
+            $oA = new Ansprechpartner(intval($_POST['aid']));
+            $oG = new Gemeinde(intval($_POST['gemeinde']));
+            
+            if (AnsprechpartnerController::addAnsprechpartnerZuGemeinde($oA->getID(), $oG->getID())) {
+                $htmlStatus = new HTMLStatus("Der Gemeinde " . $oG->getKirche() . " wurde " . $oA->getAnrede() . " " . $oA->getNachname() . " (" . $oA->getFunktion() . ") als Ansprechpartner hinzugef&uuml;gt!", HTMLStatus::$STATUS_OK);
+                $html = new HTMLRedirect($htmlStatus->getOutput(), "index.php?page=3&do=40&aid=" . $oA->getID());
+            } else {
+                $htmlStatus = new HTMLStatus("Der Gemeinde " . $oG->getKirche() . " wurde zuvor bereits " . $oA->getAnrede() . " " . $oA->getNachname() . " (" . $oA->getFunktion() . ") als Ansprechpartner hinzugef&uuml;gt!", HTMLStatus::$STATUS_ERROR);
+                $html = new HTMLRedirect($htmlStatus->getOutput(), "index.php?page=3&do=40&aid=" . $oA->getID(), ConstantLoader::getDefaultRedirectSecondsFalse());
+            }
         }
-        
         $html->anzeigen();
     }
 
@@ -383,8 +385,8 @@ class AnsprechpartnerController
             $oAnsprechpartner->setBemerkung($_POST['bemerkung']);
             $oAnsprechpartner->setAktiv(1);
             $webseite = $_POST['webseite'];
-            if("" != $webseite && strpos($webseite, "http") !== 0) {
-                $webseite = "http://".$webseite;
+            if ("" != $webseite && strpos($webseite, "http") !== 0) {
+                $webseite = "http://" . $webseite;
             }
             $oAnsprechpartner->setWebseite($webseite);
             

@@ -130,7 +130,7 @@ if (! $pageApplication->isPageRequested()) {
         $pageApplication->showPage(1, 1);
     } else {
         Log::debug("Zeige Startseite fuer Mitarbeiter");
-        $pageApplication->showPage(8, 140);
+        $pageApplication->showPage(8, 142);
     }
 } else {
     
