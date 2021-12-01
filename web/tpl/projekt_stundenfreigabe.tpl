@@ -37,7 +37,7 @@
     <th colspan="1"></th>
     <th colspan="5" style="text-align: right">
     	<input class="button iconButton cancelButton"  type="submit" name="submit" value="Ablehnen" <!--AblehnenDisabled-->/>
-    	<input class="button iconButton editButton"  type="submit" name="submit" value="Bearbeiten" <!--BearbeitenDisabled-->/>
+    	<a class="buttonlink iconButton editButton" href="index.php?page=6&do=101&uid=<!--BenutzerID-->&date=<!--WocheTS-->" title="Bearbeiten">Bearbeiten</a>
     	<input class="button iconButton saveButton"  type="submit" name="submit" value="Freigeben" <!--FreigebenDisabled-->/>
    	 </th>
   </tr>

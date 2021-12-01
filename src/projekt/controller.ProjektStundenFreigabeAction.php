@@ -11,7 +11,6 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
      */
     public function validateGetRequest()
     {
-        // TODO Auto-generated method stub
     }
 
     /**
@@ -22,7 +21,6 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
      */
     public function handleInvalidGet()
     {
-        // TODO Auto-generated method stub
     }
 
     /**
@@ -33,7 +31,6 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
      */
     public function prepareGet()
     {
-        // TODO Auto-generated method stub
     }
 
     /**
@@ -206,6 +203,8 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
             $tpl->replace("Summe" . $key, $val == 0 ? $val = "" : $val);
         }
         
+        $tpl->replace("BenutzerID", $benutzer->getID());
+        $tpl->replace("WocheTS", $arWochentageTS[0]);
         $tpl->replace("SummeAlleProjekte", $bisherStundenSumme);
         $tpl->replace("Datensaetze", $tplDS->getOutput());
         
