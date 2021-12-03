@@ -35,7 +35,7 @@
   
   	<div style="float: right; margin-top: 10px;">
   		<a class="buttonlink iconButton cancelButton" href="index.php?page=6&do=114&uid=<!--BenutzerID-->&date=<!--WocheTS-->&status=1" title="">Wieder freischalten</a>
-  		<a class="buttonlink iconButton editButton" href="index.php?page=6&do=114&uid=<!--BenutzerID-->&date=<!--WocheTS-->&status=9" title="Bearbeiten">Bearbeiten</a>
+  		<a class="buttonlink iconButton editButton" href="index.php?page=6&do=114&uid=<!--BenutzerID-->&date=<!--WocheTS-->&status=9" title="Bearbeiten">Zur Bearbeitung</a>
   		<a class="buttonlink iconButton saveButton" href="index.php?page=6&do=114&uid=<!--BenutzerID-->&date=<!--WocheTS-->&status=3" title="Bearbeiten">Freigabe & Buchung</a>
 	</div>
 </form>

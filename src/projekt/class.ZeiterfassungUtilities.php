@@ -152,7 +152,7 @@ class ZeiterfassungUtilities
     public static function getBenutzerProjektAufgabenImZeitraum($iBenutzerID, $startDatum, $endDatum) {
         
         
-        $sql = "SELECT
+        $sql = "SELECT DISTINCT
 					p.proj_id,
                     g.g_id,  
                     g.g_kirche, 
@@ -174,8 +174,8 @@ class ZeiterfassungUtilities
                     aufgabe a left join aufgabe a2 on a.au_parentid = a2.au_id 
                 WHERE 
                     (t.at_datum BETWEEN CAST('".$startDatum."' AS DATE) AND CAST('".$endDatum."' AS DATE)) 
-                    AND t.be_id = 2 
-                    and p.proj_id = t.proj_id 
+                    AND t.be_id = ".$iBenutzerID."
+                    and t.proj_id = p.proj_id 
                     and p.g_id = g.g_id 
                     and t.be_id = b.be_id 
                     and t.au_id = a.au_id 
@@ -190,6 +190,7 @@ class ZeiterfassungUtilities
 					p.proj_bezeichnung,
 					a2.au_bezeichnung,
 					a.au_bezeichnung";
+        
         return ZeiterfassungUtilities::queryDB($sql);
         
     }
