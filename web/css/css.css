@@ -550,6 +550,12 @@ span.hideContent {
 	background-image: url(../images/icons/application_windows_edit.png);
 }
 
+.unlockButton {
+	background-image: url(../images/icons/lock_large_unlocked);
+}
+
+
+
 .calendarButton {
 	background-image: url(../images/icons/calendar_day_edit.png);
 }

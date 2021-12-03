@@ -3,6 +3,11 @@
 class Arbeitstag extends SimpleDatabaseStorageObjekt
 {
 
+    public static $STATUS_OFFEN = 1;
+    public static $STATUS_KOMPLETT = 2;
+    public static $STATUS_GEBUCHT = 3;
+    public static $STATUS_WIEDEROEFFNEN_UND_BEARBEITEN = 9;
+    
     private $benutzerID;
 
     private $aufgabeID;
@@ -21,9 +26,7 @@ class Arbeitstag extends SimpleDatabaseStorageObjekt
 
     private $projektID;
 
-    private $komplett;
-
-    private $gesperrt;
+    private $status;
 
     public function __construct($iArbeitstagID = 0)
     {
@@ -43,8 +46,7 @@ class Arbeitstag extends SimpleDatabaseStorageObjekt
         $ht->add("at_datum", $this->getDatum());
         $ht->add("at_kommentar", $this->getKommentar());
         $ht->add("proj_id", $this->getProjektID());
-        $ht->add("at_komplett", $this->getKomplett());
-        $ht->add("at_gesperrt", $this->getGesperrt());
+        $ht->add("at_status", $this->getStatus());
         
         return $ht;
     }
@@ -61,8 +63,7 @@ class Arbeitstag extends SimpleDatabaseStorageObjekt
         $this->setDatum($rs['at_datum']);
         $this->setKommentar($rs['at_kommentar']);
         $this->setProjektID($rs['proj_id']);
-        $this->setKomplett($rs['at_komplett']);
-        $this->setGesperrt($rs['at_gesperrt']);
+        $this->setStatus($rs['at_status']);
     }
 
     public function getAufgabeID()
@@ -130,30 +131,9 @@ class Arbeitstag extends SimpleDatabaseStorageObjekt
         }
     }
 
-    public function getGesperrt()
-    {
-        return $this->gesperrt;
-    }
-
     public function getKomplett()
     {
-        return $this->komplett;
-    }
-
-    public function setGesperrt($gesperrt)
-    {
-        if ($this->gesperrt != $gesperrt) {
-            $this->gesperrt = $gesperrt;
-            $this->setChanged(true);
-        }
-    }
-
-    public function setKomplett($komplett)
-    {
-        if ($this->komplett != $komplett) {
-            $this->komplett = $komplett;
-            $this->setChanged(true);
-        }
+        return $this->status == Arbeitstag::$STATUS_KOMPLETT;
     }
 
     public function getDifStunden($neuberechnen = false)
@@ -210,5 +190,44 @@ class Arbeitstag extends SimpleDatabaseStorageObjekt
             $this->setChanged(true);
         }
     }
+    
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    
+    /**
+     * Kein Public Zugriff. Aenderung nur durch die #markKomplett #markGebucht #markEingegeben Methoden.
+     * @param unknown $arbeitswocheID
+     */
+    private function setStatus($statusID)
+    {
+        if ($this->status != $statusID) {
+            $this->status = $statusID;
+            $this->setChanged(true);
+        }
+    }
+    
+    public function markKomplett() {
+        if ($this->status != Arbeitstag::$STATUS_KOMPLETT) {
+            $this->status = Arbeitstag::$STATUS_KOMPLETT;
+            $this->setChanged(true);
+        }
+    }
+    
+    public function markGebucht() {
+        if ($this->status != Arbeitstag::$STATUS_GEBUCHT) {
+            $this->status = Arbeitstag::$STATUS_GEBUCHT;
+            $this->setChanged(true);
+        }
+    }
+    
+    public function markOffen() {
+        if ($this->status != Arbeitstag::$STATUS_OFFEN) {
+            $this->status = Arbeitstag::$STATUS_OFFEN;
+            $this->setChanged(true);
+        }
+    }
+    
 }
 ?>

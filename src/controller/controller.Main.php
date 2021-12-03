@@ -94,6 +94,7 @@ $pcProjekt->addChild(new SubPage(110, "zeigeProjektDetails", 10));
 $pcProjekt->addChild(new SubPage(111, "zeigeStempeluhr", 10));
 $pcProjekt->addChild(new SubPage(112, "zeigeMaterialRechnungen", 10));
 $pcProjekt->addChild(new SubPage(113, "zeigeStundenFreigabe", 10));
+$pcProjekt->addChild(new SubPage(114, "bearbeiteArbeitsTagUndWocheStatus", 10));
 $pageApplication->addController($pcProjekt);
 
 /**
@@ -118,6 +119,7 @@ $pcBenutzer->addChild(new SubPage(141, "benutzerLogout", 0));
 $pcBenutzer->addChild(new SubPage(142, "zeigeZeiterfassung", 0));
 $pcBenutzer->addChild(new SubPage(143, "datumsTest", 0));
 $pcBenutzer->addChild(new SubPage(144, "benutzerZeitauswertung", 0));
+$pcBenutzer->addChild(new SubPage(145, "benutzerZeitauswertung", 0));
 $pcBenutzer->addChild(new SubPage(200, "doHilfeRufen", 0));
 $pageApplication->addController($pcBenutzer);
 

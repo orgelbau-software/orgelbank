@@ -155,6 +155,7 @@ class BenutzerController
             // ProjektId in Session merken fuer Vorauswahl in Zeiterfassungsdialogen / Benutzerübergreifend
             $_SESSION['letzte_projekt_id'] = $pid;
         }
+        
         // Mitarbeiter Selectbox
         $c = BenutzerUtilities::getZeiterfassungsBenutzer();
         $htmlSelect = new HTMLSelect($c, "getBenutzername", $benutzer->getID());
@@ -210,7 +211,7 @@ class BenutzerController
         
         $kw = date("W", $arWochentageTS[4]); // ISO 8601 Der Donnerstag der Woche ist entscheidend. Problemfall 2019
         $jahr = date("Y", $arWochentageTS[4]); // ISO 8601 Der Donnerstag der Woche ist entscheidend. Problemfall 2019
-        
+                                               
         // Projekte für SelectBox
         $gemeindeCache = new HashTable();
         $c = ProjektUtilities::getBenutzerAufgaben($benutzer->getID());
@@ -275,11 +276,14 @@ class BenutzerController
         $doDatenSpeichern = ! $isWocheChanged && $_POST && ! isset($_POST['formName']) && $_POST['submit'] == "Speichern";
         
         // Gesperrt & Komplettierung der Woche unbedingt vor der Verarbeitung prüfen
-        $boGesperrt = ArbeitstagUtilities::isArbeitswocheGesperrt($woche);
+        $boGebucht = ArbeitstagUtilities::isArbeitswocheGebucht($woche);
         $boIstKomplett = ArbeitstagUtilities::isBenutzerArbeitswocheKomplett($woche, $benutzer->getID());
         $boSollKomplett = $boIstKomplett;
         
-        if ($boIstKomplett && isset($_POST['woche_komplett'])) {
+        if ($boGebucht) {
+            Log::debug("Woche ist bereits gebucht. Keine Aenderung dieses Zustandes");
+            $doDatenSpeichern = false;
+        } else if ($boIstKomplett && isset($_POST['woche_komplett'])) {
             Log::debug("Woche ist bereits komplett. Keine Aenderung dieses Zustandes.");
             $doDatenSpeichern = false;
         } elseif ($doDatenSpeichern && $_POST && isset($_POST['woche_komplett'])) {
@@ -291,9 +295,9 @@ class BenutzerController
         }
         
         // Woche ist gesperrt aber RadioButton für Sperrung ist nicht gesetzt --> Woche wieder entsperren
-        if ($doDatenSpeichern && $boGesperrt == false && $boIstKomplett == true && $boSollKomplett == false) {
+        if ($doDatenSpeichern && $boGebucht == false && $boIstKomplett == true && $boSollKomplett == false) {
             Log::debug("Arbeitswoche wird als INKOMPLETT markiert.");
-            ArbeitstagUtilities::setBenutzerArbeitswocheInkomplett($woche, $benutzer->getID());
+            ArbeitstagUtilities::markBenutzerArbeitswocheOffen($woche, $benutzer->getID());
             $boIstKomplett = false;
             // Wenn die Woche gerade entsperrt wurde, dürfen die Daten nicht bearbeitet werden, da keine POST-Daten vorhanden
             $doDatenSpeichern = false;
@@ -307,7 +311,7 @@ class BenutzerController
             
             $awArbeitswoche = ArbeitswocheUtilities::getOrCreateArbeitswoche($benutzer->getID(), $arWochentageTS[4], $pid);
             // ArbeitswocheUtilities::deletePreviousArbeitswoche($awArbeitswoche);
-
+            
             $benSollStunden = BenutzerUtilities::getBenutzerSollWochenStunden($benutzer->getID(), $arWochentageTS[4]);
             
             // Urlaub wird neu berechnet
@@ -316,15 +320,15 @@ class BenutzerController
             $projektID = 0;
             foreach ($_POST as $key => $stunden) {
                 if (substr($key, 0, 2) == "TS" && trim($stunden) != "") {
-
+                    
                     // Stundenwert berichtigen
                     $stunden = str_replace(",", ".", $stunden);
                     $stunden = doubleval($stunden);
                     
                     // Geaendert fuer Orgelbau Bente, dass man Stunden entnehmen kann.
-                    //$stunden = abs($stunden); // stellt sicher, dass $stunden positiv ist
+                    // $stunden = abs($stunden); // stellt sicher, dass $stunden positiv ist
                     $stunden = intval($stunden); // muss auch negativ sein um Überstunden abbuchen zu können
-                                              
+                                                 
                     // Timestamp parsen
                     $timestamp = substr($key, 2, strpos($key, "_") - 2);
                     
@@ -370,12 +374,11 @@ class BenutzerController
             $awArbeitswoche->speichern(true);
             
             // Projekt Aufgabe Stunden berechnen
-            if($projektID != 0) {
+            if ($projektID != 0) {
                 ProjektAufgabeUtilities::berechnenIstStunden($projektID);
             } else {
-//                 echo "Fehler: Die ProjektID kann 0 sein, wenn keine Stunden sondern nur Spesen eingegeben worden sind";
+                // echo "Fehler: Die ProjektID kann 0 sein, wenn keine Stunden sondern nur Spesen eingegeben worden sind";
             }
-            
         } else {
             Log::debug("Daten werden nicht gespeichert.");
         }
@@ -418,19 +421,18 @@ class BenutzerController
             $tplDS->replace("ProjektBezeichnung", "");
             
             // Stunden Information START
-            if($z->getSollStunden() == 0) {
+            if ($z->getSollStunden() == 0) {
                 // Keine SollStunden fuer dieses Projekt eingegeben.
                 $stundenInfo = "";
-            } else if(($z->getSollStunden() - $z->getIstStunden()) < 0) {
-                $stundenInfo = "(".($z->getSollStunden() - $z->getIstStunden())." von ".intval($z->getSollStunden()) . " Std.)";
+            } else if (($z->getSollStunden() - $z->getIstStunden()) < 0) {
+                $stundenInfo = "(" . ($z->getSollStunden() - $z->getIstStunden()) . " von " . intval($z->getSollStunden()) . " Std.)";
                 $tplDS->replace("cssklasse", "red");
-            } else if($z->getSollStunden() > 0) {
-                $stundenInfo = " (".($z->getSollStunden() - $z->getIstStunden())." von ".intval($z->getSollStunden()) . " Std.)";
+            } else if ($z->getSollStunden() > 0) {
+                $stundenInfo = " (" . ($z->getSollStunden() - $z->getIstStunden()) . " von " . intval($z->getSollStunden()) . " Std.)";
             } else {
                 // Keine SollStunden fuer dieses Projekt eingegeben
                 $stundenInfo = "";
             }
-            
             
             $tplDS->replace("IstStunden", $z->getIstStunden());
             // Stunden Information ENDE
@@ -467,7 +469,7 @@ class BenutzerController
                 }
             }
             $tplDS->replace("summe_" . $z->getProjektID() . "_" . $z->getUnteraufgabeID(), $iStunden == 0 ? $iStunden = "" : $iStunden);
-            if($iStunden > 0) {
+            if ($iStunden > 0) {
                 $wochentagsStunden[7] += $iStunden;
             }
             
@@ -499,13 +501,13 @@ class BenutzerController
         $tpl->replace("Datensaetze", $tplDS->getOutput());
         
         // Datensatz / Arbeitswoche gesperrt, dann Eingabemoeglichtkeit sperren
-        if ($boGesperrt || $boIstKomplett)
+        if ($boGebucht || $boIstKomplett)
             $tpl->replace("Disabled", "disabled class=\"disabled\"");
         $tpl->replace("Disabled", "");
         
         // Komplett-Button managen
-        if ($boGesperrt) {
-            $tpl->replace("WocheKomplettDisabled", "disabled");
+        if ($boGebucht) {
+            $tpl->replace("WocheKomplettDisabled", "disabled=\"disabled\"");
             $tpl->replace("SpeichernDisabled", "disabled");
         }
         $tpl->replace("SpeichernDisabled", "");
@@ -526,8 +528,6 @@ class BenutzerController
         $tpl->anzeigen();
         
         BenutzerUtilities::berechneUeberstunden($benutzer->getID());
-        
-        
     }
 
     public static function doHilfeRufen()

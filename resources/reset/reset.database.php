@@ -46,9 +46,7 @@ if($_POST && isset($_POST['password']) && $_POST['password'] == MYSQL_PASS) {
     		aw_stunden_ist,
     		aw_stunden_soll,
     		aw_stunden_dif,
-    		aw_eingabe_komplett,
-    		aw_eingabe_moeglich,
-    		aw_eingabe_gebucht,
+    		aw_status,
     		aw_lastchange,
     		aw_createdate
     		)
@@ -60,9 +58,7 @@ if($_POST && isset($_POST['password']) && $_POST['password'] == MYSQL_PASS) {
 					0,
 					b.be_std_gesamt,
 					b.be_std_gesamt * -1,
-					0,
 					1,
-					0,
 					NOW(),
 					NOW()
 				FROM 

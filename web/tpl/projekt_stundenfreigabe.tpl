@@ -31,16 +31,11 @@
     <td class="tdLabel alignRight">Gesamt</td>
     <td><input disabled type="text" id="rk" name="rk" value="<!--RK-->" class="disabled int60 jsFormatNumber"/></td>
   </tr>
-  <tr>
-    <th colspan="3">&nbsp;</th>
-    <th>&nbsp;</td>
-    <th colspan="1"></th>
-    <th colspan="5" style="text-align: right">
-    	<input class="button iconButton cancelButton"  type="submit" name="submit" value="Ablehnen" <!--AblehnenDisabled-->/>
-    	<a class="buttonlink iconButton editButton" href="index.php?page=6&do=101&uid=<!--BenutzerID-->&date=<!--WocheTS-->" title="Bearbeiten">Bearbeiten</a>
-    	<input class="button iconButton saveButton"  type="submit" name="submit" value="Freigeben" <!--FreigebenDisabled-->/>
-   	 </th>
-  </tr>
   </table>
-
+  
+  	<div style="float: right; margin-top: 10px;">
+  		<a class="buttonlink iconButton cancelButton" href="index.php?page=6&do=114&uid=<!--BenutzerID-->&date=<!--WocheTS-->&status=1" title="">Wieder freischalten</a>
+  		<a class="buttonlink iconButton editButton" href="index.php?page=6&do=114&uid=<!--BenutzerID-->&date=<!--WocheTS-->&status=9" title="Bearbeiten">Bearbeiten</a>
+  		<a class="buttonlink iconButton saveButton" href="index.php?page=6&do=114&uid=<!--BenutzerID-->&date=<!--WocheTS-->&status=3" title="Bearbeiten">Freigabe & Buchung</a>
+	</div>
 </form>

@@ -8,7 +8,8 @@ class ArbeitstagUtilities
     /**
      * Im Rahmen der mobilen Zeiterfassung hierhin ausgelagert.
      */
-    public static function speicherNeuenArbeitstag($pTimeStamp, $awArbeitswocheId, $pBenutzerID, $pProjektID, $pAufgabeID, $pIstStunden, $pSollStunden, $pEingabeKomplett) {
+    public static function speicherNeuenArbeitstag($pTimeStamp, $awArbeitswocheId, $pBenutzerID, $pProjektID, $pAufgabeID, $pIstStunden, $pSollStunden, $pEingabeKomplett)
+    {
         $at = new Arbeitstag();
         $at->setArbeitswocheID($awArbeitswocheId);
         $at->setAufgabeID($pAufgabeID);
@@ -26,16 +27,16 @@ class ArbeitstagUtilities
         
         if ($pEingabeKomplett) {
             Log::debug("Setze Arbeitstag KOMPLETT: " . $at->getDatum());
-            $at->setKomplett(1);
+            $at->markKomplett();
         } else {
             Log::debug("Setze Arbeitstag NICHT KOMPLETT: " . $at->getDatum());
-            $at->setKomplett(0);
+            $at->markOffen();
         }
         
         $at->speichern(true);
         return $at;
     }
-    
+
     public static function getMitarbeiterArbeitstagProUnteraufgabe($pBenutzerId, $pUnteraufgabeId, $pKalenderjahr)
     {
         $sql = "SELECT
@@ -47,7 +48,7 @@ class ArbeitstagUtilities
         $length = count($pUnteraufgabeId);
         for ($i = 0; $i < $length; $i ++) {
             $sql .= "au_id = " . $pUnteraufgabeId[$i];
-            if($i + 1 != $length) {
+            if ($i + 1 != $length) {
                 $sql .= " OR ";
             }
         }
@@ -125,35 +126,45 @@ class ArbeitstagUtilities
         return $retVal;
     }
 
-    public static function setBenutzerArbeitswocheKomplett($timestamp, $benutzerID)
+    public static function markBenutzerArbeitswocheOffen($timestamp, $benutzerID)
+    {
+        return self::changeBenutzerArbeitswocheStatus($timestamp, $benutzerID, Arbeitstag::$STATUS_OFFEN);
+    }
+
+    public static function markBenutzerArbeitswocheKomplett($timestamp, $benutzerID)
+    {
+        return self::changeBenutzerArbeitswocheStatus($timestamp, $benutzerID, Arbeitstag::$STATUS_KOMPLETT);
+    }
+
+    public static function markBenutzerArbeitswocheGebucht($timestamp, $benutzerID)
+    {
+        return self::changeBenutzerArbeitswocheStatus($timestamp, $benutzerID, Arbeitstag::$STATUS_GEBUCHT);
+    }
+
+    private static function changeBenutzerArbeitswocheStatus($timestamp, $benutzerID, $status)
     {
         $c = Date::berechneArbeitswoche($timestamp, "Y-m-d");
-        $sql = "UPDATE 
+        $sql = "UPDATE
 					arbeitstag
 				SET
-					at_komplett = 1
+					at_status = " . $status . "
 				WHERE
 					be_id = " . $benutzerID . " AND
-					at_datum >= '" . $c['0'] . "' AND 
+					at_datum >= '" . $c['0'] . "' AND
 					at_datum <= '" . $c['6'] . "'";
+        DB::getInstance()->NonSelectQuery($sql);
+        
+        $sql = "UPDATE 
+                    arbeitswoche 
+                SET 
+                    aw_status = ".$status." 
+                WHERE 
+                    be_id = ".$benutzerID." AND
+                    aw_wochenstart = '" . $c['0'] . "'";
         DB::getInstance()->NonSelectQuery($sql);
     }
 
-    public static function setBenutzerArbeitswocheInkomplett($timestamp, $benutzerID)
-    {
-        $c = Date::berechneArbeitswoche($timestamp, "Y-m-d");
-        $sql = "UPDATE 
-					arbeitstag
-				SET
-					at_komplett = 0
-				WHERE
-					be_id = " . $benutzerID . " AND
-					at_datum >= '" . $c['0'] . "' AND 
-					at_datum <= '" . $c['6'] . "'";
-        DB::getInstance()->NonSelectQuery($sql);
-    }
-
-    public static function isArbeitswocheGesperrt($timestamp)
+    public static function isArbeitswocheGebucht($timestamp)
     {
         $c = Date::berechneArbeitswoche($timestamp, "Y-m-d");
         $sql = "SELECT 
@@ -163,50 +174,38 @@ class ArbeitstagUtilities
 				WHERE 
 					at_datum >= '" . $c[0] . "' AND 
 					at_datum <= '" . $c[6] . "' AND 
-					at_gesperrt = 1";
+					at_status = " . Arbeitstag::$STATUS_GEBUCHT;
         if (DB::getInstance()->getMysqlNumRows($sql) > 0)
             return true;
         return false;
     }
 
-    public static function isBenutzerArbeitswocheGesperrt($timestamp, $benutzerID)
+    public static function isBenutzerArbeitswocheGebucht($timestamp, $benutzerID)
     {
-        $c = Date::berechneArbeitswoche($timestamp, "Y-m-d");
-        $sql = "SELECT 
-					* 
-				FROM 
-					arbeitstag 
-				WHERE
-					be_id = " . $benutzerID . " AND
-					at_gesperrt = 1 AND
-					at_datum >= '" . $c[0] . "' AND 
-					at_datum <= '" . $c[6] . "'";
-        if (DB::getInstance()->getMysqlNumRows($sql) > 0)
-            return true;
-        return false;
+        return self::isBenutzerArbeitswocheInStatus($timestamp, $benutzerID, Arbeitstag::$STATUS_GEBUCHT);
     }
 
     public static function isBenutzerArbeitswocheKomplett($timestamp, $benutzerID)
     {
+        return self::isBenutzerArbeitswocheInStatus($timestamp, $benutzerID, Arbeitstag::$STATUS_KOMPLETT);
+    }
+
+    private static function isBenutzerArbeitswocheInStatus($timestamp, $benutzerID, $iStatus)
+    {
         $c = Date::berechneArbeitswoche($timestamp, "Y-m-d");
-        $retVal = false;
-        $sql = "SELECT 
-					* 
-				FROM 
-					arbeitstag 
+        $sql = "SELECT
+					*
+				FROM
+					arbeitstag
 				WHERE
 					be_id = " . $benutzerID . " AND
-					at_komplett = 1 AND
-					at_datum >= '" . $c[0] . "' AND 
+					at_status = " . $iStatus . " AND
+					at_datum >= '" . $c[0] . "' AND
 					at_datum <= '" . $c[6] . "'";
         if (DB::getInstance()->getMysqlNumRows($sql) > 0) {
-            $retVal = true;
+            return true;
         }
-        
-        Log::sql($sql);
-        $s = $retVal ? "true" : "false";
-        Log::debug("BenutzerArbeitswocheKomplett: " . $s);
-        return $retVal;
+        return false;
     }
 
     public static function loadArbeitstagByTimestamp($timestamp, $benutzerID)
@@ -237,14 +236,14 @@ class ArbeitstagUtilities
 					at_datum = '" . $pDatum . "'";
         return ArbeitstagUtilities::queryDB($sql);
     }
-    
+
     /**
-     * 
-     * @param unknown $benutzerID
-     * @param unknown $sqlDatumStart
-     * @param unknown $sqlDatumEnde
-     * @param unknown $projektID
-     * @param unknown $aufgabeID
+     *
+     * @param unknown $benutzerID            
+     * @param unknown $sqlDatumStart            
+     * @param unknown $sqlDatumEnde            
+     * @param unknown $projektID            
+     * @param unknown $aufgabeID            
      * @return DatabaseStorageObjektCollection
      */
     public static function getMitarbeiterProjektAufgabenZeitraumStunde($benutzerID, $sqlDatumStart, $sqlDatumEnde, $projektID, $aufgabeID)
@@ -261,18 +260,17 @@ class ArbeitstagUtilities
 					at_datum <= '" . $sqlDatumEnde . "'";
         return ArbeitstagUtilities::queryDB($sql);
     }
-    
+
     /**
-     * 
-     * @param unknown $benutzerID
-     * @param unknown $projektID
-     * @param unknown $aufgabeID
-     * @param unknown $pDatum
+     *
+     * @param unknown $benutzerID            
+     * @param unknown $projektID            
+     * @param unknown $aufgabeID            
+     * @param unknown $pDatum            
      * @return Arbeitstag
      */
     public static function getMitarbeiterProjektAufgabenArbeitstag($benutzerID, $projektID, $aufgabeID, $pTimestamp)
     {
-        
         if (DateTime::createFromFormat('Y-m-d', $pTimestamp) !== false) {
             $datum = $pTimestamp;
         } else {
@@ -288,7 +286,7 @@ class ArbeitstagUtilities
 					proj_id = " . $projektID . " AND
 					at_datum = '" . $datum . "'";
         $results = ArbeitstagUtilities::queryDB($sql);
-        if($results->getSize() == 1) {
+        if ($results->getSize() == 1) {
             return $results->getValueOf(0);
         } else {
             return null;
@@ -314,7 +312,7 @@ class ArbeitstagUtilities
         // echo $sql."<br><br>";
         ArbeitstagUtilities::getDB()->NonSelectQuery($sql);
     }
-    
+
     public static function resetMitarbeiterZeitraumAufgabe($benutzerID, $sqlDatumStart, $sqlDatumEnde, $projektID, $aufgabeID)
     {
         $sql = "DELETE 
@@ -329,7 +327,6 @@ class ArbeitstagUtilities
         // echo $sql."<br><br>";
         ArbeitstagUtilities::getDB()->NonSelectQuery($sql);
     }
-    
 
     public static function resetMitarbeiterArbeitstagAufgabe($benutzerID, $sqlDatum, $projektID, $aufgabeID)
     {
@@ -367,7 +364,7 @@ class ArbeitstagUtilities
         }
         return - 1;
     }
-    
+
     public static function berechneSummeWochenIstStundenProProjektAufgabe($timestamp, $benutzerId, $pProjektId, $pAufgabeId)
     {
         $arWochentageTS = Date::berechneArbeitswocheTimestamp($timestamp);
@@ -377,8 +374,8 @@ class ArbeitstagUtilities
                     be_id = " . $benutzerId . " AND 
                     at_datum >= '" . date("Y-m-d", $arWochentageTS[0]) . "' AND 
                     at_datum <= '" . date("Y-m-d", $arWochentageTS[6]) . "' AND 
-                    proj_id = " . $pProjektId. " AND
-                    au_id = ".$pAufgabeId;
+                    proj_id = " . $pProjektId . " AND
+                    au_id = " . $pAufgabeId;
         Log::sql($sql);
         $r = DB::getInstance()->SelectQuery($sql);
         if (($r = DB::getInstance()->SelectQuery($sql)) != false) {
@@ -426,7 +423,7 @@ class ArbeitstagUtilities
   				arbeitswoche aw, benutzer b
 			WHERE
 				aw.be_id = b.be_id AND
-				aw_eingabe_komplett = 0 AND 
+				aw_status = 1 AND 
 				aw_kw = " . $date->getKW($timestamp) . " AND
 				aw_jahr = " . $date->getYear($timestamp) . "
 			GROUP BY

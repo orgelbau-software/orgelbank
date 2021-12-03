@@ -19,11 +19,7 @@ class Arbeitswoche extends SimpleDatabaseStorageObjekt
 
     private $wochenStundenUrlaub;
 
-    private $eingabeKomplett;
-
-    private $eingabeMoeglich;
-
-    private $eingabeGebucht;
+    private $status;
 
     private $istStunden = array(
         0,
@@ -61,9 +57,7 @@ class Arbeitswoche extends SimpleDatabaseStorageObjekt
         $ht->add("aw_stunden_soll", $this->getWochenStundenSoll());
         $ht->add("aw_stunden_dif", $this->getWochenStundenDif());
         $ht->add("aw_stunden_urlaub", $this->getWochenStundenUrlaub());
-        $ht->add("aw_eingabe_komplett", $this->getEingabeKomplett());
-        $ht->add("aw_eingabe_gebucht", $this->getEingabeGebucht());
-        $ht->add("aw_eingabe_moeglich", $this->getEingabeMoeglich());
+        $ht->add("aw_status", $this->getEingabeKomplett());
         $ht->add("aw_wochenstart", $this->getWochenStart());
         
         return $ht;
@@ -79,9 +73,7 @@ class Arbeitswoche extends SimpleDatabaseStorageObjekt
         $this->setWochenStundenSoll($rs['aw_stunden_soll']);
         $this->setWochenStundenDif($rs['aw_stunden_dif']);
         $this->setWochenStundenUrlaub($rs['aw_stunden_urlaub']);
-        $this->setEingabeGebucht($rs['aw_eingabe_gebucht']);
-        $this->setEingabeMoeglich($rs['aw_eingabe_moeglich']);
-        $this->setEingabeKomplett($rs['aw_eingabe_komplett']);
+        $this->setStatus($rs['aw_status']);
         $this->setWochenStart($rs['aw_wochenstart']);
     }
 
@@ -186,32 +178,38 @@ class Arbeitswoche extends SimpleDatabaseStorageObjekt
 
     public function getEingabeGebucht()
     {
-        return $this->eingabeGebucht;
+        return $this->status == Arbeitstag::$STATUS_GEBUCHT;
     }
 
     public function getEingabeKomplett()
     {
-        return $this->eingabeKomplett;
+        return $this->status == Arbeitstag::$STATUS_KOMPLETT;
     }
 
-    public function getEingabeMoeglich()
+    public function getEingabeOffen()
     {
-        return $this->eingabeMoeglich;
+        return $this->status == Arbeitstag::$STATUS_OFFEN;
     }
 
-    public function setEingabeGebucht($eingabeGebucht)
-    {
-        $this->eingabeGebucht = $eingabeGebucht;
+    public function markKomplett() {
+        if ($this->status != Arbeitstag::$STATUS_KOMPLETT) {
+            $this->status = Arbeitstag::$STATUS_KOMPLETT;
+            $this->setChanged(true);
+        }
     }
-
-    public function setEingabeKomplett($eingabeKomplett)
-    {
-        $this->eingabeKomplett = $eingabeKomplett;
+    
+    public function markGebucht() {
+        if ($this->status != Arbeitstag::$STATUS_GEBUCHT) {
+            $this->status = Arbeitstag::$STATUS_GEBUCHT;
+            $this->setChanged(true);
+        }
     }
-
-    public function setEingabeMoeglich($eingabeMoeglich)
-    {
-        $this->eingabeMoeglich = $eingabeMoeglich;
+    
+    public function markOffen() {
+        if ($this->status != Arbeitstag::$STATUS_OFFEN) {
+            $this->status = Arbeitstag::$STATUS_OFFEN;
+            $this->setChanged(true);
+        }
     }
 
     public function getWochenStart($formatiert = false)
@@ -251,6 +249,23 @@ class Arbeitswoche extends SimpleDatabaseStorageObjekt
     public function setWochenStundenUrlaub($wochenStundenUrlaub)
     {
         $this->wochenStundenUrlaub = $wochenStundenUrlaub;
+    }
+    
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    
+    /**
+     * Kein Public Zugriff. Aenderung nur durch die #markKomplett #markGebucht #markEingegeben Methoden.
+     * @param unknown $arbeitswocheID
+     */
+    private function setStatus($statusID)
+    {
+        if ($this->status != $statusID) {
+            $this->status = $statusID;
+            $this->setChanged(true);
+        }
     }
 }
 ?>

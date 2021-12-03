@@ -91,7 +91,7 @@ class ArbeitswocheUtilities
 
     public static function ladeNichtKompletteArbeitswochen()
     {
-        $sql = "SELECT * FROM arbeitswoche WHERE aw_eingabe_komplett = 0 ORDER BY aw_jahr DESC, aw_kw DESC";
+        $sql = "SELECT * FROM arbeitswoche WHERE aw_status = 1 ORDER BY aw_jahr DESC, aw_kw DESC";
         return ArbeitswocheUtilities::queryDB($sql);
     }
 
@@ -116,23 +116,6 @@ class ArbeitswocheUtilities
     {
         $sql = "SELECT * FROM arbeitswoche WHERE aw_wochenstart = '" . $wochenStart . "'";
         return ArbeitswocheUtilities::queryDB($sql);
-    }
-
-    public static function bucheArbeitswoche($timestamp)
-    {
-        if ($timestamp == null)
-            return;
-        
-        $aw = Date::berechneArbeitswocheTimestamp($timestamp);
-        $wocheStart = date("Y-m-d", $aw[0]);
-        $wocheEnde = date("Y-m-d", $aw[6]);
-        
-        $sql = "UPDATE arbeitstag SET at_gesperrt = 1 WHERE at_datum >= '" . $wocheStart . "' AND at_datum <= '" . $wocheEnde . "'";
-        Log::sql($sql);
-        DB::getInstance()->NonSelectQuery($sql);
-        
-        $sql = "UPDATE arbeitswoche SET aw_eingabe_moeglich = 0, aw_eingabe_gebucht = 1 WHERE aw_wochenstart = '" . $wocheStart . "'";
-        DB::getInstance()->NonSelectQuery($sql);
     }
 
     /**

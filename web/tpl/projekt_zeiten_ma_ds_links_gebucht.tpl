@@ -1,0 +1,2 @@
+    <a href="index.php?page=6&do=114&uid=<!--BenutzerID-->&date=<!--Datum-->&status=1">
+      <img src="web/images/icons/lock_small_unlocked.png" title="Wieder freischalten." class="icon <!--StatusClass-->IMG" /></a>

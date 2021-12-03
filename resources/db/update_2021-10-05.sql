@@ -20,3 +20,10 @@ ALTER TABLE `nebenkosten_rechnung`  ADD PRIMARY KEY (`nk_id`);
 ALTER TABLE `nebenkosten_rechnung` MODIFY `nk_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 INSERT INTO `option_meta` (`option_id`, `option_modul`, `option_name`, `option_value`, `option_autoload`, `option_comment`, `option_editable`, `option_lastchange`, `option_createdate`) VALUES (NULL, 'Projekt', 'nebenkosten', 'LKW,PKW,Anhänger,Spesen,Hotel', '1', 'Standard Nebenkosten Auswahl ', '1', '2021-11-30 22:05:34.000000', '2021-11-30 22:05:34.000000');
+ALTER TABLE `arbeitstag` ADD `at_status` INT(1) NOT NULL DEFAULT '1' AFTER `at_kommentar`;
+ALTER TABLE `arbeitstag` DROP `at_gesperrt`;
+ALTER TABLE `arbeitstag` DROP `at_komplett`;
+
+ALTER TABLE `arbeitswoche` ADD `aw_status` INT(1) NOT NULL DEFAULT '1' AFTER `aw_stunden_urlaub`;
+ALTER TABLE `arbeitswoche` DROP `aw_eingabe_gebucht`;
+ALTER TABLE `arbeitswoche` DROP `aw_eingabe_komplett`;

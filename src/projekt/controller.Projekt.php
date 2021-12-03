@@ -682,109 +682,7 @@ class ProjektController
 
     public static function zeigeArbeitszeitVerwaltung()
     {
-        $tpl = new Template("projekt_zeiten.tpl");
-        
-        $filter = "";
-        if (isset($_GET['filter'])) {
-            if ($_GET['filter'] == "alle") {
-                $filter = "";
-            } else if ($_GET['filter'] == "aktuell") {
-                $filter = "WHERE aw_wochenstart >= \"" . date("Y-m-d", strtotime("-8 weeks")) . "\"";
-            } else {
-                $filter = "WHERE aw_jahr = " . intval($_GET['filter']);
-            }
-        } else {
-            $filter = "WHERE aw_wochenstart >= \"" . date("Y-m-d", strtotime("-8 weeks")) . "\"";
-        }
-        
-        $c = ArbeitswocheUtilities::ladeArbeitswochen($filter);
-        $tplDS = new BufferedTemplate("projekt_zeiten_ds.tpl", "CSS", "td1", "td2");
-        $tmpKW = 0;
-        
-        // Benutzerdaten laden & in Array cachen
-        $cBenutzer = BenutzerUtilities::getAlleBenutzer();
-        $mitarbeiter = array();
-        foreach ($cBenutzer as $benutzer) {
-            if ($benutzer->getGeloescht() == 1) {
-                $benutzer->setBenutzername($benutzer->getBenutzername() . " [gel&ouml;scht]");
-            }
-            $mitarbeiter[$benutzer->getID()] = $benutzer;
-        }
-        $rowId = 0;
-        $wocheKomplett = true;
-        $wocheGebucht = true;
-        $aufgeklappteWochen = 2;
-        $jsArrayInput = "";
-        
-        if ($c->getSize() > 0) {
-            foreach ($c as $kw) {
-                if ($mitarbeiter[$kw->getBenutzerId()]->getGeloescht() != 1 || ($mitarbeiter[$kw->getBenutzerId()]->getGeloescht() == 1 && $kw->getWochenStundenIst() > 0)) {
-                    if ($tmpKW != $kw->getKalenderWoche()) {
-                        // GesamtwochenStatus muss vorher geprüft werden
-                        if ($rowId > 0) {
-                            if ($wocheGebucht) {
-                                $tplDS->replaceInBuffer("WocheGesamtStatus", "gebucht");
-                                $tplDS->replaceInBuffer("WocheGesamtStatusClass", "awStatusGebucht");
-                                $tplDS->replaceInBuffer("BuchenDisabled", "disabled");
-                            } elseif ($wocheKomplett) {
-                                $tplDS->replaceInBuffer("WocheGesamtStatus", "fertig");
-                                $tplDS->replaceInBuffer("WocheGesamtStatusClass", "awStatusFertig");
-                            } else {
-                                $tplDS->replaceInBuffer("WocheGesamtStatus", "offen");
-                                $tplDS->replaceInBuffer("WocheGesamtStatusClass", "awStatusOffen");
-                            }
-                            $tplDS->replaceInBuffer("BuchenDisabled", "");
-                        }
-                        $wocheKomplett = true;
-                        $wocheGebucht = true;
-                        
-                        $arbeitswoche = Date::berechneArbeitswoche(strtotime($kw->getWochenstart()));
-                        $tplDS->replace("KW", $kw->getKalenderWoche());
-                        $tplDS->replace("Jahr", $kw->getJahr());
-                        $tplDS->replace("TSWoche", strtotime($kw->getWochenstart()));
-                        $tplDS->replace("DatumVon", $arbeitswoche[0]);
-                        $tplDS->replace("DatumBis", $arbeitswoche[6]);
-                        $rowId = $kw->getID();
-                        $tplDS->replace("RowID", $rowId);
-                        $tplDS->next();
-                        
-                        if ($aufgeklappteWochen > 0) {
-                            $x = ProjektController::ajaxGetMitarbeiterWochenStunden(strtotime($kw->getWochenstart()));
-                            $tplDS->addToBufferBT($x);
-                            $aufgeklappteWochen --;
-                            if (strlen($jsArrayInput) > 0) {
-                                $jsArrayInput .= ",";
-                            }
-                            $jsArrayInput .= strtotime($kw->getWochenstart());
-                        }
-                    }
-                    
-                    if ($kw->getEingabeGebucht() != 1 && $kw->getEingabeKomplett() == 0) {
-                        $wocheKomplett &= false;
-                    }
-                    $wocheGebucht &= $kw->getEingabeGebucht() == 1;
-                    
-                    $tmpKW = $kw->getKalenderWoche();
-                }
-            }
-            
-            // Für den letzten Datensatz aus der Schleife noch den WochenStatus setzen
-            if ($wocheKomplett) {
-                $tplDS->replaceInBuffer("WocheGesamtStatus", "fertig");
-                $tplDS->replaceInBuffer("WocheGesamtStatusClass", "awStatusFertig");
-            } else {
-                $tplDS->replaceInBuffer("WocheGesamtStatus", "offen");
-                $tplDS->replaceInBuffer("WocheGesamtStatusClass", "awStatusOffen");
-            }
-            $tplDS->replaceInBuffer("BuchenDisabled", "");
-        } else {
-            $tplDS = new Template("projekt_zeiten_ds_keine.tpl");
-            $tplDS->replace("x", ""); // dummy
-        }
-        
-        $tpl->replace("Datensaetze", $tplDS->getOutput());
-        $tpl->replace("jsArrayInput", $jsArrayInput);
-        $tpl->anzeigen();
+        RequestHandler::handle(new ArbeitszeitVerwaltungAction());
     }
 
     public static function verwalteArbeitszeiten()
@@ -1049,6 +947,9 @@ class ProjektController
         
         $tplMaDS = new BufferedTemplate("projekt_zeiten_ma_ds.tpl", "CSS", "td3", "td4");
         
+        $tplLinksNormal = new Template("projekt_zeiten_ma_ds_links_normal.tpl");
+        $tplLinksGebucht = new Template("projekt_zeiten_ma_ds_links_gebucht.tpl");
+        
         $arbeitswoche = Date::berechneArbeitswocheTimestamp($wochenTag);
         $c = ArbeitswocheUtilities::getArbeitswochen(Date::getSQLDate($arbeitswoche['0']));
         
@@ -1062,6 +963,8 @@ class ProjektController
             $mitarbeiter[$benutzer->getID()] = $benutzer;
         }
         $rowId = 0;
+        
+        $tplLinksFuerDenDatensatz = $tplLinksNormal;
         foreach ($c as $kw) {
             if ($mitarbeiter[$kw->getBenutzerId()]->getGeloescht() != 1 || ($mitarbeiter[$kw->getBenutzerId()]->getGeloescht() == 1 && $kw->getWochenStundenIst() > 0)) {
                 $tplMaDS->replace("Benutzername", htmlspecialchars(utf8_encode($mitarbeiter[$kw->getBenutzerId()]->getBenutzername())));
@@ -1073,16 +976,24 @@ class ProjektController
                 
                 $tplMaDS->replace("RowID", $rowId);
                 
-                if ($kw->getEingabeGebucht() == 1) {
-                    $tplMaDS->replace("Status", "gebucht");
+                if ($kw->getEingabeGebucht()) {
+                    $tplLinksFuerDenDatensatz = $tplLinksGebucht;
+                    $tplMaDS->replace("Status", "Gebucht");
                     $tplMaDS->replace("StatusClass", "awStatusGebucht");
-                } elseif ($kw->getEingabeKomplett() == 0) {
-                    $tplMaDS->replace("Status", "offen");
+                } elseif ($kw->getEingabeOffen ()) {
+                    $tplLinksFuerDenDatensatz = $tplLinksNormal;
+                    $tplMaDS->replace("Status", "Offen");
                     $tplMaDS->replace("StatusClass", "awStatusOffen");
-                } elseif ($kw->getEingabeKomplett() == 1) {
-                    $tplMaDS->replace("Status", "fertig");
+                } elseif ($kw->getEingabeKomplett()) {
+                    $tplLinksFuerDenDatensatz = $tplLinksNormal;
+                    $tplMaDS->replace("Status", "Fertig");
                     $tplMaDS->replace("StatusClass", "awStatusFertig");
                 }
+                
+                $tplLinksFuerDenDatensatz->replace("BenutzerID", $kw->getBenutzerID());
+                $tplLinksFuerDenDatensatz->replace("Datum",strtotime($kw->getWochenstart()));
+                $tplMaDS->replace("Links", $tplLinksFuerDenDatensatz->getOutput());
+                $tplLinksFuerDenDatensatz->reset();
                 
                 $tplMaDS->next();
             }
@@ -1157,5 +1068,11 @@ class ProjektController
     {
         RequestHandler::handle(new ProjektStundenFreigabeAction());
     }
+    
+    public static function bearbeiteArbeitsTagUndWocheStatus()
+    {
+        RequestHandler::handle(new ArbeitsTagUndWocheStatusWechselAction());
+    }
+    
 }
 ?>

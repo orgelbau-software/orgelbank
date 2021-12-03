@@ -7,36 +7,6 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
      *
      * {@inheritdoc}
      *
-     * @see GetRequestHandler::validateGetRequest()
-     */
-    public function validateGetRequest()
-    {
-    }
-
-    /**
-     *
-     * {@inheritdoc}
-     *
-     * @see GetRequestHandler::handleInvalidGet()
-     */
-    public function handleInvalidGet()
-    {
-    }
-
-    /**
-     *
-     * {@inheritdoc}
-     *
-     * @see GetRequestHandler::prepareGet()
-     */
-    public function prepareGet()
-    {
-    }
-
-    /**
-     *
-     * {@inheritdoc}
-     *
      * @see GetRequestHandler::executeGet()
      */
     public function executeGet()
@@ -126,7 +96,7 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
             $tplDS->replace("ProjektBezeichnung", "");
             
             // Stunden Information START
-            if($z->getSollStunden() == 0) {
+            if ($z->getSollStunden() == 0) {
                 // Keine SollStunden fuer dieses Projekt eingegeben
                 $stundenInfo = "";
             } elseif (($z->getSollStunden() - $z->getIstStunden()) < 0) {
@@ -217,4 +187,31 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
         
         return $tpl;
     }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see GetRequestHandler::validateGetRequest()
+     */
+    public function validateGetRequest()
+    {}
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see GetRequestHandler::handleInvalidGet()
+     */
+    public function handleInvalidGet()
+    {}
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see GetRequestHandler::prepareGet()
+     */
+    public function prepareGet()
+    {}
 }

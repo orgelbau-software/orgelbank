@@ -1,5 +1,7 @@
 $( function() {
-	$(".awStatusGebuchtIMG").attr("src", "web/images/icons/document_a4_locked.png");
+//	$(".awStatusGebuchtIMG").attr("src", "web/images/icons/document_a4_locked.png");
+	
+	
 	$("#projektliste").tableDnD({
 		onDrop: function(table, row) {
             var rows = table.tBodies[0].rows;

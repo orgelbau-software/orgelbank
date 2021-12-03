@@ -98,6 +98,8 @@ include_once ROOTDIR . 'src/projekt/class.ProjektRequestHandler.php';
 include_once ROOTDIR . 'src/projekt/class.ProjektListeRequestHandler.php';
 include_once ROOTDIR . 'src/projekt/class.ProjektStempeluhrAction.php';
 include_once ROOTDIR . 'src/projekt/controller.ProjektStundenFreigabeAction.php';
+include_once ROOTDIR . 'src/projekt/controller.ArbeitsTagUndWocheStatusWechselAction.php';
+include_once ROOTDIR . 'src/projekt/controller.ArbeitszeitVerwaltungAction.php';
 include_once ROOTDIR . 'src/projekt/class.ProjektKostenRechner.php';
 include_once ROOTDIR . 'src/entities/class.Aufgabe.php';
 include_once ROOTDIR . 'src/projekt/class.AufgabeUtilities.php';
