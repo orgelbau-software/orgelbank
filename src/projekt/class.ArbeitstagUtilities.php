@@ -89,6 +89,8 @@ class ArbeitstagUtilities
                 );
             }
         }
+        
+        pre($retVal);
         return $retVal;
     }
 

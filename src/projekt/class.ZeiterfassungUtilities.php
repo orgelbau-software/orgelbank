@@ -113,8 +113,16 @@ class ZeiterfassungUtilities
     public static function getProjektLohnkostenByHauptaufgabe($pid, $beachteExclude = true)
     {
         $exclude = "";
-        if ($beachteExclude)
+        if ($beachteExclude) {
             $exclude = ZeiterfassungUtilities::createExcludeBenutzerStatement($pid);
+        }
+        
+        $nurGebuchteStundenSQL = "";
+        if(ConstantLoader::getProjektZeitenNurGebuchteStundenBeruecksichtigen() == true) {
+            $nurGebuchteStundenSQL = " a.at_status = ".Arbeitstag::$STATUS_GEBUCHT. " AND ";
+        } else {
+            $nurGebuchteStundenSQL = "";
+        }
         $sql = "SELECT 
     			au_parentid, sum(lohnkosten) as lohnkosten
     		FROM (
@@ -124,7 +132,7 @@ class ZeiterfassungUtilities
 					arbeitstag a, benutzer b, aufgabe aufg
 				WHERE
 					b.be_id = a.be_id AND
-					aufg.au_id = a.au_id AND
+					aufg.au_id = a.au_id AND ".$nurGebuchteStundenSQL."
 					" . $exclude . "
 					proj_id = " . $pid . " 
 				) x 

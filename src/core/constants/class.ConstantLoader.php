@@ -174,12 +174,12 @@ class ConstantLoader
     {
         return ConstantLoader::$htValues->getValueOf("rechnung_pflege_schlusstext");
     }
-    
+
     public static function getStundenRechnungSchlusstext()
     {
         return ConstantLoader::$htValues->getValueOf("rechnung_stunden_schlusstext");
     }
-    
+
     public static function getRechnungStandardZahlungsziele()
     {
         return ConstantLoader::$htValues->getValueOf("rechnung_zahlungsziele");
@@ -450,20 +450,26 @@ class ConstantLoader
     {
         return ConstantLoader::$htValues->getValueOf("geocode_api_service_endpoint");
     }
-    
+
     /**
-    * @return true oder false wenn der Wartungsbogen die Checkliste enthalten soll.
-    */
+     *
+     * @return true oder false wenn der Wartungsbogen die Checkliste enthalten soll.
+     */
     public static function getWartungsBogenCheckliste()
     {
         return ConstantLoader::$htValues->getValueOf("wartung_bogen_checkliste");
     }
-    
+
     public static function getGemeindeListeStandardSortierung()
     {
         return ConstantLoader::$htValues->getValueOf("gemeinde_liste_standard_sortierung");
     }
-  
+
+    /**
+     * Liste der Standard Nebenkosten fuer ein Projekt.
+     *
+     * @return string[] Nebenkosten Auswahl.
+     */
     public static function getAuswahlNebenkosten()
     {
         $a = explode(",", ConstantLoader::$htValues->getValueOf("nebenkosten"));
@@ -474,6 +480,15 @@ class ConstantLoader
         }
         return $retVal;
     }
-    
+
+    /**
+     * Gibt an, ob nur gebuchte Stunden beruecksichtigt werden sollen.
+     * 
+     * @return boolean TRUE wenn nur Arbeitstag im Status $STATUS_GEBUCHT beruecksichtigt werden sollen.
+     */
+    public static function getProjektZeitenNurGebuchteStundenBeruecksichtigen()
+    {
+        return "true" == ConstantLoader::$htValues->getValueOf("projekt_stunden_nur_gebucht");
+    }
 }
 ?>

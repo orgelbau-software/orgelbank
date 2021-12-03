@@ -173,6 +173,7 @@
     </table>
     
     </form>
+    <!--StatusMeldung-->
     </td>
     <td>
     <h3>Aufgaben</h3>

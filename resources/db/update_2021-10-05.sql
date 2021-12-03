@@ -27,3 +27,5 @@ ALTER TABLE `arbeitstag` DROP `at_komplett`;
 ALTER TABLE `arbeitswoche` ADD `aw_status` INT(1) NOT NULL DEFAULT '1' AFTER `aw_stunden_urlaub`;
 ALTER TABLE `arbeitswoche` DROP `aw_eingabe_gebucht`;
 ALTER TABLE `arbeitswoche` DROP `aw_eingabe_komplett`;
+
+INSERT INTO `option_meta` (`option_id`, `option_modul`, `option_name`, `option_value`, `option_autoload`, `option_comment`, `option_editable`, `option_lastchange`, `option_createdate`) VALUES (NULL, 'Projekt', 'projekt_stunden_nur_gebucht', 'true', '1', 'Sollen nur Arbeitstage im Status \"gebucht\" in der Stundenberechnung der Projekte berücksichtigt werden? Werte: true/false', '1', '2021-12-03 20:37:13.000000', '2021-12-03 20:37:13.000000');

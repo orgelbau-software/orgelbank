@@ -379,7 +379,7 @@ class BenutzerController
             $awArbeitswoche->speichern(true);
             
             // Projekt Aufgabe Stunden berechnen
-            if ($projektID != 0) {
+             if ($projektID != 0 && ConstantLoader::getProjektZeitenNurGebuchteStundenBeruecksichtigen() == true) {
                 ProjektAufgabeUtilities::berechnenIstStunden($projektID);
             } else {
                 // echo "Fehler: Die ProjektID kann 0 sein, wenn keine Stunden sondern nur Spesen eingegeben worden sind";

@@ -14,7 +14,9 @@ class ProjektAufgabeUtilities
         $sql = "UPDATE projekt_aufgabe pa INNER JOIN ( 
                     SELECT sum(at_stunden_ist) as ist, a.proj_id, au.au_parentid FROM arbeitstag a, aufgabe au WHERE a.proj_id = ".$projektID." AND a.au_id = au.au_id GROUP BY a.proj_id, au.au_parentid ) 
                     x on pa.au_id = x.au_parentid and pa.proj_id = x.proj_id 
-                SET pa_iststunden = x.ist 
+                SET 
+                    pa_iststunden = x.ist,
+                    pa_lastchange = NOW() 
                 WHERE pa.proj_id = ".$projektID;
         DB::getInstance()->NonSelectQuery($sql);
     }
