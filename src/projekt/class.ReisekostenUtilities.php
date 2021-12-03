@@ -70,6 +70,53 @@ class ReisekostenUtilities
         }
         return $retVal;
     }
+    
+    /**
+     * Gibt ein Reisekosten Objekt mit den übergebenen Parametern zurück
+     *
+     * @param int $benutzerID
+     * @param int $projektID
+     * @param int $wochenStart
+     * @return Reisekosten
+     */
+    public static function getReisekostenSummeProKW($benutzerID, $kw, $jahr)
+    {
+        $sql = "SELECT
+    			sum(rk_hotel) as rk_hotel,
+                sum(rk_spesen) as rk_spesen,
+                sum(rk_kmkosten) as rk_kmkosten,
+                sum(rk_km) as rk_km,
+                sum(rk_gesamt) as rk_gesamt
+
+    		FROM
+    			reisekosten
+    		WHERE
+    			be_id = " . $benutzerID . " AND
+                rk_kw = '" . $kw . "' AND
+                rk_jahr = '" . $jahr . "'
+            GROUP BY
+                be_id, rk_kw, rk_jahr";
+        $res = DB::getInstance()->SelectQuery($sql);
+        $retVal = null;
+        if ($res === false) {
+            $retVal = new Reisekosten();
+            $retVal->setProjektID("");
+            $retVal->setBenutzerID($benutzerID);
+            $retVal->setKW($kw);
+            $retVal->setJahr($jahr);
+        } else {
+            $x = $res[0];
+            $retVal = new Reisekosten();
+            $retVal->setBenutzerID($benutzerID);
+            $retVal->setHotel($x['rk_hotel']);
+            $retVal->setSpesen($x['rk_spesen']);
+            $retVal->setKMKosten($x['rk_kmkosten']);
+            $retVal->setGesamt($x['rk_gesamt']);
+            $retVal->setKM($x['rk_km']);
+            $retVal->setPersistent(false);
+        }
+        return $retVal;
+    }
 
     /**
      *

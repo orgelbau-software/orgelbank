@@ -313,6 +313,7 @@ class BenutzerController
             // Urlaub wird neu berechnet
             $awArbeitswoche->setWochenStundenUrlaub(0);
             
+            $projektID = 0;
             foreach ($_POST as $key => $stunden) {
                 if (substr($key, 0, 2) == "TS" && trim($stunden) != "") {
 
@@ -369,7 +370,11 @@ class BenutzerController
             $awArbeitswoche->speichern(true);
             
             // Projekt Aufgabe Stunden berechnen
-            ProjektAufgabeUtilities::berechnenIstStunden($projektID);
+            if($projektID != 0) {
+                ProjektAufgabeUtilities::berechnenIstStunden($projektID);
+            } else {
+//                 echo "Fehler: Die ProjektID kann 0 sein, wenn keine Stunden sondern nur Spesen eingegeben worden sind";
+            }
             
         } else {
             Log::debug("Daten werden nicht gespeichert.");
@@ -413,7 +418,10 @@ class BenutzerController
             $tplDS->replace("ProjektBezeichnung", "");
             
             // Stunden Information START
-            if(($z->getSollStunden() - $z->getIstStunden()) < 0) {
+            if($z->getSollStunden() == 0) {
+                // Keine SollStunden fuer dieses Projekt eingegeben.
+                $stundenInfo = "";
+            } else if(($z->getSollStunden() - $z->getIstStunden()) < 0) {
                 $stundenInfo = "(".($z->getSollStunden() - $z->getIstStunden())." von ".intval($z->getSollStunden()) . " Std.)";
                 $tplDS->replace("cssklasse", "red");
             } else if($z->getSollStunden() > 0) {

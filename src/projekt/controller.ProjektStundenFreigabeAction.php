@@ -52,7 +52,6 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
         
         // Ab Hier Copy & Paste
         $gemeindeCache = new HashTable();
-        $pid = 132;
         $tplDSRubrikFirst = new BufferedTemplate("projekt_stundenfreigabe_rubrik.tpl");
         $tplDSRubrikAfter = new BufferedTemplate("projekt_stundenfreigabe_rubrik_2.tpl");
         $tplDSRubrik = $tplDSRubrikFirst;
@@ -60,8 +59,8 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
         $bisherStundenSumme = 0;
         
         // Navigation
-        if (isset($_SESSION['request']['woche'])) {
-            $woche = $_SESSION['request']['woche'];
+        if (isset($_GET['date'])) {
+            $woche = $_GET['date'];
         } else {
             $woche = time();
             $isWocheChanged = true;
@@ -127,7 +126,10 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
             $tplDS->replace("ProjektBezeichnung", "");
             
             // Stunden Information START
-            if (($z->getSollStunden() - $z->getIstStunden()) < 0) {
+            if($z->getSollStunden() == 0) {
+                // Keine SollStunden fuer dieses Projekt eingegeben
+                $stundenInfo = "";
+            } elseif (($z->getSollStunden() - $z->getIstStunden()) < 0) {
                 $stundenInfo = "(" . ($z->getSollStunden() - $z->getIstStunden()) . " von " . intval($z->getSollStunden()) . " Std.)";
                 $tplDS->replace("cssklasse", "red");
             } else if ($z->getSollStunden() > 0) {
@@ -192,7 +194,7 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
         }
         
         // Reisekosten Felder leeren
-        $rk = ReisekostenUtilities::getReisekosten($benutzer->getID(), $pid, $kw, $jahr);
+        $rk = ReisekostenUtilities::getReisekostenSummeProKW($benutzer->getID(), $kw, $jahr);
         $tpl->replace("Spesen", WaehrungUtil::formatDoubleToWaehrung($rk->getSpesen()));
         $tpl->replace("Hotel", WaehrungUtil::formatDoubleToWaehrung($rk->getHotel()));
         $tpl->replace("KM", WaehrungUtil::formatDoubleToWaehrung($rk->getKM()));
