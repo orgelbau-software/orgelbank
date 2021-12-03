@@ -68,9 +68,7 @@ class ArbeitswocheUtilities
         $d = new Date();
         $retVal = new Arbeitswoche();
         $retVal->setBenutzerID(- 1);
-        $retVal->setEingabeGebucht(0);
-        $retVal->setEingabeKomplett(0);
-        $retVal->setEingabeMoeglich(0);
+        $retVal->markOffen();
         $retVal->setJahr(date("Y", $timestamp));
         $retVal->setKalenderWoche($d->getKW($timestamp));
         $retVal->setWochenStart(date("Y-m-d", $aw[0]));

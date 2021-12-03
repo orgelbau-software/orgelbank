@@ -988,6 +988,9 @@ class ProjektController
                     $tplLinksFuerDenDatensatz = $tplLinksNormal;
                     $tplMaDS->replace("Status", "Fertig");
                     $tplMaDS->replace("StatusClass", "awStatusFertig");
+                } else {
+                    $tplMaDS->replace("Status", "Status: ".$kw->getStatus());
+                    $tplMaDS->replace("StatusClass", "awStatusFertig");
                 }
                 
                 $tplLinksFuerDenDatensatz->replace("BenutzerID", $kw->getBenutzerID());

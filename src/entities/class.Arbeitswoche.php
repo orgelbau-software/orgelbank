@@ -57,7 +57,7 @@ class Arbeitswoche extends SimpleDatabaseStorageObjekt
         $ht->add("aw_stunden_soll", $this->getWochenStundenSoll());
         $ht->add("aw_stunden_dif", $this->getWochenStundenDif());
         $ht->add("aw_stunden_urlaub", $this->getWochenStundenUrlaub());
-        $ht->add("aw_status", $this->getEingabeKomplett());
+        $ht->add("aw_status", $this->getStatus());
         $ht->add("aw_wochenstart", $this->getWochenStart());
         
         return $ht;

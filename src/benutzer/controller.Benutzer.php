@@ -363,7 +363,12 @@ class BenutzerController
             $rk->setSpesen(WaehrungUtil::formatWaehrungToDB($_POST['spesen']));
             $rk->speichern(false);
             
-            $awArbeitswoche->setEingabeKomplett($boSollKomplett);
+            if($boSollKomplett) {
+                $awArbeitswoche->markKomplett();
+            } else {
+                $awArbeitswoche->markOffen();
+            }
+            
             $awArbeitswoche->summieren();
             $awArbeitswoche->speichern(true);
             

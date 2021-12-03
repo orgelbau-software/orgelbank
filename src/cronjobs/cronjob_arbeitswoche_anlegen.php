@@ -11,7 +11,10 @@ include "../../conf/config.inc.php";
 $ts = time();
 $aw = ArbeitswocheUtilities::createArbeitswoche($ts);
 
+$retVal = array();
+
 $sqlDelete = "DELETE FROM arbeitswoche WHERE aw_kw = " . $aw->getKalenderWoche() . " AND aw_jahr = " . $aw->getJahr();
+$retVal['delete'] = $sqlDelete;
 
 $sqlInsert = "INSERT INTO 
 			arbeitswoche
@@ -45,6 +48,8 @@ $sqlInsert = "INSERT INTO
 					b.be_geloescht = 0 AND
 					b.be_aktiviert = 1";
 
+$retVal['insert'] = $sqlInsert;
+
 // SQL ausführen
 $db = DB::getInstance();
 $db->connect();
@@ -54,4 +59,6 @@ $db->NonSelectQuery($sqlInsert);
 
 $db->disconnect();
 
+header('Content-Type: application/json');
+echo json_encode($retVal);
 ?>
