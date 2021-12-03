@@ -3,6 +3,9 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		
+		<!-- Auto Logout -->
+		<meta http-equiv="refresh" content="<!--AutoLogoutSekunden-->; URL=index.php?page=8&do=141">
+		
 		<title><!--SiteTitle--></title>
 
 		<link type="text/css" rel="stylesheet" href="<!--InstanceUrl-->web/css/css.css" />

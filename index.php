@@ -41,6 +41,9 @@ if($webUser != null && $webUser->login() && ! $webUser->isLoginExpired()) {
   $tplKopf->replace("Datum", $date->getMonthDate());
   $tplKopf->replace("Uhrzeit", $date->getTime());
   $tplKopf->replace("Benutzername", $webUser->getBenutzername());
+  $tplKopf->replace("AutoLogoutSekunden", ConstantLoader::getBenutzerAutomatischerLogoutInSekunden());
+  
+  
   if($webUser->isMonteur()) {
     $cssMenuAktiv = "";
     $currentPageId = 1;

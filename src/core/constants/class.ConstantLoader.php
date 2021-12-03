@@ -490,5 +490,18 @@ class ConstantLoader
     {
         return "true" == ConstantLoader::$htValues->getValueOf("projekt_stunden_nur_gebucht");
     }
+    
+    public static function getBenutzerAutomatischerLogoutInSekunden()
+    {
+//         return 600;
+
+         $retVal = ConstantLoader::$htValues->getValueOf("allgemein_automatischer_logout_in_sekunden");
+         if($retVal < 60) {
+             echo "Sie haben einen automatischen Logout von weniger als 60 sekunden konfiguriert. Bitte aendern sie den Wert in den Einstellungen.";
+             $retVal = 60;
+         }
+         return $retVal;
+    }
+    
 }
 ?>
