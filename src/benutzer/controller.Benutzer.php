@@ -75,7 +75,7 @@ class BenutzerController
                 $benutzer->setNachname($_POST['nachname']);
                 
                 if ($_POST['passwort'] != "") {
-                    $benutzer->setPasswort(md5($_POST['passwort']));
+                    $benutzer->setPasswort(md5(SALT.$_POST['passwort']));
                 }
                 
                 $tplStatus->setText("Benutzerdaten gespeichert");

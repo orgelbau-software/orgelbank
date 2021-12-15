@@ -103,7 +103,7 @@ class BenutzerUtilities
     public static function loadByPin($passwort, $pKlarText = false)
     {
         if($pKlarText == true) {
-            $passwort = md5($passwort);
+            $passwort = PasswordUtility::encrypt($passwort);
         }
         $sql = "SELECT
 					*
@@ -123,10 +123,17 @@ class BenutzerUtilities
         return $r;
     }
 
+    /**
+     * 
+     * @param String $benutzernamen
+     * @param String $passwort
+     * @param boolean $pKlarText
+     * @return boolean
+     */
     public static function authorisiereBenutzerdaten($benutzernamen, $passwort, $pKlarText = false)
     {
         if($pKlarText == true) {
-            $passwort = md5($passwort);
+            $passwort = PasswordUtility::encrypt($passwort);
         }
         $sql = "SELECT
 					*

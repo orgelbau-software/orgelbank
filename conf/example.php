@@ -17,4 +17,9 @@ define('ORGELBANK_API_KEY', 'AMGks2xFxDrVsGs6');
 
 define('LOGENABLED', false);
 define('SUPPORT_MAIL_FROM', "system@beispiel.de");
+
+
+// Der Salt wird zum Speichern der Passwort Hashes in der Datenbank verwendet und mach den Hash etwas sicherer.
+define('PASSWORD_SALT', 'abc');
+
 ?>

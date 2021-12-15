@@ -24,6 +24,9 @@ define('STARTRECHNUNGSNUMMER', 1000);
 
 define('SESSION_DEFAULT_EXPIRE', 1800); // halbe stunde
 
+// Der Salt wird zum Speichern der Passwort Hashes in der Datenbank verwendet und mach den Hash etwas sicherer.
+// define('PASSWORD_SALT', 'abc');
+
 
 // Fehlerbehandlung
 // ini_set('display_errors', 1); // Bei HTTP-500 Fehlern + try/catch

@@ -20,7 +20,7 @@ if(!defined("ORGELBANK_API_KEY") || ConstantLoader::getOrgelbankAPIKey() != ORGE
 if($_POST && isset($_POST['loginmodule'])) {
   $_POST['benutzername'] = filter_var($_POST['benutzername'], FILTER_SANITIZE_STRING);
   $_SESSION['user']['benutzername'] = $_POST['benutzername'];
-  $_SESSION['user']['passwort'] = md5($_POST['passwort']);
+  $_SESSION['user']['passwort'] = PasswordUtility::encrypt($_POST['passwort']);
 }
 
 if(isset($_SESSION['user']['benutzername'], $_SESSION['user']['passwort'])) {

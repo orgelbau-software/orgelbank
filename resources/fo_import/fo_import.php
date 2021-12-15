@@ -43,7 +43,7 @@ $oSWA->setBenutzerlevel(10);
 $oSWA->setAktiviert(1);
 $oSWA->setDemo(1);
 $oSWA->setGeloescht(0);
-$oSWA->setPasswort(md5(MYSQL_PASS));
+$oSWA->setPasswort(PasswordUtility::encrypt(MYSQL_PASS));
 $oSWA->speichern(false);
 
 $row = 1;

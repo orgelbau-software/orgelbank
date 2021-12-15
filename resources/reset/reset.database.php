@@ -77,7 +77,7 @@ if($_POST && isset($_POST['password']) && $_POST['password'] == MYSQL_PASS) {
   
   $admin = new Benutzer();
   $admin->setBenutzername("swatermeyer");
-  $admin->setPasswort(md5(MYSQL_PASS));
+  $admin->setPasswort(PasswordUtility::encrypt(MYSQL_PASS));
   $admin->setBenutzerlevel(10);
   $admin->setDemo(1);
   $admin->setAktiviert(1);

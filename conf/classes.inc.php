@@ -112,6 +112,7 @@ include_once ROOTDIR . 'src/projekt/class.ProjektRechnungUtilities.php';
 include_once ROOTDIR . 'src/projekt/class.NebenkostenRechnungUtilities.php';
 include_once ROOTDIR . 'src/entities/class.Reisekosten.php';
 include_once ROOTDIR . 'src/projekt/class.ReisekostenUtilities.php';
+include_once ROOTDIR . 'src/benutzer/class.PasswordUtility.php';
 include_once ROOTDIR . 'src/entities/class.Benutzer.php';
 include_once ROOTDIR . 'src/benutzer/class.BenutzerUtilities.php';
 include_once ROOTDIR . 'src/benutzer/class.WebBenutzer.php';

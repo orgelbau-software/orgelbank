@@ -106,7 +106,7 @@ $oSWA->setBenutzerlevel(10);
 $oSWA->setAktiviert(1);
 $oSWA->setDemo(1);
 $oSWA->setGeloescht(0);
-$oSWA->setPasswort(md5(MYSQL_PASS));
+$oSWA->setPasswort(PasswordUtility::encrypt(MYSQL_PASS));
 $oSWA->speichern(false);
 
 $oMGraser = new Benutzer();
@@ -116,7 +116,7 @@ $oMGraser->setNachname("Graser");
 $oMGraser->setBenutzerlevel(10);
 $oMGraser->setAktiviert(1);
 $oMGraser->setGeloescht(0);
-$oMGraser->setPasswort(md5("Gedact"));
+$oMGraser->setPasswort(PasswordUtility::encrypt("Gedact"));
 $oMGraser->speichern(false);
 
 $oMGraser = new Benutzer();
@@ -126,7 +126,7 @@ $oMGraser->setNachname("Graser");
 $oMGraser->setBenutzerlevel(10);
 $oMGraser->setAktiviert(1);
 $oMGraser->setGeloescht(0);
-$oMGraser->setPasswort(md5("Principal"));
+$oMGraser->setPasswort(PasswordUtility::encrypt("Principal"));
 $oMGraser->speichern(false);
 
 

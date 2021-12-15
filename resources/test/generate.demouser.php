@@ -25,13 +25,13 @@ $benutzer->setCreatedAt(date("Y-m-d"));
 
 $f = fopen("demouser.csv", "r");
 
-// Liest Zeile für Zeile bis zum Ende der Datei
+// Liest Zeile fï¿½r Zeile bis zum Ende der Datei
 while(!feof($f)) {
 	$line =  fgets($f);
 	$explode = explode(";", $line);
 	
 	$benutzer->setBenutzername(strtolower(trim($explode[0])));
-	$benutzer->setPasswort(md5(utf8_decode(trim($explode[1]))));
+	$benutzer->setPasswort(PasswordUtility::encrypt(utf8_decode(trim($explode[1]))));
 	
 	if($explode[0] == "" || $explode[0] == "0") {
 	} else {
