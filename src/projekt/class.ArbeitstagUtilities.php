@@ -165,7 +165,7 @@ class ArbeitstagUtilities
         DB::getInstance()->NonSelectQuery($sql);
     }
 
-    public static function isArbeitswocheGebucht($timestamp)
+    public static function isArbeitswocheGebucht($timestamp, $pBenutzerID)
     {
         $c = Date::berechneArbeitswoche($timestamp, "Y-m-d");
         $sql = "SELECT 
@@ -173,7 +173,8 @@ class ArbeitstagUtilities
 				FROM 
 					arbeitstag 
 				WHERE 
-					at_datum >= '" . $c[0] . "' AND 
+					be_id = ".$pBenutzerID." AND
+                    at_datum >= '" . $c[0] . "' AND 
 					at_datum <= '" . $c[6] . "' AND 
 					at_status = " . Arbeitstag::$STATUS_GEBUCHT;
         if (DB::getInstance()->getMysqlNumRows($sql) > 0)

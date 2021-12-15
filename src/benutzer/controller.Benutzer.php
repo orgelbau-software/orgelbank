@@ -276,7 +276,7 @@ class BenutzerController
         $doDatenSpeichern = ! $isWocheChanged && $_POST && ! isset($_POST['formName']) && $_POST['submit'] == "Speichern";
         
         // Gesperrt & Komplettierung der Woche unbedingt vor der Verarbeitung prüfen
-        $boGebucht = ArbeitstagUtilities::isArbeitswocheGebucht($woche);
+        $boGebucht = ArbeitstagUtilities::isArbeitswocheGebucht($woche, $benutzer->getID());
         $boIstKomplett = ArbeitstagUtilities::isBenutzerArbeitswocheKomplett($woche, $benutzer->getID());
         $boSollKomplett = $boIstKomplett;
         

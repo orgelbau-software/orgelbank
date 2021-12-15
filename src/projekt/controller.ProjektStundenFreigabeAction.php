@@ -3,6 +3,8 @@
 class ProjektStundenFreigabeAction implements GetRequestHandler
 {
 
+    private $mFehlerMeldung = "";
+    
     /**
      *
      * {@inheritdoc}
@@ -16,7 +18,7 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
             return;
         }
         
-        $benutzer = $webUser->getBenutzer();
+        $benutzer = new Benutzer(intval($_GET['uid']));
         $tpl = new Template("projekt_stundenfreigabe.tpl");
         $tpl->replace("Benutzername", $benutzer->getVorname() . " " . $benutzer->getNachname());
         
@@ -195,7 +197,19 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
      * @see GetRequestHandler::validateGetRequest()
      */
     public function validateGetRequest()
-    {}
+    {
+        if(!isset($_GET['uid']) || intval($_GET['uid']) <= 0 ) {
+            $this->mFehlerMeldung = "Keine MitarbeiterID uebergeben.";
+            return false;
+        }
+        
+        if(!isset($_GET['date'])) {
+            $this->mFehlerMeldung = "Kein Datum uebergeben.";
+            return false;
+        }
+        
+        return true;
+    }
 
     /**
      *
@@ -204,7 +218,13 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
      * @see GetRequestHandler::handleInvalidGet()
      */
     public function handleInvalidGet()
-    {}
+    {
+        $status =  new HTMLStatus($this->mFehlerMeldung, HTMLStatus::$STATUS_ERROR);
+        
+        $htmlRedirect = new HTMLRedirect($status->getOutput(), "index.php?page=6&do=108");
+        
+        return $htmlRedirect;
+    }
 
     /**
      *
