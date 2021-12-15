@@ -135,6 +135,11 @@ class MySQLiDBProvider implements DBProvider
     {
         return mysqli_real_escape_string($this->getInstance(), $pString);
     }
+    
+    public function getAffectedRows()
+    {
+        return mysqli_affected_rows($this->getInstance());
+    }
 
     public function getInstance()
     {

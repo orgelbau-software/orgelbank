@@ -155,10 +155,6 @@ class WebBenutzer
         session_destroy();
     }
 
-    /**
-     *
-     * @deprecated : 01.07.2010: Wo wird die noch gebraucht?
-     */
     public function initSessionData()
     {
         $_SESSION['user']['id'] = $this->getID();

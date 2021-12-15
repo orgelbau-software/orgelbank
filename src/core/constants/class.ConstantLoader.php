@@ -195,9 +195,13 @@ class ConstantLoader
         return ConstantLoader::$htValues->getValueOf("default_redirect_seconds_false");
     }
 
+    /**
+     * @deprecated 
+     * @return number
+     */
     public static function getMaximumIdleTime()
     {
-        return ConstantLoader::$htValues->getValueOf("max_idle_time");
+        return self::getBenutzerAutomatischerLogoutInSekunden() * 60;
     }
 
     public static function getMaximumIdleTimeInSeconds()

@@ -103,6 +103,16 @@ class DB implements DBProvider
     }
 
     /**
+     * Gibt die Anzahl der Datensaetze zurück, die von einem INSERT, UPDATE oder DELETE betroffen waren.
+     * 
+     * @return int Anzahl betroffener Datensaetze.
+     */
+    public function getAffectedRows()
+    {
+        return $this->mInstance->getAffectedRows();
+    }
+
+    /**
      * Gibt ein Datenbankobjekt zurück
      *
      * @return DB

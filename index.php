@@ -105,6 +105,10 @@ if ($webUser != null && $webUser->login() && ! $webUser->isLoginExpired()) {
                     $gemeindeJS .= $tplJS->getOutput();
                     
                     $tplKopf->replace("JavaScript", $gemeindeJS);
+                } else {
+                    $tplJS = new Template("gemeinde_js_ersterlogin.tpl");
+                    $tplJS->replace("APIKEY", ORGELBANK_API_KEY);
+                    $tplKopf->replace("JavaScript", $tplJS->forceOutput());
                 }
                 break;
         }

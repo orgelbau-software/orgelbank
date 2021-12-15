@@ -75,7 +75,7 @@ class BenutzerController
                 $benutzer->setNachname($_POST['nachname']);
                 
                 if ($_POST['passwort'] != "") {
-                    $benutzer->setPasswort(md5(SALT.$_POST['passwort']));
+                    $benutzer->setPasswort(md5(SALT . $_POST['passwort']));
                 }
                 
                 $tplStatus->setText("Benutzerdaten gespeichert");
@@ -363,7 +363,7 @@ class BenutzerController
             $rk->setSpesen(WaehrungUtil::formatWaehrungToDB($_POST['spesen']));
             $rk->speichern(false);
             
-            if($boSollKomplett) {
+            if ($boSollKomplett) {
                 $awArbeitswoche->markKomplett();
             } else {
                 $awArbeitswoche->markOffen();
@@ -379,7 +379,7 @@ class BenutzerController
             $awArbeitswoche->speichern(true);
             
             // Projekt Aufgabe Stunden berechnen
-             if ($projektID != 0 && ConstantLoader::getProjektZeitenNurGebuchteStundenBeruecksichtigen() == true) {
+            if ($projektID != 0 && ConstantLoader::getProjektZeitenNurGebuchteStundenBeruecksichtigen() == true) {
                 ProjektAufgabeUtilities::berechnenIstStunden($projektID);
             } else {
                 // echo "Fehler: Die ProjektID kann 0 sein, wenn keine Stunden sondern nur Spesen eingegeben worden sind";
@@ -568,6 +568,25 @@ class BenutzerController
         }
         $html = new HTMLRedirect($htmlStatus->getOutput(), $_POST['help_addr'], $sekunden);
         $html->anzeigen();
+    }
+
+    public static function doHilfeRufenCronjob($pCronjobArray)
+    {
+        $firmenAnschrift = new Ansprechpartner(1);
+        
+        $sekunden = 1;
+        $titel = INSTALLATION_NAME . ": Cronjob!";
+        $msg = "";
+        $msg .= "Datum: " . date("d.m.Y H:i:s") . "\r\n";
+        $msg .= "\r\n";
+        $msg .= "Nachricht: " . $pCronjobArray . "\r\n";
+        $msg .= "\r\n";
+        
+        $header = "from:" . SUPPORT_MAIL_FROM . "\r\n";
+        if ($firmenAnschrift->getEmail() != "") {
+            $header .= "Reply-To: " . $firmenAnschrift->getEmail() . "\r\n";
+        } else {}
+        @mail(SUPPORT_MAIL_ADDR, $titel, $msg, $header);
     }
 }
 

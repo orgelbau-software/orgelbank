@@ -30,3 +30,7 @@ ALTER TABLE `arbeitswoche` DROP `aw_eingabe_komplett`;
 
 INSERT INTO `option_meta` (`option_id`, `option_modul`, `option_name`, `option_value`, `option_autoload`, `option_comment`, `option_editable`, `option_lastchange`, `option_createdate`) VALUES (NULL, 'Projekt', 'projekt_stunden_nur_gebucht', 'true', '1', 'Sollen nur Arbeitstage im Status \"gebucht\" in der Stundenberechnung der Projekte berücksichtigt werden? Werte: true/false', '1', '2021-12-03 20:37:13.000000', '2021-12-03 20:37:13.000000');
 INSERT INTO `option_meta` (`option_id`, `option_modul`, `option_name`, `option_value`, `option_autoload`, `option_comment`, `option_editable`, `option_lastchange`, `option_createdate`) VALUES (NULL, 'Allgemein', 'allgemein_automatischer_logout_in_sekunden', '600', '1', 'Zeit in Sekunden nach der ein automatischer Logout durchgeführt wird.', '1', '2021-12-03 21:50:55.000000', '2021-12-03 21:50:55.000000');
+
+DELETE from option_meta where option_name = 'max_idle_time';
+
+INSERT INTO `option_meta` (`option_id`, `option_modul`, `option_name`, `option_value`, `option_autoload`, `option_comment`, `option_editable`, `option_lastchange`, `option_createdate`) VALUES (NULL, 'Allgemein', 'cronjob_last_execution', '0', '1', 'Letzte Ausführung der Cronjobs', '0', '2021-12-15 21:40:53.000000', '2021-12-15 21:40:53.000000');

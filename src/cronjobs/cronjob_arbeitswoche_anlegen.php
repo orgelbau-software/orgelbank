@@ -6,17 +6,19 @@
  */
 
 // Config einbinden
-include "../../conf/config.inc.php";
+include_once "../../conf/config.inc.php";
 
 $ts = time();
 $aw = ArbeitswocheUtilities::createArbeitswoche($ts);
 
 $retVal = array();
+$retVal['http_status'] = "200";
 
-$sqlDelete = "DELETE FROM arbeitswoche WHERE aw_kw = " . $aw->getKalenderWoche() . " AND aw_jahr = " . $aw->getJahr();
-$retVal['delete'] = $sqlDelete;
-
-$sqlInsert = "INSERT INTO 
+try {
+    $sqlDelete = "DELETE FROM arbeitswoche WHERE aw_kw = " . $aw->getKalenderWoche() . " AND aw_jahr = " . $aw->getJahr();
+//     $retVal['delete'] = $sqlDelete;
+    
+    $sqlInsert = "INSERT IGNORE INTO 
 			arbeitswoche
     		(
     		be_id,
@@ -26,7 +28,7 @@ $sqlInsert = "INSERT INTO
     		aw_stunden_ist,
     		aw_stunden_soll,
     		aw_stunden_dif,
-    		aw_eingabe_status,
+    		aw_status,
     		aw_lastchange,
     		aw_createdate
     		)
@@ -47,18 +49,30 @@ $sqlInsert = "INSERT INTO
 					b.be_zeiterfassung = 1 AND
 					b.be_geloescht = 0 AND
 					b.be_aktiviert = 1";
-
-$retVal['insert'] = $sqlInsert;
-
-// SQL ausführen
-$db = DB::getInstance();
-$db->connect();
-
-$db->NonSelectQuery($sqlDelete);
-$db->NonSelectQuery($sqlInsert);
-
-$db->disconnect();
-
+    
+    $retVal['insert'] = $sqlInsert;
+    
+    // SQL ausführen
+    $db = DB::getInstance();
+    $db->connect();
+    
+//     $db->NonSelectQuery($sqlDelete);
+//     $retVal['geloeschte_eintraege'] = $db->getAffectedRows();
+    $angelegteWochen = $db->NonSelectQuery($sqlInsert);
+    if($db->getAffectedRows() == 0) {
+        $retVal['http_status'] = "201";
+    } else {
+        $retVal['http_status'] = "200";
+    }
+    $retVal['angelegte_eintraege'] = $db->getAffectedRows();
+    
+    $db->disconnect();
+} catch (Throwable $t) {
+    $retVal['http_status'] = "500";
+    $retVal['message'] = $t->getMessage();
+    BenutzerController::doHilfeRufenCronjob($retVal);
+}
 header('Content-Type: application/json');
+http_response_code($retVal['http_status']);
 echo json_encode($retVal);
 ?>

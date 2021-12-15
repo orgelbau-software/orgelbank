@@ -17,3 +17,4 @@ resources/graser_import/*.csv
 resources/bente_import/*.csv
 resources/bente_import/*.sql
 vendor/*
+backup/*.sql.gz
