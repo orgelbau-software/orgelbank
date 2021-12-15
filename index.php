@@ -29,6 +29,7 @@ if (isset($_SESSION['user']['benutzername'], $_SESSION['user']['passwort'])) {
     $webUser->setPasswort($_SESSION['user']['passwort']);
 }
 
+// echo PasswordUtility::encrypt("Gedact2021");
 if ($webUser != null && $webUser->login() && ! $webUser->isLoginExpired()) {
     $tplKopf = new Template("indexkopf.tpl");
     $tplFuss = new Template("indexfuss.tpl");
