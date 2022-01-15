@@ -47,12 +47,20 @@ class GemeindeListeAction implements GetRequestHandler, PostRequestHandler
     public function executeGet()
     {
         $tplGemeindeListe = new Template("gemeinde_liste.tpl");
-        $tplGemeindeDS = new BufferedTemplate("gemeinde_liste_ds.tpl", "Farbwechsel", "td1", "td2");
-        $tplGemeindeRubrik = new Template("gemeinde_liste_rubrik_first.tpl");
+        
+        if(ConstantLoader::getGemeindeListeStandardSortierung() == "ort") {
+            $tplGemeindeDS = new BufferedTemplate("gemeinde_liste_ort_ds.tpl", "Farbwechsel", "td1", "td2");
+            $tplGemeindeRubrik = new Template("gemeinde_liste_ort_rubrik_first.tpl");
+            $tplGemeindeRubrik2 = new Template("gemeinde_liste_ort_rubrik.tpl");
+        } else {
+            $tplGemeindeDS = new BufferedTemplate("gemeinde_liste_ds.tpl", "Farbwechsel", "td1", "td2");
+            $tplGemeindeRubrik = new Template("gemeinde_liste_rubrik_first.tpl");
+            $tplGemeindeRubrik2 = new Template("gemeinde_liste_rubrik.tpl");
+        }
         $strRubriken = "";
         $boFirst = true;
         $iAnzahlGemeinden = GemeindeUtilities::getAnzahlGemeinden();
-        // Rubriken f�r die Gemeindeansicht
+        // Rubriken für die Gemeindeansicht
         $konfession = KonfessionUtilities::getKonfessionenAsArray();
         
         // Bei wenig Kunden immer den Gesamtbestand anzeigen
@@ -126,7 +134,7 @@ class GemeindeListeAction implements GetRequestHandler, PostRequestHandler
                     $Anfangszeichen[] = $newindex;
                 if ($boFirst) {
                     $boFirst = false;
-                    $tplGemeindeRubrik = new Template("gemeinde_liste_rubrik.tpl");
+                    $tplGemeindeRubrik = $tplGemeindeRubrik2;
                 }
             }
             
