@@ -11,6 +11,40 @@ $exportfile = fopen("export_bente.sql", "w+");
 fwrite($exportfile, "DELETE FROM ansprechpartner WHERE a_id > 927;");
 fwrite($exportfile, "DELETE FROM adresse WHERE ad_id > 1965;");
 
+//
+// EDV - Computer
+// Familie
+// Gesch�ftlich
+// HWK / Innung
+// Handwerker
+// Hilfskraft
+// Holzhandel / S�gewerke
+// Kirchengemeinden
+// Kirchenverwaltung
+// Maschinen / Werkzeuge
+// Mitarbeiter
+// OR / Sachverst�ndige
+// Organisten
+// Orgelbauer
+// Orgelbauwerkst�tten
+// Pastoren
+// Rotary
+// Telefonliste LItus
+// Verschiedenes
+// Wartung
+// Weihnachtsflasche
+// Weihnachtspost
+// Werkstatt-Konzert
+// Zulieferer
+
+$nurKontakteInDiesenKategorienImportieren = array();
+$nurKontakteInDiesenKategorienImportieren[] = "Kirchengemeinden";
+$nurKontakteInDiesenKategorienImportieren[] = "Pastoren";
+$nurKontakteInDiesenKategorienImportieren[] = "Kirchenverwaltung";
+$nurKontakteInDiesenKategorienImportieren[] = "OR / Sachverst";
+$nurKontakteInDiesenKategorienImportieren[] = "Organisten";
+$nurKontakteInDiesenKategorienImportieren[] = "Pastoren";
+
 if (($handle = fopen("kontakte.original.csv", "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
         $num = count($data);
@@ -200,25 +234,40 @@ if (($handle = fopen("kontakte.original.csv", "r")) !== FALSE) {
         $entity->LandRegion_geschäftlich = "";
         
         $bemerkung = $entity->createAttributeList();
-        if($bemerkung != "") {
+        if ($bemerkung != "") {
             $bemerkung .= "---\r\n";
         }
         
         $bemerkung .= $ansprechpartner->getBemerkung();
         $ansprechpartner->setBemerkung($bemerkung);
         
-        //echo $bemerkung;
+        // echo $bemerkung;
         
-        fwrite($exportfile, $ansprechpartner->export());
-        fwrite($exportfile, "\r\n\r\n");
-        $row ++;
+        $istInEinerWichtigenKategorie = false;
+        foreach ($nurKontakteInDiesenKategorienImportieren as $wichtigeKategorie) {
+            if (strpos($entity->Kategorien, $wichtigeKategorie) !== false) {
+                $istInEinerWichtigenKategorie = true;
+            }
+        }
+        
+        if ($istInEinerWichtigenKategorie) {
+            fwrite($exportfile, $ansprechpartner->export());
+            fwrite($exportfile, "\r\n\r\n");
+            $row ++;
+        }
     }
     fclose($handle);
+    
+    
+    ksort(CSVBenteEntity::$tmpKat);
+    foreach (CSVBenteEntity::$tmpKat as $key => $val) {
+        echo $key ." - ".$val. "<br/>";
+    }
 }
 
 fclose($exportfile);
-echo "SQL File generated.";
-
+echo "SQL File generated.<br/>";
+echo "Anzahl Kontakte: " .$row."<br/>";
 class CSVBenteEntity
 {
 
@@ -333,20 +382,18 @@ class CSVBenteEntity
     public $EMailAdresse;
 
     // public $EMailTyp;
-//     public $EMail_Angezeigter_Name;
-
+    // public $EMail_Angezeigter_Name;
     public $EMail_2_Adresse;
 
-//     public $EMail_2_Typ;
-
-//     public $EMail_2_Angezeigter_Name;
-
+    // public $EMail_2_Typ;
+    
+    // public $EMail_2_Angezeigter_Name;
     public $EMail_3_Adresse;
 
-//     public $EMail_3_Typ;
-
-//     public $EMail_3_Angezeigter_Name;
-
+    // public $EMail_3_Typ;
+    
+    // public $EMail_3_Angezeigter_Name;
+    
     // public $Empfohlen_von;
     public $Geburtstag;
 
@@ -400,6 +447,8 @@ class CSVBenteEntity
         $retVal .= "]";
         return $retVal;
     }
+
+    public static $tmpKat = array();
 
     public function createAttributeList()
     {
@@ -572,18 +621,18 @@ class CSVBenteEntity
         if ("" != $this->EMail_2_Adresse) {
             $content .= "EMail_2_Adresse: " . $this->EMail_2_Adresse . "\r\n";
         }
-//         if ("" != $this->EMail_2_Typ) {
-//             $content .= "EMail_2_Typ: " . $this->EMail_2_Typ . "\r\n";
-//         }
+        // if ("" != $this->EMail_2_Typ) {
+        // $content .= "EMail_2_Typ: " . $this->EMail_2_Typ . "\r\n";
+        // }
         // if ("" != $this->EMail_2_Angezeigter_Name) {
         // $content .= "EMail_2_Angezeigter_Name: " . $this->EMail_2_Angezeigter_Name . "\r\n";
         // }
         if ("" != $this->EMail_3_Adresse) {
             $content .= "EMail_3_Adresse: " . $this->EMail_3_Adresse . "\r\n";
         }
-//         if ("" != $this->EMail_3_Typ) {
-//             $content .= "EMail_3_Typ: " . $this->EMail_3_Typ . "\r\n";
-//         }
+        // if ("" != $this->EMail_3_Typ) {
+        // $content .= "EMail_3_Typ: " . $this->EMail_3_Typ . "\r\n";
+        // }
         // if ("" != $this->EMail_3_Angezeigter_Name) {
         // $content .= "EMail_3_Angezeigter_Name: " . $this->EMail_3_Angezeigter_Name . "\r\n";
         // }
@@ -610,6 +659,27 @@ class CSVBenteEntity
         }
         if ("" != $this->Kategorien) {
             $content .= "Kategorien: " . $this->Kategorien . "\r\n";
+            
+            $k = array();
+            if (strpos($this->Kategorien, ";") > 0) {
+                $k = explode(";", $this->Kategorien);
+            } else {
+                $k[] = $this->Kategorien;
+            }
+            
+            foreach ($k as $val) {
+                if (! isset(CSVBenteEntity::$tmpKat[$val])) {
+                    CSVBenteEntity::$tmpKat[$val] = 1;
+                } else {
+                    CSVBenteEntity::$tmpKat[$val] = CSVBenteEntity::$tmpKat[$val]+1;
+                }
+            }
+        } else {
+            if (! isset(CSVBenteEntity::$tmpKat["Ohne Kategorie"])) {
+                CSVBenteEntity::$tmpKat["Ohne Kategorie"] = 1;
+            } else {
+                CSVBenteEntity::$tmpKat["Ohne Kategorie"] = CSVBenteEntity::$tmpKat["Ohne Kategorie"]+1;
+            }
         }
         // if ("" != $this->Kinder) {
         // $content .= ": " . $this->Kinder . "\r\n";
