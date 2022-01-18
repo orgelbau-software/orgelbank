@@ -55,8 +55,15 @@ class OrgelRequestHandler
         }
         
         if (! isset($_GET['order'])) {
-            $retVal['SQLORDER'] = "g_kirche";
-            $retVal['GETTER'] = "getGemeindeNamen";
+            $standardSortierung = ConstantLoader::getGemeindeListeStandardSortierung();
+            if ($standardSortierung == "ort") {
+                $retVal['SQLORDER'] = "ad_ort";
+                $retVal['GETTER'] = "getGemeindeOrt";
+            } else {
+                $retVal['SQLORDER'] = "g_kirche";
+                $retVal['GETTER'] = "getGemeindeNamen";
+            }
+            
             $retVal['SKALA'] = "ALPHA";
         } elseif ($_GET['order'] == "erbauer") {
             $retVal['SQLORDER'] = "o_erbauer";
@@ -87,7 +94,13 @@ class OrgelRequestHandler
             $retVal['GETTER'] = "getGemeindeBezirk";
             $retVal['SKALA'] = "NUMERIC";
         }
-        $retVal['TPLORDER'] = isset($_GET['order']) ? $_GET['order'] : "gemeinde";
+        
+        $standardSortierung = ConstantLoader::getGemeindeListeStandardSortierung();
+        if ($standardSortierung == "ort") {
+            $retVal['TPLORDER'] = isset($_GET['order']) ? $_GET['order'] : "ort";
+        } else {
+            $retVal['TPLORDER'] = isset($_GET['order']) ? $_GET['order'] : "gemeinde";
+        }
         $retVal['SQLADD'] = ' ORDER BY ' . $retVal['SQLORDER'] . " " . $retVal['SQLDIR'];
         
         if (isset($_GET['index'])) {

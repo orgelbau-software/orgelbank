@@ -184,6 +184,7 @@ include_once ROOTDIR . 'src/ansprechpartner/controller.Ansprechpartner.php';
 include_once ROOTDIR . 'src/orgel/controller.OrgelBildAction.php';
 include_once ROOTDIR . 'src/orgel/controller.OrgelWartungAction.php';
 include_once ROOTDIR . 'src/orgel/controller.Orgel.php';
+include_once ROOTDIR . 'src/orgel/controller.OrgelListeAction.php';
 include_once ROOTDIR . 'src/gemeinde/controller.Gemeinde.php';
 include_once ROOTDIR . 'src/orgel/controller.Disposition.php';
 include_once ROOTDIR . 'src/rechnung/controller.Rechnung.php';
