@@ -121,8 +121,10 @@ class RechnungController
             $_POST[$key] = addslashes(trim($val));
         }
         
+        $netto = WaehrungUtil::formatWaehrungToDB($_POST['gnetto']);
         if (isset($_POST['satz']) && $_POST['satz'] != "" && $_POST['satz'] != 0) {
-            $nettoBetrag = round($_POST['gnetto'] * $_POST['satz'] / 100, 2);
+            $satz = intval($_POST['satz']);
+            $nettoBetrag = round($netto * ($satz / 100), 2);
         } else {
             $nettoBetrag = round($_POST['anetto'], 2);
         }
@@ -137,7 +139,7 @@ class RechnungController
         $oRechnung->setTitel($_POST['titel']);
         $oRechnung->setEinleitung($_POST['einleitung']);
         $oRechnung->setNettoBetrag($nettoBetrag, true);
-        $oRechnung->setGesamtNetto($_POST['gnetto'], true);
+        $oRechnung->setGesamtNetto($netto, true);
         $oRechnung->setAbschlagSatz($_POST['satz']);
         
         $oRechnung->speichern(true);
@@ -679,8 +681,9 @@ class RechnungController
 
     public static function zeigeReadOnlyRechnung()
     {
-        if (! isset($_GET['typid'], $_GET['id']))
+        if (! isset($_GET['typid'], $_GET['id'])) {
             return;
+        }
         
         $tplRechnung = null;
         $oRechnung = null;
@@ -757,6 +760,9 @@ class RechnungController
                     }
                 }
                 $tplRechnung->replace("Rechnungen", $s);
+                break;
+            default:
+                die("Fehler fuer Typ " . $_GET['typid']);
                 break;
         }
         

@@ -79,7 +79,7 @@ class AnsprechpartnerController
         if (! $_POST || ! isset($_POST['aid'], $_POST['gemeinde']) || "" == $_POST['gemeinde']) {
             $htmlStatus = new HTMLStatus("Fehlerhafte Auswahl!", HTMLStatus::$STATUS_ERROR);
             $aid = (isset($_POST['aid']) ? $_POST['aid'] : "");
-            $html = new HTMLRedirect($htmlStatus->getOutput(), "index.php?page=3&do=40&aid=" .$aid);
+            $html = new HTMLRedirect($htmlStatus->getOutput(), "index.php?page=3&do=40&aid=" . $aid);
         } else {
             
             $oA = new Ansprechpartner(intval($_POST['aid']));
@@ -365,7 +365,11 @@ class AnsprechpartnerController
         if (isset($_POST['name']) && $_POST['name'] != "") {
             Utilities::escapePost();
             $oAnsprechpartner->setAnrede($_POST['anrede']);
-            $oAnsprechpartner->setFirma($_POST['firma']);
+            
+            // Firmendaten aendern, nicht Ansprechpartner bearbeiten
+            if (isset($_POST['firma'])) {
+                $oAnsprechpartner->setFirma($_POST['firma']);
+            }
             $oAnsprechpartner->setTitel($_POST['titel']);
             $oAnsprechpartner->setVorname($_POST['vorname']);
             $oAnsprechpartner->setFunktion($_POST['funktion']);
@@ -384,11 +388,13 @@ class AnsprechpartnerController
             $oAnsprechpartner->setEmail($_POST['email']);
             $oAnsprechpartner->setBemerkung($_POST['bemerkung']);
             $oAnsprechpartner->setAktiv(1);
-            $webseite = $_POST['webseite'];
-            if ("" != $webseite && strpos($webseite, "http") !== 0) {
-                $webseite = "http://" . $webseite;
+            if (isset($_POST['webseite'])) {
+                $webseite = $_POST['webseite'];
+                if ("" != $webseite && strpos($webseite, "http") !== 0) {
+                    $webseite = "http://" . $webseite;
+                }
+                $oAnsprechpartner->setWebseite($webseite);
             }
-            $oAnsprechpartner->setWebseite($webseite);
             
             // war auskommentiert, wegen Speichern der Firmendaten wieder einkommentiert
             $oAnsprechpartner->setAndere($_POST['andere']);

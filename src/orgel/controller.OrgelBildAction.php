@@ -35,17 +35,24 @@ class OrgelBildAction implements GetRequestHandler, PostRequestHandler, PostRequ
 
     public function executePost()
     {
+        if (! is_dir(ORGELBILD_BILD_PFAD)) {
+            mkdir(ORGELBILD_BILD_PFAD) || die("Kann das Verzeichnis " . ORGELBILD_BILD_PFAD . " nicht erstellen");
+        }
+        if (! is_dir(ORGELBILD_THUMB_PFAD)) {
+            mkdir(ORGELBILD_THUMB_PFAD) || die("Kann das Verzeichnis " . ORGELBILD_THUMB_PFAD . " nicht erstellen");
+        }
+        
         $zielId = 0;
-        if (! file_exists("store/orgelpics/" . $this->oid . "_3.jpg"))
+        if (! file_exists(ORGELBILD_BILD_PFAD . $this->oid . "_3.jpg"))
             $zielId = 3;
-        if (! file_exists("store/orgelpics/" . $this->oid . "_2.jpg"))
+        if (! file_exists(ORGELBILD_BILD_PFAD . $this->oid . "_2.jpg"))
             $zielId = 2;
-        if (! file_exists("store/orgelpics/" . $this->oid . "_1.jpg"))
+        if (! file_exists(ORGELBILD_BILD_PFAD . $this->oid . "_1.jpg"))
             $zielId = 1;
         
         if ($zielId > 0) {
-            $bildPfad = ROOTDIR . "store/orgelpics/" . $this->oid . "_" . $zielId . ".jpg";
-            $thumbPfad = ROOTDIR . "store/orgelpics/thumbs/" . $this->oid . "_" . $zielId . ".jpg";
+            $bildPfad =  ORGELBILD_BILD_PFAD . $this->oid . "_" . $zielId . ".jpg";
+            $thumbPfad =  ORGELBILD_THUMB_PFAD . $this->oid . "_" . $zielId . ".jpg";
             
             $filetemp = $_FILES['probe']['tmp_name'];
             $filename = $_FILES['probe']['name'];
@@ -136,17 +143,21 @@ class OrgelBildAction implements GetRequestHandler, PostRequestHandler, PostRequ
         $iBildCounter = 0;
         $tplOrgelBilder = new BufferedTemplate("orgel_details_orgelbild.tpl");
         for ($i = 1; $i <= 3; $i ++) {
-            if (file_exists("store/orgelpics/" . $oOrgel->getID() . "_" . $i . ".jpg")) {
+            $bildPfad = ORGELBILD_BILD_PFAD . $oOrgel->getID() . "_" . $i . ".jpg";
+            $thumbPfad = ORGELBILD_THUMB_PFAD . $oOrgel->getID() . "_" . $i . ".jpg";
+            if (file_exists($bildPfad)) {
                 $tplOrgelBilder->replace("PicID", $i);
                 $tplOrgelBilder->replace("OID", $oOrgel->getID());
                 $tplOrgelBilder->replace("GemeindeNamen", $oGemeinde->getKirche());
                 
-                if (file_exists("store/orgelpics/thumbs/" . $oOrgel->getID() . "_" . $i . ".jpg")) {
+                if (file_exists($thumbPfad)) {
                     $imagesize = getimagesize("store/orgelpics/thumbs/" . $oOrgel->getID() . "_" . $i . ".jpg");
                     $width = $imagesize[1];
                     if ($imagesize[0] > $imagesize[1]) {
                         $width = $imagesize[1];
                     }
+                } else {
+                    $width = 0;
                 }
                 
                 $tplOrgelBilder->replace("Bildname", $oOrgel->getID());

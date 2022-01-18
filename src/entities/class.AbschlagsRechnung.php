@@ -68,7 +68,7 @@ class AbschlagsRechnung extends Rechnung
         $kirche = str_replace("/", "-", $oGemeinde->getKirche());
         $ziel = parent::getSpeicherOrt() . "/abschlag/" . $kirche . "-" . $rechNr;
         $ziel = Utilities::ersetzeZeichen($ziel);
-        $ziel .= MSWordOutput::FILE_EXTENSTION;
+        $ziel .= MSWordOutput::$FILE_EXTENSTION;
         return $ziel;
     }
 

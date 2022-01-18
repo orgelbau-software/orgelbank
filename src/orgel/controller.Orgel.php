@@ -139,7 +139,7 @@ class OrgelController
         $oOrgel->setZyklus($_POST['zyklus']);
         $oOrgel->setMassnahmen($_POST['massnahmen']);
         $oOrgel->setGemeindeId($_POST['gemeindeid']);
-        if(isset($_POST['wartungsprotokollId'])) {
+        if (isset($_POST['wartungsprotokollId'])) {
             $oOrgel->setWartungsprotokollID($_POST['wartungsprotokollId']);
         }
         
@@ -331,7 +331,7 @@ class OrgelController
         $cWartungsprotokolle = WartungsprotokollUtilities::getWartungsprotokolle();
         $htmlSelectProtokolle = new HTMLSelectForDSOC($cWartungsprotokolle, "getName", $oOrgel->getWartungsprotokollID());
         $tplOrgelDetails->replace("Wartungsprotokolle", $htmlSelectProtokolle->getOutput());
-            
+        
         // Gemeindenamen
         $htmlGemeinden = new HTMLSelect(GemeindeUtilities::getGemeinden(" ORDER BY g_kirche"), "getKirche", $oGemeinde->getID());
         $tplOrgelDetails->replace("Gemeinden", $htmlGemeinden->getOutput());
@@ -358,15 +358,15 @@ class OrgelController
                 }
                 
                 $suffix = "";
-                if($oRegister->getTyp() == 2) {
+                if ($oRegister->getTyp() == 2) {
                     $suffix = " (T)";
-                } else if($oRegister->getTyp() == 3) {
+                } else if ($oRegister->getTyp() == 3) {
                     $suffix = " (E)";
                 } else {
                     $suffix = "";
                 }
                 
-                $tplRegister->replace("Spalte1", $oRegister->getName(). $suffix);
+                $tplRegister->replace("Spalte1", $oRegister->getName() . $suffix);
                 $tplRegister->replace("Spalte2", $oRegister->getFuss() . "'");
                 $tplRegister->replace("Spalte3", $oRegister->getReihenfolge());
                 $strContent .= $tplRegister->getOutputAndRestore();
@@ -388,12 +388,14 @@ class OrgelController
         $tplOrgelBilder = new BufferedTemplate("orgel_details_orgelbild.tpl");
         $iBildCounter = 0;
         for ($i = 1; $i <= 3; $i ++) {
-            if (file_exists("store/orgelpics/" . $oOrgel->getID() . "_" . $i . ".jpg")) {
+            $originalBild = ORGELBILD_BILD_PFAD . $oOrgel->getID() . "_" . $i . ".jpg";
+            $thumb = ORGELBILD_THUMB_PFAD . $oOrgel->getID() . "_" . $i . ".jpg";
+            if (file_exists($originalBild) && file_exists($thumb)) {
                 $tplOrgelBilder->replace("PicID", $i);
                 $tplOrgelBilder->replace("OID", $oOrgel->getID());
                 $tplOrgelBilder->replace("GemeindeNamen", $oGemeinde->getKirche());
                 
-                $imagesize = getimagesize("store/orgelpics/thumbs/" . $oOrgel->getID() . "_" . $i . ".jpg");
+                $imagesize = getimagesize($thumb);
                 $width = $imagesize[1];
                 if ($imagesize[0] > $imagesize[1]) {
                     $width = $imagesize[1];
@@ -757,7 +759,7 @@ class OrgelController
             }
             
             // OrgelPflege Update
-            if($oWartung != null) {
+            if ($oWartung != null) {
                 $oOrgel = new Orgel($oWartung->getOrgelId());
                 $oLetzteWartung = WartungUtilities::getOrgelLetzteWartung($oWartung->getOrgelId());
                 if ($oLetzteWartung != null) {
@@ -823,7 +825,7 @@ class OrgelController
                 
                 $stimmung = $stimmungen[$wartung->getStimmung()];
                 $tplWartungDS->replace("Stimmung", $stimmung);
-               
+                
                 $tplWartungDS->next();
             }
         } else {
@@ -940,7 +942,7 @@ class OrgelController
         $tmpJahr = 0;
         
         // Aktuell geplante aber nicht eingetragene Wartungen
-        if($cOrgelListe->getSize() > 0) {
+        if ($cOrgelListe->getSize() > 0) {
             $tplRubrik->replace("Rubrik", "!");
             $tplDS->addToBuffer($tplRubrik);
             $tplRubrik->restoreTemplate();
@@ -958,7 +960,7 @@ class OrgelController
                 $tplDS->replace("Bezirk", $orgel->getGemeindeBezirk());
                 $tplDS->replace("Zyklus", $orgel->getZyklus());
                 // Missbrauch des Baujahrs Feld um die WartungsId zu uebertragen
-                $tplDS->replace("NaechstePflege", "<a href=\"index.php?page=2&do=28&oid=134&action=edit&wid=".$orgel->getBaujahr()."\">Zur Wartung</a>");
+                $tplDS->replace("NaechstePflege", "<a href=\"index.php?page=2&do=28&oid=134&action=edit&wid=" . $orgel->getBaujahr() . "\">Zur Wartung</a>");
                 $tplDS->replace("AnzahlRegister", $orgel->getRegisterAnzahl());
                 $tplDS->next();
             }
@@ -1075,15 +1077,13 @@ class OrgelController
                 $worksheet->write("L" . $iZeile, $name);
                 $worksheet->write("M" . $iZeile, $orgel->getTelefon());
                 
-                
-
                 $worksheet->write("N" . $iZeile, $orgel->getKostenHauptstimmung());
                 $worksheet->write("O" . $iZeile, $orgel->getKostenTeilstimmung());
                 
                 $worksheet->write("P" . $iZeile, $orgel->getOrgelId());
                 $worksheet->write("Q" . $iZeile, $orgel->getGemeindeId());
                 $worksheet->write("R" . $iZeile, $orgel->getAnsprechpartnerId());
-
+                
                 $iZeile += 1;
             }
         }
@@ -1091,13 +1091,14 @@ class OrgelController
         $workbook->download("GemeindeList-" . date("Ymd_Hi") . ".xls");
         $workbook->close();
     }
-    
+
     public static function insertOrgelWartung()
     {
         RequestHandler::handle(new OrgelWartungAction());
     }
-    
-    public static function zeigeWartungsprotokolle() {
+
+    public static function zeigeWartungsprotokolle()
+    {
         RequestHandler::handle(new WartungsprotokolleAction());
     }
 }
