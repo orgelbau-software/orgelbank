@@ -55,15 +55,23 @@ class RechnungUtilities
             $oZielGemeinde = new Gemeinde(intval($_GET['gid']));
         }
         
-        $c = GemeindeUtilities::getGemeinden(" ORDER BY g_kirche ASC");
+        $standardSortierung = ConstantLoader::getGemeindeListeStandardSortierung();
+        if ($standardSortierung == "ort") {
+            $c = GemeindeUtilities::getGemeinden(" ORDER BY ad_ort ASC");
+        } else {
+            $c = GemeindeUtilities::getGemeinden(" ORDER BY g_kirche ASC");
+        }
         
         foreach ($c as $oGemeinde) {
             if ($oZielGemeinde != null && $oZielGemeinde->getID() == $oGemeinde->getID())
                 $tplSelect->replace("Selected", Constant::$HTML_SELECTED_SELECTED);
             $tplSelect->replace("Selected", "");
             $tplSelect->replace("Value", $oGemeinde->getID());
-            $tplSelect->replace("Name", $oGemeinde->getKirche() . ", " . $oGemeinde->getKircheAdresse()
-                ->getOrt());
+            if ($standardSortierung == "ort") {
+                $tplSelect->replace("Name", $oGemeinde->getKircheAdresse()->getOrt() .", ".$oGemeinde->getKirche());
+            } else {
+                $tplSelect->replace("Name", $oGemeinde->getKirche() . ", " . $oGemeinde->getKircheAdresse());
+            }
             $strContent .= $tplSelect->getOutputAndRestore();
         }
         

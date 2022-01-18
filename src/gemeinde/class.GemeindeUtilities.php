@@ -91,7 +91,14 @@ class GemeindeUtilities
 
     public static function getGemeinden($strOrderBy = null)
     {
-        $sql = "SELECT * FROM gemeinde WHERE g_aktiv = 1 ";
+        $sql = "SELECT 
+                    * 
+                FROM 
+                    gemeinde g, 
+                    adresse a 
+                WHERE 
+                    g.g_kirche_aid = a.ad_id AND 
+                    g.g_aktiv = 1 ";
         if ($strOrderBy != null)
             $sql .= $strOrderBy;
         return GemeindeUtilities::queryDB($sql);
