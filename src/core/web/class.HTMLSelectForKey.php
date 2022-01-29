@@ -15,6 +15,8 @@ class HTMLSelectForKey extends HTMLSelectForArray
 
     private $arraylist;
 
+    private $valueMaxLength = 0;
+
     /**
      * Standardkonstruktor zum erstellen einer neuen HTML Select Box
      *
@@ -55,10 +57,32 @@ class HTMLSelectForKey extends HTMLSelectForArray
             } else {
                 $tmpKey = $tmpValue;
             }
+            
+            if($this->valueMaxLength > 0 && strlen($tmpValue) > $this->valueMaxLength) {
+                $tmpValue = substr($tmpValue, 0, $this->valueMaxLength -1) . "...";
+            }
             $a[$tmpKey] = $tmpValue;
         }
         $this->setCollection($a);
         parent::init();
+    }
+
+    /**
+     *
+     * @return the $valueMaxLength
+     */
+    public function getValueMaxLength()
+    {
+        return $this->valueMaxLength;
+    }
+
+    /**
+     *
+     * @param number $valueMaxLength            
+     */
+    public function setValueMaxLength($valueMaxLength)
+    {
+        $this->valueMaxLength = $valueMaxLength;
     }
 }
 

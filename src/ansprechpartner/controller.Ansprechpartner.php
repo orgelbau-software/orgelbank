@@ -305,14 +305,24 @@ class AnsprechpartnerController
         // AnsprechpartnerDetails Ende
         
         // Ansprechpartner Gemeinden anzeigen
-        $c = GemeindeUtilities::getGemeindenAusserVonAnsprechpartner($oAnsprechpartner->getID(), " ORDER BY g_kirche ASC");
+        $standardSortierung = ConstantLoader::getGemeindeListeStandardSortierung();
+        if ($standardSortierung == "ort") {
+            $c = GemeindeUtilities::getGemeindenAusserVonAnsprechpartner($oAnsprechpartner->getID(), " ORDER BY a.ad_ort ASC");
+        } else {
+            $c = GemeindeUtilities::getGemeindenAusserVonAnsprechpartner($oAnsprechpartner->getID(), " ORDER BY g_kirche ASC");
+        }
         
         // Gemeindeliste nicht ausgeben wenn leer oder die dem Ansprechpartner zugeordneten Gemeinden == der GesamtAnzahl der Gemeinden ist
         // SWA, 10.2016: der obige kommentar macht gerade keinen Sinn. Das greift, wenn die Anzahl der der bereits zugeordneten Gemeinden = der noch zuzuordnen ist.
         // if($c->getSize() > 0 && $c->getSize() > $cAnsprGemeinden->getSize()) {
         if ($c->getSize() > 0) {
             $tplSub->replace("GemeindeHinzufuegenDisabled", "");
-            $tplSelect = new HTMLSelectForKey($c, "getGemeindeId", "getKirche,getOrt", 0);
+            if ($standardSortierung == "ort") {
+                $tplSelect = new HTMLSelectForKey($c, "getGemeindeId", "getOrt,getKirche", 0);
+            } else {
+                $tplSelect = new HTMLSelectForKey($c, "getGemeindeId", "getKirche,getOrt", 0);
+            }
+            $tplSelect->setValueMaxLength(57);
         } else {
             $tplSelect->replace("Name", "keine Gemeinde verf&uuml;gbar");
             $tplSelect->replace("Value", - 1);

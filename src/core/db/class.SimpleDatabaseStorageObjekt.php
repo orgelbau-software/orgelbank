@@ -100,8 +100,14 @@ abstract class SimpleDatabaseStorageObjekt extends DatabaseStorageObjekt
         $values = "";
         foreach ($ht as $key => $val) {
             $iCounter ++;
-            $values .= "'" . addslashes($val) . "' ";
-            $keys .= $key . " ";
+            if($val == "LAST_INSERT_ID()") {
+                $values .=  $val ;
+            } elseif (strpos($val, "@") === 0) {
+                $values .=  $val ;
+            } else {
+                $values .= "'" . addslashes($val) . "'";
+            }
+            $keys .= $key;
             
             if ($iCounter <= $ht->getLength() - 1) {
                 $values .= ", ";

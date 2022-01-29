@@ -106,6 +106,7 @@ class GemeindeGeocodeAPIAction implements GetRequestHandler
             // only overwrite status if the call before was also successful
             if ($msg == "" && $serviceResponse->status != IGeolocationConstants::OK) {
                 $msg = $serviceResponse->message;
+                $msg = $serviceResponse->message;
                 $msg = Constant::getGeoStatusUserMessage($serviceResponse->status, "Route");
                 $result->setRC(IGeolocationConstants::SERVICE_STATUS_FAILED);
             }

@@ -29,7 +29,6 @@ class GemeindeGeocodeAction implements GetRequestHandler
         $msg = "";
         $geocodeResult = - 1;
         $isKirchenAdresseOK = false;
-        
         $o = new Gemeinde(intval($_GET['gid']));
         if ($o->getID() != - 1) {
             $srvGeocode = new OrgelbankGoogleMapsGeocoder();
@@ -81,26 +80,32 @@ class GemeindeGeocodeAction implements GetRequestHandler
             }
             
             if ($isKirchenAdresseOK) {
-                $a = new Ansprechpartner(1);
+                $firmenAnschrift = new Ansprechpartner(1);
                 $srvDirection = new OrgelbankGoogleMapsDirectionsService();
                 $srvDirection->setDestination($o->getKircheAdresse()
                     ->getFormattedAdress(true));
-                $srvDirection->setOrigin($a->getAdresse()
-                    ->getLat() . "," . $a->getAdresse()
-                    ->getLng());
-                if ($a->getAdresse()->getLat() == "" || $a->getAdresse()->getLat() == "") {
-                    $srvDirection->setOrigin($a->getAdresse()
+                
+                if ($firmenAnschrift->getAdresse()->getLat() != "" && $firmenAnschrift->getAdresse()->getLat() != "") {
+                    $srvDirection->setOrigin($firmenAnschrift->getAdresse()
+                        ->getLat() . "," . $firmenAnschrift->getAdresse()
+                        ->getLng());
+                } else if ($firmenAnschrift->getAdresse()->getFormattedAdress(true) != "") {
+                    $srvDirection->setOrigin($firmenAnschrift->getAdresse()
                         ->getFormattedAdress(true));
+                } else {
+                    $geocodeResult = IGeolocationConstants::INVALID_COMPANY_ADDRESS;
                 }
                 
-                $currentGeocodeResult = $srvDirection->getDirections();
-                $result = $srvDirection->getResult();
-                if ($currentGeocodeResult != IGeolocationConstants::OK) {
-                    $msg = Constant::getGeoStatusUserMessage($currentGeocodeResult, "Route");
+                if ($geocodeResult != IGeolocationConstants::INVALID_COMPANY_ADDRESS) {
+                    $currentGeocodeResult = $srvDirection->getDirections();
+                    $result = $srvDirection->getResult();
+                    if ($currentGeocodeResult != IGeolocationConstants::OK) {
+                        $msg = Constant::getGeoStatusUserMessage($currentGeocodeResult, "Route");
+                    }
+                    
+                    // only overwrite status if the call before was also successful
+                    $geocodeResult = ($geocodeResult == IGeolocationConstants::OK ? $currentGeocodeResult : $geocodeResult);
                 }
-                
-                // only overwrite status if the call before was also successful
-                $geocodeResult = ($geocodeResult == IGeolocationConstants::OK ? $currentGeocodeResult : $geocodeResult);
             }
         } else {
             $msg = "Die Gemeinde muss erst gespeichert werden.";

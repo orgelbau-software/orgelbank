@@ -1,6 +1,8 @@
 <?php
 include "../../conf/config.inc.php";
 
+$csvDateiNamen = "bente_januar_22.csv";
+
 $db = DB::getInstance();
 $db->connect();
 $sql = array();
@@ -8,8 +10,9 @@ $sql = array();
 $row = 1;
 
 $exportfile = fopen("export_bente.sql", "w+");
-fwrite($exportfile, "DELETE FROM ansprechpartner WHERE a_id > 927;");
-fwrite($exportfile, "DELETE FROM adresse WHERE ad_id > 1965;");
+fwrite($exportfile, "TRUNCATE TABLE gemeinde;\n");
+fwrite($exportfile, "DELETE FROM ansprechpartner WHERE a_id > 1;\n");
+fwrite($exportfile, "DELETE FROM adresse WHERE ad_type = 1 AND ad_id > 1;\n");
 
 //
 // EDV - Computer
@@ -45,7 +48,7 @@ $nurKontakteInDiesenKategorienImportieren[] = "OR / Sachverst";
 $nurKontakteInDiesenKategorienImportieren[] = "Organisten";
 $nurKontakteInDiesenKategorienImportieren[] = "Pastoren";
 
-if (($handle = fopen("kontakte.original.csv", "r")) !== FALSE) {
+if (($handle = fopen($csvDateiNamen, "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
         $num = count($data);
         // echo "<p> $num Felder in Zeile $row: <br /></p>\n";
@@ -207,7 +210,8 @@ if (($handle = fopen("kontakte.original.csv", "r")) !== FALSE) {
         $entity->EMailAdresse = "";
         $ansprechpartner->setFax($entity->Fax_geschäftlich);
         $entity->Fax_geschäftlich = "";
-        $ansprechpartner->setFunktion($entity->Position);
+        
+        $ansprechpartner->setFunktion($entity->Kategorien);
         $entity->Position = "";
         $ansprechpartner->setMobil($entity->Mobiltelefon);
         $entity->Mobiltelefon = "";
@@ -244,30 +248,70 @@ if (($handle = fopen("kontakte.original.csv", "r")) !== FALSE) {
         // echo $bemerkung;
         
         $istInEinerWichtigenKategorie = false;
+        $istAnsprechpartnerEigentlichEineGemeinde = false;
+        $funktion = "";
         foreach ($nurKontakteInDiesenKategorienImportieren as $wichtigeKategorie) {
             if (strpos($entity->Kategorien, $wichtigeKategorie) !== false) {
                 $istInEinerWichtigenKategorie = true;
+                if ($funktion != "") {
+                    $funktion .= ", ";
+                }
+                $funktion .= $wichtigeKategorie;
             }
         }
+        $ansprechpartner->setFunktion($funktion);
         
         if ($istInEinerWichtigenKategorie) {
             fwrite($exportfile, $ansprechpartner->export());
             fwrite($exportfile, "\r\n\r\n");
+            fwrite($exportfile, "SET @ansprId = LAST_INSERT_ID();" . "\r\n\r\n");
             $row ++;
+            
+            if (strpos($entity->Kategorien, "Kirchengemeinden") !== false) {
+                $istInEinerWichtigenKategorie = true;
+                
+                $gemeinde = new Gemeinde();
+                $gemeinde->setAktiv(true);
+                
+                $kirchenName = ($entity->Weitere_Vornamen != "" ? ($entity->Weitere_Vornamen . " " . $ansprechpartner->getNachname()) : ($ansprechpartner->getNachname() . " " . $ansprechpartner->getVorname()));
+                $gemeinde->setKirche($kirchenName);
+                
+                if (strpos(strtolower($ansprechpartner->getVorname()), "ev.-luth.") !== false) {
+                    $gemeinde->setKID(5); // Luthrisch
+                } else if (strpos(strtolower($ansprechpartner->getVorname()), "ev.") !== false || strpos(strtolower($ansprechpartner->getVorname()), "evang") !== false) {
+                    $gemeinde->setKID(1); // Evangelisch
+                } elseif (strpos(strtolower($ansprechpartner->getVorname()), "kath.") !== false) {
+                    $gemeinde->setKID(2); // Katholisch
+                } else {
+                    $gemeinde->setKID(3); // Sonstiges
+                }
+                
+                $addresse = new Adresse();
+                $addresse->setLand("Deutschland");
+                $addresse->setOrt($ansprechpartner->getNachname());
+                $addresse->setType(Adresse::TYPE_KIRCHE);
+                fwrite($exportfile, $addresse->export());
+                fwrite($exportfile, "\r\n\r\n");
+                
+                $gemeinde->setKircheAdressId("LAST_INSERT_ID()");
+                $gemeinde->setAID("@ansprId");
+                fwrite($exportfile, $gemeinde->export());
+                fwrite($exportfile, "\r\n\r\n");
+            }
         }
     }
     fclose($handle);
     
-    
     ksort(CSVBenteEntity::$tmpKat);
     foreach (CSVBenteEntity::$tmpKat as $key => $val) {
-        echo $key ." - ".$val. "<br/>";
+        echo $key . " - " . $val . "<br/>";
     }
 }
 
 fclose($exportfile);
 echo "SQL File generated.<br/>";
-echo "Anzahl Kontakte: " .$row."<br/>";
+echo "Anzahl Kontakte: " . $row . "<br/>";
+
 class CSVBenteEntity
 {
 
@@ -639,7 +683,7 @@ class CSVBenteEntity
         // if ("" != $this->Empfohlen_von) {
         // $content .= ": " . $this->Empfohlen_von . "\r\n";
         // }
-        if ("0.0.00" != $this->Geburtstag) {
+        if ("0.0.00" != $this->Geburtstag && "0 0 00" != $this->Geburtstag) {
             $content .= "Geburtstag: " . $this->Geburtstag . "\r\n";
         }
         // if ("" != $this->Geschlecht) {
@@ -654,7 +698,7 @@ class CSVBenteEntity
         // if ("" != $this->Internet_FreiGebucht) {
         // $content .= ": " . $this->Internet_FreiGebucht . "\r\n";
         // }
-        if ("0.0.00" != $this->Jahrestag) {
+        if ("0.0.00" != $this->Jahrestag && "0 0 00" != $this->Jahrestag) {
             $content .= "Jahrestag: " . $this->Jahrestag . "\r\n";
         }
         if ("" != $this->Kategorien) {
@@ -671,14 +715,14 @@ class CSVBenteEntity
                 if (! isset(CSVBenteEntity::$tmpKat[$val])) {
                     CSVBenteEntity::$tmpKat[$val] = 1;
                 } else {
-                    CSVBenteEntity::$tmpKat[$val] = CSVBenteEntity::$tmpKat[$val]+1;
+                    CSVBenteEntity::$tmpKat[$val] = CSVBenteEntity::$tmpKat[$val] + 1;
                 }
             }
         } else {
             if (! isset(CSVBenteEntity::$tmpKat["Ohne Kategorie"])) {
                 CSVBenteEntity::$tmpKat["Ohne Kategorie"] = 1;
             } else {
-                CSVBenteEntity::$tmpKat["Ohne Kategorie"] = CSVBenteEntity::$tmpKat["Ohne Kategorie"]+1;
+                CSVBenteEntity::$tmpKat["Ohne Kategorie"] = CSVBenteEntity::$tmpKat["Ohne Kategorie"] + 1;
             }
         }
         // if ("" != $this->Kinder) {
