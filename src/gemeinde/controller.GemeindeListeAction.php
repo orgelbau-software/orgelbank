@@ -123,7 +123,7 @@ class GemeindeListeAction implements GetRequestHandler, PostRequestHandler
                 );
             }
             
-            if ($newindex[1] != $oldindex[1]) {
+            if (strtolower($newindex[1]) != strtolower($oldindex[1])) {
                 $tplGemeindeRubrik->replace("Rubrik", $newindex[2]);
                 $tplGemeindeRubrik->replace("Dir", $handledRequest->getValueOf("TPLDIR"));
                 $tplGemeindeRubrik->replace("Show", $handledRequest->getValueOf("TPLSHOW"));
