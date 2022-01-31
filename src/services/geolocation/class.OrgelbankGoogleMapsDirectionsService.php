@@ -6,6 +6,8 @@ class OrgelbankGoogleMapsDirectionsService extends GoogleMapsDirectionsService i
     const ADDRESS_NOT_UNIQUE = "ROUTE_NOT_UNIQUE";
 
     const ADDRESS_NOT_FOUND = "ADDRESS_NOT_FOUND";
+    
+    const ROUTE_NOT_FOUND = "ROUTE_NOT_FOUND";
 
     private $result = null;
 
@@ -62,16 +64,19 @@ class OrgelbankGoogleMapsDirectionsService extends GoogleMapsDirectionsService i
                 $this->resultCount = count($response['routes']);
                 if (0 == $this->resultCount) {
                     $retVal = self::ROUTE_NOT_FOUND;
+                    $this->result = null;
                 } elseif (1 == $this->resultCount) {
                     $this->plainResult = $response['routes'][0];
                     $this->result = $this->mapResponseToResult($this->plainResult);
                     $retVal = self::OK;
                 } else {
                     $retVal = self::ROUTE_NOT_UNIQUE;
+                    $this->result = null;
                 }
             } else {
                 if ($response['status'] == GoogleMapsGeocoder::STATUS_NO_RESULTS) {
                     $retVal = self::ROUTE_NOT_FOUND;
+                    $this->result = null;
                 } elseif ($response['status'] == IGeolocationConstants::NOT_FOUND) {
                     $retVal = IGeolocationConstants::NOT_FOUND;
                 } elseif ($response['status'] == GoogleMapsGeocoder::STATUS_INVALID_REQUEST) {
@@ -81,6 +86,7 @@ class OrgelbankGoogleMapsDirectionsService extends GoogleMapsDirectionsService i
 //                     echo "-->" . $response['status'];
 //                     pre($response);
                     $retVal = IGeolocationConstants::SERVICE_NOT_OK;
+                    $this->result = null;
                 }
             }
         } else {

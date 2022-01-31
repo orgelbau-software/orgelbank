@@ -574,12 +574,18 @@ class BenutzerController
     {
         $firmenAnschrift = new Ansprechpartner(1);
         
+        if(is_array($pCronjobArray)) {
+            $content = print_r($pCronjobArray);
+        } else {
+            $content = $pCronjobArray;
+        }
+        
         $sekunden = 1;
         $titel = INSTALLATION_NAME . ": Cronjob!";
         $msg = "";
         $msg .= "Datum: " . date("d.m.Y H:i:s") . "\r\n";
         $msg .= "\r\n";
-        $msg .= "Nachricht: " . $pCronjobArray . "\r\n";
+        $msg .= "Nachricht: " . $content . "\r\n";
         $msg .= "\r\n";
         
         $header = "from:" . SUPPORT_MAIL_FROM . "\r\n";

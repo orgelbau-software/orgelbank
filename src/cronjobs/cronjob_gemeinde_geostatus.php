@@ -87,7 +87,12 @@ try {
                 $Directions->setDestination($adresse->getLat() . "," . $adresse->getLng());
                 $Directions->setDestination($adresse->getFormattedAdress(true));
                 $current['directions_status'] = $Directions->getDirections();
-                $current['directions_result'] = $Directions->getResult()->toArray();
+                $result = $Directions->getResult();
+                if($result != null) {
+                    $current['directions_result'] = $Directions->getResult()->toArray();
+                } else {
+                    $current['directions_result'] = "result is NULL";
+                }
             } else {
                 $current['not_found'] = $geocoderStatus;
             }
