@@ -575,7 +575,7 @@ class BenutzerController
         $firmenAnschrift = new Ansprechpartner(1);
         
         if(is_array($pCronjobArray)) {
-            $content = print_r($pCronjobArray);
+            $content = print_r($pCronjobArray, true);
         } else {
             $content = $pCronjobArray;
         }
