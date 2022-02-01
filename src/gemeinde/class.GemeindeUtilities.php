@@ -5,9 +5,10 @@ class GemeindeUtilities
 
     /**
      * Added "NaechstePflege" am 18.02.2018
-     * @param string $pPflegevertrag
-     * @param string $pOffeneWartungen
-     * @param string $pBezirkId
+     * 
+     * @param string $pPflegevertrag            
+     * @param string $pOffeneWartungen            
+     * @param string $pBezirkId            
      * @return ArrayList
      */
     public static function loadGemeindeLandkarte($pPflegevertrag = "", $pOffeneWartungen = "", $pBezirkId = "")
@@ -27,7 +28,7 @@ class GemeindeUtilities
     		o.o_aktiv = 1 AND
 			o.g_id = g.g_id AND
 			g.g_kirche_aid = a.ad_id AND
-            o.o_letztepflege < '".date("Y")."-01-01' AND
+            o.o_letztepflege < '" . date("Y") . "-01-01' AND
 			(a.ad_geostatus = 'OK' OR a.ad_geostatus = 'PARTIAL_OK') ";
         if ($pBezirkId != "") {
             $sql .= " AND b_id = " . $pBezirkId . " ";
@@ -101,7 +102,7 @@ class GemeindeUtilities
                     g.g_aktiv = 1 ";
         if ($strOrderBy != null)
             $sql .= $strOrderBy;
-        return GemeindeUtilities::queryDB($sql);
+        return GemeindeUtilities::queryDBForKircheOrtBean($sql);
     }
 
     public static function getGemeindenAusserVonAnsprechpartner($ansprechpartnerID, $strOrderBy = null)

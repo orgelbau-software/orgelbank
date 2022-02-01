@@ -59,7 +59,13 @@ class OrgelController
             $gid = intval($_GET['gid']);
         }
         
-        $htmlGemeinden = new HTMLSelect(GemeindeUtilities::getGemeinden(" ORDER BY g_kirche"), "getKirche", $gid);
+        $standardSortierung = ConstantLoader::getGemeindeListeStandardSortierung();
+        if ($standardSortierung == "ort") {
+            $htmlGemeinden = new HTMLSelectForKey(GemeindeUtilities::getGemeinden(" ORDER BY ad_ort"), "getGemeindeId", "getOrt,getKirche", 0);
+        } else {
+            $htmlGemeinden = new HTMLSelectForKey(GemeindeUtilities::getGemeinden(" ORDER BY g_kirche"), "getGemeindeId", "getKirche,getOrt", 0);
+        }
+        $htmlGemeinden->setValueMaxLength(56);
         $tplOrgelDetails->replace("Gemeinden", $htmlGemeinden->getOutput());
         
         $htmlSelectStatus = new HTMLSelectForArray(Constant::getOrgelStatus(), 0);
@@ -333,7 +339,13 @@ class OrgelController
         $tplOrgelDetails->replace("Wartungsprotokolle", $htmlSelectProtokolle->getOutput());
         
         // Gemeindenamen
-        $htmlGemeinden = new HTMLSelect(GemeindeUtilities::getGemeinden(" ORDER BY g_kirche"), "getKirche", $oGemeinde->getID());
+        $standardSortierung = ConstantLoader::getGemeindeListeStandardSortierung();
+        if ($standardSortierung == "ort") {
+            $htmlGemeinden = new HTMLSelectForKey(GemeindeUtilities::getGemeinden(" ORDER BY ad_ort"), "getGemeindeId", "getOrt,getKirche", $oGemeinde->getID());
+        } else {
+            $htmlGemeinden = new HTMLSelectForKey(GemeindeUtilities::getGemeinden(" ORDER BY g_kirche"), "getGemeindeId", "getKirche,getOrt", $oGemeinde->getID());
+        }
+        
         $tplOrgelDetails->replace("Gemeinden", $htmlGemeinden->getOutput());
         
         $oldmanual = 0;

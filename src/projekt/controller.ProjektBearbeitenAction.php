@@ -108,8 +108,13 @@ class ProjektBearbeitenAction implements GetRequestHandler, PostRequestHandler, 
         }
         
         // Gemeindeauswahl
-        $c = GemeindeUtilities::getGemeinden(" ORDER BY g_kirche ASC");
-        $htmlSelect = new HTMLSelect($c, "getKirche", $p->getGemeindeID());
+        $standardSortierung = ConstantLoader::getGemeindeListeStandardSortierung();
+        if ($standardSortierung == "ort") {
+            $htmlSelect = new HTMLSelectForKey(GemeindeUtilities::getGemeinden(" ORDER BY ad_ort"), "getGemeindeId", "getOrt,getKirche", $p->getGemeindeID());
+        } else {
+            $htmlSelect = new HTMLSelectForKey(GemeindeUtilities::getGemeinden(" ORDER BY g_kirche"), "getGemeindeId", "getKirche,getOrt", $p->getGemeindeID());
+        }
+       
         $tpl->replace("Gemeinden", $htmlSelect->getOutput());
         
         // Aufgaben
