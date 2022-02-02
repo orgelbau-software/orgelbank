@@ -1,8 +1,9 @@
 <?php
-include_once ROOTDIR . 'lib/tFPDF/tfpdf.php';
-include_once ROOTDIR . '/lib/tFPDF/tfpdfbookmark.php';
+// include_once ROOTDIR . 'lib/tFPDF/tfpdf.php';
+// include_once ROOTDIR . '/lib/tFPDF/tfpdfbookmark.php';
+use setasign\Fpdi\Tfpdf\Fpdi;
 
-abstract class BasisPDF extends tFPDFWithBookmark
+abstract class BasisPDF  extends Fpdi 
 {
 
     private $utf8 = true;

@@ -1,6 +1,6 @@
 <?php
-include_once ROOTDIR . 'lib/tFPDF/tfpdf.php';
-include_once ROOTDIR . '/lib/tFPDF/tfpdfbookmark.php';
+// include_once ROOTDIR . 'lib/tFPDF/tfpdf.php';
+// include_once ROOTDIR . '/lib/tFPDF/tfpdfbookmark.php';
 
 class StundenzettelPDF extends BasisPDF
 {
