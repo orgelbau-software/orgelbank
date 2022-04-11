@@ -91,8 +91,10 @@ try {
             
             $mail = & Mail::factory('mail');
             $mail->send($bestaetigungsmail_adresse, $hdrs, $body);
+            $mail->send(CUSTOMER_MAIL_TO, $hdrs, $body);
             
             $retVal['mail'] =  "Best&auml;tigungsmail wurde erfolgreich versandt!";
+            $retVal['http_status'] = 200;
         }
     }
 } catch (Throwable $t) {

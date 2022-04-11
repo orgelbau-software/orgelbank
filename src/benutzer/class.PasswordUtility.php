@@ -10,6 +10,7 @@ class PasswordUtility
      */
     public static function encrypt($pPasswordKlartext)
     {
+//         echo md5(PASSWORD_SALT.$pPasswordKlartext);
         return md5(PASSWORD_SALT.$pPasswordKlartext);
     }
 

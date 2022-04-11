@@ -293,8 +293,9 @@ class ProjektController
             Utilities::escapePost();
             
             $benutzerID = 0;
-            if ($_POST['ben_id'] != - 1)
+            if ($_POST['ben_id'] != - 1) {
                 $benutzerID = $_POST['ben_id'];
+            }
             
             $benutzer = new Benutzer($benutzerID);
             
@@ -314,7 +315,8 @@ class ProjektController
                 
                 // Nur Passwort setzen, wenn eine Eingabe gemacht wurde
                 if ($_POST['passwort'] != "") {
-                    $benutzer->setPasswort(md5($_POST['passwort']));
+                    $benutzer->setPasswort(PasswordUtility::encrypt($_POST['passwort']));
+                    $benutzer->setFailedLoginCount(0); // Bei Neuvergabe auch den FehlerCount zurücksetzen.
                 }
                 
                 // Wochenstunden speichern

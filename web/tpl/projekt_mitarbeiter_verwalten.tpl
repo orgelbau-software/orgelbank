@@ -109,6 +109,9 @@
     </table>
     <a target="_blank" href="src/projekt/projekt.php?action=stundenzettel&bid=<!--BenID-->">Stundenzettel anzeigen</a>
     
+    <!--Status--><br/>
+    <!--Status2-->
+    
     </td>
     <td>
     <h3>Mitarbeiterliste</h3>
@@ -138,8 +141,6 @@
     	</tr>
     	<!--Aufgaben-->
     </table>
-    <!--Status--><br/>
-    <!--Status2-->
     </td>
   </tr>
 </table>

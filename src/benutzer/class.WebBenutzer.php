@@ -97,6 +97,7 @@ class WebBenutzer
                     $this->benutzer->setAktiviert(0);
                     $this->errorTXT = "Ihr Konto wurde aus Sicherheitsgründen gesperrt. Wenden Sie sich an den Systemadministrator.";
                     SupportMail::send("Benutzer wurde gesperrt: " . $this->benutzer->getBenutzername(), "");
+                    SupportMail::sendSupportMail(CUSTOMER_MAIL_TO, "Benutzer wurde gesperrt: " . $this->benutzer->getBenutzername(), "");
                 }
                 $this->benutzer->speichern();
                 $this->benutzer = null;

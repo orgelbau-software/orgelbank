@@ -35,9 +35,9 @@ class UrlaubsBuchungUtilities
             $verbuchen = 0;
         }
         
-        // if($verbuchen == 0) {
-        // $b->speichern(true);
-        // }
+        if($verbuchen == 0) {
+            $b->speichern(true);
+        }
         
         return $verbuchen == 0;
     }

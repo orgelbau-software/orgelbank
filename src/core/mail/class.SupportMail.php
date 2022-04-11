@@ -5,9 +5,14 @@ class SupportMail
 
     public static function send($betreff, $content)
     {
+        return SupportMail::send(SUPPORT_MAIL_ADDR, $betreff, $content);
+    }
+
+    public static function sendSupportMail($to, $betreff, $content)
+    {
         $retVal = false;
         if (SupportMail::isOnline() && SUPPORT_MAIL_ENABLED) {
-            $retVal = mail(SUPPORT_MAIL_ADDR, INSTALLATION_NAME . ": " . $betreff, $content, "from:" . SUPPORT_MAIL_FROM);
+            $retVal = mail($to, INSTALLATION_NAME . ": " . $betreff, $content, "from:" . SUPPORT_MAIL_FROM);
         }
         return $retVal;
     }

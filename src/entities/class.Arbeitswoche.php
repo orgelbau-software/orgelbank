@@ -92,7 +92,9 @@ class Arbeitswoche extends SimpleDatabaseStorageObjekt
             // So funktioniert es nur, wenn der gesamte Urlaub der Woche auf einen Arbeitstag eingetragen wird
 
             // 2019-07-30: Warum nicht einfach so?
-            $this->setWochenStundenUrlaub($at->getIstStunden() + $this->getWochenStundenUrlaub());
+            $summeUrlaub = $at->getIstStunden() + $this->getWochenStundenUrlaub();
+            $this->setWochenStundenUrlaub($summeUrlaub);
+            UrlaubsBuchungUtilities::bucheUrlaub($summeUrlaub, $at->getBenutzerID());
         }
     }
 

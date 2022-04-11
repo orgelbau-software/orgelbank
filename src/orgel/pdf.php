@@ -1,11 +1,5 @@
 <?php
 include_once '../../conf/config.inc.php';
-// include_once '../../lib/fpdf.php';
-// include_once '../../lib/fpdfbookmark.php';
-// include_once '../../lib/fpdf/fpdf.php';
-// include_once '../../lib/fpdf/fpdfbookmark.php';
-//include_once '../../lib/tFPDF/tfpdf.php';
-//include_once '../../lib/tFPDF/tfpdfbookmark.php';
 include_once 'class.OrgelbankBasisPDF.php';
 include_once 'class.WartungsbogenPDF.php';
 include_once 'class.OrgelbankWartungsbogenPDF.php';
@@ -32,7 +26,7 @@ if(isset($_POST['submit'])) {
 } else if(isset($_GET['action'])) {
     $action = strtolower($_GET['action']);
 } else {
-    echo "Fehler";
+    $action = "unbekannt";
 }
 
 
@@ -46,18 +40,18 @@ if(strpos($action, "deckbl") === 0) {
                 $pdf->addOrgel(new Orgel($value));
             }
         }
-        $pdf->Output("Deckblatt.pdf", "I");
+        $pdf->Output("I", "Deckblatt.pdf");
         $db->disconnect();
     } elseif (isset($_GET['oid'])) {
         SeitenStatistik::count("deckblatt.php?oid=X", "PDF::printSingleOrgel");
         $pdf->addOrgel(new Orgel($_GET['oid']));
-        $pdf->Output("Deckblatt.pdf", "I");
+        $pdf->Output("I", "Deckblatt.pdf");
         $db->disconnect();
     } else {
-        echo "Keine Orgel ID uebergeben.";
+        die("Keine Orgel ID uebergeben fuer Deckblatt.");
     }
     
-    $pdf->Output("Deckblatt.pdf", "I");
+    
     
 } else {
     $pdf = new OrgelbankWartungsbogenPDF();
@@ -69,17 +63,17 @@ if(strpos($action, "deckbl") === 0) {
                 $pdf->addOrgel(new Orgel($value));
             }
         }
-        $pdf->Output("Wartungsunterlagen.pdf", "I");
+        $pdf->Output("I", "Wartungsunterlagen.pdf");
         $db->disconnect();
     } elseif (isset($_GET['oid'])) {
         SeitenStatistik::count("pdf.php?oid=X", "PDF::printSingleOrgel");
         $pdf->addOrgel(new Orgel($_GET['oid']));
-        $pdf->Output("Wartungsunterlagen.pdf", "I");
+        $pdf->Output("I", "Wartungsunterlagen.pdf");
         $db->disconnect();
     } else {
-        echo "Keine Orgel ID uebergeben.";
+        die("Keine Orgel ID uebergeben fuer Wartungsbogen.");
     }
-    $pdf->Output("Wartungsunterlagen.pdf", "I");
+    
 }
 
 // PDF ausgeben

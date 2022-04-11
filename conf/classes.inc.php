@@ -6,7 +6,11 @@ include_once ROOTDIR . 'src/core/mail/class.SupportMail.php';
 include_once ROOTDIR . 'src/core/security/class.IntrusionNotificationMailer.php';
 
 // Composer Stuff
-require_once ROOTDIR . 'vendor/autoload.php';
+if(file_exists(ROOTDIR . 'vendor/autoload.php')) {
+    require_once ROOTDIR . 'vendor/autoload.php';
+} else {
+    die("Bitte erst composer ausfuehren um benoetigte Pakete zu installieren.");
+}
 
 include_once ROOTDIR . 'src/core/excel/OrgelbankPHPSpreadsheetWriter.php';
 
