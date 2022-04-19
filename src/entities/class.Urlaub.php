@@ -1,84 +1,234 @@
 <?php
 
 /**
- * @author swatermeyer
- * @since 26.02.2009
+ * 
+ * @author Stephan
+ *
  */
-class UrlaubsBuchung extends SimpleDatabaseStorageObjekt
+class Urlaub extends SimpleDatabaseStorageObjekt
 {
 
-    private $tageVorher;
+    public const STATUS_ANGELEGT = 1;
+    
+    private $datumVon;
 
-    private $tageGebucht;
+    private $datumBis;
 
-    private $tageNachher;
+    private $tage;
 
-    private $bemerkung;
+    private $verbleibend;
+
+    private $resturlaub;
+
+    private $summe;
+
+    private $status;
+
+    private $benutzerId;
+    
+    // Transient
+    private $benutzername;
 
     public function __construct($iID = 0)
     {
-        parent::__construct($iID, "be_id", "benutzer", "be_");
+        parent::__construct($iID, "u_id", "urlaub", "u_");
     }
 
     protected function laden()
     {
         $rs = $this->result;
-        $this->setTageVorher($rs['ub_tage_vorher']);
-        $this->setTageGebucht($rs['ub_tage_gebucht']);
-        $this->setTageNachher($rs['ub_tage_nachher']);
-        $this->setBemerkung($rs['ub_bemekerung']);
+        $this->setDatumVon($rs['u_datum_von']);
+        $this->setDatumBis($rs['u_datum_bis']);
+        $this->setTage($rs['u_tage']);
+        $this->setBenutzerId($rs['be_id']);
+        $this->setVerbleibend($rs['u_verbleibend']);
+        $this->setResturlaub($rs['u_resturlaub']);
+        $this->setSumme($rs['u_summe']);
+        $this->setStatus($rs['u_status']);
     }
 
     protected function generateHashtable()
     {
         $ht = new HashTable();
         
-        $ht->add("ub_tage_vorher", $this->getTageVorher());
-        $ht->add("ub_tage_nachher", $this->getTageNachher());
-        $ht->add("ub_tage_gebucht", $this->getTageGebucht());
-        $ht->add("ub_bemerkung", $this->getBemerkung());
+        $ht->add("u_datum_von", $this->getDatumVon());
+        $ht->add("u_datum_bis", $this->getDatumBis());
+        $ht->add("u_tage", $this->getTage());
+        $ht->add("be_id", $this->getBenutzerId());
+        $ht->add("u_verbleibend", $this->getVerbleibend());
+        $ht->add("u_resturlaub", $this->getResturlaub());
+        $ht->add("u_summe", $this->getSumme());
+        $ht->add("u_status", $this->getStatus());
         
         return $ht;
     }
 
-    public function getBemerkung()
+    /**
+     *
+     * @return the $datumVon
+     */
+    public function getDatumVon($formatiert = false)
     {
-        return $this->bemerkung;
+        if ($formatiert) {
+            return date("d.m.Y", strtotime($this->datumVon));
+        }
+        return $this->datumVon;
     }
 
-    public function getTageGebucht()
+    /**
+     *
+     * @return the $datumBis
+     */
+    public function getDatumBis($formatiert = false)
     {
-        return $this->tageGebucht;
+        if ($formatiert) {
+            return date("d.m.Y", strtotime($this->datumBis));
+        }
+        return $this->datumBis;
     }
 
-    public function getTageNachher()
+    /**
+     *
+     * @return the $tage
+     */
+    public function getTage()
     {
-        return $this->tageNachher;
+        return $this->tage;
     }
 
-    public function getTageVorher()
+    /**
+     *
+     * @return the $verbleibend
+     */
+    public function getVerbleibend()
     {
-        return $this->tageVorher;
+        return $this->verbleibend;
     }
 
-    public function setBemerkung($bemerkung)
+    /**
+     *
+     * @return the $resturlaub
+     */
+    public function getResturlaub()
     {
-        $this->bemerkung = $bemerkung;
+        return $this->resturlaub;
     }
 
-    public function setTageGebucht($tageGebucht)
+    /**
+     *
+     * @return the $summe
+     */
+    public function getSumme()
     {
-        $this->tageGebucht = $tageGebucht;
+        return $this->summe;
     }
 
-    public function setTageNachher($tageNachher)
+    /**
+     *
+     * @return the $status
+     */
+    public function getStatus()
     {
-        $this->tageNachher = $tageNachher;
+        return $this->status;
     }
 
-    public function setTageVorher($tageVorher)
+    /**
+     *
+     * @param field_type $datumVon            
+     */
+    public function setDatumVon($datumVon)
     {
-        $this->tageVorher = $tageVorher;
+        $this->datumVon = $datumVon;
     }
+
+    /**
+     *
+     * @param field_type $datumBis            
+     */
+    public function setDatumBis($datumBis)
+    {
+        $this->datumBis = $datumBis;
+    }
+
+    /**
+     *
+     * @param field_type $tage            
+     */
+    public function setTage($tage)
+    {
+        $this->tage = $tage;
+    }
+
+    /**
+     *
+     * @param field_type $verbleibend            
+     */
+    public function setVerbleibend($verbleibend)
+    {
+        $this->verbleibend = $verbleibend;
+    }
+
+    /**
+     *
+     * @param field_type $resturlaub            
+     */
+    public function setResturlaub($resturlaub)
+    {
+        $this->resturlaub = $resturlaub;
+    }
+
+    /**
+     *
+     * @param field_type $summe            
+     */
+    public function setSumme($summe)
+    {
+        $this->summe = $summe;
+    }
+
+    /**
+     *
+     * @param field_type $status            
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     *
+     * @return the $benutzerId
+     */
+    public function getBenutzerId()
+    {
+        return $this->benutzerId;
+    }
+
+    /**
+     *
+     * @param field_type $benutzerId            
+     */
+    public function setBenutzerId($benutzerId)
+    {
+        $this->benutzerId = $benutzerId;
+    }
+    /**
+     * @return the $benutzername
+     */
+    public function getBenutzername()
+    {
+        return $this->benutzername;
+    }
+
+    /**
+     * @param field_type $benutzername
+     */
+    public function setBenutzername($benutzername)
+    {
+        $this->benutzername = $benutzername;
+    }
+
+    
+    
 }
 ?>

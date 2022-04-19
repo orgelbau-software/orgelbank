@@ -6,7 +6,9 @@ class RequestHandler
     public static function handle($c)
     {
         $tpl = null;
-        if ($_POST) {
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
             Log::debug("start handle POST request");
             if ($c instanceof PostRequestValidator) {
                 Log::debug("validate POST request");

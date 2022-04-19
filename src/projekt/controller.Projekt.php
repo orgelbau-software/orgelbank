@@ -751,7 +751,7 @@ class ProjektController
                     $tplLinksFuerDenDatensatz = $tplLinksGebucht;
                     $tplMaDS->replace("Status", "Gebucht");
                     $tplMaDS->replace("StatusClass", "awStatusGebucht");
-                } elseif ($kw->getEingabeOffen ()) {
+                } elseif ($kw->getEingabeOffen()) {
                     $tplLinksFuerDenDatensatz = $tplLinksNormal;
                     $tplMaDS->replace("Status", "Offen");
                     $tplMaDS->replace("StatusClass", "awStatusOffen");
@@ -760,12 +760,12 @@ class ProjektController
                     $tplMaDS->replace("Status", "Fertig");
                     $tplMaDS->replace("StatusClass", "awStatusFertig");
                 } else {
-                    $tplMaDS->replace("Status", "Status: ".$kw->getStatus());
+                    $tplMaDS->replace("Status", "Status: " . $kw->getStatus());
                     $tplMaDS->replace("StatusClass", "awStatusFertig");
                 }
                 
                 $tplLinksFuerDenDatensatz->replace("BenutzerID", $kw->getBenutzerID());
-                $tplLinksFuerDenDatensatz->replace("Datum",strtotime($kw->getWochenstart()));
+                $tplLinksFuerDenDatensatz->replace("Datum", strtotime($kw->getWochenstart()));
                 $tplMaDS->replace("Links", $tplLinksFuerDenDatensatz->getOutput());
                 $tplLinksFuerDenDatensatz->reset();
                 
@@ -842,11 +842,20 @@ class ProjektController
     {
         RequestHandler::handle(new ProjektStundenFreigabeAction());
     }
-    
+
     public static function bearbeiteArbeitsTagUndWocheStatus()
     {
         RequestHandler::handle(new ArbeitsTagUndWocheStatusWechselAction());
     }
-    
+
+    public static function zeigeUrlaubsVerwaltung()
+    {
+        RequestHandler::handle(new UrlaubsVerwaltungAction());
+    }
+
+    public static function verwalteJahresurlaub()
+    {
+        RequestHandler::handle(new JahresurlaubAnlegenAction());
+    }
 }
 ?>

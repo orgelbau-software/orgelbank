@@ -95,6 +95,8 @@ $pcProjekt->addChild(new SubPage(111, "zeigeStempeluhr", 10));
 $pcProjekt->addChild(new SubPage(112, "zeigeMaterialRechnungen", 10));
 $pcProjekt->addChild(new SubPage(113, "zeigeStundenFreigabe", 10));
 $pcProjekt->addChild(new SubPage(114, "bearbeiteArbeitsTagUndWocheStatus", 10));
+$pcProjekt->addChild(new SubPage(115, "zeigeUrlaubsVerwaltung", 10));
+$pcProjekt->addChild(new SubPage(116, "verwalteJahresurlaub", 10));
 $pageApplication->addController($pcProjekt);
 
 /**
