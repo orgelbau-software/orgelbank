@@ -10,6 +10,8 @@ class Urlaub extends SimpleDatabaseStorageObjekt
 
     public const STATUS_ANGELEGT = 1;
     
+    public const STATUS_MANUELL = 2;
+
     private $datumVon;
 
     private $datumBis;
@@ -25,7 +27,9 @@ class Urlaub extends SimpleDatabaseStorageObjekt
     private $status;
 
     private $benutzerId;
-    
+
+    private $bemerkung;
+
     // Transient
     private $benutzername;
 
@@ -45,6 +49,7 @@ class Urlaub extends SimpleDatabaseStorageObjekt
         $this->setResturlaub($rs['u_resturlaub']);
         $this->setSumme($rs['u_summe']);
         $this->setStatus($rs['u_status']);
+        $this->setBemerkung($rs['u_bemerkung']);
     }
 
     protected function generateHashtable()
@@ -59,6 +64,7 @@ class Urlaub extends SimpleDatabaseStorageObjekt
         $ht->add("u_resturlaub", $this->getResturlaub());
         $ht->add("u_summe", $this->getSumme());
         $ht->add("u_status", $this->getStatus());
+        $ht->add("u_bemerkung", $this->getBemerkung());
         
         return $ht;
     }
@@ -70,6 +76,9 @@ class Urlaub extends SimpleDatabaseStorageObjekt
     public function getDatumVon($formatiert = false)
     {
         if ($formatiert) {
+            if($this->datumVon == "0000-00-00") {
+                return "";
+            }
             return date("d.m.Y", strtotime($this->datumVon));
         }
         return $this->datumVon;
@@ -82,6 +91,9 @@ class Urlaub extends SimpleDatabaseStorageObjekt
     public function getDatumBis($formatiert = false)
     {
         if ($formatiert) {
+            if($this->datumBis == "0000-00-00") {
+                return "";
+            }
             return date("d.m.Y", strtotime($this->datumBis));
         }
         return $this->datumBis;
@@ -212,7 +224,9 @@ class Urlaub extends SimpleDatabaseStorageObjekt
     {
         $this->benutzerId = $benutzerId;
     }
+
     /**
+     *
      * @return the $benutzername
      */
     public function getBenutzername()
@@ -221,14 +235,30 @@ class Urlaub extends SimpleDatabaseStorageObjekt
     }
 
     /**
-     * @param field_type $benutzername
+     *
+     * @param field_type $benutzername            
      */
     public function setBenutzername($benutzername)
     {
         $this->benutzername = $benutzername;
     }
 
-    
-    
+    /**
+     *
+     * @return the $bemerkung
+     */
+    public function getBemerkung()
+    {
+        return $this->bemerkung;
+    }
+
+    /**
+     *
+     * @param field_type $bemerkung            
+     */
+    public function setBemerkung($bemerkung)
+    {
+        $this->bemerkung = $bemerkung;
+    }
 }
 ?>

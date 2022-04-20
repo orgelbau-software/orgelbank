@@ -3,6 +3,17 @@
 class UrlaubsUtilities
 {
 
+    public static function getLetzterUrlaubsEintrag($pBenutzerId) {
+        $sql = "SELECT u.* FROM urlaub u WHERE be_id = ".$pBenutzerId. " ORDER BY u.u_id DESC LIMIT 1";
+        $r = UrlaubsUtilities::queryDB($sql);
+        
+        $retVal = null;
+        if($r != null && $r[0] != null) {
+            $retVal = $r[0];
+        }
+        return $retVal;
+    }
+    
     public static function getUrlaubsEintraege($where = "", $orderby = "")
     {
         $sql = "SELECT
