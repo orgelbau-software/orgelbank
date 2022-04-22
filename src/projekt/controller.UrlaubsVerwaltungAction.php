@@ -63,6 +63,19 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
         
         $tpl = new Template("projekt_urlaub.tpl");
         
+        if(isset($_GET['action'], $_GET['uid']) && $_GET['action'] == "delete") {
+            $urlaubsTagId = intval($_GET['uid']);
+            $zuLoeschen = new Urlaub($urlaubsTagId);
+            $letzterUrlaubsTag = UrlaubsUtilities::getLetzterUrlaubsEintrag($zuLoeschen->getBenutzerId());
+            if($zuLoeschen->getID() == $letzterUrlaubsTag->getID()) {
+                $letzterUrlaubsTag->loeschen();
+                $this->mFehlerMeldung = new HTMLStatus("Urlaubseintrag erfolgreich gelöscht");
+            } else {
+                $this->mFehlerMeldung = new HTMLStatus("Urlaubseintrag konnte nicht gelöscht werden.", HTMLStatus::$STATUS_ERROR);
+            }
+            
+        }
+        
         $c = BenutzerUtilities::getZeiterfassungsBenutzer();
         $htmlSelect = new HTMLSelect($c, "getBenutzername", $this->benutzerId);
         $tpl->replace("Mitarbeiter", $htmlSelect->getOutput());
@@ -100,6 +113,9 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
             }
             $filterBenutzer .= " DATE(u.u_datum_von) >= '".$this->jahresauswahl."-01-01' ";
         }
+        
+       
+        
         
         $letzteUrlaubsTage = UrlaubsUtilities::getLetzteUrlaubsTagsIdProBenutzer();
         
