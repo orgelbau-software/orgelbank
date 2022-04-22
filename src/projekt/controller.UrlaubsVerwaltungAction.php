@@ -68,11 +68,12 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
         $tpl->replace("Mitarbeiter", $htmlSelect->getOutput());
         
         $jahre = array();
-        for ($i = 2022; $i <= date("Y") + 1; $i ++) {
-            $jahre[] = $i;
+        $startJahr = 2022;
+        for ($i = $startJahr; $i <= date("Y") + 1; $i ++) {
+            $jahre[$i] = $i;
         }
         
-        $htmlJahre = new HTMLSelectForArray($jahre);
+        $htmlJahre = new HTMLSelectForArray($jahre, $this->jahresauswahl);
         $tpl->replace("Jahresauswahl", $htmlJahre->getOutput());
         
         // Status Abfrage
@@ -92,8 +93,21 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
         } else {
             $filterBenutzer = "";
         }
+        
+        if($this->jahresauswahl > 0) {
+            if($filterBenutzer != "") {
+                $filterBenutzer .= " AND ";
+            }
+            $filterBenutzer .= " DATE(u.u_datum_von) >= '".$this->jahresauswahl."-01-01' ";
+        }
+        
+        $letzteUrlaubsTage = UrlaubsUtilities::getLetzteUrlaubsTagsIdProBenutzer();
+        
         $u = UrlaubsUtilities::getUrlaubsEintraege($filterBenutzer);
+        
         $tplDS = new BufferedTemplate("projekt_urlaub_liste_ds.tpl", "CSS", "td1", "td2");
+        $tplIconLoeschen = new Template("projekt_urlaub_liste_ds_loeschen.tpl");
+        $tplIconNichtLoeschen = new Template("projekt_urlaub_liste_ds_nichtloeschen.tpl");
         foreach ($u as $urlaubseintrag) {
             $tplDS->replace("UrlaubsID", $urlaubseintrag->getID());
             $tplDS->replace("DatumVon", $urlaubseintrag->getDatumVon(true));
@@ -109,6 +123,14 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
             }
             $tplDS->replace("Bemerkung", $urlaubseintrag->getBemerkung());
             $tplDS->replace("Summe", $urlaubseintrag->getSumme());
+            
+            if(isset($letzteUrlaubsTage[$urlaubseintrag->getBenutzerId()]) && $letzteUrlaubsTage[$urlaubseintrag->getBenutzerId()] == $urlaubseintrag->getID()) {
+                $tplIconLoeschen->replace("UrlaubsID", $urlaubseintrag->getID());
+                $tplDS->replace("LoeschenIcon", $tplIconLoeschen->getOutput());
+                $tplIconLoeschen->reset();
+            } else {
+                $tplDS->replace("LoeschenIcon", $tplIconNichtLoeschen->forceOutput());
+            }
             $tplDS->next();
         }
         
@@ -128,6 +150,12 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
             $this->benutzerId = intval($_POST['benutzerId']);
         } else if (isset($_POST['quickswitchBenutzerId'])) {
             $this->benutzerId = intval($_POST['quickswitchBenutzerId']);
+        }
+        
+        if (isset($_POST['quickswitchJahr'])) {
+            $this->jahresauswahl = $_POST['quickswitchJahr'];
+        } else {
+            $this->jahresauswahl = date("Y");
         }
     }
 

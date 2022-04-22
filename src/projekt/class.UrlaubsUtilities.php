@@ -3,6 +3,22 @@
 class UrlaubsUtilities
 {
 
+    public static function getLetzteUrlaubsTagsIdProBenutzer() {
+        $sql = "SELECT u.be_id, MAX(u.u_id) as u_id FROM urlaub u GROUP BY be_id";
+        
+        $retVal = array();
+        if (($res = DB::getInstance()->SelectQuery($sql)) !== false) {
+            foreach ($res as $objekt) {
+                $retVal[$objekt['be_id']] = $objekt['u_id'];
+            }
+        }
+        return $retVal;
+    }
+    /**
+     * 
+     * @param int $pBenutzerId
+     * @return NULL|Urlaub
+     */
     public static function getLetzterUrlaubsEintrag($pBenutzerId) {
         $sql = "SELECT u.* FROM urlaub u WHERE be_id = ".$pBenutzerId. " ORDER BY u.u_id DESC LIMIT 1";
         $r = UrlaubsUtilities::queryDB($sql);

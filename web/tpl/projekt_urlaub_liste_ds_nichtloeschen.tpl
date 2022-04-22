@@ -1,0 +1,1 @@
+				<img class="icon" src="web/images/icons/document_a4_locked.png" title="Dieser Eintrag kann nicht gelöscht werden, da bereits nachfolgende Urlaubseinträge existieren." />

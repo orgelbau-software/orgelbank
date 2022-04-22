@@ -9,7 +9,6 @@
 		<td class="<!--CSS-->"><!--Status--></td>
 		<td class="<!--CSS-->"><!--Bemerkung--></td>
 		<td class="<!--CSS-->">
-			<a title="Urlaubseintrag ändern" href="index.php?page=6&do=115&uid=<!--UrlaubsID-->">
-				<img class="icon" src="web/images/icons/document_a4_remove.png" /></a>
+			<!--LoeschenIcon-->
 		</td>
 	</tr>

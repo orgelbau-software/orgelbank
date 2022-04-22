@@ -80,18 +80,26 @@ class JahresurlaubAnlegenAction implements GetRequestHandler, PostRequestHandler
         
         foreach ($c as $benutzer) {
             $urlaubsTage = $benutzer->getUrlaubsTage() / ($benutzer->getStdGesamt() / 5);
+            
+            $alterUrlaub = UrlaubsUtilities::getLetzterUrlaubsEintrag($benutzer->getID());
+            
             $urlaub = new Urlaub();
             $urlaub->setBenutzerId($benutzer->getID());
             $urlaub->setVerbleibend($urlaubsTage);
+            
+            // if -> Resturlaub soll uebernommmen werden.
             if(isset($_POST['resturlaub']) && $_POST['resturlaub'] == "on") {
-                $urlaub->setSumme($urlaub->getResturlaub() + $urlaub->getVerbleibend());
+                $urlaub->setResturlaub($alterUrlaub->getVerbleibend() + $alterUrlaub->getResturlaub());
             } else {
-                $urlaub->setSumme($urlaub->getVerbleibend());
+                $urlaub->setResturlaub(0);
             }
-            $urlaub->setResturlaub(0);
+            
+            $urlaub->setSumme($urlaub->getResturlaub() + $urlaub->getVerbleibend());
+            
             $urlaub->setStatus(Urlaub::STATUS_ANGELEGT);
             $urlaub->setDatumVon($_POST['jahr'] . "-01-01");
             $urlaub->setDatumBis($_POST['jahr'] . "-12-31");
+            $urlaub->setBemerkung("Neuer Urlaub für ".$_POST['jahr']);
             $urlaub->speichern(false);
         }
         
