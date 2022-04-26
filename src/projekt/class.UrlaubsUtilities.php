@@ -14,6 +14,21 @@ class UrlaubsUtilities
         }
         return $retVal;
     }
+    
+    /**
+     *
+     * @param int $pBenutzerId
+     * @return NULL|Urlaub
+     */
+    public static function getUrlaubsTageProBenutzer($pBenutzerId, $jahr = "") {
+        $sql = "SELECT u.* FROM urlaub u WHERE be_id = ".$pBenutzerId." "; 
+        if($jahr != "") {
+            $sql .= "  AND DATE(u.u_datum_von) >= '".$jahr."-01-01' ";
+        }
+        $sql .=" ORDER BY u.u_id";
+        return UrlaubsUtilities::queryDB($sql);
+    }
+    
     /**
      * 
      * @param int $pBenutzerId

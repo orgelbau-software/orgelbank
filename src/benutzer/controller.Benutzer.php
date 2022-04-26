@@ -22,23 +22,21 @@ class BenutzerController
         $ueberstunden = BenutzerUtilities::berechneUeberstunden($benutzer->getID());
         $ueberstunden = $ueberstunden == "" ? 0 : $ueberstunden;
         
-        $urlaubstageGesamt = $benutzer->getUrlaubstage() / 8;
-        $urlaubstageGesamt = $urlaubstageGesamt == "" ? 0 : $urlaubstageGesamt;
+        $benutzerUrlaub = UrlaubsUtilities::getUrlaubsTageProBenutzer($benutzer->getID(), date("Y"));
         
-        $urlaubRest = $benutzer->getUrlaubRest() / 8;
-        $urlaubRest = $urlaubRest == "" ? 0 : $urlaubRest;
+        $tplDS = new BufferedTemplate("benutzer_urlaub_liste_ds.tpl", "CSS", "td1", "td2");
+        foreach($benutzerUrlaub as $currentUrlaubsTag) {
+            $tplDS->replace("Verbleibend", $currentUrlaubsTag->getVerbleibend());
+            $tplDS->replace("Summe", $currentUrlaubsTag->getSumme());
+            $tplDS->replace("Resturlaub", $currentUrlaubsTag->getResturlaub());
+            $tplDS->replace("DatumVon", $currentUrlaubsTag->getDatumVon(true));
+            $tplDS->replace("DatumBis", $currentUrlaubsTag->getDatumBis(true));
+            $tplDS->replace("Status", $currentUrlaubsTag->getStatus());
+            $tplDS->replace("Bemerkung", $currentUrlaubsTag->getBemerkung());
+            $tplDS->next();
+        }
         
-        $urlaubGesamt = $benutzer->getUrlaubAktuell() / 8;
-        $urlaubGesamt = $urlaubGesamt == "" ? 0 : $urlaubGesamt;
-        
-        $urlaubGenommen = $urlaubstageGesamt + $urlaubRest - $urlaubGesamt;
-        $urlaubGenommen = $urlaubGenommen == "" ? 0 : $urlaubGenommen;
-        
-        $tpl->replace("Ueberstunden", $ueberstunden);
-        $tpl->replace("UrlaubJahr", $urlaubstageGesamt);
-        $tpl->replace("UrlaubRest", $urlaubRest);
-        $tpl->replace("UrlaubGenommen", $urlaubGenommen);
-        $tpl->replace("UrlaubGesamt", $urlaubGesamt);
+        $tpl->replace("Urlaubstage", $tplDS->getOutput());
         $tpl->anzeigen();
     }
 

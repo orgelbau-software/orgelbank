@@ -18,26 +18,17 @@
 	</tr>
 </table>
 
-<h3>Urlaubsstatistik</h3>
+<h3>Urlaubstage</h3>
 <table class="liste">
 	<tr>
-		<th>&nbsp;</th>
-		<th>  Urlaubsanspruch dieses Jahr:</th>
-		<td style=" text-align: right;"><!--UrlaubJahr--> Tage</td>
+		<th>Datum Von</th>
+		<th>Datum Bis</th>
+		<th>Tage</th>
+		<th>Verbleibend</th>
+		<th>Resturlaub</th>
+		<th>Total</th>
+		<th>Status</th>
+		<th>Bemerkung</th>
 	</tr>
-	<tr>
-		<th>+</th>
-		<th>Resturlaub aus letztem Jahr:</th>
-		<td style=" text-align: right;"><!--UrlaubRest--> Tage</td>
-	</tr>
-	<tr>
-		<th style="border-bottom: 1px solid black;">-</th>
-		<th style="border-bottom: 1px solid black;">Genommener Urlaub:</th>
-		<td style="border-bottom: 1px solid black; text-align: right;"><!--UrlaubGenommen--> Tage</td>
-	</tr>
-	<tr>
-		<th>=</th>
-		<th>Gesamtanspruch:</th>
-		<td style=" text-align: right;"><!--UrlaubGesamt--> Tage</td>
-	</tr>
+	<!--Urlaubstage-->
 </table>
