@@ -11,6 +11,14 @@ class Urlaub extends SimpleDatabaseStorageObjekt
     public const STATUS_ANGELEGT = 1;
     
     public const STATUS_MANUELL = 2;
+    
+    public const STATUS_ZEITERFASSUNG = 3;
+    
+    public const TYP_URLAUB = "U";
+    
+    public const TYP_KORREKTUR = "K";
+    
+    public const TYP_ZUSATZ = "Z";
 
     private $datumVon;
 

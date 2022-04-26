@@ -346,6 +346,8 @@ class BenutzerController
                     // Stunden speichern
                     if (trim($stunden != "")) {
                         $at = ArbeitstagUtilities::speicherNeuenArbeitstag($timestamp, $awArbeitswoche->getID(), $benutzer->getID(), $projektID, $aufgabeID, $stunden, $benSollStunden[Date::getTagDerWoche($timestamp)], $boSollKomplett);
+                        
+                        // Berechnet auch die Urlaubstage
                         $awArbeitswoche->addArbeitstag($at);
                     }
                 }

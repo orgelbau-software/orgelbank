@@ -92,9 +92,13 @@ class Arbeitswoche extends SimpleDatabaseStorageObjekt
             // So funktioniert es nur, wenn der gesamte Urlaub der Woche auf einen Arbeitstag eingetragen wird
 
             // 2019-07-30: Warum nicht einfach so?
+            // 2022-04-26: Muss der Urlaub noch pro Woche gespeichert werden? Warum? Urlaub wird doch jetzt separat gebucht.
             $summeUrlaub = $at->getIstStunden() + $this->getWochenStundenUrlaub();
             $this->setWochenStundenUrlaub($summeUrlaub);
-            UrlaubsBuchungUtilities::bucheUrlaub($summeUrlaub, $at->getBenutzerID());
+            
+            $halberOderGanzerTagUrlaub = ($at->getIstStunden() < ($at->getSollStunden() / 2) ? 0.5 : 1);
+            // Buch den Urlaubstag offiziell
+            UrlaubsUtilities::bucheBenutzerUrlaub($pBenutzer, $pDatum, $halberOderGanzerTagUrlaub);
         }
     }
 

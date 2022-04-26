@@ -63,17 +63,16 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
         
         $tpl = new Template("projekt_urlaub.tpl");
         
-        if(isset($_GET['action'], $_GET['uid']) && $_GET['action'] == "delete") {
+        if (isset($_GET['action'], $_GET['uid']) && $_GET['action'] == "delete") {
             $urlaubsTagId = intval($_GET['uid']);
             $zuLoeschen = new Urlaub($urlaubsTagId);
             $letzterUrlaubsTag = UrlaubsUtilities::getLetzterUrlaubsEintrag($zuLoeschen->getBenutzerId());
-            if($zuLoeschen->getID() == $letzterUrlaubsTag->getID()) {
+            if ($zuLoeschen->getID() == $letzterUrlaubsTag->getID()) {
                 $letzterUrlaubsTag->loeschen();
                 $this->mFehlerMeldung = new HTMLStatus("Urlaubseintrag erfolgreich gelöscht");
             } else {
                 $this->mFehlerMeldung = new HTMLStatus("Urlaubseintrag konnte nicht gelöscht werden.", HTMLStatus::$STATUS_ERROR);
             }
-            
         }
         
         $c = BenutzerUtilities::getZeiterfassungsBenutzer();
@@ -107,15 +106,12 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
             $filterBenutzer = "";
         }
         
-        if($this->jahresauswahl > 0) {
-            if($filterBenutzer != "") {
+        if ($this->jahresauswahl > 0) {
+            if ($filterBenutzer != "") {
                 $filterBenutzer .= " AND ";
             }
-            $filterBenutzer .= " DATE(u.u_datum_von) >= '".$this->jahresauswahl."-01-01' ";
+            $filterBenutzer .= " DATE(u.u_datum_von) >= '" . $this->jahresauswahl . "-01-01' ";
         }
-        
-       
-        
         
         $letzteUrlaubsTage = UrlaubsUtilities::getLetzteUrlaubsTagsIdProBenutzer();
         
@@ -140,7 +136,7 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
             $tplDS->replace("Bemerkung", $urlaubseintrag->getBemerkung());
             $tplDS->replace("Summe", $urlaubseintrag->getSumme());
             
-            if(isset($letzteUrlaubsTage[$urlaubseintrag->getBenutzerId()]) && $letzteUrlaubsTage[$urlaubseintrag->getBenutzerId()] == $urlaubseintrag->getID()) {
+            if (isset($letzteUrlaubsTage[$urlaubseintrag->getBenutzerId()]) && $letzteUrlaubsTage[$urlaubseintrag->getBenutzerId()] == $urlaubseintrag->getID()) {
                 $tplIconLoeschen->replace("UrlaubsID", $urlaubseintrag->getID());
                 $tplDS->replace("LoeschenIcon", $tplIconLoeschen->getOutput());
                 $tplIconLoeschen->reset();
@@ -184,75 +180,17 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
     public function executePost()
     {
         if (isset($_POST['datumvon'])) {
-            $letzterUrlaub = UrlaubsUtilities::getLetzterUrlaubsEintrag($this->benutzerId);
-            if ($letzterUrlaub == null) {
-                return new HTMLStatus("Der letzte Urlaubstag für " . $this->benutzerId . " konnte nicht ermittelt werden.", false);
+            $statusOrTrue = UrlaubsUtilities::bucheUrlaub($this->benutzerId, $_POST['datumvon'], $_POST['datumbis'], $_POST['tage'], $_POST['urlaubstyp'], $_POST['bemerkung']);
+            if($statusOrTrue !== true) {
+                $this->mFehlerMeldung = $statusOrTrue;
             }
-            
-            if ($this->isKorrekturOrZusatzBuchung($_POST['urlaubstyp']) && $_POST['bemerkung'] == "") {
-                return new HTMLStatus("Bei Korrekturbuchungen muss eine Bemerkung angegeben werden.", HTMLStatus::$STATUS_ERROR, false);
-            }
-            
-            $urlaub = new Urlaub();
-            $urlaub->setBenutzerId($this->benutzerId);
-            $urlaub->setBemerkung(htmlspecialchars($_POST['bemerkung']));
-            $urlaub->setTage(intval($_POST['tage']));
-            
-            $urlaub->setDatumVon($datum = date("Y-m-d", strtotime($_POST['datumvon'])));
-            if ($_POST['datumbis'] == "") {
-                $urlaub->setDatumBis(null);
-            } else {
-                $urlaub->setDatumBis($datum = date("Y-m-d", strtotime($_POST['datumbis'])));
-            }
-            
-            // Wichtig fuer Korrekturen
-            $urlaub->setResturlaub($letzterUrlaub->getResturlaub());
-            
-            if ($this->isKorrekturOrZusatzBuchung($_POST['urlaubstyp'])) {
-                $rest = $urlaub->getTage() * - 1;
-            } else {
-                $rest = $urlaub->getTage();
-            }
-            
-            if (! $this->isKorrekturOrZusatzBuchung($_POST['urlaubstyp']) && $letzterUrlaub->getResturlaub() > 0) {
-                if ($rest > $letzterUrlaub->getResturlaub()) {
-                    $urlaub->setResturlaub(0);
-                    $rest = $rest - $letzterUrlaub->getResturlaub();
-                } else {
-                    $urlaub->setResturlaub($letzterUrlaub->getResturlaub() - $rest);
-                    $rest = 0;
-                }
-            }
-            
-            if ($rest > 0 && $letzterUrlaub->getVerbleibend() < $rest) {
-                $this->mFehlerMeldung = new HTMLStatus("Der Mitarbeiter möchte " . $rest . " Tage Urlaub buchen, hat aber nur noch " . $urlaub->getVerbleibend() . " Tage übrig (Resturlaub: " . $urlaub->getResturlaub() . ")", HTMLStatus::$STATUS_WARN, false);
-            } else {
-                $urlaub->setVerbleibend($letzterUrlaub->getVerbleibend() - $rest);
-                $urlaub->setSumme($urlaub->getVerbleibend() + $urlaub->getResturlaub());
-                $urlaub->setStatus(Urlaub::STATUS_MANUELL);
-                $urlaub->speichern();
-            }
-            
             $this->benutzerId = 0;
         }
         
         return $this->executeGet();
     }
 
-    private function isKorrekturOrZusatzBuchung($strTyp)
-    {
-        if ($strTyp == null || $strTyp == "") {
-            return false;
-        }
-        if ($strTyp == "K") {
-            return true;
-        }
-        
-        if ($strTyp == "Z") {
-            return true;
-        }
-        return false;
-    }
+    
 
     /**
      *
