@@ -348,7 +348,6 @@ class ProjektController
                 
                 // Urlaubstage umrechen & speichern
                 $_POST['urlaubstage'] = str_replace(",", ".", $_POST['urlaubstage']);
-                $_POST['urlaubstage'] *= ($iStdGesamt / 5); // 40 / 5 = 8 Stunden pro Tag
                 $benutzer->setUrlaubstage($_POST['urlaubstage']);
                 
                 $strText = "";
@@ -511,7 +510,7 @@ class ProjektController
         // Urlaubstage
         $dblUrlaubstage = ConstantLoader::getStandardUrlaubstage();
         if ($benutzer->getStdGesamt() > 0) {
-            $dblUrlaubstage = $benutzer->getUrlaubstage() / ($benutzer->getStdGesamt() / 5);
+            $dblUrlaubstage = $benutzer->getUrlaubstage();
         }
         $tpl->replace("Urlaubstage", str_replace(".", ",", $dblUrlaubstage));
         
@@ -531,6 +530,15 @@ class ProjektController
             $ueberstunden = ProjektUtilities::countMitarbeiterUeberstunden($benutzer->getID());
         }
         $tpl->replace("Ueberstunden", $ueberstunden);
+        
+        $urlaub = UrlaubsUtilities::getLetzterUrlaubsEintrag($benutzer->getID());
+        if($urlaub != null) {
+            $tpl->replace("AktuellerUrlaub", $urlaub->getVerbleibend());
+            $tpl->replace("Resturlaub", $urlaub->getResturlaub());
+        } else {
+            $tpl->replace("AktuellerUrlaub", "");
+            $tpl->replace("Resturlaub", "");
+        }
         
         // Benutzerstatus
         if ($benutzer->isAdmin()) {

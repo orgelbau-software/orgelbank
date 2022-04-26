@@ -79,7 +79,7 @@ class JahresurlaubAnlegenAction implements GetRequestHandler, PostRequestHandler
         $c = BenutzerUtilities::getZeiterfassungsBenutzer();
         
         foreach ($c as $benutzer) {
-            $urlaubsTage = $benutzer->getUrlaubsTage() / ($benutzer->getStdGesamt() / 5);
+            $urlaubsTage = $benutzer->getUrlaubsTage();
             
             $alterUrlaub = UrlaubsUtilities::getLetzterUrlaubsEintrag($benutzer->getID());
             

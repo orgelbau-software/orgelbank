@@ -98,11 +98,17 @@
       </tr>
     </table>
     
-    <h3>Resturlaub und &Uuml;berstunden</h3>
+    <h3>(Rest-) Urlaub und &Uuml;berstunden</h3>
     <table class="liste txt310">
    		<tr>
         	<th>&Uuml;berstunden:</th>
         	<td><!--Ueberstunden--></td>
+       	</tr>
+       	<tr>
+        	<th>Aktueller Urlaub:</th>
+        	<td><!--AktuellerUrlaub--></td>
+        </tr>
+        <tr>
         	<th>Resturlaub:</th>
         	<td><!--Resturlaub--></td>
       	</tr>

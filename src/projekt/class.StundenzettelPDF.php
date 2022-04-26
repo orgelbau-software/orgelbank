@@ -1,6 +1,4 @@
 <?php
-// include_once ROOTDIR . 'lib/tFPDF/tfpdf.php';
-// include_once ROOTDIR . '/lib/tFPDF/tfpdfbookmark.php';
 
 class StundenzettelPDF extends BasisPDF
 {
@@ -20,7 +18,7 @@ class StundenzettelPDF extends BasisPDF
         $totalStundenDif = 0;
         $starthoehe = 40;
         $this->benutzername = $pBenutzer->getBenutzername();
-        $resturlaub = $pBenutzer->getUrlaubstage();
+//         $resturlaub = $pBenutzer->getUrlaubstage();
         
         
         foreach ($pData as $currentData) {
@@ -34,10 +32,10 @@ class StundenzettelPDF extends BasisPDF
                 // Mitarbeiter Daten
                 $this->activateFontTextHeadline();
                 $this->Cell($this->iRandLinks, $this->cellheight, 'Stundenzettel von ' . $pBenutzer->getVorname() . " " . $pBenutzer->getNachname() . " erstellt am " . date("d.m.Y, H:i") . " Uhr", 0, 1, "L");
-                $resturlaub = $pBenutzer->getUrlaubstage();
+//                 $resturlaub = $pBenutzer->getUrlaubstage();
                 
                 $this->activateFontNormal();
-                $this->Cell($this->iRandLinks, $this->cellheight, 'Urlaub: '.$resturlaub.' Stunden', 0, 1, "L");
+//                 $this->Cell($this->iRandLinks, $this->cellheight, 'Urlaub: '.$resturlaub.' Stunden', 0, 1, "L");
                 
                 $this->SetXY($this->iRandLinks, $starthoehe);
                 $rahmen = 0;
@@ -48,8 +46,8 @@ class StundenzettelPDF extends BasisPDF
                 $this->Cell(20, $this->cellheight, 'Diff', $rahmen);
                 $this->Cell(20, $this->cellheight, 'Vorwoche', $rahmen);
                 $this->Cell(20, $this->cellheight, 'Gesamt', $rahmen);
-                $this->Cell(20, $this->cellheight, 'Urlaub', $rahmen);
-                $this->Cell(20, $this->cellheight, 'Resturlaub', $rahmen);
+                //$this->Cell(20, $this->cellheight, 'Urlaub', $rahmen);
+                //$this->Cell(20, $this->cellheight, 'Resturlaub', $rahmen);
                 $this->activateFontNormal();
                 $this->SetXY($this->iRandLinks, $starthoehe + $this->cellheight);
                 $counter = 0;
@@ -64,12 +62,12 @@ class StundenzettelPDF extends BasisPDF
             $this->Cell(20, $this->cellheight, $currentData->getWochenStundenSoll());
             $this->Cell(20, $this->cellheight, $currentData->getWochenStundenIst());
             $this->Cell(20, $this->cellheight, $currentData->getWochenStundenDif());
-            $this->Cell(20, $this->cellheight, $totalStundenDif);
+            $this->Cell(20, $this->cellheight, $totalStundenDif."");
             $totalStundenDif += $currentData->getWochenStundenDif();
-            $this->Cell(29, $this->cellheight, $totalStundenDif);
-            $this->Cell(20, $this->cellheight, $currentData->getWochenStundenUrlaub());
-            $resturlaub -= $currentData->getWochenStundenUrlaub();
-            $this->Cell(20, $this->cellheight, $resturlaub);
+            $this->Cell(29, $this->cellheight, $totalStundenDif."");
+            //$this->Cell(20, $this->cellheight, $currentData->getWochenStundenUrlaub());
+            //$resturlaub -= $currentData->getWochenStundenUrlaub();
+            //$this->Cell(20, $this->cellheight, $resturlaub);
             
             $letztesJahr = $currentData->getJahr();
         }
