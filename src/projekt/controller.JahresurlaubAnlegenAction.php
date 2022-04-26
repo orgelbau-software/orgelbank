@@ -83,6 +83,11 @@ class JahresurlaubAnlegenAction implements GetRequestHandler, PostRequestHandler
             
             $alterUrlaub = UrlaubsUtilities::getLetzterUrlaubsEintrag($benutzer->getID());
             
+            // Es gibt keinen alten Urlaubseintrag. Meistens bei kompletter Neu-Anlage.
+            if($alterUrlaub == null) {
+                $alterUrlaub = new Urlaub();
+            }
+            
             $urlaub = new Urlaub();
             $urlaub->setBenutzerId($benutzer->getID());
             $urlaub->setVerbleibend($urlaubsTage);

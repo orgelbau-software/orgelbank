@@ -140,7 +140,18 @@ if ($webUser != null && $webUser->login() && ! $webUser->isLoginExpired()) {
     // Head ausgeben
     echo $tplKopf->forceOutput();
     // Aufgerufene Seite wird hier eingebunden
-    include_once 'src/controller/controller.Main.php';
+    
+    try {
+         include_once 'src/controller/controller.Main.php';
+    } catch(Exception $e) {
+        try {
+            pre($e);
+        } catch(Error $e2) {
+            ErrorHandler::handle($e2->getCode(), $e2->getMessage(), $e2->getFile(), $e2->getLine(), "");
+        }
+    } catch(Error $e) {
+        ErrorHandler::handle($e->getCode(), $e->getMessage(), $e->getFile(), $e->getLine(), $e->getTrace());
+    }
 } else {
     $tplStatus = null;
     if ($_POST) {

@@ -5,21 +5,26 @@ class UrlaubsUtilities
 
     public static function bucheBenutzerUrlaub($pBenutzer, $pDatum, $pHalberOderGanzerTag)
     {
-        UrlaubsUtilities::bucheUrlaub($pBenutzer, $pDatum, $pDatum, $pHalberOderGanzerTag, Urlaub::TYP_URLAUB, "");
+        return UrlaubsUtilities::bucheUrlaub($pBenutzer, $pDatum, $pDatum, $pHalberOderGanzerTag, Urlaub::TYP_URLAUB, Urlaub::STATUS_ZEITERFASSUNG, "");
     }
 
     /**
      * 
      * @param int $pBenutzerID
-     * @param string $pDatumVon
-     * @param string $pDatumBis
+     * @param string $pDatumVon Y-m-d
+     * @param string $pDatumBis Y-m-d
      * @param int $pTage
      * @param int $pUrlaubsTyp
      * @param string $pBemerkung
      * @return HTMLStatus|boolean
      */
-    public static function bucheUrlaub($pBenutzerID, $pDatumVon, $pDatumBis, $pTage, $pUrlaubsTyp, $pBemerkung = "")
+    public static function bucheUrlaub($pBenutzerID, $pDatumVon, $pDatumBis, $pTage, $pUrlaubsTyp, $pStatus, $pBemerkung = "")
     {
+        $bereitsExistierenderUrlaubsEintrag = UrlaubsUtilities::getBestimmtenUrlaubsEintragBenutzer($pBenutzerID, $pDatumVon);
+        if($bereitsExistierenderUrlaubsEintrag != null) {
+            return new HTMLStatus("Fuer den Tag ".$pDatumVon." gibt es bereits einen eingetragenen Urlaubstag.", HTMLStatus::$STATUS_ERROR, false);
+        }
+        
         $letzterUrlaub = UrlaubsUtilities::getLetzterUrlaubsEintrag($pBenutzerID);
         if ($letzterUrlaub == null) {
             return new HTMLStatus("Der letzte Urlaubstag für " . $pBenutzerID . " konnte nicht ermittelt werden.", false);
@@ -34,11 +39,11 @@ class UrlaubsUtilities
         $urlaub->setBemerkung(htmlspecialchars($pBemerkung));
         $urlaub->setTage(intval($pTage));
         
-        $urlaub->setDatumVon($datum = date("Y-m-d", strtotime($pDatumVon)));
+        $urlaub->setDatumVon($pDatumVon);
         if ($pDatumBis == "") {
             $urlaub->setDatumBis(null);
         } else {
-            $urlaub->setDatumBis($datum = date("Y-m-d", strtotime($pDatumBis)));
+            $urlaub->setDatumBis($pDatumBis);
         }
         
         // Wichtig fuer Korrekturen
@@ -65,7 +70,7 @@ class UrlaubsUtilities
         } else {
             $urlaub->setVerbleibend($letzterUrlaub->getVerbleibend() - $rest);
             $urlaub->setSumme($urlaub->getVerbleibend() + $urlaub->getResturlaub());
-            $urlaub->setStatus(Urlaub::STATUS_MANUELL);
+            $urlaub->setStatus($pStatus);
             $urlaub->speichern();
         }
         return true;
@@ -99,6 +104,22 @@ class UrlaubsUtilities
         return UrlaubsUtilities::queryDB($sql);
     }
 
+    /**
+     *
+     * @param int $pBenutzerId
+     * @return NULL|Urlaub
+     */
+    public static function getBestimmtenUrlaubsEintragBenutzer($pBenutzerId, $pDatum)
+    {
+        $sql = "SELECT u.* FROM urlaub u WHERE be_id = " . $pBenutzerId . " AND DATE(u.u_datum_von) = '" . $pDatum."';";
+        $r = UrlaubsUtilities::queryDB($sql);
+        $retVal = null;
+        if ($r != null && $r[0] != null) {
+            $retVal = $r[0];
+        }
+        return $retVal;
+    }
+    
     /**
      *
      * @param int $pBenutzerId            
@@ -157,10 +178,10 @@ class UrlaubsUtilities
         if ($strTyp == null || $strTyp == "") {
             return false;
         }
-        if ($strTyp == Urlaub::TYP_URLAUB) {
-            return true;
-        }
         
+        if ($strTyp == Urlaub::TYP_URLAUB) {
+            return false;
+        }
         
         if ($strTyp == Urlaub::TYP_KORREKTUR) {
             return true;

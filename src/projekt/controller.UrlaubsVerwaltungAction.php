@@ -180,7 +180,7 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
     public function executePost()
     {
         if (isset($_POST['datumvon'])) {
-            $statusOrTrue = UrlaubsUtilities::bucheUrlaub($this->benutzerId, $_POST['datumvon'], $_POST['datumbis'], $_POST['tage'], $_POST['urlaubstyp'], $_POST['bemerkung']);
+            $statusOrTrue = UrlaubsUtilities::bucheUrlaub($this->benutzerId, date("Y-m-d", strtotime($_POST['datumvon'])), date("Y-m-d", strtotime($_POST['datumbis'])), $_POST['tage'], $_POST['urlaubstyp'], Urlaub::STATUS_MANUELL, $_POST['bemerkung']);
             if($statusOrTrue !== true) {
                 $this->mFehlerMeldung = $statusOrTrue;
             }

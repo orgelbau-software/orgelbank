@@ -98,7 +98,11 @@ class Arbeitswoche extends SimpleDatabaseStorageObjekt
             
             $halberOderGanzerTagUrlaub = ($at->getIstStunden() < ($at->getSollStunden() / 2) ? 0.5 : 1);
             // Buch den Urlaubstag offiziell
-            UrlaubsUtilities::bucheBenutzerUrlaub($pBenutzer, $pDatum, $halberOderGanzerTagUrlaub);
+            $result = UrlaubsUtilities::bucheBenutzerUrlaub($at->getBenutzerID(), $at->getDatum(), $halberOderGanzerTagUrlaub);
+            if($result !== true) {
+            // echo $result->getOutput();
+            // 2022-04-26: Erstmal geben wir hier nichts aus. 
+            }
         }
     }
 

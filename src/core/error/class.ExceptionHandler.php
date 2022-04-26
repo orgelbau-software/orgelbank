@@ -43,7 +43,7 @@ class ExceptionHandler
         $this->kontext = $kontext;
     }
 
-    public static function handle(Throwable $e)
+    public static function handle(Exception $e)
     {
         if (error_reporting() < $e->getCode())
             return;

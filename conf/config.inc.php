@@ -34,7 +34,7 @@ define('SESSION_DEFAULT_EXPIRE', 1800); // halbe stunde
 
 
 // Fehlerbehandlung
-// ini_set('display_errors', 1); // Bei HTTP-500 Fehlern + try/catch
+ini_set('display_errors', 1); // Bei HTTP-500 Fehlern + try/catch
 define("ERROR_REPORTING_LVL", E_ALL); // also used in class.DB.php
 error_reporting(ERROR_REPORTING_LVL);
 
