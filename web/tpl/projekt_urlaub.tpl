@@ -21,7 +21,7 @@
 		<td><div class="inputDatum"><input class="datePicker" maxlength="10" type="text" name="datumbis" value="<!--DatumBis-->" tabindex="2"/></div></td>
 		<th>Tage</th>
 		<td>
-			<input type="number" min="-30" max="30" name="tage" value="<!--Tage-->" class="int50" tabindex="4" required />
+			<input type="number" min="-30" max="30" step="0.5" name="tage" value="<!--Tage-->" class="int50" tabindex="4" required />
 			<select name="urlaubstyp">
 				<option value="U">Urlaub</option>
 				<option value="Z">Zusatz</option>

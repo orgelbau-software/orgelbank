@@ -5,7 +5,7 @@ class UrlaubsUtilities
 
     public static function bucheBenutzerUrlaub($pBenutzer, $pDatum, $pHalberOderGanzerTag)
     {
-        return UrlaubsUtilities::bucheUrlaub($pBenutzer, $pDatum, $pDatum, $pHalberOderGanzerTag, Urlaub::TYP_URLAUB, Urlaub::STATUS_ZEITERFASSUNG, "");
+        return UrlaubsUtilities::bucheUrlaub($pBenutzer, $pDatum, "", $pHalberOderGanzerTag, Urlaub::TYP_URLAUB, Urlaub::STATUS_ZEITERFASSUNG, "");
     }
 
     /**
@@ -37,7 +37,7 @@ class UrlaubsUtilities
         $urlaub = new Urlaub();
         $urlaub->setBenutzerId($pBenutzerID);
         $urlaub->setBemerkung(htmlspecialchars($pBemerkung));
-        $urlaub->setTage(intval($pTage));
+        $urlaub->setTage(doubleval($pTage));
         
         $urlaub->setDatumVon($pDatumVon);
         if ($pDatumBis == "") {

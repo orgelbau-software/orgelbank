@@ -123,7 +123,12 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
         foreach ($u as $urlaubseintrag) {
             $tplDS->replace("UrlaubsID", $urlaubseintrag->getID());
             $tplDS->replace("DatumVon", $urlaubseintrag->getDatumVon(true));
-            $tplDS->replace("DatumBis", $urlaubseintrag->getDatumBis(true));
+            
+            if($urlaubseintrag->getDatumBis() == null || $urlaubseintrag->getDatumBis(true) == "01.01.1970") {
+                $tplDS->replace("DatumBis","");
+            } else {
+                $tplDS->replace("DatumBis", $urlaubseintrag->getDatumBis(true));
+            }
             $tplDS->replace("Benutzername", $urlaubseintrag->getBenutzername());
             $tplDS->replace("Tage", $urlaubseintrag->getTage());
             $tplDS->replace("Status", $urlaubseintrag->getStatus());
