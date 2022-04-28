@@ -23,7 +23,7 @@ abstract class RechnungOutput
         $this->rechnung = $pRechnung;
         $this->gemeinde = new Gemeinde($pRechnung->getGemeindeID());
         
-        if(strpos($pUnterordner, "/") != strlen($pUnterordner) -1) {
+        if (strpos($pUnterordner, "/") != strlen($pUnterordner) - 1) {
             $pUnterordner .= "/";
         }
         $this->unterordner = $pUnterordner;
@@ -63,48 +63,33 @@ abstract class RechnungOutput
     public function speichern()
     {
         $zielpfad = $this->getSpeicherOrt();
-//         $zielpfad = Utilities::ersetzeZeichen($zielpfad);
-//         $verzeichnisse = array(
-//             RECHNUNGDIR,
-//             RECHNUNGDIR . date("Y"),
-//             RECHNUNGDIR . date("Y") . "/abschlag",
-//             RECHNUNGDIR . date("Y") . "/stunde",
-//             RECHNUNGDIR . date("Y") . "/end",
-//             RECHNUNGDIR . date("Y") . "/pflege"
-//         );
-        
-//         foreach ($verzeichnisse as $dir) {
-//             if (! is_dir($dir)) {
-//                 mkdir($dir);
-//             }
-//         }
-        
+
         // 2020-04-28: Suffix hinzufuegen, falls er nicht existiert.
         if (false === strpos($zielpfad, MSWordOutput::$FILE_EXTENSTION)) {
             $zielpfad .= MSWordOutput::$FILE_EXTENSTION;
         }
         $originalSpeicherPfad = $this->template->save($zielpfad);
-        //return $originalSpeicherPfad;
+        // return $originalSpeicherPfad;
         
         // 2022-04-28: Wir geben den relativen Pfad zurueck, weil der fuern den Download gebraucht wird.
-        $relativerSpeicherPfad =str_replace(ROOTDIR, "", $originalSpeicherPfad);
+        $relativerSpeicherPfad = str_replace(ROOTDIR, "", $originalSpeicherPfad);
         return $relativerSpeicherPfad;
     }
 
     protected function getSpeicherOrt()
     {
         $jahr = date("Y", strtotime($this->rechnung->getDatum(true)));
-        $ordner = RECHNUNGDIR . $jahr ."/".$this->unterordner;
+        $ordner = RECHNUNGDIR . $jahr . "/" . $this->unterordner;
         
         $rechNr = str_replace("/", "-", $this->rechnung->getNummer());
         $kirche = str_replace("/", "-", $this->gemeinde->getKirche());
         $dateiname = $kirche . "-" . $rechNr;
         $dateiname = Utilities::ersetzeZeichen($dateiname);
         
-        if(!is_dir($ordner)) {
+        if (! is_dir($ordner)) {
             mkdir($ordner);
         }
-        return $ordner .$dateiname . ".".MSWordOutput::$FILE_EXTENSTION;
+        return $ordner . $dateiname . "." . MSWordOutput::$FILE_EXTENSTION;
     }
 
     public function convertToEuro($e)
