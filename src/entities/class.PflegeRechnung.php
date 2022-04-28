@@ -44,16 +44,6 @@ class PflegeRechnung extends PositionsRechnung
         return $retVal;
     }
 
-    public function getSpeicherOrt()
-    {
-        $oGemeinde = new Gemeinde($this->getGemeindeID());
-        $rechNr = str_replace("/", "-", $this->getNummer());
-        $kirche = str_replace("/", "-", $oGemeinde->getKirche());
-        $ziel = parent::getSpeicherOrt() . "pflege/" . $kirche . "-" . $rechNr;
-        $ziel = Utilities::ersetzeZeichen($ziel);
-        return $ziel;
-    }
-
     /**
      * Kosten der Pflege (nur für die Positionen) ohne Fahrtkosten
      *

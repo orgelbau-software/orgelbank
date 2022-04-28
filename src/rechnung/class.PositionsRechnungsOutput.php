@@ -3,9 +3,15 @@
 abstract class PositionsRechnungsOutput extends RechnungOutput
 {
 
-    public function __construct($pfad, PositionsRechnung $r)
+    /**
+     * 
+     * @param String $pfad
+     * @param PositionsRechnung $r
+     * @param String $pUnterordner
+     */
+    public function __construct($pfad, PositionsRechnung $r, $pUnterordner)
     {
-        parent::__construct($pfad, $r);
+        parent::__construct($pfad, $r, $pUnterordner);
     }
 
     public function ersetzeRechnungsTags()

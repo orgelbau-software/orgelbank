@@ -14,9 +14,6 @@ class RechnungView extends Rechnung
         $speichern;
     }
 
-    public function getSpeicherOrt()
-    {}
-
     public function getGemeindeName()
     {
         return $this->gemeindeNamen;

@@ -17,19 +17,16 @@ class MSWordOutput extends Output
     public function replace($platzhalter, $wert)
     {
         try {
-            // echo ("Ersetze '" . $platzhalter . "' mit Wert '" . $wert . "'<br/>");
-//             $this->template->setValue($platzhalter, $wert);
             $this->template->setValue($platzhalter, utf8_decode($wert));
         } catch (Exception $e) {
             echo " Variable nicht in Dokument gefunden: '" . $platzhalter . "'</br>";
         }
-        // return parent::replace($platzhalter, $wert);
         return true;
     }
 
-    public function save($file)
+    public function save($pPfad)
     {
-        $this->template->saveAs($file);
-        return $file;
+        $this->template->saveAs($pPfad);
+        return $pPfad;
     }
 }

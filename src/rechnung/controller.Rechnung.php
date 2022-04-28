@@ -39,10 +39,10 @@ class RechnungController
         $tplRechnung = new EndRechnungOutput("resources/vorlagen/rechnung_end", $oRechnung);
         $tplRechnung->erstellen();
         
-        $tplRechnung->speichern($oRechnung->getSpeicherOrt());
+        $speicherort = $tplRechnung->speichern();
         
         // Zur Rechnung weiterleiten
-        $htmlStatus = new HTMLRedirect("", $oRechnung->getSpeicherOrt(), 1);
+        $htmlStatus = new HTMLRedirect("", $speicherort, 1);
         $htmlStatus->anzeigen();
     }
 
@@ -153,10 +153,10 @@ class RechnungController
         $tplRechnung = new AbschlagRechnungOutput("resources/vorlagen/rechnung_abschlag", $oRechnung);
         $tplRechnung->erstellen();
         
-        $tplRechnung->speichern($oRechnung->getSpeicherOrt());
+        $speicherort = $tplRechnung->speichern();
         
         // Zur Rechnung weiterleiten
-        $tplStatus = new HTMLRedirect("Die Rechnung wurde erstellt.", $oRechnung->getSpeicherOrt());
+        $tplStatus = new HTMLRedirect("Die Rechnung wurde erstellt.", $speicherort);
         $tplStatus->anzeigen();
     }
 
@@ -281,11 +281,11 @@ class RechnungController
         $tplRechnung = new StundenRechnungOutput("resources/vorlagen/rechnung_stunde", $oRechnung);
         $tplRechnung->erstellen();
         
-        $tplRechnung->speichern($oRechnung->getSpeicherOrt());
+        $speicherort = $tplRechnung->speichern();
         
         // Zur Rechnung weiterleiten
         $tplStatus = new Template("rechnung_status_zurueck.tpl");
-        $tplStatus->replace("Ziel", $oRechnung->getSpeicherOrt());
+        $tplStatus->replace("Ziel", $speicherort);
         $tplStatus->replace("Sekunden", 1);
         $tplStatus->anzeigen();
     }
@@ -357,11 +357,23 @@ class RechnungController
 
     public static function druckePflegerechnung()
     {
-        if (! isset($_POST['gemeindeid']))
+        if (! isset($_POST['gemeindeid']) || intval($_POST['gemeindeid']) <= 0) {
+            $tplStatus = new HTMLStatus("Bitte wählen Sie eine Gemeinde aus.", HTMLStatus::$STATUS_ERROR, false);
+            $tplStatus->anzeigen();
             return;
+        }
         
-        foreach ($_POST as $key => $val)
+        foreach ($_POST as $key => $val) {
             $_POST[$key] = addslashes(trim($val));
+        }
+        
+        if($_POST['pflegebetrag'] == "") {
+            $tplStatus = new HTMLStatus("Bitte geben Sie zuerst einen Rechnungsbetrag ein.", HTMLStatus::$STATUS_ERROR, false);
+            $tplStatus->anzeigen();
+            return;
+        }
+        
+        $fahrtkosten = doubleval($_POST['fahrtkosten']);
         
         $oRechnung = new PflegeRechnung();
         $oRechnung->setGemeindeID($_POST['gemeindeid']);
@@ -370,7 +382,7 @@ class RechnungController
         $oRechnung->setNummer($_POST['rechnungsnummer']);
         $oRechnung->setText1($_POST['bemerkung1']);
         $oRechnung->setText2($_POST['bemerkung2']);
-        $oRechnung->setFahrtkosten($_POST['fahrtkosten']);
+        $oRechnung->setFahrtkosten($fahrtkosten);
         $oRechnung->setPflegekosten($_POST['pflegebetrag']);
         $oRechnung->errechneGesamtBetrag(true);
         $oRechnung->speichern(true);
@@ -399,8 +411,7 @@ class RechnungController
         // $tplRechnung = new PflegeRechnungOutput("resources/vorlagen/rechnung_pflege", $oRechnung);
         $tplRechnung = new PflegeRechnungOutput("resources/vorlagen/rechnung_pflege", $oRechnung);
         $tplRechnung->erstellen();
-        $neuerSpeicherort = $oRechnung->getSpeicherOrt();
-        $neuerSpeicherort = $tplRechnung->speichern($neuerSpeicherort);
+        $neuerSpeicherort = $tplRechnung->speichern();
         
         // Zur Rechnung weiterleiten
         $tplStatus = new HTMLRedirect("Rechnung wurde erstellt.", $neuerSpeicherort);

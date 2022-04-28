@@ -9,13 +9,24 @@ abstract class RechnungOutput
 
     protected $gemeinde;
 
-    public function __construct($pfad, Rechnung $r)
+    protected $unterordner;
+
+    /**
+     *
+     * @param String $pTemplatePfad            
+     * @param Rechnung $pRechnung            
+     * @param String $unterordner            
+     */
+    public function __construct($pTemplatePfad, Rechnung $pRechnung, $pUnterordner)
     {
-        // $this->template = new RTFOutput($pfad);
-        // $this->template = new ODTOutput($pfad) ;
-        $this->template = new MSWordOutput($pfad);
-        $this->rechnung = $r;
-        $this->gemeinde = new Gemeinde($r->getGemeindeID());
+        $this->template = new MSWordOutput($pTemplatePfad);
+        $this->rechnung = $pRechnung;
+        $this->gemeinde = new Gemeinde($pRechnung->getGemeindeID());
+        
+        if(strpos($pUnterordner, "/") != strlen($pUnterordner) -1) {
+            $pUnterordner .= "/";
+        }
+        $this->unterordner = $pUnterordner;
     }
 
     public function erstellen()
@@ -49,23 +60,51 @@ abstract class RechnungOutput
 
     public abstract function ersetzeRechnungsTags();
 
-    public function speichern($zielpfad)
+    public function speichern()
     {
-        $zielpfad = Utilities::ersetzeZeichen($zielpfad);
-        $verzeichnisse = array(
-            RECHNUNGDIR,
-            RECHNUNGDIR . date("Y"),
-            RECHNUNGDIR . date("Y") . "/abschlag",
-            RECHNUNGDIR . date("Y") . "/stunde",
-            RECHNUNGDIR . date("Y") . "/end",
-            RECHNUNGDIR . date("Y") . "/pflege"
-        );
-        foreach ($verzeichnisse as $dir) {
-            if (! is_dir($dir)) {
-                mkdir($dir);
-            }
+        $zielpfad = $this->getSpeicherOrt();
+//         $zielpfad = Utilities::ersetzeZeichen($zielpfad);
+//         $verzeichnisse = array(
+//             RECHNUNGDIR,
+//             RECHNUNGDIR . date("Y"),
+//             RECHNUNGDIR . date("Y") . "/abschlag",
+//             RECHNUNGDIR . date("Y") . "/stunde",
+//             RECHNUNGDIR . date("Y") . "/end",
+//             RECHNUNGDIR . date("Y") . "/pflege"
+//         );
+        
+//         foreach ($verzeichnisse as $dir) {
+//             if (! is_dir($dir)) {
+//                 mkdir($dir);
+//             }
+//         }
+        
+        // 2020-04-28: Suffix hinzufuegen, falls er nicht existiert.
+        if (false === strpos($zielpfad, MSWordOutput::$FILE_EXTENSTION)) {
+            $zielpfad .= MSWordOutput::$FILE_EXTENSTION;
         }
-        return $this->template->save($zielpfad);
+        $originalSpeicherPfad = $this->template->save($zielpfad);
+        //return $originalSpeicherPfad;
+        
+        // 2022-04-28: Wir geben den relativen Pfad zurueck, weil der fuern den Download gebraucht wird.
+        $relativerSpeicherPfad =str_replace(ROOTDIR, "", $originalSpeicherPfad);
+        return $relativerSpeicherPfad;
+    }
+
+    protected function getSpeicherOrt()
+    {
+        $jahr = date("Y", strtotime($this->rechnung->getDatum(true)));
+        $ordner = RECHNUNGDIR . $jahr ."/".$this->unterordner;
+        
+        $rechNr = str_replace("/", "-", $this->rechnung->getNummer());
+        $kirche = str_replace("/", "-", $this->gemeinde->getKirche());
+        $dateiname = $kirche . "-" . $rechNr;
+        $dateiname = Utilities::ersetzeZeichen($dateiname);
+        
+        if(!is_dir($ordner)) {
+            mkdir($ordner);
+        }
+        return $ordner .$dateiname . ".".MSWordOutput::$FILE_EXTENSTION;
     }
 
     public function convertToEuro($e)

@@ -3,9 +3,11 @@
 class StundenRechnungOutput extends PositionsRechnungsOutput
 {
 
+    public const UNTERORDNER_STUNDE = "stunde/";
+    
     public function __construct($pfad, StundenRechnung $r)
     {
-        parent::__construct($pfad, $r);
+        parent::__construct($pfad, $r, StundenRechnungOutput::UNTERORDNER_STUNDE);
     }
 
     public function ersetzeRechnungsTags()

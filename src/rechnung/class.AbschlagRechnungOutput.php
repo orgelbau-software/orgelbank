@@ -3,9 +3,11 @@
 class AbschlagRechnungOutput extends RechnungOutput
 {
 
+    public const UNTERORDNER_ABSCHLAG = "abschlag/";
+    
     public function __construct($pfad, AbschlagsRechnung $r)
     {
-        parent::__construct($pfad, $r);
+        parent::__construct($pfad, $r, AbschlagRechnungOutput::UNTERORDNER_ABSCHLAG);
     }
 
     public function ersetzeRechnungsTags()

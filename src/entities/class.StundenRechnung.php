@@ -57,17 +57,6 @@ class StundenRechnung extends PositionsRechnung
         return $this->getNettoBetrag();
     }
 
-    public function getSpeicherOrt()
-    {
-        $oGemeinde = new Gemeinde($this->getGemeindeID());
-        $rechNr = str_replace("/", "-", $this->getNummer());
-        $kirche = str_replace("/", "-", $oGemeinde->getKirche());
-        $ziel = parent::getSpeicherOrt() . "stunde/" . $kirche . "-" . $rechNr;
-        $ziel = Utilities::ersetzeZeichen($ziel);
-        $ziel .= MSWordOutput::$FILE_EXTENSTION;
-        return $ziel;
-    }
-
     public function getAzubiLohn($formatiert = false)
     {
         if ($formatiert)

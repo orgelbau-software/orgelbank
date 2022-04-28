@@ -68,9 +68,9 @@ class RechnungUtilities
             $tplSelect->replace("Selected", "");
             $tplSelect->replace("Value", $oGemeinde->getID());
             if ($standardSortierung == "ort") {
-                $tplSelect->replace("Name", $oGemeinde->getKircheAdresse()->getOrt() .", ".$oGemeinde->getKirche());
+                $tplSelect->replace("Name", $oGemeinde->getOrt() .", ".$oGemeinde->getKirche());
             } else {
-                $tplSelect->replace("Name", $oGemeinde->getKirche() . ", " . $oGemeinde->getKircheAdresse());
+                $tplSelect->replace("Name", $oGemeinde->getKirche() . ", " . $oGemeinde->getOrt());
             }
             $strContent .= $tplSelect->getOutputAndRestore();
         }

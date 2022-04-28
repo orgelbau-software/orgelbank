@@ -36,13 +36,6 @@ abstract class Rechnung extends SimpleDatabaseStorageObjekt
     
     public abstract function getType();
 
-    public function getSpeicherOrt()
-    {
-        $jahr = date("Y", strtotime($this->getDatum(true)));
-        // return ROOTDIR."store/rechnungen/" . $jahr . "/";
-        return "store/rechnungen/" . $jahr . "/";
-    }
-
     protected function generateHashtable()
     {
         $ht = new HashTable();

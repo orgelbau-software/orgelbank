@@ -12,10 +12,12 @@ class EndRechnungOutput extends RechnungOutput
     private $tplAbschlagsContent;
 
     private $abschlagContent;
+    
+    public const UNTERORDNER_ENDRECHNUNG = "end/";
 
     public function __construct($pfad, EndRechnung $r)
     {
-        parent::__construct($pfad, $r);
+        parent::__construct($pfad, $r, EndRechnungOutput::UNTERORDNER_ENDRECHNUNG);
         // $this->tplAbschlagsContent = new Output("resources/vorlagen/rechnung_end_abschlag.rtf");
         $this->loadAbschlagsRechnungen();
     }
