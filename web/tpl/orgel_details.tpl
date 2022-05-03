@@ -10,7 +10,7 @@
 			</tr>
 			<tr>
 				<td class="tdLabel">Baujahr:</td>
-				<td><input type="text" name="baujahr" maxlength="10" value="<!--Baujahr-->" class="int40 jsJahr"></td>
+				<td><input type="number" name="baujahr" step="1" min="0" max="2100" value="<!--Baujahr-->" class="int60 jsJahr"></td>
 				<td class="tdLabel">Erbauer:</td>
 				<td colspan="3"><input type="text" name="erbauer" maxlength="50" value="<!--Erbauer-->" class="txt200"></td>
 			</tr>
@@ -22,7 +22,7 @@
 					</select>
 				</td>
 				<td class="tdLabel">Jahr:</th>
-				<td><input type="text" name="renoviert" maxlength="10" value="<!--Renoviert-->" class="int40 jsJahr"></td>
+				<td><input type="number" name="renoviert" step="1" min="0" max="2100" value="<!--Renoviert-->" class="int60 jsJahr"></td>
 				<td class="tdLabel">von:</th>
 				<td><input type="text" name="renovierer" maxlength="50" value="<!--Renovierer-->" class="txt106"></td>
 			</tr>
@@ -58,6 +58,15 @@
 					<select name="registertraktur" class="txt110">
 						<!--Registertraktur-->
 					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="tdLabel">Manuale:</td>
+				<td>
+					<!--AnzahlManuale-->
+				</td>
+				<td class="tdLabel"></td>
+				<td>
 				</td>
 			</tr>
 		</table>
@@ -127,7 +136,7 @@
 			</tr>
 			<tr>
 				<td class="tdLabel">Register:</td>
-				<td><!--Register--></td>
+				<td><!--AnzahlManuale--></td>
 				<td class="tdLabel">Hauptstimmung:</td>
 				<td>
 					<select name="intervall_hauptstimmung" class="width110">
@@ -178,7 +187,7 @@
 				</td>
 			</tr>
 		</table>
-		<h3>Disposition</h3>
+		<h3>Disposition - <!--AnzahlManuale--></h3>
 		<div id="orgeldetailsdisposition" class="txt430">
 			<table class="liste" style="width:100%; border: 0px solid black;">
 				<!--DispositionContent-->

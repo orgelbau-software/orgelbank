@@ -3,6 +3,34 @@
 class OrgelUtilities
 {
 
+    /**
+     * Fuer die Orgel-Liste und Orgel-Details.
+     * 
+     * @param Orgel|OrgelListeBean $pOrgel
+     * @return string Beispiel: II/Pedal
+     */
+    public static function getOrgelManualeUebersicht($pOrgel)
+    {
+        // Manuale aus der Datenbank lesen
+        if ($pOrgel->getManual5() == 1) {
+            $manual = "V";
+        } elseif ($pOrgel->getManual4() == 1) {
+            $manual = "IV";
+        } elseif ($pOrgel->getManual3() == 1) {
+            $manual = "III";
+        } elseif ($pOrgel->getManual2() == 1) {
+            $manual = "II";
+        } elseif ($pOrgel->getManual1() == 1) {
+            $manual = "I";
+        } else {
+            $manual = "keine Manuale";
+        }
+        if ($pOrgel->getPedal() == 1) {
+            $manual = $manual . "/Pedal";
+        }
+        return $manual;
+    }
+
     public static function getOrgelManuale(Orgel $o)
     {
         $a = array();
@@ -90,7 +118,7 @@ class OrgelUtilities
         }
         return OrgelUtilities::queryDBOrgelGemeinde($sql);
     }
-    
+
     public static function getOrgelListeEingeplanteWartungen($pSQLAdd = null, $strOrderBy = null)
     {
         // Missbrauch des Baujahrs um die WartungsId zu uebertragen
@@ -111,7 +139,6 @@ class OrgelUtilities
       		        g.ad_ort ASC";
         return OrgelUtilities::queryDBOrgelGemeinde($sql);
     }
-    
 
     public static function getGemeindeOrgeln($gid, $strOrderBy = null)
     {
@@ -120,7 +147,7 @@ class OrgelUtilities
             $sql .= $strOrderBy;
         return OrgelUtilities::queryDB($sql);
     }
-    
+
     public static function getOrgeln($strOrderBy = null)
     {
         $sql = "SELECT * FROM orgel o WHERE o.o_aktiv = '1' ";

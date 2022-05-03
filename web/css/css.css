@@ -378,7 +378,7 @@ a:hover {
 
 .disabled,.readOnly {
 	border: 1px solid grey;
-	color: grey;
+	color: #404040;
 	text-align: right;
 	background-color: #D4D4D4;
 }

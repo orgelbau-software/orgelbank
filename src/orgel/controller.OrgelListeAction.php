@@ -142,23 +142,7 @@ class OrgelListeAction implements GetRequestHandler, PostRequestHandler
                 $tplOrgellisterubrik->restoreTemplate();
             }
             
-            // Manuale aus der Datenbank lesen
-            if ($oOrgel->getManual5() == 1) {
-                $manual = "V";
-            } elseif ($oOrgel->getManual4() == 1) {
-                $manual = "IV";
-            } elseif ($oOrgel->getManual3() == 1) {
-                $manual = "III";
-            } elseif ($oOrgel->getManual2() == 1) {
-                $manual = "II";
-            } elseif ($oOrgel->getManual1() == 1) {
-                $manual = "I";
-            } else {
-                $manual = "keine Manuale";
-            }
-            if ($oOrgel->getPedal() == 1) {
-                $manual = $manual . "/Pedal";
-            }
+            $manual = OrgelUtilities::getOrgelManualeUebersicht($oOrgel);
             
             // Werte ins Template einfuegen
             $tplOrgellisteDs->replace("OID", $oOrgel->getOrgelID());

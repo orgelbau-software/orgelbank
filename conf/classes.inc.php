@@ -74,6 +74,8 @@ include_once ROOTDIR . 'src/entities/class.Orgel.php';
 include_once ROOTDIR . 'src/orgel/class.OrgelRequestHandler.php';
 include_once ROOTDIR . 'src/orgel/class.OrgelOffeneWartungenRequestHandler.php';
 include_once ROOTDIR . 'src/orgel/class.OrgelUtilities.php';
+include_once ROOTDIR . 'src/orgel/controller.OrgelDetailsAction.php';
+include_once ROOTDIR . 'src/orgel/controller.WartungsListeAction.php';
 include_once ROOTDIR . 'src/orgel/controller.WartungsprotokolleAction.php';
 include_once ROOTDIR . 'src/beans/class.AdressBean.php';
 include_once ROOTDIR . 'src/beans/class.DirectionsBean.php';
