@@ -91,8 +91,7 @@ class WartungsprotokolleAction implements PostRequestHandler, GetRequestHandler
                 
                 if (isset($_FILES['protokoll']) && $_FILES['protokoll']['name'] != "") {
                     $filename = $_FILES['protokoll']['name'];
-                    $fileendung = strtolower(substr(strchr($filename, "."), 1, 5));
-                    
+                    $fileendung = strtolower(substr($filename, strrpos($filename, ".") + 1));
                     if ($fileendung == "pdf") {
                         $dateiSpeichern = true;
                     } else {
@@ -108,7 +107,9 @@ class WartungsprotokolleAction implements PostRequestHandler, GetRequestHandler
                     $filetemp = $_FILES['protokoll']['tmp_name'];
                     $filename = $_FILES['protokoll']['name'];
                     $filesize = $_FILES['protokoll']['size'];
-                    $fileendung = strtolower(substr(strchr($filename, "."), 1, 5));
+                    $fileendung = strtolower(substr($filename, strrpos($filename, ".") + 1));
+                    
+                    $filename = str_replace(" ", "_", $filename);
                     
                     $relativerPfad = "store/protokolle/" . $protokollId . "_" . $filename;
                     $protokollPfad = ROOTDIR . $relativerPfad;
@@ -117,13 +118,17 @@ class WartungsprotokolleAction implements PostRequestHandler, GetRequestHandler
                     if (file_exists($protokollPfad)) {
                         copy($protokollPfad, $protokollPfad . "_" . time());
                     }
-                    copy($filetemp, $protokollPfad);
-                    $protokoll->setDateiname($relativerPfad);
-                    $protokoll->speichern(true);
+                    if(copy($filetemp, $protokollPfad)) {
+                        $protokoll->setDateiname($relativerPfad);
+                        $protokoll->speichern(true);
+                        
+                        $htmlStatus = new HTMLStatus();
+                        $htmlStatus->setText("Wartungsprotokoll gespeichert: " . $protokollPfad);
+                    } else {
+                        $htmlStatus = new HTMLStatus();
+                        $htmlStatus->setText("Wartungsprotokoll konnte nicht gespeichert werden.");
+                    }
                 }
-                                
-                $htmlStatus = new HTMLStatus();
-                $htmlStatus->setText("Wartungsprotokoll gespeichert.");
                 
             } else if ($_POST['submit'] == "Löschen") {
                 WartungsprotokollUtilities::deleteWartungsprotokoll($protokollId);

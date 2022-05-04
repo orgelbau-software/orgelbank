@@ -63,7 +63,7 @@
 			<tr>
 				<td class="tdLabel">Manuale:</td>
 				<td>
-					<!--AnzahlManuale-->
+					<!--AnzahlManualeUndRegister-->
 				</td>
 				<td class="tdLabel"></td>
 				<td>
@@ -76,23 +76,23 @@
 				<th colspan="6">Manuale:</th>
 			</tr>
 			<tr>
-				<td><input type="checkbox" name="manual1" <!--m1-->> M I</td>
+				<td><input type="checkbox" name="manual1" id="manual1" <!--m1-->> <label for="manual1">M I</label></td>
 				<td><input type="text" name="m1groesse" value="<!--m1groesse-->" class="txt45"></td>
 				<td><input type="text" name="m1wd" value="<!--m1wd-->" class="txt30" > mm/WS</td>
-				<td><input type="checkbox" name="manual3" <!--m3-->> M III</td>
+				<td><input type="checkbox" name="manual3" id="manual3" <!--m3-->> <label for="manual3">M III</label></td>
 				<td><input type="text" name="m3groesse" value="<!--m3groesse-->" class="txt45"></td>
 				<td><input type="text" name="m3wd" value="<!--m3wd-->" class="txt30"> mm/WS</td>
 			</tr>
 			<tr>
-				<td><input type="checkbox" name="manual2" <!--m2-->> M II</td>
+				<td><input type="checkbox" name="manual2" id="manual2" <!--m2-->> <label for="manual2">M II</label></td>
 				<td><input type="text" name="m2groesse" value="<!--m2groesse-->" class="txt45"></td>
 				<td><input type="text" name="m2wd" value="<!--m2wd-->" class="txt30"> mm/WS</td>
-				<td><input type="checkbox" name="manual4" <!--m4-->> M IV</td>
+				<td><input type="checkbox" name="manual4" id="manual4" <!--m4-->> <label for="manual4">M IV</label></td>
 				<td><input type="text" name="m4groesse" value="<!--m4groesse-->"class="txt45"></td>
 				<td><input type="text" name="m4wd" value="<!--m4wd-->" class="txt30"> mm/WS</td>
 			</tr>
 			<tr>
-				<td><input type="checkbox" name="pedal" <!--m6-->> Pedal</td>
+				<td><input type="checkbox" name="pedal" id="pedal" <!--m6-->> <label for="pedal">Pedal</label></td>
 				<td><input type="text" name="m6groesse" value="<!--m6groesse-->" class="txt45"></td>
 				<td><input type="text" name="m6wd" value="<!--m6wd-->" class="txt30"> mm/WS</td>
 				<td>&nbsp;</td>
@@ -135,8 +135,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tdLabel">Register:</td>
-				<td><!--AnzahlManuale--></td>
+				<td class="tdLabel"><label for="registeranzahl">Register:</label></td>
+				<td><!--AnzahlManuale--> - <input type="number" name="registeranzahl" id="registeranzahl" value="<!--Register-->" min="0" max="100" step="1" class="int40"/></td>
 				<td class="tdLabel">Hauptstimmung:</td>
 				<td>
 					<select name="intervall_hauptstimmung" class="width110">
@@ -187,7 +187,7 @@
 				</td>
 			</tr>
 		</table>
-		<h3>Disposition - <!--AnzahlManuale--></h3>
+		<h3>Disposition - <!--AnzahlManualeUndRegister--></h3>
 		<div id="orgeldetailsdisposition" class="txt430">
 			<table class="liste" style="width:100%; border: 0px solid black;">
 				<!--DispositionContent-->

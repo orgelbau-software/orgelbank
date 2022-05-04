@@ -79,6 +79,8 @@ class OrgelDetailsAction implements GetRequestHandler
             $arManuale[6] = "checked";
         
         $anzahlManuale = OrgelUtilities::getOrgelManualeUebersicht($oOrgel);
+        $tplOrgelDetails->replace("AnzahlManuale", $anzahlManuale);
+        
         if($oOrgel->getRegisterAnzahl() > 0) {
             $anzahlManuale .= " - ".$oOrgel->getRegisterAnzahl();
         }
@@ -95,7 +97,8 @@ class OrgelDetailsAction implements GetRequestHandler
         $tplOrgelDetails->replace("StimmungNach", $oOrgel->getStimmung());
         $tplOrgelDetails->replace("Register", $oOrgel->getRegisterAnzahl());
         $tplOrgelDetails->replace("Anmerkung", stripslashes($oOrgel->getAnmerkung()));
-        $tplOrgelDetails->replace("AnzahlManuale", $anzahlManuale);
+        $tplOrgelDetails->replace("AnzahlManualeUndRegister", $anzahlManuale);
+        
         
         // Manuale Checkboxen
         $tplOrgelDetails->replace("m1", $arManuale[1]);

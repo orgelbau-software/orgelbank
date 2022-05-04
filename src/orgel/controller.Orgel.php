@@ -145,6 +145,8 @@ class OrgelController
         $oOrgel->setZyklus($_POST['zyklus']);
         $oOrgel->setMassnahmen($_POST['massnahmen']);
         $oOrgel->setGemeindeId($_POST['gemeindeid']);
+        $oOrgel->setRegisterAnzahl(intval($_POST['registeranzahl']));
+        
         if (isset($_POST['wartungsprotokollId'])) {
             $oOrgel->setWartungsprotokollID($_POST['wartungsprotokollId']);
         }
