@@ -111,19 +111,24 @@ class WartungsprotokolleAction implements PostRequestHandler, GetRequestHandler
                     
                     $filename = str_replace(" ", "_", $filename);
                     
-                    $relativerPfad = "store/protokolle/" . $protokollId . "_" . $filename;
-                    $protokollPfad = ROOTDIR . $relativerPfad;
+                    if(!is_dir(WARTUNGSPROTOKOLL_ABSOLUTER_PFAD)) {
+                        mkdir(WARTUNGSPROTOKOLL_ABSOLUTER_PFAD) || die("Verzeichnis kann nicht erstellt werden: ". WARTUNGSPROTOKOLL_ABSOLUTER_PFAD);
+                    }
+                    
+                    $neuerDateiname = $protokollId . "_" . $filename;
+                    $relativerPfad = WARTUNGSPROTOKOLL_RELATIVER_PFAD . $neuerDateiname;
+                    $speicherPfad = WARTUNGSPROTOKOLL_ABSOLUTER_PFAD . $neuerDateiname;
                     
                     // Backup
-                    if (file_exists($protokollPfad)) {
-                        copy($protokollPfad, $protokollPfad . "_" . time());
+                    if (file_exists($speicherPfad)) {
+                        copy($speicherPfad, $speicherPfad . "_" . time());
                     }
-                    if(copy($filetemp, $protokollPfad)) {
+                    if(copy($filetemp, $speicherPfad)) {
                         $protokoll->setDateiname($relativerPfad);
                         $protokoll->speichern(true);
                         
                         $htmlStatus = new HTMLStatus();
-                        $htmlStatus->setText("Wartungsprotokoll gespeichert: " . $protokollPfad);
+                        $htmlStatus->setText("Wartungsprotokoll gespeichert: " . $speicherPfad);
                     } else {
                         $htmlStatus = new HTMLStatus();
                         $htmlStatus->setText("Wartungsprotokoll konnte nicht gespeichert werden.");

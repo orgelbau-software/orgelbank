@@ -7,9 +7,9 @@ mb_internal_encoding( 'UTF-8' );
 
 // Providerspezifische Zugangsdaten laden
 //include_once 'example.php';
-//include_once 'bente.allinkl.conf.php';
+include_once 'bente.allinkl.conf.php';
 //include_once 'krawinkel.allinkl.conf.php';
-include_once 'krawinkel.lokal.conf.php';
+//include_once 'krawinkel.lokal.conf.php';
 
 if((!is_dir(ROOTDIR) || !substr(ROOTDIR, -strlen(ROOTDIR)) === "/")) {
     die("Konstante ROOTDIR zeigt auf ein ungueltiges Verzeichnis. Das Verzeichnis muss mit / enden. " . ROOTDIR);
@@ -23,6 +23,9 @@ define('SUPPORT_MAIL_ADDR', "stephan@watermeyer.info");
 define("ORGELBILD_BILD_PFAD", ROOTDIR . "store/orgelpics/");
 define("ORGELBILD_THUMB_PFAD", ORGELBILD_BILD_PFAD . "thumbs/");
 define('RECHNUNGDIR', ROOTDIR . 'store/rechnungen/');
+
+define("WARTUNGSPROTOKOLL_RELATIVER_PFAD", "store/protokolle/");
+define("WARTUNGSPROTOKOLL_ABSOLUTER_PFAD", ROOTDIR ."" .WARTUNGSPROTOKOLL_RELATIVER_PFAD);
 
 define('MWST_SATZ', 0.19);
 define('STARTRECHNUNGSNUMMER', 1000);
