@@ -35,3 +35,5 @@ DELETE from option_meta where option_name = 'max_idle_time';
 
 INSERT INTO `option_meta` (`option_id`, `option_modul`, `option_name`, `option_value`, `option_autoload`, `option_comment`, `option_editable`, `option_lastchange`, `option_createdate`) VALUES (NULL, 'Allgemein', 'cronjob_last_execution', '0', '1', 'Letzte Ausführung der Cronjobs', '0', '2021-12-15 21:40:53.000000', '2021-12-15 21:40:53.000000');
 ALTER TABLE `option_meta` ADD UNIQUE( `option_name`);
+
+ALTER TABLE `orgel` CHANGE `o_massnahmen` `o_massnahmen` VARCHAR(500) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Notwendige Massnahmen';

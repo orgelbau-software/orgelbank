@@ -65,9 +65,8 @@
 				<td>
 					<!--AnzahlManualeUndRegister-->
 				</td>
-				<td class="tdLabel"></td>
-				<td>
-				</td>
+				<td class="tdLabel">&nbsp;</td>
+				<td>&nbsp;</td>
 			</tr>
 		</table>
 		<br />
@@ -135,8 +134,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tdLabel"><label for="registeranzahl">Register:</label></td>
-				<td><!--AnzahlManuale--> - <input type="number" name="registeranzahl" id="registeranzahl" value="<!--Register-->" min="0" max="100" step="1" class="int40"/></td>
+				<td class="tdLabel"><label for="registeranzahl">Manuale:</label></td>
+				<td><!--AnzahlManuale--></td>
 				<td class="tdLabel">Hauptstimmung:</td>
 				<td>
 					<select name="intervall_hauptstimmung" class="width110">
@@ -145,8 +144,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tdLabel">&nbsp;</td>
-				<td>&nbsp;</td>
+				<td class="tdLabel">Register:</td>
+				<td><input type="number" name="registeranzahl" id="registeranzahl" value="<!--Register-->" min="0" max="100" step="1" class="int50"/></td>
 				<td class="tdLabel">Stimmung nach:</td>
 				<td><input type="text" name="stimmung" maxlength="50" class="width110" value="<!--StimmungNach-->"></td>
 			</tr>
@@ -161,7 +160,7 @@
 			</tr>
 			<tr>
 				<td colspan="4">
-					<textarea name="massnahmen" class="txtarea435"><!--NotwendigeMassnahmen--></textarea>
+					<textarea name="massnahmen" maxlength="500" class="txtarea435"><!--NotwendigeMassnahmen--></textarea>
 				</td>
 			</tr>
 		</table>

@@ -126,7 +126,7 @@
 			</tr>
 			<tr>
 				<td class="tdLabel">Register:</td>
-				<td><!--Register--></td>
+				<td><input type="number" name="registeranzahl" id="registeranzahl" value="<!--Register-->" min="0" max="100" step="1" class="int40"/></td>
 				<td class="tdLabel">Hauptstimmung:</td>
 				<td>
 					<select name="intervall_hauptstimmung" class="width110">

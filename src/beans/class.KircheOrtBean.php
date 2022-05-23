@@ -9,10 +9,14 @@ class KircheOrtBean implements Bean
 
     private $ort;
 
+    //
+    private $kid;
+
     public function init($rs)
     {
         $this->setGemeindeId($rs['g_id']);
         $this->setKirche($rs['g_kirche']);
+        $this->setKID($rs['k_id']);
         $this->setOrt($rs['ad_ort']);
     }
 
@@ -49,5 +53,23 @@ class KircheOrtBean implements Bean
     public function setOrt($ort)
     {
         $this->ort = $ort;
+    }
+
+    /**
+     *
+     * @return the $kid
+     */
+    public function getKID()
+    {
+        return $this->kid;
+    }
+
+    /**
+     *
+     * @param field_type $kid            
+     */
+    public function setKID($kid)
+    {
+        $this->kid = $kid;
     }
 }

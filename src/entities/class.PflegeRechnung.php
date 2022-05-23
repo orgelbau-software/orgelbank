@@ -37,7 +37,14 @@ class PflegeRechnung extends PositionsRechnung
      */
     public function errechneGesamtBetrag($speichern = false)
     {
-        $retVal = $this->getPflegekosten() + $this->getFahrtkosten();
+        $retVal = 0;
+        if(intval($this->getPflegekosten()) !== 0) {
+            $retVal +=  $this->getPflegekosten();
+        }
+        if($this->getFahrtkosten() != "") {
+            $retVal +=  $this->getFahrtkosten();
+        }
+        
         if ($speichern) {
             $this->setNettoBetrag($retVal, true);
         }

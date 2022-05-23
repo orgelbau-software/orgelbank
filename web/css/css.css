@@ -923,7 +923,9 @@ table.registerAuswahl td {
 .width40 {
 	width: 40px;
 }
-
+.width70 {
+	width: 70px;
+}
 .width80 {
 	width: 80px;
 }

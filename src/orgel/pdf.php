@@ -22,7 +22,6 @@ ConstantLoader::performAutoload();
 
 if(isset($_POST['submit'])) {
     $action = strtolower($_POST['submit']);
-    
 } else if(isset($_GET['action'])) {
     $action = strtolower($_GET['action']);
 } else {
