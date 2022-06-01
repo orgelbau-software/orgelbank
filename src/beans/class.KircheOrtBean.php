@@ -16,7 +16,7 @@ class KircheOrtBean implements Bean
     {
         $this->setGemeindeId($rs['g_id']);
         $this->setKirche($rs['g_kirche']);
-        $this->setKID($rs['k_id']);
+        $this->setKID(isset($rs['k_id']) ? $rs['k_id'] : 0);
         $this->setOrt($rs['ad_ort']);
     }
 

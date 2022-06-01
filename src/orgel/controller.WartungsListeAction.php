@@ -298,9 +298,10 @@ class WartungsListeAction implements GetRequestHandler, PostRequestHandler, Post
      */
     public function validatePostRequest()
     {
-        if (! isset($_POST['oid'])) {
+        if (! isset($_POST['orgelId'])) {
             return false;
         }
+        return true;
     }
 
     /**
