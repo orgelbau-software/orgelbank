@@ -84,12 +84,12 @@ class WartungsListeAction implements GetRequestHandler, PostRequestHandler, Post
                 $oWartung->setMitarbeiterId1($_POST['mitarbeiter_1']);
                 $oWartung->setMitarbeiterId2($_POST['mitarbeiter_2']);
                 $oWartung->setMitarbeiterId3($_POST['mitarbeiter_3']);
-                $oWartung->setMitarbeiterIstStd1($_POST['ma1_stunden_ist']);
-                $oWartung->setMitarbeiterIstStd2($_POST['ma2_stunden_ist']);
-                $oWartung->setMitarbeiterIstStd3($_POST['ma3_stunden_ist']);
-                $oWartung->setMitarbeiterFaktStd1($_POST['ma1_stunden_fakt']);
-                $oWartung->setMitarbeiterFaktStd2($_POST['ma2_stunden_fakt']);
-                $oWartung->setMitarbeiterFaktStd3($_POST['ma3_stunden_fakt']);
+                $oWartung->setMitarbeiterIstStd1($this->commaToDot($_POST['ma1_stunden_ist']));
+                $oWartung->setMitarbeiterIstStd2($this->commaToDot($_POST['ma2_stunden_ist']));
+                $oWartung->setMitarbeiterIstStd3($this->commaToDot($_POST['ma3_stunden_ist']));
+                $oWartung->setMitarbeiterFaktStd1($this->commaToDot($_POST['ma1_stunden_fakt']));
+                $oWartung->setMitarbeiterFaktStd2($this->commaToDot($_POST['ma2_stunden_fakt']));
+                $oWartung->setMitarbeiterFaktStd3($this->commaToDot($_POST['ma3_stunden_fakt']));
                 $oWartung->setTastenhalter(isset($_POST['tastenhalter']));
                 $oWartung->setMaterial($_POST['material']);
                 $oWartung->setAbrechnungsArtId($_POST['abrechnung']);
@@ -224,12 +224,12 @@ class WartungsListeAction implements GetRequestHandler, PostRequestHandler, Post
         $tplWartung->replace("NichtDurchgefuehrt", "");
         
         $tplWartung->replace("Material", $oWartung->getMaterial());
-        $tplWartung->replace("Ma1IstStd", $oWartung->getMitarbeiterIstStd1());
-        $tplWartung->replace("Ma2IstStd", $oWartung->getMitarbeiterIstStd2());
-        $tplWartung->replace("Ma3IstStd", $oWartung->getMitarbeiterIstStd3());
-        $tplWartung->replace("Ma1FaktStd", $oWartung->getMitarbeiterFaktStd1());
-        $tplWartung->replace("Ma2FaktStd", $oWartung->getMitarbeiterFaktStd2());
-        $tplWartung->replace("Ma3FaktStd", $oWartung->getMitarbeiterFaktStd3());
+        $tplWartung->replace("Ma1IstStd", $this->dotToComma($oWartung->getMitarbeiterIstStd1()));
+        $tplWartung->replace("Ma2IstStd", $this->dotToComma($oWartung->getMitarbeiterIstStd2()));
+        $tplWartung->replace("Ma3IstStd", $this->dotToComma($oWartung->getMitarbeiterIstStd3()));
+        $tplWartung->replace("Ma1FaktStd", $this->dotToComma($oWartung->getMitarbeiterFaktStd1()));
+        $tplWartung->replace("Ma2FaktStd", $this->dotToComma($oWartung->getMitarbeiterFaktStd2()));
+        $tplWartung->replace("Ma3FaktStd", $this->dotToComma($oWartung->getMitarbeiterFaktStd3()));
         $tplWartung->replace("Tastenhalter", ($oWartung->getTastenhalter() == true ? Constant::$HTML_CHECKED_CHECKED : ""));
         
         // Gemeinde Details
@@ -313,5 +313,20 @@ class WartungsListeAction implements GetRequestHandler, PostRequestHandler, Post
     public function handleInvalidPost()
     {
         return $this->handleInvalidGet();
+    }
+    
+    private function commaToDot($pValue) {
+        if($pValue == null) { 
+            return null;
+        }
+        $stunden = str_replace(",", ".", $pValue);
+        return doubleval($stunden);
+    }
+    
+    private function dotToComma($pValue) {
+        if($pValue == null) {
+            return null;
+        }
+        return str_replace(".", ",", $pValue);
     }
 }

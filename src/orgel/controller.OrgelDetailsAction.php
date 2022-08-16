@@ -179,7 +179,7 @@ class OrgelDetailsAction implements GetRequestHandler
                 } else if ($oWartung->getStimmung() == 1) {
                     $tplWartungen->replace("Hauptstimmung", "Neben");
                 } else {
-                    $tplWartungen->replace("Hauptstimmung", "Keine");
+                    $tplWartungen->replace("Hauptstimmung", "Wartung");
                 }
                 $tplWartungen->next();
             }
@@ -189,8 +189,9 @@ class OrgelDetailsAction implements GetRequestHandler
             $tplWartungen->next();
         }
         $tplOrgelDetails->replace("Wartungen", $tplWartungen->getOutput());
-        if ($oOrgel->getAnzahlManuale() == 0)
+        if ($oOrgel->getAnzahlManuale() == 0) {
             $tplOrgelDetails->replace("CSSSpanHide", "hideContent");
+        }
         
         // Wartungsprotokolle
         $cWartungsprotokolle = WartungsprotokollUtilities::getWartungsprotokolle();

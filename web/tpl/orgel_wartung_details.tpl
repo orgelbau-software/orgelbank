@@ -45,7 +45,7 @@
 		<th>Stimmung:</th>
 		<td>
 			<select name="stimmung" tabindex="3" class="txt150">
-				<option value="0" <!--NichtDurchgefuehrt-->>keine Stimmung</option>
+				<option value="0" <!--NichtDurchgefuehrt-->>nur Wartung</option>
 				<option value="1" <!--Nebenstimmung-->>Nebenstimmung</option>
 				<option value="2" <!--Hauptstimmung-->>Hauptstimmung</option>
 				<option value="3" <!--Zungenstimmung-->>Zungenstimmung</option>
