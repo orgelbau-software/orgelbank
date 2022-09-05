@@ -91,9 +91,13 @@ try {
             
             $mail = & Mail::factory('mail');
             $mail->send($bestaetigungsmail_adresse, $hdrs, $body);
-            $mail->send(CUSTOMER_MAIL_TO, $hdrs, $body);
-            
-            $retVal['mail'] =  "Best&auml;tigungsmail wurde erfolgreich versandt!";
+            if(CUSTOMER_MAIL_TO != "") {
+                $retVal['kundenmail'] =  "Best&auml;tigungsmail wurde an den Kunden erfolgreich versandt! ";
+                $mail->send(CUSTOMER_MAIL_TO, $hdrs, $body);
+            } else {
+                $retVal['kundenmail'] =  "Keine Email an den Kunden versendet!";
+            }
+            $retVal['mail'] =  "Best&auml;tigungsmail wurde erfolgreich an den Administrator versandt!";
             $retVal['http_status'] = 200;
         }
     }
