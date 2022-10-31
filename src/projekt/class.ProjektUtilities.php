@@ -29,12 +29,12 @@ class ProjektUtilities
 				ORDER BY ";
         
         // Sortierung nach Ort oder Gemeinde
-        if(ConstantLoader::getGemeindeListeStandardSortierung() == "ort") {
-            $sql .= "ad.ad_ort, ";
-        } else {
-            $sql .= "g_kirche, ";
-        }
-        
+//         if(ConstantLoader::getGemeindeListeStandardSortierung() == "ort") {
+//             $sql .= "ad.ad_ort, ";
+//         } else {
+//             $sql .= "g_kirche, ";
+//         }
+        $sql .= " p.proj_sortierung, "; 
         $sql .= " p.proj_bezeichnung, 
 					a.au_bezeichnung,
 					a2.au_bezeichnung";
