@@ -168,7 +168,7 @@ class WartungsListeAction implements GetRequestHandler, PostRequestHandler, Post
                 $tplWartungDS->replace("Datum", $wartung->getDatum(true));
                 $tplWartungDS->replace("Mitarbeiter", $benutzer->getBenutzername());
                 $tplWartungDS->replace("Bemerkung", $wartung->getBemerkung());
-                $tplWartungDS->replace("Temperatur", ($wartung->getTemperatur() != "" ? $wartung->getTemperatur() . " �C" : ""));
+                $tplWartungDS->replace("Temperatur", ($wartung->getTemperatur() != "" ? $wartung->getTemperatur() . " °C" : ""));
                 $tplWartungDS->replace("Stimmtonhoehe", ($wartung->getStimmtonHoehe() != "" ? $wartung->getStimmtonHoehe() . " HZ" : ""));
                 $tplWartungDS->replace("Luftfeuchtigkeit", ($wartung->getLuftfeuchtigkeit() != "" ? $wartung->getLuftfeuchtigkeit() . " %" : ""));
                 
