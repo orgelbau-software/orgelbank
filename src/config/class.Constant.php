@@ -121,10 +121,10 @@ class Constant
     public static function getAnredeAuswahl()
     {
         return array(
-            "" => "keine",
+            "keine" => "keine",
             "Herr" => "Herr",
             "Frau" => "Frau",
-            "HerrFrau" => "Herr und Frau"
+            "Herr und Frau" => "Herr und Frau"
         );
     }
 
@@ -132,8 +132,8 @@ class Constant
     {
         return array(
             "" => "",
-            "Dr." => "Doktor",
-            "Prof." => "Professor"
+            "Doktor" => "Doktor",
+            "Professor" => "Professor"
         );
     }
 

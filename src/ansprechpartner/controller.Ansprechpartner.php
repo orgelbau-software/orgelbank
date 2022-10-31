@@ -271,19 +271,20 @@ class AnsprechpartnerController
         // Ansprechpartner Liste Ende
         
         $tplAnsprechpartner->replace("Dir", $strTPLDir);
+               
+        $tplAnredeArtenDL = new HTMLDatalistForArray(Constant::getAnredeAuswahl());
+        $tplAnsprechpartner->replace("AnredeDatalist", $tplAnredeArtenDL->getOutput());
+        $tplAnsprechpartner->replace("Anrede", $oAnsprechpartner->getAnrede());
         
-        $htmlSelectAnrede = new HTMLSelectForArray(Constant::getAnredeAuswahl(), $oAnsprechpartner->getAnrede());
-        $tplAnsprechpartner->replace("SelectAnrede", $htmlSelectAnrede->getOutput());
-        
-        $htmlSelectAnrede = new HTMLSelectForArray(Constant::getTitelAuswahl(), $oAnsprechpartner->getTitel());
-        $tplAnsprechpartner->replace("SelectTitel", $htmlSelectAnrede->getOutput());
+        $tplTitelArtenDL = new HTMLDatalistForArray(Constant::getTitelAuswahl());
+        $tplAnsprechpartner->replace("TitelDatalist", $tplTitelArtenDL->getOutput());
+        $tplAnsprechpartner->replace("Titel", $oAnsprechpartner->getTitel());
         
         $selectLand = new HTMLSelectForArray(ConstantLoader::getLaenderAuswahl(), $oAnsprechpartner->getAdresse()->getLand());
         $tplAnsprechpartner->replace("Laender", $selectLand->getOutput());
         
         $tplAnsprechpartner->replace("Funktion", $oAnsprechpartner->getFunktion());
         $tplAnsprechpartner->replace("Firma", $oAnsprechpartner->getFirma());
-        $tplAnsprechpartner->replace("Anrede", $oAnsprechpartner->getAnrede());
         $tplAnsprechpartner->replace("Vorname", $oAnsprechpartner->getVorname());
         $tplAnsprechpartner->replace("Nachname", $oAnsprechpartner->getNachname());
         $tplAnsprechpartner->replace("Strasse", $oAnsprechpartner->getAdresse()

@@ -10,17 +10,19 @@
 	<tr>
 		<th>Anrede:</th>
 		<td>
-			<select name="anrede">
-				<!--SelectAnrede-->
-			</select>
+			<input type="text" name="anrede" class="txt170" list="anrededatalist" value="<!--Anrede-->"/>
+			<datalist id="anrededatalist">
+  				<!--AnredeDatalist-->
+			</datalist>
 		</td>
 	</tr>
 	<tr>
 		<th>Titel:</th>
 		<td>
-			<select name="titel">
-				<!--SelectTitel-->
-			</select>
+			<input type="text" name="titel" class="txt170" list="titeldatalist" value="<!--Titel-->"/>
+			<datalist id="titeldatalist">
+  				<!--TitelDatalist-->
+			</datalist>
 		</td>
 	</tr>
 	<tr>

@@ -91,11 +91,13 @@ class EinstellungController
             $firma = new Ansprechpartner();
         }
         
-        $htmlSelectAnrede = new HTMLSelectForArray(Constant::getAnredeAuswahl(), $firma->getAnrede());
-        $tpl->replace("SelectAnrede", $htmlSelectAnrede->getOutput());
+        $tplAnredeArtenDL = new HTMLDatalistForArray(Constant::getAnredeAuswahl());
+        $tpl->replace("AnredeDatalist", $tplAnredeArtenDL->getOutput());
+        $tpl->replace("Anrede", $firma->getAnrede());
         
-        $htmlSelectAnrede = new HTMLSelectForArray(Constant::getTitelAuswahl(), $firma->getTitel());
-        $tpl->replace("SelectTitel", $htmlSelectAnrede->getOutput());
+        $tplTitelArtenDL = new HTMLDatalistForArray(Constant::getTitelAuswahl());
+        $tpl->replace("TitelDatalist", $tplTitelArtenDL->getOutput());
+        $tpl->replace("Titel", $firma->getTitel());
         
         $tpl->replace("AID", $firma->getID());
         $tpl->replace("AnredeHerr", "");
@@ -103,7 +105,7 @@ class EinstellungController
         $tpl->replace("AnredeKeine", "");
         
         $tpl->replace("Funktion", $firma->getFunktion());
-        $tpl->replace("Anrede", $firma->getAnrede());
+        
         $tpl->replace("Vorname", $firma->getVorname());
         $tpl->replace("Nachname", $firma->getNachname());
         $tpl->replace("Strasse", $firma->getAdresse()
