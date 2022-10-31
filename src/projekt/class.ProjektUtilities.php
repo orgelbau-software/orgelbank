@@ -12,7 +12,8 @@ class ProjektUtilities
 					benutzer b, 
 					aufgabe_mitarbeiter am, 
 					projekt p, 
-					gemeinde g, 
+					gemeinde g,
+                    adresse ad,
 					projekt_aufgabe pa, 
 					aufgabe a LEFT JOIN aufgabe a2 on a.au_id = a2.au_parentid AND a2.au_geloescht = 0
 				WHERE b.be_id = " . $iBenutzerID . " 
@@ -21,12 +22,20 @@ class ProjektUtilities
 					AND p.proj_id = pa.proj_id 
 					AND pa.au_id = a.au_id
 					AND p.g_id = g.g_id
+                    AND g.g_kirche_aid = ad.ad_id
 					AND a.au_geloescht = 0
 					AND p.proj_geloescht = 0
 					AND p.proj_archiviert = 0 
-				ORDER BY
-					g_kirche,
-					p.proj_bezeichnung, 
+				ORDER BY ";
+        
+        // Sortierung nach Ort oder Gemeinde
+        if(ConstantLoader::getGemeindeListeStandardSortierung() == "ort") {
+            $sql .= "ad.ad_ort, ";
+        } else {
+            $sql .= "g_kirche, ";
+        }
+        
+        $sql .= " p.proj_bezeichnung, 
 					a.au_bezeichnung,
 					a2.au_bezeichnung";
         return ProjektUtilities::queryDB($sql);
