@@ -8,9 +8,9 @@
 			<th>Datum</th>
 			<th>Mitarbeiter</th>
 			<th>Bemerkung</th>
-			<th>Temperatur</th>
-			<th>Luftfeuchte</th>
-			<th>Stimmtonh&ouml;he</th>
+			<th class="alignRight">Temperatur</th>
+			<th class="alignRight">Luftfeuchte</th>
+			<th class="alignRight">Stimmtonh&ouml;he</th>
 			<th>Stimmung</th>
 			<th colspan="2">Aktionen</th>
 		</tr>
