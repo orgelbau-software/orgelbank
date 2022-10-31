@@ -26,11 +26,11 @@ if (isset($_GET['ansicht']) && $_GET['ansicht'] == "liste") {
         
         if ($results !== false) {
             foreach ($results as $current) {
-                $retVal[] = utf8_encode($current['d_name']);
+                $retVal[] = $current['d_name'];
             }
         }
     }
-    header('Content-Type: application/json');
+    header('Content-Type: application/json;  charset=utf-8');
     echo json_encode($retVal);
 } else if (isset($_GET['action'], $_GET['order']) && $_GET['action'] == "dispositionssort") {
     header('Content-Type: application/json');
