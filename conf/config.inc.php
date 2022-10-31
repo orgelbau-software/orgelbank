@@ -50,7 +50,14 @@ set_exception_handler("ExceptionHandler::handle");
 
 // Klassen
 
-session_set_save_handler(array('OrgelbankSessionHandler', 'open'), array('OrgelbankSessionHandler', 'close'), array('OrgelbankSessionHandler', 'read'), array('OrgelbankSessionHandler', 'write'), array('OrgelbankSessionHandler', 'destroy'), array('OrgelbankSessionHandler', 'gc'));
+session_set_save_handler(
+        array('OrgelbankSessionHandler', 'open'), 
+        array('OrgelbankSessionHandler', 'close'), 
+        array('OrgelbankSessionHandler', 'read'), 
+        array('OrgelbankSessionHandler', 'write'), 
+        array('OrgelbankSessionHandler', 'destroy'), 
+        array('OrgelbankSessionHandler', 'gc')
+    );
 
 // Logging
 // Log::setLogger(new DoNothingLogger());
