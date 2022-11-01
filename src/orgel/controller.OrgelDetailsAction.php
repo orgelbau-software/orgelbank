@@ -1,9 +1,11 @@
 <?php
 
-class OrgelDetailsAction implements GetRequestHandler
+class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
 {
 
     private $mOrgelId;
+    
+    private $mStatus;
 
     /**
      *
@@ -81,8 +83,8 @@ class OrgelDetailsAction implements GetRequestHandler
         $anzahlManuale = OrgelUtilities::getOrgelManualeUebersicht($oOrgel);
         $tplOrgelDetails->replace("AnzahlManuale", $anzahlManuale);
         
-        if($oOrgel->getRegisterAnzahl() > 0) {
-            $anzahlManuale .= " - ".$oOrgel->getRegisterAnzahl();
+        if ($oOrgel->getRegisterAnzahl() > 0) {
+            $anzahlManuale .= " - " . $oOrgel->getRegisterAnzahl();
         }
         
         // Replaces
@@ -95,10 +97,10 @@ class OrgelDetailsAction implements GetRequestHandler
         $tplOrgelDetails->replace("NotwendigeMassnahmen", $oOrgel->getMassnahmen());
         $tplOrgelDetails->replace("Hauptstimmung", $oOrgel->getHauptstimmung());
         $tplOrgelDetails->replace("StimmungNach", $oOrgel->getStimmung());
+        $tplOrgelDetails->replace("Stimmton", $oOrgel->getStimmton());
         $tplOrgelDetails->replace("Register", $oOrgel->getRegisterAnzahl());
         $tplOrgelDetails->replace("Anmerkung", stripslashes($oOrgel->getAnmerkung()));
         $tplOrgelDetails->replace("AnzahlManualeUndRegister", $anzahlManuale);
-        
         
         // Manuale Checkboxen
         $tplOrgelDetails->replace("m1", $arManuale[1]);
@@ -286,8 +288,119 @@ class OrgelDetailsAction implements GetRequestHandler
             $tplOrgelBilder->replace("OID", $oOrgel->getID());
         }
         
+        // Status von vorheriger Speicherung?
+        if($this->mStatus != null) {
+            $tplOrgelDetails->replace("Status", $this->mStatus);
+        } else {
+            $tplOrgelDetails->replace("Status", "");
+        }
+        
         $tplOrgelDetails->replace("OrgelBilder", $tplOrgelBilder->getOutput());
         $tplOrgelDetails->replace("AnzahlOrgelBilder", $iBildCounter);
         return $tplOrgelDetails;
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see PostRequestHandler::preparePost()
+     */
+    public function preparePost()
+    {
+        // TODO Auto-generated method stub
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see PostRequestHandler::executePost()
+     */
+    public function executePost()
+    {
+        if (! isset($_POST['o_id']))
+            return;
+        
+        if ($_POST['o_id'] == 0) {
+            $oOrgel = new Orgel(); // Bei neuer Orgel wird 0 uebergeben
+        } else {
+            $oOrgel = new Orgel($_POST['o_id']); // Orgel per ID laden
+        }
+        
+        // Speichern
+        $oOrgel->setAktiv(1);
+        $oOrgel->setBaujahr($_POST['baujahr']);
+        $oOrgel->setErbauer($_POST['erbauer']);
+        $oOrgel->setOstID($_POST['status']);
+        $oOrgel->setRenoviert($_POST['renoviert']);
+        $oOrgel->setRenovierer($_POST['renovierer']);
+        $oOrgel->setWindladeID($_POST['windlade']);
+        $oOrgel->setSpieltrakturID($_POST['spieltraktur']);
+        $oOrgel->setKoppelID($_POST['koppel']);
+        $oOrgel->setRegistertrakturID($_POST['registertraktur']);
+        $oOrgel->setStimmung($_POST['stimmung']);
+        $oOrgel->setStimmton($_POST['stimmton']);
+        $oOrgel->setAnmerkung($_POST['anmerkung']);
+        $oOrgel->setPflegevertrag($_POST['pflegevertrag']);
+        $oOrgel->setKostenHauptstimmung($_POST['kostenhauptstimmung']);
+        $oOrgel->setKostenTeilstimmung($_POST['kostenteilstimmung']);
+        $oOrgel->setIntervallHauptstimmung($_POST['intervall_hauptstimmung']);
+        $oOrgel->setZyklus($_POST['zyklus']);
+        $oOrgel->setMassnahmen($_POST['massnahmen']);
+        $oOrgel->setGemeindeId($_POST['gemeindeid']);
+        $oOrgel->setRegisterAnzahl(isset($_POST['registeranzahl']) ? intval($_POST['registeranzahl']) : 0);
+        
+        if (isset($_POST['wartungsprotokollId'])) {
+            $oOrgel->setWartungsprotokollID($_POST['wartungsprotokollId']);
+        }
+        
+        if (isset($_POST['manual1'])) {
+            $oOrgel->setManual1(1);
+        } else {
+            $oOrgel->setManual1(0);
+        }
+        if (isset($_POST['manual2'])) {
+            $oOrgel->setManual2(1);
+        } else {
+            $oOrgel->setManual2(0);
+        }
+        if (isset($_POST['manual3'])) {
+            $oOrgel->setManual3(1);
+        } else {
+            $oOrgel->setManual3(0);
+        }
+        if (isset($_POST['manual4'])) {
+            $oOrgel->setManual4(1);
+        } else {
+            $oOrgel->setManual4(0);
+        }
+        if (isset($_POST['pedal'])) {
+            $oOrgel->setPedal(1);
+        } else {
+            $oOrgel->setPedal(0);
+        }
+        
+        $oOrgel->setGroesseM1($_POST['m1groesse']);
+        $oOrgel->setGroesseM2($_POST['m2groesse']);
+        $oOrgel->setGroesseM3($_POST['m3groesse']);
+        $oOrgel->setGroesseM4($_POST['m4groesse']);
+        $oOrgel->setGroesseM6($_POST['m6groesse']);
+        
+        $oOrgel->setWinddruckM1($_POST['m1wd']);
+        $oOrgel->setWinddruckM2($_POST['m2wd']);
+        $oOrgel->setWinddruckM3($_POST['m3wd']);
+        $oOrgel->setWinddruckM4($_POST['m4wd']);
+        $oOrgel->setWinddruckM6($_POST['m6wd']);
+        $oOrgel->speichern(true);
+        
+        
+        $this->mStatus = new HTMLStatus();
+        $this->mStatus->setStatusclass(HTMLStatus::$STATUS_OK);
+        $this->mStatus->setText("Orgeldetails gespeichert.");
+        
+        $this->mOrgelId = $oOrgel->getID();
+        
+        return $this->executeGet();
     }
 }

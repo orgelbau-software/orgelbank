@@ -89,6 +89,7 @@ class OrgelController
         // Kosten Haupt und Teilstimmung
         $tplOrgelDetails->replace("KostenHauptstimmung", "");
         $tplOrgelDetails->replace("KostenTeilstimmung", "");
+        $tplOrgelDetails->replace("Stimmton", "");
         
         $htmlIntervalHauptstimmung = new HTMLSelectForArray(Constant::getIntervallHauptstimmung());
         $tplOrgelDetails->replace("IntervallHaupstimmungSelect", $htmlIntervalHauptstimmung->getOutput());
@@ -114,86 +115,7 @@ class OrgelController
 
     public static function speicherOrgelDetails()
     {
-        if (! isset($_POST['o_id']))
-            return;
-        
-        if ($_POST['o_id'] == 0) {
-            $oOrgel = new Orgel(); // Bei neuer Orgel wird 0 uebergeben
-        } else {
-            $oOrgel = new Orgel($_POST['o_id']); // Orgel per ID laden
-        }
-        
-        $tplStatus = new Output("./templates/status_zurueck_u_redirect.tpl");
-        
-        // Speichern
-        $oOrgel->setAktiv(1);
-        $oOrgel->setBaujahr($_POST['baujahr']);
-        $oOrgel->setErbauer($_POST['erbauer']);
-        $oOrgel->setOstID($_POST['status']);
-        $oOrgel->setRenoviert($_POST['renoviert']);
-        $oOrgel->setRenovierer($_POST['renovierer']);
-        $oOrgel->setWindladeID($_POST['windlade']);
-        $oOrgel->setSpieltrakturID($_POST['spieltraktur']);
-        $oOrgel->setKoppelID($_POST['koppel']);
-        $oOrgel->setRegistertrakturID($_POST['registertraktur']);
-        $oOrgel->setStimmung($_POST['stimmung']);
-        $oOrgel->setAnmerkung($_POST['anmerkung']);
-        $oOrgel->setPflegevertrag($_POST['pflegevertrag']);
-        $oOrgel->setKostenHauptstimmung($_POST['kostenhauptstimmung']);
-        $oOrgel->setKostenTeilstimmung($_POST['kostenteilstimmung']);
-        $oOrgel->setIntervallHauptstimmung($_POST['intervall_hauptstimmung']);
-        $oOrgel->setZyklus($_POST['zyklus']);
-        $oOrgel->setMassnahmen($_POST['massnahmen']);
-        $oOrgel->setGemeindeId($_POST['gemeindeid']);
-        $oOrgel->setRegisterAnzahl(isset($_POST['registeranzahl']) ? intval($_POST['registeranzahl']) : 0);
-        
-        if (isset($_POST['wartungsprotokollId'])) {
-            $oOrgel->setWartungsprotokollID($_POST['wartungsprotokollId']);
-        }
-        
-        if (isset($_POST['manual1'])) {
-            $oOrgel->setManual1(1);
-        } else {
-            $oOrgel->setManual1(0);
-        }
-        if (isset($_POST['manual2'])) {
-            $oOrgel->setManual2(1);
-        } else {
-            $oOrgel->setManual2(0);
-        }
-        if (isset($_POST['manual3'])) {
-            $oOrgel->setManual3(1);
-        } else {
-            $oOrgel->setManual3(0);
-        }
-        if (isset($_POST['manual4'])) {
-            $oOrgel->setManual4(1);
-        } else {
-            $oOrgel->setManual4(0);
-        }
-        if (isset($_POST['pedal'])) {
-            $oOrgel->setPedal(1);
-        } else {
-            $oOrgel->setPedal(0);
-        }
-        
-        $oOrgel->setGroesseM1($_POST['m1groesse']);
-        $oOrgel->setGroesseM2($_POST['m2groesse']);
-        $oOrgel->setGroesseM3($_POST['m3groesse']);
-        $oOrgel->setGroesseM4($_POST['m4groesse']);
-        $oOrgel->setGroesseM6($_POST['m6groesse']);
-        
-        $oOrgel->setWinddruckM1($_POST['m1wd']);
-        $oOrgel->setWinddruckM2($_POST['m2wd']);
-        $oOrgel->setWinddruckM3($_POST['m3wd']);
-        $oOrgel->setWinddruckM4($_POST['m4wd']);
-        $oOrgel->setWinddruckM6($_POST['m6wd']);
-        $oOrgel->speichern(true);
-        
-        $tplStatus->replace("<!--Text-->", "Orgeldetails gespeichert.");
-        $tplStatus->replace("<!--Sekunden-->", 1);
-        $tplStatus->replace("<!--Ziel-->", "index.php?page=2&do=21&oid=" . $oOrgel->getID());
-        echo $tplStatus->getOutput();
+        RequestHandler::handle(new OrgelDetailsAction());
     }
 
     public static function zeigeOrgelDetails()

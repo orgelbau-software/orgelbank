@@ -1,0 +1,1 @@
+ALTER TABLE `orgel` ADD `o_stimmton` VARCHAR(10) NOT NULL AFTER `o_stimmung`;

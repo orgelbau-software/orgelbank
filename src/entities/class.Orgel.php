@@ -84,6 +84,8 @@ class Orgel extends SimpleDatabaseStorageObjekt
     private $wartungsprotokollId;
     
     private $intervallHauptstimmung;
+    
+    private $stimmton;
 
     // Konstruktor
     public function __construct($iID = 0, $primaryKey = "o_id", $tableName = "orgel", $tablePrefix = "o_")
@@ -128,6 +130,7 @@ class Orgel extends SimpleDatabaseStorageObjekt
         $ht->add("o_m6groesse", $this->getGroesseM6());
         $ht->add("o_pedal", $this->getPedal());
         $ht->add("o_stimmung", $this->getStimmung());
+        $ht->add("o_stimmton", $this->getStimmton());
         $ht->add("o_aktiv", $this->getAktiv());
         $ht->add("o_anzahlregister", $this->getRegisterAnzahl());
         $ht->add("g_id", $this->getGemeindeId());
@@ -178,6 +181,7 @@ class Orgel extends SimpleDatabaseStorageObjekt
         $this->setGroesseM6($rs['o_m6groesse']);
         $this->setPedal($rs['o_pedal']);
         $this->setStimmung($rs['o_stimmung']);
+        $this->setStimmton($rs['o_stimmton']);
         $this->setAktiv($rs['o_aktiv']);
         $this->setRegisterAnzahl($rs['o_anzahlregister']);
         $this->setLetztePflege($rs['o_letztepflege']);
@@ -321,6 +325,11 @@ class Orgel extends SimpleDatabaseStorageObjekt
     public function getStimmung()
     {
         return $this->stimmung;
+    }
+    
+    public function getStimmton()
+    {
+        return $this->stimmton;
     }
 
     public function getWinddruckM1()
@@ -570,6 +579,15 @@ class Orgel extends SimpleDatabaseStorageObjekt
             $this->setChanged(true);
         }
         $this->stimmung = $stimmung;
+    }
+    
+    public function setStimmton($stimmton)
+    {
+        if ($this->stimmton != $stimmton) {
+            $this->stimmton = $stimmton;
+            $this->setChanged(true);
+        }
+        $this->stimmton = $stimmton;
     }
 
     public function setTemperatur($temperatur)

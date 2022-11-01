@@ -188,6 +188,15 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
         $this->activateFontNormal();
         $this->Cell($td, $this->cellheight, Constant::getIntervallHauptstimmung()[$oOrgel->getIntervallHauptstimmung()], $rahmen, 1, $ausrichtungTD);
         
+        $this->activateFontBold();
+        $this->Cell($th, $this->cellheight, 'Orig. Stimmton:', $rahmen, 0, $ausrichtungTH);
+        $this->activateFontNormal();
+        $this->Cell($td, $this->cellheight, $oOrgel->getStimmton(), $rahmen, 0, $ausrichtungTD);
+        $this->activateFontBold();
+        $this->Cell($th, $this->cellheight, '', $rahmen, 0, $ausrichtungTH);
+        $this->activateFontNormal();
+        $this->Cell($td, $this->cellheight,'', $rahmen, 1, $ausrichtungTD);
+        
         $this->addWartungsBlock($oOrgel);
         
         $massnahmen = $oOrgel->getMassnahmen() != "" ? $oOrgel->getMassnahmen() : "(keine)";

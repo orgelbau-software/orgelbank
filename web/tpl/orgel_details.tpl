@@ -149,6 +149,12 @@
 				<td class="tdLabel">Stimmung nach:</td>
 				<td><input type="text" name="stimmung" maxlength="50" class="width110" value="<!--StimmungNach-->"></td>
 			</tr>
+			<tr>
+				<td class="tdLabel">&nbsp;</td>
+				<td>&nbsp;</td>
+				<td class="tdLabel">Stimmton:</td>
+				<td><input type="number" name="stimmton" maxlength="50" class="width110" value="<!--Stimmton-->"  min="0" max="1000" step="0.1"></td>
+			</tr>
             <tr>
 				<td class="tdLabel">Hauptstimmung:</td>
 				<td><input type="text" min="1" step="any"  name="kostenhauptstimmung" maxlength="50" class="width80" value="<!--KostenHauptstimmung-->"> &euro;</td>
@@ -227,6 +233,8 @@
 			</tr>
 		</table>
 		<a href="index.php?page=2&do=23&action=show&oid=<!--OID-->" title="Bilder der Orgel verwalten">Bilder verwalten</a>
+		
+		<!--Status-->
 	</td>
 </tr>
 </table>
