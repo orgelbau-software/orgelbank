@@ -44,7 +44,7 @@ class OrgelbankPHPSpreadsheetWriter
 
     public function write($pCoordinates, $pText, $pFormat = null)
     {
-        $this->mExcel->getActiveSheet()->setCellValue($pCoordinates, utf8_encode($pText));
+        $this->mExcel->getActiveSheet()->setCellValue($pCoordinates, $pText);
         
         if ($pFormat == "bold") {
             $this->mExcel->getActiveSheet()

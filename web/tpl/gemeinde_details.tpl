@@ -156,6 +156,8 @@
 			<a href="index.php?page=2&do=24&gid=<!--GemeindeID-->" title="Eine neue Orgel f&uuml;r die Gemeinde <!--GemeindeNamen--> erstellen">Neue Orgel hinzufügen</a><br />
 			<br />
 			Um eine bestehende Orgel einer Gemeinde zuzuordnen, in den Orgeldetails auf  "Gemeinde hinzufügen" klicken.<br />
+			
+			<!--Status-->
 		</td>
 	</tr>
 </table>
