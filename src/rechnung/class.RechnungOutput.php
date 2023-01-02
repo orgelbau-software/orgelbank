@@ -87,7 +87,7 @@ abstract class RechnungOutput
         $dateiname = Utilities::ersetzeZeichen($dateiname);
         
         if (! is_dir($ordner)) {
-            mkdir($ordner);
+             mkdir($ordner, 0755, true);
         }
         return $ordner . $dateiname . "." . MSWordOutput::$FILE_EXTENSTION;
     }
