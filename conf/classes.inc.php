@@ -112,6 +112,7 @@ include_once ROOTDIR . 'src/projekt/class.UrlaubsUtilities.php';
 include_once ROOTDIR . 'src/projekt/controller.UrlaubsVerwaltungAction.php';
 include_once ROOTDIR . 'src/projekt/controller.JahresurlaubAnlegenAction.php';
 include_once ROOTDIR . 'src/projekt/controller.ProjektDetailsAction.php';
+include_once ROOTDIR . 'src/projekt/controller.ProjektListeAction.php';
 include_once ROOTDIR . 'src/projekt/class.ProjektKostenRechner.php';
 include_once ROOTDIR . 'src/entities/class.Aufgabe.php';
 include_once ROOTDIR . 'src/projekt/class.AufgabeUtilities.php';
