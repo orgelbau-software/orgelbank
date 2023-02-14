@@ -14,7 +14,8 @@ class Constant
             1 => "Nebenstimmung",
             2 => "Hauptstimmung",
             3 => "Zungenstimmung",
-            4 => "Wartung"
+            4 => "Wartung",
+            5 => "Reparatur"
         );
     }
     

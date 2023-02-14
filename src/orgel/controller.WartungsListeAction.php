@@ -217,11 +217,14 @@ class WartungsListeAction implements GetRequestHandler, PostRequestHandler, Post
             $tplWartung->replace("Zungenstimmung", Constant::$HTML_SELECTED_SELECTED);
         } elseif ($oWartung->getStimmung() == 0) {
             $tplWartung->replace("NichtDurchgefuehrt", Constant::$HTML_SELECTED_SELECTED);
+        } elseif ($oWartung->getStimmung() == 5) {
+            $tplWartung->replace("Reparatur", Constant::$HTML_SELECTED_SELECTED);
         }
         $tplWartung->replace("Hauptstimmung", "");
         $tplWartung->replace("Nebenstimmung", "");
         $tplWartung->replace("Zungenstimmung", "");
         $tplWartung->replace("NichtDurchgefuehrt", "");
+        $tplWartung->replace("Reparatur", "");
         
         $tplWartung->replace("Material", $oWartung->getMaterial());
         $tplWartung->replace("Ma1IstStd", $this->dotToComma($oWartung->getMitarbeiterIstStd1()));

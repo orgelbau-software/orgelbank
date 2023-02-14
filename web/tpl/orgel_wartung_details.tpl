@@ -11,7 +11,7 @@
 			<th class="alignRight">Temperatur</th>
 			<th class="alignRight">Luftfeuchte</th>
 			<th class="alignRight">Stimmtonh&ouml;he</th>
-			<th>Stimmung</th>
+			<th>Art</th>
 			<th colspan="2">Aktionen</th>
 		</tr>
 		<!--Wartungen-->
@@ -42,10 +42,11 @@
 		<th rowspan="2"><textarea name="bemerkung" rows="2" class="txt400" tabindex="7"><!--Bemerkung--></textarea></th>
 	</tr>
 	<tr>
-		<th>Stimmung:</th>
+		<th>Art:</th>
 		<td>
 			<select name="stimmung" tabindex="3" class="txt150">
 				<option value="0" <!--NichtDurchgefuehrt-->>nur Wartung</option>
+				<option value="5" <!--Reparatur-->>Reparatur</option>
 				<option value="1" <!--Nebenstimmung-->>Nebenstimmung</option>
 				<option value="2" <!--Hauptstimmung-->>Hauptstimmung</option>
 				<option value="3" <!--Zungenstimmung-->>Zungenstimmung</option>
