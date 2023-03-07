@@ -6,7 +6,7 @@ include_once ROOTDIR . 'src/core/mail/class.SupportMail.php';
 include_once ROOTDIR . 'src/core/security/class.IntrusionNotificationMailer.php';
 
 // Composer Stuff
-if(file_exists(ROOTDIR . 'vendor/autoload.php')) {
+if (file_exists(ROOTDIR . 'vendor/autoload.php')) {
     require_once ROOTDIR . 'vendor/autoload.php';
 } else {
     die("Bitte erst composer ausfuehren um benoetigte Pakete zu installieren.");
@@ -64,6 +64,7 @@ include_once ROOTDIR . 'src/gemeinde/class.GemeindeUtilities.php';
 include_once ROOTDIR . 'src/gemeinde/class.GemeindeRequestHandler.php';
 include_once ROOTDIR . 'src/gemeinde/controller.GemeindeListeAction.php';
 include_once ROOTDIR . 'src/gemeinde/controller.GemeindeDetailsAction.php';
+include_once ROOTDIR . 'src/gemeinde/controller.GemeindeListeExcel.php';
 include_once ROOTDIR . 'src/entities/class.Adresse.php';
 include_once ROOTDIR . 'src/entities/class.Ansprechpartner.php';
 include_once ROOTDIR . 'src/ansprechpartner/class.AnsprechpartnerUtilities.php';
@@ -107,12 +108,15 @@ include_once ROOTDIR . 'src/projekt/class.ProjektStempeluhrAction.php';
 include_once ROOTDIR . 'src/projekt/controller.ProjektStundenFreigabeAction.php';
 include_once ROOTDIR . 'src/projekt/controller.ArbeitsTagUndWocheStatusWechselAction.php';
 include_once ROOTDIR . 'src/projekt/controller.ArbeitszeitVerwaltungAction.php';
+include_once ROOTDIR . 'src/projekt/controller.ProjektArchiv.php';
 include_once ROOTDIR . 'src/entities/class.Urlaub.php';
 include_once ROOTDIR . 'src/projekt/class.UrlaubsUtilities.php';
 include_once ROOTDIR . 'src/projekt/controller.UrlaubsVerwaltungAction.php';
 include_once ROOTDIR . 'src/projekt/controller.JahresurlaubAnlegenAction.php';
 include_once ROOTDIR . 'src/projekt/controller.ProjektDetailsAction.php';
 include_once ROOTDIR . 'src/projekt/controller.ProjektListeAction.php';
+include_once ROOTDIR . 'src/projekt/controller.ProjektAufgabenVerwaltung.php';
+include_once ROOTDIR . 'src/projekt/controller.ProjektMitarbeiterVerwaltung.php';
 include_once ROOTDIR . 'src/projekt/class.ProjektKostenRechner.php';
 include_once ROOTDIR . 'src/entities/class.Aufgabe.php';
 include_once ROOTDIR . 'src/projekt/class.AufgabeUtilities.php';
@@ -191,12 +195,21 @@ include_once ROOTDIR . 'src/pagecontrol/class.SeitenStatistik.php';
 include_once ROOTDIR . 'src/entities/class.BenutzerVerlauf.php';
 include_once ROOTDIR . 'src/benutzer/class.BenutzerVerlaufTracker.php';
 
-
 include_once ROOTDIR . 'src/ansprechpartner/controller.Ansprechpartner.php';
+include_once ROOTDIR . 'src/ansprechpartner/controller.AnsprechpartnerVerwaltung.php';
+include_once ROOTDIR . 'src/ansprechpartner/controller.AnsprechpartnerSpeichern.php';
+include_once ROOTDIR . 'src/ansprechpartner/controller.AnsprechpartnerLoeschen.php';
+include_once ROOTDIR . 'src/ansprechpartner/controller.AnsprechpartnerGemeindeVerbindung.php';
 include_once ROOTDIR . 'src/orgel/controller.OrgelBildAction.php';
 include_once ROOTDIR . 'src/orgel/controller.OrgelWartungAction.php';
 include_once ROOTDIR . 'src/orgel/controller.Orgel.php';
 include_once ROOTDIR . 'src/orgel/controller.OrgelListeAction.php';
+include_once ROOTDIR . 'src/orgel/controller.OrgelListeExcel.php';
+include_once ROOTDIR . 'src/orgel/controller.OffeneWartungen.php';
+include_once ROOTDIR . 'src/orgel/controller.OrgelDruckansicht.php';
+include_once ROOTDIR . 'src/orgel/controller.NeueOrgelAnlegen.php';
+include_once ROOTDIR . 'src/orgel/controller.OrgelLoeschen.php';
+include_once ROOTDIR . 'src/orgel/controller.OrgelGemeindeVerbindungLoeschen.php';
 include_once ROOTDIR . 'src/gemeinde/controller.Gemeinde.php';
 include_once ROOTDIR . 'src/orgel/controller.Disposition.php';
 include_once ROOTDIR . 'src/rechnung/controller.Rechnung.php';
