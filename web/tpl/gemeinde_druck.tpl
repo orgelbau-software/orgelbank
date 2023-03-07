@@ -1,6 +1,7 @@
 <html>
 <head>
 	<title>Gemeinde Druckansicht</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<style type="text/css">
 	body { font-family: Arial, Verdana;}
 	a { color: #000000; text-decoration: none;}

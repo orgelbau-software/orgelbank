@@ -1,19 +1,22 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<style type="text/css">
+	body { font-family: Arial, Verdana;}
+	a { color: #000000; text-decoration: none;}
+	table{border:1px solid black; border-collapse: separate;}
+	th{text-align: left;}
+	td{border-bottom: 1px solid black; padding: 0px 10px 3px 0;}
+	tr{border-bottom: 1px solid black;}
+	.right{text-align:right;border-bottom: 1px solid black; padding-bottom: 3px;}
+		ul li{
+			list-style: none;
+		display: inline;
+			}
+	</style>
 
-<style type="text/css">
-body { font-family: Arial, Verdana;}
-a { color: #000000; text-decoration: none;}
-table{border:1px solid black; border-collapse: separate;}
-th{text-align: left;}
-td{border-bottom: 1px solid black; padding: 0px 10px 3px 0;}
-tr{border-bottom: 1px solid black;}
-.right{text-align:right;border-bottom: 1px solid black; padding-bottom: 3px;}
-	ul li{
-		list-style: none;
-	display: inline;
-		}
-</style>
-
-<script type="text/javascript" src="../../lib/jquery/jquery-1.5.1.min.js"></script>
+	<script type="text/javascript" src="../../lib/jquery/jquery-1.5.1.min.js"></script>
 	<script type="text/javascript">
 	 $.noConflict();
 	jQuery( function() {
