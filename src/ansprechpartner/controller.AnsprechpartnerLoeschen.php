@@ -1,6 +1,6 @@
 <?php
 
-class AnsprechpartnerLoeschen implements GetRequestHandler
+class AnsprechpartnerLoeschen implements GetRequestHandler, PostRequestHandler, PostRequestValidator
 {
 
     /**
@@ -11,6 +11,8 @@ class AnsprechpartnerLoeschen implements GetRequestHandler
      */
     public function validateGetRequest()
     {
+        if (! isset($_GET['aid']))
+            return false;
         return true;
     }
 
@@ -22,7 +24,7 @@ class AnsprechpartnerLoeschen implements GetRequestHandler
      */
     public function handleInvalidGet()
     {
-        return new HTMLStatus("Alles ok");
+        return new HTMLStatus("Keine AnsprechpartnerID uebergeben");
     }
 
     /**
@@ -42,10 +44,7 @@ class AnsprechpartnerLoeschen implements GetRequestHandler
      * @return Template
      */
     public function executeGet()
-    {
-        if (! isset($_GET['aid']) && ! isset($_POST['objektid']))
-            return;
-        
+    {        
         $retVal = null;
         if ($_POST && isset($_POST['objektid'])) {
             $o = new Ansprechpartner($_POST['objektid']);
@@ -89,4 +88,47 @@ class AnsprechpartnerLoeschen implements GetRequestHandler
         }
         return $retVal;
     }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see PostRequestHandler::preparePost()
+     */
+    public function preparePost()
+    {
+        // TODO Auto-generated method stub
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see PostRequestHandler::executePost()
+     */
+    public function executePost()
+    {
+        return $this->executeGet();
+    }
+    /**
+     * {@inheritDoc}
+     * @see PostRequestValidator::validatePostRequest()
+     */
+    public function validatePostRequest()
+    {
+        if(! isset($_POST['objektid'])) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see PostRequestValidator::handleInvalidPost()
+     */
+    public function handleInvalidPost()
+    {
+        return new HTMLStatus("Keine AnsprechpartnerID uebergeben");
+    }
+
 }

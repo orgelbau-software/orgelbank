@@ -1,38 +1,41 @@
 <?php
 
-class AnsprechpartnerSpeichern implements GetRequestHandler
+class AnsprechpartnerSpeichern implements PostRequestHandler, PostRequestValidator
 {
 
     /**
      *
      * {@inheritdoc}
      *
-     * @return bool
+     * @see PostRequestHandler::preparePost()
      */
-    public function validateGetRequest()
+    public function preparePost()
+    {}
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see PostRequestValidator::validatePostRequest()
+     */
+    public function validatePostRequest()
     {
-        return true;
+        if (! $_POST || ! isset($_POST['aid'])) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
      *
      * {@inheritdoc}
      *
-     * @return HTMLStatus
+     * @see PostRequestValidator::handleInvalidPost()
      */
-    public function handleInvalidGet()
+    public function handleInvalidPost()
     {
-        return new HTMLStatus("Alles ok");
-    }
-
-    /**
-     *
-     * {@inheritdoc}
-     *
-     */
-    public function prepareGet()
-    {
-        return;
+        return new HTMLStatus("Kein POST Request oder AID fehlt.");
     }
 
     /**
@@ -41,10 +44,8 @@ class AnsprechpartnerSpeichern implements GetRequestHandler
      *
      * @return Template
      */
-    public function executeGet()
+    public function executePost()
     {
-        if (! $_POST || ! isset($_POST['aid']))
-            return;
         if ($_POST['aid'] == 0) {
             $oAnsprechpartner = new Ansprechpartner();
         } else {
