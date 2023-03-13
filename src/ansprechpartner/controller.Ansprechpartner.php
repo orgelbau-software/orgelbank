@@ -49,7 +49,7 @@ class AnsprechpartnerController
      * @param unknown $iGemeindeID            
      * @return boolean
      */
-    private static function addAnsprechpartnerZuGemeinde($iAnsprechpartnerID, $iGemeindeID)
+    public static function addAnsprechpartnerZuGemeinde($iAnsprechpartnerID, $iGemeindeID)
     {
         $retVal = false;
         $alreadyAdded = AnsprechpartnerUtilities::existiertVerbindung($iAnsprechpartnerID, $iGemeindeID);

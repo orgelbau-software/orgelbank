@@ -1,6 +1,6 @@
 <?php
 
-class AnsprechpartnerGemeindeVerbindung implements GetRequestHandler
+class AnsprechpartnerGemeindeVerbindung implements GetRequestHandler, PostRequestHandler, PostRequestValidator
 {
 
     /**
@@ -61,5 +61,49 @@ class AnsprechpartnerGemeindeVerbindung implements GetRequestHandler
             }
         }
         return $html;
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see PostRequestHandler::preparePost()
+     */
+    public function preparePost()
+    {
+        // TODO Auto-generated method stub
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see PostRequestHandler::executePost()
+     */
+    public function executePost()
+    {
+        return $this->executeGet();
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see PostRequestValidator::validatePostRequest()
+     */
+    public function validatePostRequest()
+    {
+        return true;
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see PostRequestValidator::handleInvalidPost()
+     */
+    public function handleInvalidPost()
+    {
+        // TODO Auto-generated method stub
     }
 }
