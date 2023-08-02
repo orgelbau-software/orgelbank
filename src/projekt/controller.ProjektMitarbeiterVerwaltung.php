@@ -1,6 +1,6 @@
 <?php
 
-class ProjektMitarbeiterVerwaltung implements GetRequestHandler
+class ProjektMitarbeiterVerwaltung implements GetRequestHandler, PostRequestHandler
 {
 
     /**
@@ -335,5 +335,27 @@ class ProjektMitarbeiterVerwaltung implements GetRequestHandler
         $tpl->replace("Status2", "");
         
         return $tpl;
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see PostRequestHandler::preparePost()
+     */
+    public function preparePost()
+    {
+        return;
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see PostRequestHandler::executePost()
+     */
+    public function executePost()
+    {
+        return $this->executeGet();
     }
 }

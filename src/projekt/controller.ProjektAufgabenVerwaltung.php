@@ -1,6 +1,6 @@
 <?php
 
-class ProjektAufgabenVerwaltung implements GetRequestHandler
+class ProjektAufgabenVerwaltung implements GetRequestHandler, PostRequestHandler
 {
 
     /**
@@ -249,4 +249,22 @@ class ProjektAufgabenVerwaltung implements GetRequestHandler
         
         return $tpl;
     }
+    /**
+     * {@inheritDoc}
+     * @see PostRequestHandler::preparePost()
+     */
+    public function preparePost()
+    {
+        return; 
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see PostRequestHandler::executePost()
+     */
+    public function executePost()
+    {
+        return $this->executeGet();
+    }
+
 }

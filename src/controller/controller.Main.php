@@ -8,14 +8,14 @@ $pageApplication = new PageApp();
  * Gemeindecontroller
  */
 $pcGemeinde = new PageController(1, "GemeindeController", 5);
-$pcGemeinde->addChild(new SubPage(1, "zeigeGemeindeListe", 10));
+$pcGemeinde->addChild(new SubPage(1, "zeigeGemeindeListe", 5));
 $pcGemeinde->addChild(new SubPage(2, "zeigeGemeindeDetails", 5));
-$pcGemeinde->addChild(new SubPage(3, "speichereGemeindeDetails", 10));
+$pcGemeinde->addChild(new SubPage(3, "speichereGemeindeDetails", 5));
 $pcGemeinde->addChild(new SubPage(4, "neueGemeindeAnlegen", 10));
 $pcGemeinde->addChild(new SubPage(5, "loescheGemeinde", 10));
 $pcGemeinde->addChild(new SubPage(6, "exportGemeindeListeExcel", 10));
 $pcGemeinde->addChild(new SubPage(7, "ajaxGemeindeListeDruckansicht", 10));
-$pcGemeinde->addChild(new SubPage(8, "zeigeGemeindeLandkarte", 10));
+$pcGemeinde->addChild(new SubPage(8, "zeigeGemeindeLandkarte", 5));
 $pageApplication->addController($pcGemeinde);
 
 /**
@@ -24,7 +24,7 @@ $pageApplication->addController($pcGemeinde);
 $pcOrgel = new PageController(2, "OrgelController", 5);
 $pcOrgel->addChild(new SubPage(20, "zeigeOrgelListe", 5));
 $pcOrgel->addChild(new SubPage(21, "zeigeOrgelDetails", 5));
-$pcOrgel->addChild(new SubPage(22, "speicherOrgelDetails", 10));
+$pcOrgel->addChild(new SubPage(22, "speicherOrgelDetails", 5));
 $pcOrgel->addChild(new SubPage(23, "verwalteOrgelBild", 10));
 $pcOrgel->addChild(new SubPage(24, "neueOrgelAnlegen", 10));
 $pcOrgel->addChild(new SubPage(25, "neueOrgelGemeindeVerbindung", 10));
@@ -41,11 +41,11 @@ $pageApplication->addController($pcOrgel);
  */
 $pcAnsprechpartner = new PageController(3, "AnsprechpartnerController", 5);
 $pcAnsprechpartner->addChild(new SubPage(40, "zeigeAnsprechpartnerVerwaltung", 5));
-$pcAnsprechpartner->addChild(new SubPage(41, "speichereAnsprechpartner", 10));
+$pcAnsprechpartner->addChild(new SubPage(41, "speichereAnsprechpartner", 5));
 $pcAnsprechpartner->addChild(new SubPage(42, "loescheAnsprechpartner", 10));
 $pcAnsprechpartner->addChild(new SubPage(43, "neueVerbindungZuGemeinde", 10));
 $pcAnsprechpartner->addChild(new SubPage(44, "loescheGemeindeAnsprechpartner", 10));
-$pcAnsprechpartner->addChild(new SubPage(45, "aendereAnsprechpartner", 10));
+$pcAnsprechpartner->addChild(new SubPage(45, "aendereAnsprechpartner", 5));
 $pageApplication->addController($pcAnsprechpartner);
 
 /**
@@ -53,9 +53,9 @@ $pageApplication->addController($pcAnsprechpartner);
  */
 $pcDisposition = new PageController(4, "DispositionController", 5);
 $pcDisposition->addChild(new SubPage(60, "zeigeDisposition", 5));
-$pcDisposition->addChild(new SubPage(61, "bearbeiteDisposition", 10));
-$pcDisposition->addChild(new SubPage(62, "speichereDispositionsEintrag", 10));
-$pcDisposition->addChild(new SubPage(63, "speichereReihenfolge", 10));
+$pcDisposition->addChild(new SubPage(61, "bearbeiteDisposition", 5));
+$pcDisposition->addChild(new SubPage(62, "speichereDispositionsEintrag", 5));
+$pcDisposition->addChild(new SubPage(63, "speichereReihenfolge", 5));
 $pageApplication->addController($pcDisposition);
 
 /**
