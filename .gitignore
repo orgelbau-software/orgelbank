@@ -18,3 +18,5 @@ resources/bente_import/*.csv
 resources/bente_import/*.sql
 vendor/*
 backup/*.sql.gz
+resources/fo_import/*.csv
+resources/fo_import/*.wdb

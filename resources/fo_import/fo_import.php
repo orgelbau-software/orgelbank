@@ -8,8 +8,8 @@ $sql[] = "TRUNCATE TABLE benutzer;";
 //$sql[] = "TRUNCATE TABLE adresse;";
 $sql[] = "TRUNCATE TABLE ansprechpartner;";
 $sql[] = "TRUNCATE TABLE disposition;";
-//$sql[] = "TRUNCATE TABLE gemeinde;";
-//$sql[] = "TRUNCATE TABLE orgel;";
+$sql[] = "TRUNCATE TABLE gemeinde;";
+$sql[] = "TRUNCATE TABLE orgel;";
 $sql[] = "TRUNCATE TABLE wartung;";
 $sql[] = "TRUNCATE TABLE gemeindeansprechpartner;";
 foreach ($sql as $key => $val) {
@@ -49,13 +49,17 @@ $oSWA->speichern(false);
 $row = 1;
 
 $bezirke = array();
-if (($handle = fopen("Stim_DAT ab 2010-a.csv", "r")) !== FALSE) {
+if (($handle = fopen("Stim DAT ab 2022.csv", "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
         $num = count($data);
         echo "<p> $num Felder in Zeile $row: <br /></p>\n";
         $row ++;
         for ($c = 0; $c < $num; $c ++) {
             echo $c . ":" . $data[$c] . "<br />\n";
+        }
+        
+        if($num <= 9) {
+            continue;
         }
         
         if($row == 2) {

@@ -29,6 +29,9 @@ if($_POST && isset($_POST['password']) && $_POST['password'] == MYSQL_PASS) {
   $sql[] = "TRUNCATE TABLE reisekosten;";
   $sql[] = "TRUNCATE TABLE seitenstatistik;";
   $sql[] = "TRUNCATE TABLE wartung;";
+  $sql[] = "TRUNCATE TABLE nebenkosten_rechnung;";
+  $sql[] = "TRUNCATE TABLE urlaub;";
+  $sql[] = "TRUNCATE TABLE wartungsprotokolle;";
   
  
   

@@ -7,7 +7,12 @@ include_once ROOTDIR . 'src/core/security/class.IntrusionNotificationMailer.php'
 
 // Composer Stuff
 if (file_exists(ROOTDIR . 'vendor/autoload.php')) {
-    require_once ROOTDIR . 'vendor/autoload.php';
+    try {
+        require_once ROOTDIR . 'vendor/autoload.php';
+    } catch (Error $e) {
+        die('Error during execution of vendor/autoload.php: '.  $e->getMessage());
+    }
+    
 } else {
     die("Bitte erst composer ausfuehren um benoetigte Pakete zu installieren.");
 }

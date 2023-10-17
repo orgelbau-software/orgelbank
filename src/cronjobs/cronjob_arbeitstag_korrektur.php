@@ -17,21 +17,22 @@ try {
     
     $sql = "SELECT * FROM arbeitswoche";
     $r = $db->SelectQuery($sql);
-    
-    foreach ($r as $obj) {
-        $berechnet = ArbeitstagUtilities::berechneSummeWochenIstStunden(strtotime($obj['aw_wochenstart']), $obj['be_id']);
-        $gespeichert = $obj['aw_stunden_ist'];
-        if ($berechnet != $gespeichert && ! ($berechnet == "" && $gespeichert == 0)) {
-            $sql = "UPDATE arbeitswoche SET aw_stunden_ist = " . $berechnet . ", aw_stunden_dif = aw_stunden_soll - " . $berechnet . " WHERE aw_id = " . $obj['aw_id'] . ";";
-            
-            $msg = "Gespeichert: " . $gespeichert . ", Berechnet: " . $berechnet . ", BenutzerId: " . $obj['be_id'] . ", Wochenstart: " . $obj['aw_wochenstart'];
-            $retVal[] = array(
-                "sql" => $sql,
-                "msg",
-                $msg
-            );
-            
-            $db->NonSelectQuery($sql);
+    if($r != null && count($r) > 0) {
+        foreach ($r as $obj) {
+            $berechnet = ArbeitstagUtilities::berechneSummeWochenIstStunden(strtotime($obj['aw_wochenstart']), $obj['be_id']);
+            $gespeichert = $obj['aw_stunden_ist'];
+            if ($berechnet != $gespeichert && ! ($berechnet == "" && $gespeichert == 0)) {
+                $sql = "UPDATE arbeitswoche SET aw_stunden_ist = " . $berechnet . ", aw_stunden_dif = aw_stunden_soll - " . $berechnet . " WHERE aw_id = " . $obj['aw_id'] . ";";
+                
+                $msg = "Gespeichert: " . $gespeichert . ", Berechnet: " . $berechnet . ", BenutzerId: " . $obj['be_id'] . ", Wochenstart: " . $obj['aw_wochenstart'];
+                $retVal[] = array(
+                    "sql" => $sql,
+                    "msg",
+                    $msg
+                );
+                
+                $db->NonSelectQuery($sql);
+            }
         }
     }
     $db->disconnect();
