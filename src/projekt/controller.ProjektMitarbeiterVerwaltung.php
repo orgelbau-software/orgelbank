@@ -84,8 +84,9 @@ class ProjektMitarbeiterVerwaltung implements GetRequestHandler, PostRequestHand
                 $iStdGesamt = 0;
                 foreach ($_POST as $key => $val) {
                     if (substr($key, 0, 8) == "stunden_") {
-                        $_POST[$key] = str_replace(",", ".", $val);
-                        $iStdGesamt += $val;
+                        $formattedValue = str_replace(",", ".", $val);
+                        $_POST[$key] = $formattedValue;
+                        $iStdGesamt += $formattedValue;
                     }
                 }
                 
@@ -97,8 +98,8 @@ class ProjektMitarbeiterVerwaltung implements GetRequestHandler, PostRequestHand
                 $benutzer->setStdSamstag($_POST['stunden_5']);
                 $benutzer->setStdSonntag($_POST['stunden_6']);
                 $benutzer->setStdGesamt(doubleval($iStdGesamt));
-                $benutzer->setStdLohn(WaehrungUtil::formatWaehrungToDB($_POST['lohn']));
-                $benutzer->setVerrechnungsSatz(WaehrungUtil::formatWaehrungToDB($_POST['verrechnungssatz']));
+                $benutzer->setStdLohn($_POST['lohn']);
+                $benutzer->setVerrechnungsSatz($_POST['verrechnungssatz']);
                 $benutzer->setAktiviert($_POST['aktiviert']);
                 $benutzer->setChangeAt(0);
                 if (isset($_POST['zeiterfassung'])) {
@@ -108,7 +109,7 @@ class ProjektMitarbeiterVerwaltung implements GetRequestHandler, PostRequestHand
                 }
                 
                 // Urlaubstage umrechen & speichern
-                $_POST['urlaubstage'] = str_replace(",", ".", $_POST['urlaubstage']);
+                $_POST['urlaubstage'] = $_POST['urlaubstage'];
                 $benutzer->setUrlaubstage($_POST['urlaubstage']);
                 
                 $strText = "";
@@ -237,8 +238,8 @@ class ProjektMitarbeiterVerwaltung implements GetRequestHandler, PostRequestHand
         $tpl->replace("Nachname", $benutzer->getNachname());
         $tpl->replace("Benutzername", $benutzer->getBenutzername());
         $tpl->replace("Eintrittsdatum", ($benutzer->getEintrittsDatum(false) != 0 ? $benutzer->getEintrittsDatum(true) : ""));
-        $tpl->replace("Lohn", WaehrungUtil::formatDoubleToWaehrung($benutzer->getStdLohn()));
-        $tpl->replace("VerrechnungsSatz", WaehrungUtil::formatDoubleToWaehrung($benutzer->getVerrechnungsSatz()));
+        $tpl->replace("Lohn",$benutzer->getStdLohn());
+        $tpl->replace("VerrechnungsSatz",$benutzer->getVerrechnungsSatz());
         
         // Benutzer Aufgabe
         $mitarbeiterAufgaben = AufgabeUtilities::getMitarbeiterAufgaben($benutzer->getID());
@@ -273,16 +274,16 @@ class ProjektMitarbeiterVerwaltung implements GetRequestHandler, PostRequestHand
         if ($benutzer->getStdGesamt() > 0) {
             $dblUrlaubstage = $benutzer->getUrlaubstage();
         }
-        $tpl->replace("Urlaubstage", str_replace(".", ",", $dblUrlaubstage));
+        $tpl->replace("Urlaubstage", $dblUrlaubstage);
         
         // Benutzerstunden
         $tpl->replace("Stunden0", $benutzer->getID() == - 1 ? ConstantLoader::getStandardArbeitsstundenMontag() : $benutzer->getStdMontag());
-        $tpl->replace("Stunden1", $benutzer->getID() == - 1 ? ConstantLoader::getStandardArbeitsstundenDienstag() : $benutzer->getStdDienstag());
-        $tpl->replace("Stunden2", $benutzer->getID() == - 1 ? ConstantLoader::getStandardArbeitsstundenMittwoch() : $benutzer->getStdMittwoch());
-        $tpl->replace("Stunden3", $benutzer->getID() == - 1 ? ConstantLoader::getStandardArbeitsstundenDonnerstag() : $benutzer->getStdDonnerstag());
+        $tpl->replace("Stunden1", $benutzer->getID() == - 1 ? ConstantLoader::getStandardArbeitsstundenDienstag() :  $benutzer->getStdDienstag());
+        $tpl->replace("Stunden2", $benutzer->getID() == - 1 ? ConstantLoader::getStandardArbeitsstundenMittwoch() :  $benutzer->getStdMittwoch());
+        $tpl->replace("Stunden3", $benutzer->getID() == - 1 ? ConstantLoader::getStandardArbeitsstundenDonnerstag() :  $benutzer->getStdDonnerstag());
         $tpl->replace("Stunden4", $benutzer->getID() == - 1 ? ConstantLoader::getStandardArbeitsstundenFreitag() : $benutzer->getStdFreitag());
         $tpl->replace("Stunden5", $benutzer->getID() == - 1 ? ConstantLoader::getStandardArbeitsstundenSamstag() : $benutzer->getStdSamstag());
-        $tpl->replace("Stunden6", $benutzer->getID() == - 1 ? ConstantLoader::getStandardArbeitsstundenSonntag() : $benutzer->getStdSonntag());
+        $tpl->replace("Stunden6", $benutzer->getID() == - 1 ? ConstantLoader::getStandardArbeitsstundenSonntag() :  $benutzer->getStdSonntag());
         $tpl->replace("Summe", $benutzer->getID() == - 1 ? ConstantLoader::getStandardWochenstunden() : $benutzer->getStdGesamt());
         
         // Ueberstunden

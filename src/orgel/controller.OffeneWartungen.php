@@ -132,6 +132,6 @@ class OffeneWartungen implements GetRequestHandler
         }
         
         $tpl->replace("Content", $tplDS->getOutput());
-        $tpl->anzeigen();
+        return $tpl;
     }
 }

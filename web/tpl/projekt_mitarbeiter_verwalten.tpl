@@ -9,19 +9,19 @@
     <table class="liste txt310">
       <tr>
         <th>Vorname:</th>
-        <td><input type="text" name="vorname" size="20" value="<!--Vorname-->" /></td>
+        <td><input type="text" name="vorname" class="txt140" value="<!--Vorname-->" /></td>
       </tr>
       <tr>
         <th>Nachname:</th>
-        <td><input type="text" name="nachname" size="20" value="<!--Nachname-->" /></td>
+        <td><input type="text" name="nachname" class="txt140" value="<!--Nachname-->" /></td>
       </tr>
       <tr>
         <th>Benutzername:</th>
-        <td><input type="text" name="benutzername" size="20" value="<!--Benutzername-->" /></td>
+        <td><input type="text" name="benutzername" class="txt140" value="<!--Benutzername-->" /></td>
       </tr>
       <tr>
         <th>Passwort:</th>
-        <td><input type="text" name="passwort" size="20" value="" /></td>
+        <td><input type="text" name="passwort" class="txt140" value="" /></td>
       </tr>
       <tr>
         <th>Eintrittsdatum:</th>
@@ -32,26 +32,26 @@
       </tr>
       <tr>
         <th>Stundenlohn:</th>
-        <td><input type="text" name="lohn" class="int50 jsFormatNumber" value="<!--Lohn-->" /> EUR/Std.</td>
+        <td><input type="number" min="0" step="0.01" name="lohn" class="int70" value="<!--Lohn-->" /> EUR/Std.</td>
       </tr>
       <tr>
         <th>Verrechnungssatz:</th>
-        <td><input type="text" name="verrechnungssatz" class="int50 jsFormatNumber" value="<!--VerrechnungsSatz-->" /> EUR/Std.</td>
+        <td><input type="number" min="0" step="0.01" name="verrechnungssatz" class="int70" value="<!--VerrechnungsSatz-->" /> EUR/Std.</td>
       </tr>
       <tr>
         <th>Urlaubstage pro Jahr:</th>
-        <td><input type="text" name="urlaubstage" size="4" value="<!--Urlaubstage-->" /></td>
+        <td><input type="number" min="0" step="0.5" name="urlaubstage" class="int70" size="4" value="<!--Urlaubstage-->" /></td>
       </tr>
       <tr>
         <th>Status:</th>
-        <td><select name="aktiviert">
+        <td><select name="aktiviert" class="txt140">
           <option value="0"<!--Deaktiviert-->>Deaktiviert</option>
           <option value="1"<!--Aktiviert-->>Aktiviert</option>
         </select></td>
       </tr>
       <tr>
         <th>Rolle:</th>
-        <td><select name="benutzerlevel">
+        <td><select name="benutzerlevel" class="txt100">
           <option value="0"<!--Mitarbeiter-->>Mitarbeiter</option>
           <option value="5"<!--Monteur-->>Monteur</option>
           <option value="10"<!--Admin-->>Administrator</option>
@@ -71,14 +71,13 @@
         <th class="alignCenter">Donnerstag</th>
       </tr>
       <tr>
-        <td style="padding-bottom: 15px;"><input type="text" name="stunden_0" value="<!--Stunden0-->"
-        size="2"/></td>
+        <td style="padding-bottom: 15px;"><input type="number" min="0" max="12" step="0.25" class="int60" name="stunden_0" value="<!--Stunden0-->" /></td>
 
-        <td><input type="text" name="stunden_1" value="<!--Stunden1-->" size="2" /></td>
+        <td><input type="number" name="stunden_1" min="0" max="12" step="0.25" class="int60" value="<!--Stunden1-->" /></td>
 
-        <td><input type="text" name="stunden_2" value="<!--Stunden2-->"size="2" /></td>
+        <td><input type="number" name="stunden_2" min="0" max="12" step="0.25" class="int60" value="<!--Stunden2-->" /></td>
 
-        <td><input type="text" name="stunden_3" value="<!--Stunden3-->" size="2" /></td>
+        <td><input type="number" name="stunden_3" min="0" max="12" step="0.25" class="int60" value="<!--Stunden3-->" /></td>
       </tr>
       <tr>
         <th class="alignCenter">Freitag</th>
@@ -87,14 +86,13 @@
         <th class="alignCenter">Summe</th>
       </tr>
       <tr>
-        <td style="padding-bottom: 15px;"><input type="text" name="stunden_4" value="<!--Stunden4-->"
-        size="2"/></td>
+        <td style="padding-bottom: 15px;"><input type="number" name="stunden_4" min="0" max="12" step="0.25" class="int60" value="<!--Stunden4-->" /></td>
 
-        <td><input type="text" name="stunden_5" value="<!--Stunden5-->" size="2"/></td>
+        <td><input type="number" name="stunden_5" min="0" max="12" step="0.25" class="int60" value="<!--Stunden5-->" /></td>
 
-        <td><input type="text" name="stunden_6" value="<!--Stunden6-->" size="2"/></td>
+        <td><input type="number" name="stunden_6" min="0" max="12" step="0.25" class="int60" value="<!--Stunden6-->" /></td>
 
-        <td><input type="text" class="disabled" name="summe" value="<!--Summe-->" size="2"/></td>
+        <td><input type="number" class="disabled int60" name="summe" value="<!--Summe-->" /></td>
       </tr>
     </table>
     

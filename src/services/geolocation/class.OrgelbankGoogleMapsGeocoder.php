@@ -34,7 +34,7 @@ class OrgelbankGoogleMapsGeocoder extends GoogleMapsGeocoderService implements I
             // return $this->doGeocode($https, $raw);
             return $this->doGeocodeWithRetry($https, $raw);
         } catch (Exception $e) {
-//             pre($e);
+             pre($e);
             return self::SERVICE_NOT_AVAILABLE;
         }
     }
