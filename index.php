@@ -91,6 +91,9 @@ if ($webUser != null && $webUser->login() && ! $webUser->isLoginExpired()) {
             case 8:
                 $cssMenuAktiv = "Benutzer";
                 $tplSubMenu = new Template("benutzer_menu.tpl");
+                $tplJS = new Template("benutzer_js.tpl");
+                $tplJS->replace("kmPauschale", ConstantLoader::getKilometerpauschale());
+                $tplKopf->replace("JavaScript", $tplJS->getOutput());
                 break;
             default:
                 $cssMenuAktiv = "Gemeinde";
