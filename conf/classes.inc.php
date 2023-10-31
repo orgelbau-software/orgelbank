@@ -138,6 +138,7 @@ include_once ROOTDIR . 'src/benutzer/class.PasswordUtility.php';
 include_once ROOTDIR . 'src/entities/class.Benutzer.php';
 include_once ROOTDIR . 'src/benutzer/class.BenutzerUtilities.php';
 include_once ROOTDIR . 'src/benutzer/class.WebBenutzer.php';
+include_once ROOTDIR . 'src/benutzer/controller.Zeiterfassung.php';
 include_once ROOTDIR . 'src/beans/class.AufgabeMitarbeiter.php';
 include_once ROOTDIR . 'src/entities/class.Konfession.php';
 include_once ROOTDIR . 'src/gemeinde/class.KonfessionUtilities.php';

@@ -22,6 +22,12 @@ try {
     
     $sql_file = BACKUPDIR . "dump_" . $db_name . "_" . date('Ymd_Hi') . ".sql";
     
+    if(!is_dir(BACKUPDIR)) {
+        if(!mkdir(BACKUPDIR)) {
+            throw new Exception("Kann Backupverzeichnis nicht erstellen: ". BACKUPDIR);
+        }
+    }
+    
     // ###################################################################
     
     // ## daten überprüfen
@@ -55,14 +61,18 @@ try {
     $size = str_replace(".", ",", $size);
     $groesse = "$size $fileSizeNames[$i]";
     
-    // ## nachricht erstellen
-    $message = "Ihr Backup der Datenbank <b>" . $db_name . "</b> wurde durchgeführt.<br>";
-    $message .= "Die Größe des erstellten Dumps beträgt <b>" . $groesse . "</b>.<br>";
-    
-    if ($downloadlink_erstellen == "yes" or $downloadlink_erstellen == "ja" or $downloadlink_erstellen == "1") {
-        $link = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-        $link = str_replace(basename(__FILE__), $datei, $link);
-        $message .= "Downloadlink: <a href='" . $link . "'>" . $datei . "</a>";
+    if($groesse > 0) {
+        // ## nachricht erstellen
+        $message = "Ihr Backup der Datenbank <b>" . $db_name . "</b> wurde durchgeführt.<br>";
+        $message .= "Die Größe des erstellten Dumps beträgt <b>" . $groesse . "</b>.<br>";
+        
+        if ($downloadlink_erstellen == "yes" or $downloadlink_erstellen == "ja" or $downloadlink_erstellen == "1") {
+            $link = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+            $link = str_replace(basename(__FILE__), $datei, $link);
+            $message .= "Downloadlink: <a href='" . $link . "'>" . $datei . "</a>";
+        }
+    } else {
+       throw new Exception("Datenbankbackup ist 0 byte: ". $datei);
     }
     
     // # nachricht ausgeben
@@ -102,7 +112,6 @@ try {
         }
     }
 } catch (Throwable $t) {
-    echo $t;
     $retVal['http_status'] = "501";
     $retVal['message'] = $t->getMessage();
     BenutzerController::doHilfeRufenCronjob($retVal);

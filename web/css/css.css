@@ -290,7 +290,7 @@ input,select,textarea,.buttonlink,.inputKalender,.zeiteingabe,.fakeinput
 }
 
 .zeiteingabe {
-	text-align: right;
+	width: 60px;
 }
 
 checkbox {
@@ -1015,4 +1015,8 @@ table.registerAuswahl td {
 .infowindowMassnahme {
 	width: 350px;
 	max-width: 350px;
+}
+
+.zeiterfassungWochenende {
+	display: none;
 }

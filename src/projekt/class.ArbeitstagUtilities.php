@@ -126,6 +126,38 @@ class ArbeitstagUtilities
         }
         return $retVal;
     }
+    
+    /**
+     *
+     * Ermittelt die geleisteten Ist-Stunden pro Mitarbeiter in einem bestimmten Zeitraum
+     *
+     * @param int $benutzerID
+     * @param
+     *            SQL Date $wochenStart
+     * @param
+     *            SQL Date $pDatum
+     * @return Array mit Key = ProjektID, Value=Summe der Stunden
+     */
+    public static function berechneMitarbeiterTagStunden($benutzerID, $pDatum)
+    {
+        $sql = "SELECT
+					sum(at_stunden_ist) as summe
+				FROM
+					arbeitstag
+				WHERE
+					be_id = " . $benutzerID . " AND
+					at_datum = '" . $pDatum . "'";
+        $res = DB::getInstance()->SelectQuery($sql);
+        $retVal = 0;
+        if ($res != null && $res !== false) {
+            foreach ($res as $curr) {
+                $retVal = $curr['summe'];
+            }
+        }
+        return $retVal;
+    }
+    
+    
 
     public static function markBenutzerArbeitswocheOffen($timestamp, $benutzerID)
     {
