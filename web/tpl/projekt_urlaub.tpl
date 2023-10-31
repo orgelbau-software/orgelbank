@@ -69,4 +69,4 @@
 
 <hr class="bottomMenuHR"/>
 
-<a class="buttonlink iconButton createButton" href="index.php?page=6&do=116" title="Neuen Jahresurlaub anlegen">Neuen Jahrsurlaub Anlegen</a>
+<a class="buttonlink iconButton createButton" href="index.php?page=6&do=116" title="Neuen Jahresurlaub anlegen">Neuen Jahresurlaub Anlegen</a>
