@@ -103,9 +103,13 @@ class ArbeitswocheUtilities
         return ArbeitswocheUtilities::queryDB($sql);
     }
     
-    public static function ladeArbeitswochenByBenutzerId($pBenutzerId)
+    public static function ladeArbeitswochenByBenutzerId($pBenutzerId, $pJahr = null)
     {
-        $sql = "SELECT * FROM arbeitswoche WHERE be_id = ".$pBenutzerId." ORDER BY aw_jahr ASC, aw_kw ASC";
+        $sql = "SELECT * FROM arbeitswoche WHERE be_id = ".$pBenutzerId." ";
+        if($pJahr != null) {
+            $sql .= " AND aw_jahr = ".$pJahr. " ";
+        }
+        $sql .=" ORDER BY aw_jahr ASC, aw_kw ASC";
         return ArbeitswocheUtilities::queryDB($sql);
     }
     

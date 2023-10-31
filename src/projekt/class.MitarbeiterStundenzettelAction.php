@@ -1,5 +1,9 @@
 <?php
 class MitarbeiterStundenzettelAction implements GetRequestHandler {
+    
+    protected $benutzerId;
+    protected $jahr;
+    
     /**
      * {@inheritDoc}
      * @see GetRequestHandler::validateGetRequest()
@@ -27,7 +31,8 @@ class MitarbeiterStundenzettelAction implements GetRequestHandler {
      */
     public function prepareGet()
     {
-        $_GET['bid'] = intval($_GET['bid']);
+        $this->benutzerId = intval($_GET['bid']);
+        $this->jahr = isset($_GET['jahr']) ? intval($_GET['jahr']) : null;
     }
 
     /**
@@ -36,8 +41,8 @@ class MitarbeiterStundenzettelAction implements GetRequestHandler {
      */
     public function executeGet()
     {
-        $data = ArbeitswocheUtilities::ladeArbeitswochenByBenutzerId($_GET['bid']);
-        $benutzer = new Benutzer($_GET['bid']);
+        $data = ArbeitswocheUtilities::ladeArbeitswochenByBenutzerId($this->benutzerId, $this->jahr);
+        $benutzer = new Benutzer($this->benutzerId);
         
         
         $pdf = new StundenzettelPDF();

@@ -138,7 +138,10 @@ include_once ROOTDIR . 'src/benutzer/class.PasswordUtility.php';
 include_once ROOTDIR . 'src/entities/class.Benutzer.php';
 include_once ROOTDIR . 'src/benutzer/class.BenutzerUtilities.php';
 include_once ROOTDIR . 'src/benutzer/class.WebBenutzer.php';
+
 include_once ROOTDIR . 'src/benutzer/controller.Zeiterfassung.php';
+include_once ROOTDIR . 'src/benutzer/controller.BenutzerZeitauswertung.php';
+
 include_once ROOTDIR . 'src/beans/class.AufgabeMitarbeiter.php';
 include_once ROOTDIR . 'src/entities/class.Konfession.php';
 include_once ROOTDIR . 'src/gemeinde/class.KonfessionUtilities.php';
@@ -154,6 +157,7 @@ include_once ROOTDIR . 'src/projekt/class.ProjektMaterialRechnungenAction.php';
 include_once ROOTDIR . 'src/projekt/class.BasisPDF.php';
 include_once ROOTDIR . 'src/projekt/class.StundenzettelPDF.php';
 include_once ROOTDIR . 'src/projekt/class.MitarbeiterStundenzettelAction.php';
+include_once ROOTDIR . 'src/benutzer/class.BenutzerStundenzettelAction.php';
 
 include_once ROOTDIR . 'src/entities/class.RechnungsPosition.php';
 include_once ROOTDIR . 'src/entities/class.Rechnung.php';
