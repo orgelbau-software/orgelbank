@@ -22,4 +22,6 @@ define('SUPPORT_MAIL_FROM', "system@beispiel.de");
 // Der Salt wird zum Speichern der Passwort Hashes in der Datenbank verwendet und mach den Hash etwas sicherer.
 define('PASSWORD_SALT', 'abc');
 
+// Prefix fuer die Rechnungs Templates in resources/vorlagen/kunde_rechnung_pflege.docx
+define('RECHNUNG_PREFIX', 'kunde_');
 ?>

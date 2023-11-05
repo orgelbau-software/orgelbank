@@ -20,3 +20,4 @@ vendor/*
 backup/*.sql.gz
 resources/fo_import/*.csv
 resources/fo_import/*.wdb
+resources/vorlagen/*.docx

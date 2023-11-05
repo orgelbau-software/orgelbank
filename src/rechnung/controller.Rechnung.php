@@ -36,7 +36,7 @@ class RechnungController
         }
         
         // Template öffnen
-        $tplRechnung = new EndRechnungOutput("resources/vorlagen/rechnung_end", $oRechnung);
+        $tplRechnung = new EndRechnungOutput("resources/vorlagen/".RECHNUNG_PREFIX."rechnung_end", $oRechnung);
         $tplRechnung->erstellen();
         
         $speicherort = $tplRechnung->speichern();
@@ -150,7 +150,7 @@ class RechnungController
         $cs->setAbschlagRechnungsNummerNaechste($rechnungsNummerOhneJahr + 1);
         
         // Template öffnen
-        $tplRechnung = new AbschlagRechnungOutput("resources/vorlagen/rechnung_abschlag", $oRechnung);
+        $tplRechnung = new AbschlagRechnungOutput("resources/vorlagen/".RECHNUNG_PREFIX."rechnung_abschlag", $oRechnung);
         $tplRechnung->erstellen();
         
         $speicherort = $tplRechnung->speichern();
@@ -278,7 +278,7 @@ class RechnungController
         
         // Template öffnen
         // $tplRechnung = new StundenRechnungOutput("resources/vorlagen/rechnung_stunde", $oRechnung);
-        $tplRechnung = new StundenRechnungOutput("resources/vorlagen/rechnung_stunde", $oRechnung);
+        $tplRechnung = new StundenRechnungOutput("resources/vorlagen/".RECHNUNG_PREFIX."rechnung_stunde", $oRechnung);
         $tplRechnung->erstellen();
         
         $speicherort = $tplRechnung->speichern();
@@ -409,7 +409,7 @@ class RechnungController
         
         // Template öffnen
         // $tplRechnung = new PflegeRechnungOutput("resources/vorlagen/rechnung_pflege", $oRechnung);
-        $tplRechnung = new PflegeRechnungOutput("resources/vorlagen/rechnung_pflege", $oRechnung);
+        $tplRechnung = new PflegeRechnungOutput("resources/vorlagen/".RECHNUNG_PREFIX."rechnung_pflege", $oRechnung);
         $tplRechnung->erstellen();
         $neuerSpeicherort = $tplRechnung->speichern();
         
