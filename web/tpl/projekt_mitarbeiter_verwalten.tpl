@@ -113,6 +113,20 @@
     </table>
     <a target="_blank" href="src/projekt/projekt.php?action=stundenzettel&bid=<!--BenID-->">Stundenzettel anzeigen</a>
     
+    <h3>&Uuml;berstunden</h3>
+    <table class="liste txt310">
+    	<tr>
+    		<th>KW</th>
+    		<!--<th>Datum</th>-->
+    		<th>Soll</th>
+    		<th>Ist</th>
+    		<th>Soll-Ist</th>
+    		<th>DifVW</th>
+    		<th>Total</th>
+    	</tr>
+   		<!--UeberstundenData-->
+    </table>
+    
     <!--Status--><br/>
     <!--Status2-->
     

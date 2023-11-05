@@ -326,6 +326,43 @@ class ProjektMitarbeiterVerwaltung implements GetRequestHandler, PostRequestHand
             $tpl->replace("ZeiterfassungCheck", Constant::$HTML_CHECKED_CHECKED);
         $tpl->replace("ZeiterfassungCheck", "");
         
+        
+        // Ueberstunden / Wochenstatistik
+        if ($benutzer->getID() > 0) {
+            $data = ArbeitswocheUtilities::ladeArbeitswochenByBenutzerId($benutzer->getID(), date("Y"));
+            echo $benutzer->getID();
+            $letztesJahr = 0;
+            $totalStundenDif = 0;
+            
+            $tplUeberstunden = new BufferedTemplate("projekt_mitarbeiter_uestunden_ds.tpl", "CSS", "td1", "td2");
+            foreach ($data as $currentData) {
+                
+                if ($letztesJahr == 0 || $currentData->getJahr() != $letztesJahr) {
+                    
+                    // TODO: Hier muss die Option rein ob Stunden genullt werden sollen oder nicht. Elmar will es haben.
+                    $totalStundenDif = 0;
+                }
+
+                $tplUeberstunden->replace("Kalenderwoche", $currentData->getKalenderWoche());
+                $tplUeberstunden->replace("Jahr", $currentData->getJahr());
+                $tplUeberstunden->replace("WochenStart", $currentData->getWochenStart());
+                $tplUeberstunden->replace("Soll", $currentData->getWochenStundenSoll());
+                $tplUeberstunden->replace("Ist", $currentData->getWochenStundenIst());
+                $tplUeberstunden->replace("Differenz", $currentData->getWochenStundenDif());
+                $tplUeberstunden->replace("TotalDif1", $totalStundenDif);
+                $totalStundenDif += $currentData->getWochenStundenDif();
+                $tplUeberstunden->replace("TotalDif2", $totalStundenDif);
+                
+                $letztesJahr = $currentData->getJahr();
+                $tplUeberstunden->next();
+            }
+            
+            $tpl->replace("UeberstundenData", $tplUeberstunden->getOutput());
+        } else {
+            $tpl->replace("UeberstundenData", "");
+        }
+        
+        
         // HTML Status Ausgabe
         if ($tplStatus != null)
             $tpl->replace("Status", $tplStatus->getOutput());

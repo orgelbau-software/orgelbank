@@ -30,7 +30,7 @@
     <td><input disabled class="disabled zeiteingabe" type="number" name="summe_freitag" value="<!--Summe5-->" size="3" /></td>
     <td class="zeiterfassungWochenende"><input disabled class="disabled zeiteingabe" type="number" name="summe_samstag" value="<!--Summe6-->" size="3" /></td>
     <td class="zeiterfassungWochenende"><input disabled class="disabled zeiteingabe" type="number" name="summe_sonntag" value="<!--Summe0-->" size="3" /></td>
-    <td><img class="jsColumn" src="web/images/icons/gem_options.png" value="zeiterfassungWochenende"  /></td>
+    <td>&nbsp;</td>
   </tr>
   <tr>
   	<td style="width: 200px;">&nbsp;</td>
