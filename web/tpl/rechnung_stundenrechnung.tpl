@@ -69,32 +69,32 @@
 			<tr>
 				<td class="tdbez" style="width: 120px">1 Geselle:</td>
 				<td>
-					<input <!--disableForm--> type="text" name="geselle_std" id="geselle_std" value="<!--GeselleStd-->" size="2" onChange="summiere()"/> Stunden á
-					<input <!--disableForm--> type="text" name="geselle_lohn" id="geselle_lohn" value="<!--GeselleLohn-->" size="3" onChange="summiere()"/> Euro (Netto)
+					<input <!--disableForm--> type="number" min="0" step="0.25" name="geselle_std" id="geselle_std" value="<!--GeselleStd-->" size="2" onChange="summiere()" class="werteingabe" /> Stunden á
+					<input <!--disableForm--> type="number" min="0" step="0.01" name="geselle_lohn" id="geselle_lohn" value="<!--GeselleLohn-->" size="3" onChange="summiere()" class="werteingabe" /> Euro (Netto)
 				</td>
-				<td>&nbsp;&nbsp;&nbsp;<input type="text" size="5" name="sum_geselle" id="sum_geselle" disabled class="disabled" value="<!--SummeGeselle-->"/> Euro </td>
+				<td>&nbsp;&nbsp;&nbsp;<input type="number" min="0" step="0.25" size="5" name="sum_geselle" id="sum_geselle" disabled class="disabled rechnungseingabe" value="<!--SummeGeselle-->"/> Euro </td>
 			</tr>
 			<tr>
 				<td class="tdbez" style="width: 120px">1 Auszubildende/r:</td>
 				<td>
-					<input <!--disableForm--> type="text" name="azubi_std" id="azubi_std" value="<!--AzubiStd-->" size="2" onChange="summiere()"/> Stunden á
-					<input <!--disableForm--> type="text" name="azubi_lohn" id="azubi_lohn" value="<!--AzubiLohn-->" size="3" onChange="summiere()"/> Euro (Netto)
+					<input <!--disableForm--> type="number" min="0" step="0.25" name="azubi_std" id="azubi_std" value="<!--AzubiStd-->" size="2" onChange="summiere()" class="werteingabe"/> Stunden á
+					<input <!--disableForm--> type="number" min="0" step="0.01" name="azubi_lohn" id="azubi_lohn" value="<!--AzubiLohn-->" size="3" onChange="summiere()" class="werteingabe"/> Euro (Netto)
 				</td>
-				<td>+ <input type="text" size="5" name="sum_azubi" id="sum_azubi" disabled class="disabled" value="<!--SummeAzubi-->"/> Euro </td>
+				<td>+ <input type="number" size="5" name="sum_azubi" id="sum_azubi" disabled class="disabled rechnungseingabe" value="<!--SummeAzubi-->"/> Euro </td>
 			</tr>
 			<tr>
 				<td class="tdbez" style="width: 120px">Material:</td>
-				<td><input <!--disableForm--> type="text" name="material" id="material" value="<!--Material-->" size="5" onChange="summiere()"/> Euro (Netto)</td>
-				<td>+ <input type="text" size="5" name="sum_material" id="sum_material" disabled class="disabled" value="<!--Material-->" onChange="summiere()"/> Euro </td>
+				<td><input <!--disableForm--> type="number" min="0" step="0.01" name="material" id="material" value="<!--Material-->" size="5" onChange="summiere()" class="werteingabe"/> Euro (Netto)</td>
+				<td>+ <input type="number" min="0" step="0.01" size="5" name="sum_material" id="sum_material" disabled class="disabled rechnungseingabe" value="<!--Material-->" onChange="summiere()"/> Euro </td>
 			</tr>
 			<tr>
 				<td class="tdbez" style="width: 120px">Fahrtkosten:</td>
-				<td><input <!--disableForm--> type="text" name="fahrtkosten" id="fahrtkosten" value="<!--Fahrtkosten-->" size="5" onChange="summiere()"/> Euro</td>
-				<td>+ <input type="text" size="5" name="sum_fk" id="sum_fk" disabled class="disabled" value="<!--Fahrtkosten-->" onChange="summiere()"/> Euro </td>
+				<td><input <!--disableForm--> type="number" min="0" step="0.01" name="fahrtkosten" id="fahrtkosten" value="<!--Fahrtkosten-->" size="5" onChange="summiere()" class="werteingabe"/> Euro</td>
+				<td>+ <input type="number" min="0" step="0.01" size="5" name="sum_fk" id="sum_fk" disabled class="disabled rechnungseingabe" value="<!--Fahrtkosten-->" onChange="summiere()" /> Euro </td>
 			</tr>
 			<tr>
 				<td colspan="2">&nbsp;</td>
-				<td>= <input type="text" size="5" name="sum_ges" id="sum_ges" value="<!--Betrag-->" disabled class="disabled"/> Euro Gesamt</td>
+				<td>= <input type="number" min="0" step="0.01" size="5" name="sum_ges" id="sum_ges" value="<!--Betrag-->" disabled class="disabled rechnungseingabe"/> Euro Gesamt</td>
 			</tr>
 		</table>
 		<hr class="bottomMenuHR"/>

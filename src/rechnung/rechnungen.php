@@ -98,14 +98,14 @@ if (isset($_GET['action'])) {
             
             if ($r != null) {
                 if ($r->getFahrtkosten() == "") {} elseif ($r->getPflegekosten() == "") {
-                    $retVal['fahrtkosten'] = $r->getFahrtkosten(true);
+                    $retVal['fahrtkosten'] = $r->getFahrtkosten();
                 } else {
-                    $retVal['pflegekosten'] = $r->getPflegekosten(true);
-                    $retVal['fahrtkosten'] = $r->getFahrtkosten(true);
+                    $retVal['pflegekosten'] = $r->getPflegekosten();
+                    $retVal['fahrtkosten'] = $r->getFahrtkosten();
                 }
-                $retVal['nettobetrag'] = $r->getNettoBetrag(true);
-                $retVal['bruttobetrag'] = $r->getBruttoBetrag(true);
-                $retVal['mwst'] = $r->getMwSt(true);
+                $retVal['nettobetrag'] = $r->getNettoBetrag();
+                $retVal['bruttobetrag'] = $r->getBruttoBetrag();
+                $retVal['mwst'] = $r->getMwSt();
                 $retVal['datum'] = $r->getDatum(true);
             }
             

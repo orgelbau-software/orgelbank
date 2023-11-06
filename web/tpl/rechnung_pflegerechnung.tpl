@@ -100,28 +100,28 @@
 			</tr>
 			<tr>
 				<td class="tdbez">Pflegekosten:</td>
-				<td>&nbsp;&nbsp;&nbsp;<input id="pflegekosten" onchange="summierePflegerechnung()" <!--disableForm--> type="text" name="pflegebetrag" value="<!--Pflegebetrag-->" size="8" class="inputzahl"/> EUR</td>
-				<td colspan="2"><input onkeyup="summierePflegerechnung()" disabled id="letzterpflegebtrag" type="text" name="js_pflege" value="<!--LetztePflege-->" size="8" class="disabled inputzahl"/> EUR</td>
+				<td>&nbsp;&nbsp;&nbsp;<input id="pflegekosten" onchange="summierePflegerechnung()" <!--disableForm--> type="number" min="0" step="0.01" name="pflegebetrag" value="<!--Pflegebetrag-->" size="8" class="inputzahl rechnungseingabe"/> EUR</td>
+				<td colspan="2"><input onkeyup="summierePflegerechnung()" disabled id="letzterpflegebtrag" type="number" min="0" step="0.01"  name="js_pflege" value="<!--LetztePflege-->" size="8" class="disabled inputzahl rechnungseingabe"/> EUR</td>
 			</tr>
 			<tr>
 				<td class="tdbez">Fahrtkosten:</td>
-				<td>+ <input onkeyup="summierePflegerechnung()" id="fahrtkosten" type="text" name="fahrtkosten" value="<!--Fahrtkosten-->" size="8" class="inputzahl" <!--disableForm--> /> EUR</td>
-				<td colspan="2"><input disabled id="letztefahrtkosten" type="text" name="js_fahrt" value="<!--LetzteFahrt-->" size="8" class="disabled inputzahl"/> EUR</td>
+				<td>+ <input onkeyup="summierePflegerechnung()" id="fahrtkosten" type="number" min="0" step="0.01"  name="fahrtkosten" value="<!--Fahrtkosten-->" size="8" class="inputzahl rechnungseingabe" <!--disableForm--> /> EUR</td>
+				<td colspan="2"><input disabled id="letztefahrtkosten" type="number" min="0" step="0.01"  name="js_fahrt" value="<!--LetzteFahrt-->" size="8" class="disabled inputzahl rechnungseingabe"/> EUR</td>
 			</tr>
 			<tr>
 				<td class="tdbez">Gesamtbetrag (Netto):</td>
-				<td>= <input id="summe" disabled type="text" name="rechnungsbetrag" value="<!--Betrag-->" size="8" class="disabled inputzahl"/> EUR</td>
-				<td colspan="2"><input disabled id="letztenetto" type="text" name="js_netto" value="<!--LetzteNetto-->" size="8" class="disabled inputzahl"/> EUR</td>
+				<td>= <input id="summe" disabled type="number" min="0" step="0.01"  name="rechnungsbetrag" value="<!--Betrag-->" size="8" class="disabled inputzahl rechnungseingabe"/> EUR</td>
+				<td colspan="2"><input disabled id="letztenetto" type="number" min="0" step="0.01"  name="js_netto" value="<!--LetzteNetto-->" size="8" class="disabled inputzahl rechnungseingabe"/> EUR</td>
 			</tr>
 			<tr>
 				<td class="tdbez">MwSt. <!--MwStSatz-->%</td>
-				<td>+ <input id="mwst" disabled type="text" name="mwst" value="<!--MwSt-->" size="8" class="disabled inputzahl"/> EUR</td>
-				<td colspan="2"><input disabled id="letztemwst" type="text" name="js_mwst" value="<!--LetzteMwSt-->" size="8" class="disabled inputzahl"/> EUR</td>
+				<td>+ <input id="mwst" disabled type="number" min="0" step="0.01"  name="mwst" value="<!--MwSt-->" size="8" class="disabled inputzahl rechnungseingabe"/> EUR</td>
+				<td colspan="2"><input disabled id="letztemwst" type="number" min="0" step="0.01"  name="js_mwst" value="<!--LetzteMwSt-->" size="8" class="disabled inputzahl rechnungseingabe"/> EUR</td>
 			</tr>
 				<tr>
 				<td class="tdbez">Gesamtbetrag (Brutto):</td>
-				<td>= <input id="jsBruttoBetrag" disabled type="text" name="brutto" value="<!--BruttoBetrag-->" size="8" class="disabled inputzahl"/> EUR</td>
-				<td colspan="2"><input disabled id="letztebrutto" type="text" name="js_brutto" value="<!--LetzteBrutto-->" size="8" class="disabled inputzahl"/> EUR</td>
+				<td>= <input id="jsBruttoBetrag" disabled type="number" min="0" step="0.01"  name="brutto" value="<!--BruttoBetrag-->" size="8" class="disabled inputzahl rechnungseingabe"/> EUR</td>
+				<td colspan="2"><input disabled id="letztebrutto" type="number" min="0" step="0.01"  name="js_brutto" value="<!--LetzteBrutto-->" size="8" class="disabled inputzahl rechnungseingabe"/> EUR</td>
 			</tr>
 		</table>
     

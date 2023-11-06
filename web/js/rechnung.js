@@ -101,8 +101,6 @@ function doAdresse() {
 		return;
 	}
 	
-	
-	
 	jQuery.ajax({
 		url : './src/rechnung/rechnungen.php',
 		method : "GET",
@@ -138,13 +136,6 @@ function summiere() {
 	var m = document.getElementById("material").value;
 	var f = document.getElementById("fahrtkosten").value;
 
-	gs = gs.replace((/,/g), ".");
-	gl = gl.replace((/,/g), ".");
-	as = as.replace((/,/g), ".");
-	al = al.replace((/,/g), ".");
-	m = m.replace((/,/g), ".");
-	f = f.replace((/,/g), ".");
-
 	document.getElementById("sum_geselle").value = (gs * gl).toFixed(2);
 	document.getElementById("sum_azubi").value = (as * al).toFixed(2);
 	document.getElementById("sum_material").value = (m * 1).toFixed(2);
@@ -160,15 +151,12 @@ function summierePflegerechnung() {
 	var pk = jQuery("#pflegekosten").val();
 	var fk = jQuery("#fahrtkosten").val();
 
-	pk = pk.replace((/,/g), ".");
-	fk = fk.replace((/,/g), ".");
-
 	var summe = (pk * 1 + fk * 1).toFixed(2);
 	var mwst = (summe * mwstSatz).toFixed(2);
 	var brutto = (summe * 1 + mwst * 1).toFixed(2);
-	jQuery("#summe").attr('value', summe.replace(".", ","));
-	jQuery("#jsBruttoBetrag").attr('value', brutto.replace(".", ","));
-	jQuery("#mwst").attr('value', mwst.replace(".", ","));
+	jQuery("#summe").attr('value', summe);
+	jQuery("#jsBruttoBetrag").attr('value', brutto);
+	jQuery("#mwst").attr('value', mwst);
 }
 
 function doAbschlag() {

@@ -71,34 +71,34 @@
 			<tr>
 				<td class="tdbez" class="width120">Nettobetrag:</td>
 				<td>
-					<input type="text" name="gnetto" id="gnetto" value="<!--GesamtNetto-->" size="8" onChange="berechneAbschlag()" class="inputzahl"/> EUR
+					<input type="number" min="0" step="0.01"  name="gnetto" id="gnetto" value="<!--GesamtNetto-->" size="8" onChange="berechneAbschlag()" class="inputzahl rechnungseingabe"/> EUR
 				</td>
 				<td>
-					<input type="text" name="anetto" id="anetto" value="<!--AbschlagNetto-->" size="8" onChange="berechneAbschlag()" class="inputzahl"/> EUR
+					<input type="number" min="0" step="0.01"  name="anetto" id="anetto" value="<!--AbschlagNetto-->" size="8" onChange="berechneAbschlag()" class="inputzahl rechnungseingabe"/> EUR
 				</td>
 			</tr>
 			<tr>
 				<td class="tdbez" class="width120"><!--MwStSatz-->% MwSt.:</td>
 				<td>
-					<input type="text" name="gsteuer" id="gsteuer" value="<!--GesamtMwSt-->" size="8" disabled class="disabled"/> EUR
+					<input type="number" min="0" step="0.01"  name="gsteuer" id="gsteuer" value="<!--GesamtMwSt-->" size="8" disabled class="disabled rechnungseingabe"/> EUR
 				</td>
 				<td>
-					<input type="text" name="asteuer" id="asteuer" value="<!--AbschlagMwSt-->" size="8" disabled class="disabled"/> EUR
+					<input type="number" min="0" step="0.01"  name="asteuer" id="asteuer" value="<!--AbschlagMwSt-->" size="8" disabled class="disabled rechnungseingabe"/> EUR
 				</td>
 			</tr>
 			<tr>
 				<td class="tdbez" class="width120">Rechnungsbetrag:</td>
 				<td>
-					<input type="text" name="gsumme" id="gsumme" value="<!--GesamtSumme-->" size="8" disabled class="disabled"/> EUR
+					<input type="number" min="0" step="0.01" name="gsumme" id="gsumme" value="<!--GesamtSumme-->" size="8" disabled class="disabled rechnungseingabe"/> EUR
 				</td>
 				<td>
-					<input type="text" name="asumme" id="asumme" value="<!--AbschlagSumme-->" size="8" disabled class="disabled"/> EUR
+					<input type="number" min="0" step="0.01"  name="asumme" id="asumme" value="<!--AbschlagSumme-->" size="8" disabled class="disabled rechnungseingabe"/> EUR
 				</td>
 			</tr>
 			<tr>
 				<td class="tdbez" class="width120">Abschlagssatz:</td>
 				<td colspan="2">
-					<input <!--disableForm--> type="text" name="satz" id="satz" value="<!--AbschlagSatz-->" size="1" onChange="berechneAbschlag()" class="inputzahl"/> Prozent
+					<input <!--disableForm--> type="number" min="0" step="0.01" name="satz" id="satz" value="<!--AbschlagSatz-->" size="1" onChange="berechneAbschlag()" class="inputzahl rechnungseingabe"/> Prozent
 				</td>
 			</tr>
 		</table>

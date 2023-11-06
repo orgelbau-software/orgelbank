@@ -1,8 +1,17 @@
 <?php
 include "../../conf/config.inc.php";
+
+DB::getInstance()->connect();
+
+session_start();
+
+$user = new WebBenutzer();
+if ($user->validateSession() == false) {
+    die("keine gueltige session");
+}
+
 if (isset($_GET['action'], $_GET['request']) && $_GET['action'] == "ajax") {
-    DB::getInstance()->connect();
-    
+        
     if (isset($_GET['request'], $_GET['a'], $_GET['p']) && $_GET['request'] == "unteraufgaben") {
         
         $ha = AufgabeUtilities::loadChildrenAufgaben(intval($_GET['a']));
