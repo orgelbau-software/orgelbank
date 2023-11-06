@@ -305,17 +305,10 @@ jQuery(function() {
 					minLength : 2
 			});
 	
-	jQuery('.datePickerRechnung').datepicker({
-		showOn : "button",
-		showWeek : true,
-		buttonImage : "web/images/calendar.png",
-		buttonImageOnly : true,
-		buttonText : "",
-		onSelect: function(date) {
-			var date2 = $('#jsDatePickerRechnungsdatum').datepicker('getDate');
-			var zahlungsziel = parseInt(jQuery('#jsZahlungsziel').val());
-            date2.setDate(date2.getDate()+zahlungsziel);
-            $('#jsDatePickerZieldatum').datepicker('setDate', date2);            
-		}
+	jQuery('.datePickerRechnung').change(function() {            
+		var days = document.getElementById("jsZahlungsziel").value;
+        var date = new Date(document.getElementById("jsDatePickerRechnungsdatum").value);
+        date.setDate(date.getDate() + parseInt(days));
+        document.getElementById("jsDatePickerZieldatum").valueAsDate = date;
 	});
 });

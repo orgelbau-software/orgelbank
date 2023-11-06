@@ -472,8 +472,8 @@ class RechnungController
         
         // Rechnungsdatum & Zahlungsziel
         $iZahlungsZiel = ConstantLoader::getStandardZahlungsziel();
-        $tplRechnung->replace("Rechnungsdatum", date("d.m.Y"));
-        $tplRechnung->replace("Zahlungsziel", date("d.m.Y", strtotime("+" . $iZahlungsZiel . " day")));
+        $tplRechnung->replace("Rechnungsdatum", date("Y-m-d"));
+        $tplRechnung->replace("Zahlungsziel", date("Y-m-d", strtotime("+" . $iZahlungsZiel . " day")));
         
         // Rechnungsnummer
         $tplRechnung->replace("Rechnungsjahr", date("y"));
