@@ -19,16 +19,17 @@
         <th>Benutzername:</th>
         <td><input type="text" name="benutzername" class="txt140" value="<!--Benutzername-->" /></td>
       </tr>
+        <tr>
+      <th>Email:</th>
+        <td><input type="text" name="email" class="txt140" value="<!--Email-->" /></td>
+      </tr>
       <tr>
         <th>Passwort:</th>
         <td><input type="text" name="passwort" class="txt140" value="" /></td>
       </tr>
       <tr>
         <th>Eintrittsdatum:</th>
-        <td>
-        <div class="inputDatum"><input class="datePicker" type="text" name="eintrittsdatum" value="<!--Eintrittsdatum-->"
-        /></div>
-        </td>
+        <td><input type="date" name="eintrittsdatum" value="<!--Eintrittsdatum-->" /></td>
       </tr>
       <tr>
         <th>Stundenlohn:</th>

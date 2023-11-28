@@ -1,6 +1,8 @@
 <?php
 //config.php
 date_default_timezone_set("Europe/Berlin");
+setlocale(LC_TIME, 'de_DE.UTF8');
+
 ob_start(); // FirePHP
 
 mb_internal_encoding( 'UTF-8' );

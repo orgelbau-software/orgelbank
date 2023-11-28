@@ -122,7 +122,7 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
         $tplIconNichtLoeschen = new Template("projekt_urlaub_liste_ds_nichtloeschen.tpl");
         foreach ($u as $urlaubseintrag) {
             $tplDS->replace("UrlaubsID", $urlaubseintrag->getID());
-            $tplDS->replace("DatumVon", $urlaubseintrag->getDatumVon(true));
+            $tplDS->replace("DatumVon", date("D, d.m.Y", strtotime($urlaubseintrag->getDatumVon(false))));
             
             if($urlaubseintrag->getDatumBis() == null || $urlaubseintrag->getDatumBis(true) == "01.01.1970") {
                 $tplDS->replace("DatumBis","");

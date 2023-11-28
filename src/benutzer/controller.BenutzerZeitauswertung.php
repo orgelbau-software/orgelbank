@@ -61,12 +61,34 @@ class BenutzerZeitauswertung implements GetRequestHandler
         $ueberstunden = BenutzerUtilities::berechneUeberstunden($benutzer->getID());
         $ueberstunden = $ueberstunden == "" ? 0 : $ueberstunden;
         
+        $benutzerStunden = ArbeitswocheUtilities::ladeArbeitswochenByBenutzerId($benutzer->getID(), date("Y"));
+        $totalStundenDif = 0;
+        
+        $tplDS = new BufferedTemplate("benutzer_stunden_liste_ds.tpl", "CSS", "td1", "td2");
+        
+        foreach ($benutzerStunden as $currentWoche) {            
+            $tplDS->replace("KW", $currentWoche->getJahr() . "/" . $currentWoche->getKalenderWoche());
+            $tplDS->replace("Woche", date("d.m.Y", strtotime($currentWoche->getWochenStart())));
+            $tplDS->replace("Soll", $currentWoche->getWochenStundenSoll());
+            $tplDS->replace("Ist", $currentWoche->getWochenStundenIst());
+            $tplDS->replace("Diff", $currentWoche->getWochenStundenDif());
+            $tplDS->replace("Vorwoche", $totalStundenDif."");
+            $totalStundenDif += $currentWoche->getWochenStundenDif();
+            $tplDS->replace("Gesamt", $totalStundenDif."");
+            
+            $tplDS->next();
+        }
+        
+        $tpl->replace("Stunden", $tplDS->getOutput());
+        
+        
         $benutzerUrlaub = UrlaubsUtilities::getUrlaubsTageProBenutzer($benutzer->getID(), date("Y"));
         
         $tplDS = new BufferedTemplate("benutzer_urlaub_liste_ds.tpl", "CSS", "td1", "td2");
         foreach ($benutzerUrlaub as $currentUrlaubsTag) {
             $tplDS->replace("Verbleibend", $currentUrlaubsTag->getVerbleibend());
             $tplDS->replace("Summe", $currentUrlaubsTag->getSumme());
+            $tplDS->replace("Stunden", $currentUrlaubsTag->getstunden());
             $tplDS->replace("Resturlaub", $currentUrlaubsTag->getResturlaub());
             $tplDS->replace("DatumVon", $currentUrlaubsTag->getDatumVon(true));
             $tplDS->replace("DatumBis", $currentUrlaubsTag->getDatumBis(true));
@@ -76,6 +98,8 @@ class BenutzerZeitauswertung implements GetRequestHandler
         }
         
         $tpl->replace("Urlaubstage", $tplDS->getOutput());
+        
+        
         return $tpl;
     }
 }

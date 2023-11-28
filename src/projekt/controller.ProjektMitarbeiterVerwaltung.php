@@ -69,9 +69,10 @@ class ProjektMitarbeiterVerwaltung implements GetRequestHandler, PostRequestHand
                 
                 $oldBenutzername = $benutzer->getBenutzername();
                 $benutzer->setBenutzername($_POST['benutzername']);
+                $benutzer->setEmail($_POST['email']);
                 $benutzer->setBenutzerlevel($_POST['benutzerlevel']);
                 if ($_POST['eintrittsdatum'] != "" && strtotime($_POST['eintrittsdatum']) > 0) {
-                    $benutzer->setEintrittsDatum(date("Y-m-d", strtotime($_POST['eintrittsdatum'])));
+                    $benutzer->setEintrittsDatum($_POST['eintrittsdatum']);
                 }
                 
                 // Nur Passwort setzen, wenn eine Eingabe gemacht wurde
@@ -120,6 +121,9 @@ class ProjektMitarbeiterVerwaltung implements GetRequestHandler, PostRequestHand
                     $strText .= "<li>Benutzername darf nicht leer sein.</li>";
                 if (strlen($benutzer->getBenutzername()) > ConstantLoader::getBenutzerMaxUsernameLength())
                     $strText .= "<li>Benutzername darf höchstens " . ConstantLoader::getBenutzerMaxUsernameLength() . " Zeichen haben.</li>";
+                if ($_POST['email'] != "" && !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                    $strText .= "<li>Email Adresse ist ungültig: " . $_POST['email'] . "</li>";
+                }
                 
                 if ($_POST['passwort'] != "") {
                     if (strlen($_POST['passwort']) > 0 && strlen($_POST['passwort']) < ConstantLoader::getBenutzerMinPasswortLength()) {
@@ -237,7 +241,8 @@ class ProjektMitarbeiterVerwaltung implements GetRequestHandler, PostRequestHand
         $tpl->replace("Vorname", $benutzer->getVorname());
         $tpl->replace("Nachname", $benutzer->getNachname());
         $tpl->replace("Benutzername", $benutzer->getBenutzername());
-        $tpl->replace("Eintrittsdatum", ($benutzer->getEintrittsDatum(false) != 0 ? $benutzer->getEintrittsDatum(true) : ""));
+        $tpl->replace("Email", $benutzer->getEmail());
+        $tpl->replace("Eintrittsdatum", ($benutzer->getEintrittsDatum(false) != 0 ? $benutzer->getEintrittsDatum(false) : ""));
         $tpl->replace("Lohn",$benutzer->getStdLohn());
         $tpl->replace("VerrechnungsSatz",$benutzer->getVerrechnungsSatz());
         
@@ -330,7 +335,6 @@ class ProjektMitarbeiterVerwaltung implements GetRequestHandler, PostRequestHand
         // Ueberstunden / Wochenstatistik
         if ($benutzer->getID() > 0) {
             $data = ArbeitswocheUtilities::ladeArbeitswochenByBenutzerId($benutzer->getID(), date("Y"));
-            echo $benutzer->getID();
             $letztesJahr = 0;
             $totalStundenDif = 0;
             
