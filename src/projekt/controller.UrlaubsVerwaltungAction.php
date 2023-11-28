@@ -96,7 +96,7 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
         // Urlaubskontrolle
         $tpl->replace("DatumVon", "");
         $tpl->replace("DatumBis", "");
-        $tpl->replace("Tage", "1");
+        $tpl->replace("Stunden", "8");
         $tpl->replace("Bemerkung", "");
         $tpl->replace("SubmitValue", "Speichern");
         
@@ -130,13 +130,17 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
                 $tplDS->replace("DatumBis", $urlaubseintrag->getDatumBis(true));
             }
             $tplDS->replace("Benutzername", $urlaubseintrag->getBenutzername());
-            $tplDS->replace("Tage", $urlaubseintrag->getTage());
+            $tplDS->replace("Tage",  number_format(doubleval($urlaubseintrag->getStunden()/ 8),0));
+            $tplDS->replace("Stunden", number_format(doubleval($urlaubseintrag->getStunden()), 2));
             $tplDS->replace("Status", $urlaubseintrag->getStatus());
             $tplDS->replace("Verbleibend", $urlaubseintrag->getVerbleibend());
+            $tplDS->replace("VerbleibendTage", intval($urlaubseintrag->getVerbleibend() / 8));
             if ($urlaubseintrag->getResturlaub() == 0) {
-                $tplDS->replace("Resturlaub", "");
+                $tplDS->replace("Resturlaub", "0");
+                $tplDS->replace("ResturlaubTage", "0");
             } else {
                 $tplDS->replace("Resturlaub", $urlaubseintrag->getResturlaub());
+                $tplDS->replace("ResturlaubTage", $urlaubseintrag->getResturlaub() / 8);
             }
             $tplDS->replace("Bemerkung", $urlaubseintrag->getBemerkung());
             $tplDS->replace("Summe", $urlaubseintrag->getSumme());

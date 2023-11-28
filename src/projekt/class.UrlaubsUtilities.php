@@ -3,9 +3,9 @@
 class UrlaubsUtilities
 {
 
-    public static function bucheBenutzerUrlaub($pBenutzer, $pDatum, $pHalberOderGanzerTag)
+    public static function bucheBenutzerUrlaub($pBenutzer, $pDatum, $pHalberOderGanzerTag, $pStunden)
     {
-        return UrlaubsUtilities::bucheUrlaub($pBenutzer, $pDatum, "", $pHalberOderGanzerTag, Urlaub::TYP_URLAUB, Urlaub::STATUS_ZEITERFASSUNG, "");
+        return UrlaubsUtilities::bucheUrlaub($pBenutzer, $pDatum, "", $pHalberOderGanzerTag, $pStunden, Urlaub::TYP_URLAUB, Urlaub::STATUS_ZEITERFASSUNG, "");
     }
 
     /**
@@ -13,12 +13,13 @@ class UrlaubsUtilities
      * @param int $pBenutzerID
      * @param string $pDatumVon Y-m-d
      * @param string $pDatumBis Y-m-d
-     * @param int $pTage
+     * @param int $pTage - deprecated
+     * @param int $pStunden
      * @param int $pUrlaubsTyp
      * @param string $pBemerkung
      * @return HTMLStatus|boolean
      */
-    public static function bucheUrlaub($pBenutzerID, $pDatumVon, $pDatumBis, $pTage, $pUrlaubsTyp, $pStatus, $pBemerkung = "")
+    public static function bucheUrlaub($pBenutzerID, $pDatumVon, $pDatumBis, $pTage, $pStunden, $pUrlaubsTyp, $pStatus, $pBemerkung = "")
     {
         $bereitsExistierenderUrlaubsEintrag = UrlaubsUtilities::getBestimmtenUrlaubsEintragBenutzer($pBenutzerID, $pDatumVon);
         if($bereitsExistierenderUrlaubsEintrag != null) {
@@ -37,7 +38,8 @@ class UrlaubsUtilities
         $urlaub = new Urlaub();
         $urlaub->setBenutzerId($pBenutzerID);
         $urlaub->setBemerkung(htmlspecialchars($pBemerkung));
-        $urlaub->setTage(doubleval($pTage));
+        //$urlaub->setTage(doubleval($pTage));
+        $urlaub->setStunden(doubleval($pStunden));
         
         $urlaub->setDatumVon($pDatumVon);
         if ($pDatumBis == "") {
@@ -50,9 +52,9 @@ class UrlaubsUtilities
         $urlaub->setResturlaub($letzterUrlaub->getResturlaub());
         
         if (UrlaubsUtilities::isKorrekturOrZusatzBuchung($pUrlaubsTyp)) {
-            $rest = $urlaub->getTage() * - 1;
+            $rest = $urlaub->getStunden() * - 1;
         } else {
-            $rest = $urlaub->getTage();
+            $rest = $urlaub->getStunden();
         }
         
         if (! UrlaubsUtilities::isKorrekturOrZusatzBuchung($pUrlaubsTyp) && $letzterUrlaub->getResturlaub() > 0) {
@@ -66,7 +68,7 @@ class UrlaubsUtilities
         }
         
         if ($rest > 0 && $letzterUrlaub->getVerbleibend() < $rest) {
-            return new HTMLStatus("Der Mitarbeiter möchte " . $rest . " Tage Urlaub buchen, hat aber nur noch " . $urlaub->getVerbleibend() . " Tage übrig (Resturlaub: " . $urlaub->getResturlaub() . ")", HTMLStatus::$STATUS_WARN, false);
+            return new HTMLStatus("Der Mitarbeiter möchte " . $rest . " Stunden Urlaub buchen, hat aber nur noch " . $urlaub->getVerbleibend() . " Stunden übrig (Resturlaub: " . $urlaub->getResturlaub() . ")", HTMLStatus::$STATUS_WARN, false);
         } else {
             $urlaub->setVerbleibend($letzterUrlaub->getVerbleibend() - $rest);
             $urlaub->setSumme($urlaub->getVerbleibend() + $urlaub->getResturlaub());

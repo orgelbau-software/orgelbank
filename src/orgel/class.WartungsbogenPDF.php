@@ -9,6 +9,8 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
      * @var boolean
      */
     protected $utf8 = true;
+    
+    const NEWROW = 1;
 
     function __construct()
     {
@@ -90,38 +92,38 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
         $this->SetKeywords($this->getKeywords() . $oGemeinde->getKirche() . ", ", $this->utf8);
         
         // Ansprechpartner
-        $this->SetXY(83, 30);
-        $this->activateFontNormal();
+//         $this->SetXY(83, 30);
+        $this->activateFontTextHeadline();
         $this->Cell(50, 6, 'Ansprechpartner:', 0, 0, "L");
-        $this->ln(3);
+        $this->ln(5);
         
         // Tabellenkopf
-        $this->SetXY(85, 36);
+//         $this->SetXY(85, 36);
         $this->SetFont("DejaVu B", '', 10);
         $rahmen = 0;
-        $this->Cell(22, $this->cellheight, 'Funktion', $rahmen);
-        $this->Cell(35, $this->cellheight, 'Name', $rahmen);
-        $this->Cell(28, $this->cellheight, 'Telefon', $rahmen);
-        $this->Cell(28, $this->cellheight, 'Mobil', $rahmen);
+        $this->Cell(35, $this->cellheight, 'Funktion', $rahmen);
+        $this->Cell(50, $this->cellheight, 'Name', $rahmen);
+        $this->Cell(40, $this->cellheight, 'Telefon', $rahmen);
+        $this->Cell(40, $this->cellheight, 'Mobil', $rahmen, WartungsbogenPDF::NEWROW);
         $this->activateFontNormal();
         
+        $starthoehe = 36;
         foreach ($pAnsprechpartner as $oAnsprechpartner) {
             // Laufvariablen
-            $starthoehe = 36;
             $counter = $counter + 1;
             
-            $this->SetXY(85, $starthoehe + $this->cellheight * $counter);
-            $this->Cell(22, $this->cellheight, substr($oAnsprechpartner->getFunktion(), 0, 10), 1);
-            $this->Cell(35, $this->cellheight, substr($oAnsprechpartner->getAnzeigename(), 0, 18), 1);
-            $this->Cell(28, $this->cellheight, $oAnsprechpartner->getTelefon(), 1);
-            $this->Cell(28, $this->cellheight, $oAnsprechpartner->getMobil(), 1);
+//             $this->SetXY(85, $starthoehe + $this->cellheight * $counter);
+            $this->Cell(35, $this->cellheight, substr($oAnsprechpartner->getFunktion(), 0, 20), 1);
+            $this->Cell(50, $this->cellheight, substr($oAnsprechpartner->getAnzeigename(), 0, 30), 1);
+            $this->Cell(40, $this->cellheight, $oAnsprechpartner->getTelefon(), 1);
+            $this->Cell(40, $this->cellheight, $oAnsprechpartner->getMobil(), 1, WartungsbogenPDF::NEWROW);
         }
-        
+        $this->ln(2);
         // Header Bezirk & OrgelId
         $this->addBezirkUndOrgelID($oOrgel->getID(), $oGemeinde->getBID());
         
         // Trennstrich
-        $this->SetXY($this->iRandLinks, 60);
+//         $this->SetXY($this->iRandLinks, 60);
         $this->zeichneTrennstrich();
     }
 

@@ -6,7 +6,7 @@
 <table class="liste">
 	<tr>
 		<th>Datum Von:</th>
-		<td><div class="inputDatum"><input class="datePicker" maxlength="10" type="text" name="datumvon" value="<!--DatumVon-->" tabindex="1"/></div></td>
+		<td><input type="date" name="datumvon" value="<!--DatumVon-->" tabindex="1"/></td>
 		<th>Mitarbeiter:</th>
 		<td>
 		<select name="benutzerId" tabindex="3">
@@ -18,10 +18,10 @@
 	</tr>
 	<tr>
 		<th>Datum Bis:</th>
-		<td><div class="inputDatum"><input class="datePicker" maxlength="10" type="text" name="datumbis" value="<!--DatumBis-->" tabindex="2"/></div></td>
-		<th>Tage</th>
+		<td><input type="date" name="datumbis" value="<!--DatumBis-->" tabindex="2"/></td>
+		<th>Stunden</th>
 		<td>
-			<input type="number" min="-30" max="30" step="0.5" name="tage" value="<!--Tage-->" class="int50" tabindex="4" required />
+			<input type="number" min="-240" max="240" step="0.25" name="tage" value="<!--Stunden-->" class="int50" tabindex="4" required />
 			<select name="urlaubstyp">
 				<option value="U">Urlaub</option>
 				<option value="Z">Zusatz</option>
@@ -56,7 +56,7 @@
 		<th>Datum Von</th>
 		<th>Datum Bis</th>
 		<th>Mitarbeiter</th>
-		<th>Tage</th>
+		<th>Stunden (Tage)</th>
 		<th>Verbleibend</th>
 		<th>Resturlaub</th>
 		<th>Total</th>

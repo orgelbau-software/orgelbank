@@ -35,10 +35,14 @@ class BenutzerController
             } elseif ($_POST['passwort'] != "" && ($_POST['passwort'] == $benutzer->getVorname() || $_POST['passwort'] == $benutzer->getNachname() || $_POST['passwort'] == $benutzer->getBenutzername())) {
                 $tplStatus->setText("Passwort darf weder Vor- Nach- noch dem Benutzernamen entsprechen!" . $_POST['passwort']);
                 $tplStatus->setStatusclass(1);
+            } else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                $tplStatus->setText("Email Adresse ungültig: " . $_POST['email']);
+                $tplStatus->setStatusclass(1);
             } else {
                 // Benutzer laden
                 $benutzer->setVorname($_POST['vorname']);
                 $benutzer->setNachname($_POST['nachname']);
+                $benutzer->setEmail($_POST['email']);
                 
                 if ($_POST['passwort'] != "") {
                     $benutzer->setPasswort(md5(PASSWORD_SALT . $_POST['passwort']));
@@ -54,6 +58,7 @@ class BenutzerController
         $tpl->replace("Vorname", $benutzer->getVorname());
         $tpl->replace("Nachname", $benutzer->getNachname());
         $tpl->replace("Benutzername", $benutzer->getBenutzername());
+        $tpl->replace("Email", $benutzer->getEmail());
         
         if ($tplStatus != null) {
             $tpl->replace("Statusmeldung", $tplStatus->getOutput());

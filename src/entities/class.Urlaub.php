@@ -24,7 +24,7 @@ class Urlaub extends SimpleDatabaseStorageObjekt
 
     private $datumBis;
 
-    private $tage;
+    private $stunden;
 
     private $verbleibend;
 
@@ -51,7 +51,7 @@ class Urlaub extends SimpleDatabaseStorageObjekt
         $rs = $this->result;
         $this->setDatumVon($rs['u_datum_von']);
         $this->setDatumBis($rs['u_datum_bis']);
-        $this->setTage($rs['u_tage']);
+        $this->setStunden($rs['u_stunden']);
         $this->setBenutzerId($rs['be_id']);
         $this->setVerbleibend($rs['u_verbleibend']);
         $this->setResturlaub($rs['u_resturlaub']);
@@ -66,7 +66,7 @@ class Urlaub extends SimpleDatabaseStorageObjekt
         
         $ht->add("u_datum_von", $this->getDatumVon());
         $ht->add("u_datum_bis", $this->getDatumBis());
-        $ht->add("u_tage", $this->getTage());
+        $ht->add("u_stunden", $this->getStunden());
         $ht->add("be_id", $this->getBenutzerId());
         $ht->add("u_verbleibend", $this->getVerbleibend());
         $ht->add("u_resturlaub", $this->getResturlaub());
@@ -109,11 +109,11 @@ class Urlaub extends SimpleDatabaseStorageObjekt
 
     /**
      *
-     * @return the $tage
+     * @return the $stunden
      */
-    public function getTage()
+    public function getStunden()
     {
-        return $this->tage;
+        return $this->stunden;
     }
 
     /**
@@ -172,11 +172,11 @@ class Urlaub extends SimpleDatabaseStorageObjekt
 
     /**
      *
-     * @param field_type $tage            
+     * @param field_type $stunden            
      */
-    public function setTage($tage)
+    public function setStunden($stunden)
     {
-        $this->tage = $tage;
+        $this->stunden = $stunden;
     }
 
     /**

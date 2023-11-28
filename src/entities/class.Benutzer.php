@@ -54,6 +54,8 @@ class Benutzer extends SimpleDatabaseStorageObjekt
     private $sortierung;
 
     private $demo;
+    
+    private $email;
 
     public function __construct($iID = 0)
     {
@@ -66,6 +68,7 @@ class Benutzer extends SimpleDatabaseStorageObjekt
         $this->setVorname($rs['be_vorname']);
         $this->setNachname($rs['be_nachname']);
         $this->setBenutzername($rs['be_benutzername']);
+        $this->setEmail($rs['be_email']);
         $this->setPasswort($rs['be_passwort']);
         $this->setBenutzerlevel($rs['be_benutzerlevel']);
         $this->setAktiviert($rs['be_aktiviert']);
@@ -102,6 +105,7 @@ class Benutzer extends SimpleDatabaseStorageObjekt
         $ht->add("be_vorname", $this->getVorname());
         $ht->add("be_nachname", $this->getNachname());
         $ht->add("be_benutzername", $this->getBenutzername());
+        $ht->add("be_email", $this->getEmail());
         $ht->add("be_passwort", $this->getPasswort());
         $ht->add("be_benutzerlevel", $this->getBenutzerlevel());
         $ht->add("be_aktiviert", $this->getAktiviert());
@@ -147,6 +151,11 @@ class Benutzer extends SimpleDatabaseStorageObjekt
     {
         return $this->benutzername;
     }
+    
+    public function getEmail()
+    {
+        return $this->email;
+    }
 
     public function getNachname()
     {
@@ -184,6 +193,14 @@ class Benutzer extends SimpleDatabaseStorageObjekt
         }
     }
 
+    public function setEmail($email)
+    {
+        if ($this->email != $email) {
+            $this->email = $email;
+            $this->setChanged(true);
+        }
+    }
+    
     public function setNachname($nachname)
     {
         if ($this->nachname != $nachname) {

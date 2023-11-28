@@ -21,6 +21,12 @@
 		</td>
 	</tr>
 	<tr>
+		<th>Email:</th>
+		<td>
+			<input type="text" name="email" size="35" value="<!--Email-->" />
+		</td>
+	</tr>
+	<tr>
 		<th>&nbsp;</th>
 		<td style="text-align: right"><input type="submit" name="submit" value="Speichern"/></td>
 	</tr>
