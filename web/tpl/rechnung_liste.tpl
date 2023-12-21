@@ -55,7 +55,7 @@ Es wurden <b><!--AnzahlRechnungen--> Rechnungen</b> im Zeitraum vom <b><!--Zeitr
 <table>
 	<tr>
 		<th>Eingangs-Datum</th>
-		<td><div class="inputDatum"><input  id="jsEingangsDatum" class="datePicker jsCalendar"  type="text" name="eingangsdatum" value="" maxlength="10" /></div></td>
+		<td><input  id="jsEingangsDatum" class="jsCalendar" type="date" name="eingangsdatum" value="" /></td>
 	</tr>
 	<tr>
 		<th>Rechnungs-Betrag:</th>

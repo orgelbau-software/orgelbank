@@ -12,9 +12,9 @@
 		</tr>
 			<tr>
 				<td class="tdbez">RE-Datum:</td>
-				<td><div class="inputDatum"><input <!--disableForm--> class="datePicker" type="text" name="datum" value="<!--Rechnungsdatum-->" size="9"/></div></td>
+				<td><input <!--disableForm--> type="date" name="datum" value="<!--Rechnungsdatum-->" /></td>
 				<td class="tdbez">Zahlungsziel:</td>
-				<td><div class="inputDatum"><input <!--disableForm--> class="datePicker" type="text" name="zahlungsziel" value="<!--Zahlungsziel-->" size="9"/></div></td>
+				<td><input <!--disableForm--> type="date" name="zahlungsziel" value="<!--Zahlungsziel-->" /></td>
 				<td class="tdbez">RE-Nr:</td>
 				<td><input <!--disableForm--> type="text" name="rechnungsnummer" value="<!--Rechnungsnummer-->/<!--Rechnungsjahr-->" size="8"/></td>
 			</tr>

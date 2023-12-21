@@ -85,8 +85,7 @@
       <tr>
         <th>Datum:</th>
         <td>
-        <div class="inputDatum"><input type="text" class="datePicker" name="datum" value="<!--Datum-->"
-        size="8" /></div>
+        <input type="date" name="datum" value="<!--Datum-->" />
         </td>
       </tr>
       <tr>
@@ -109,7 +108,7 @@
       </tr>
       <tr>
         <th>Betrag:</th>
-        <td><input type="text" name="betrag" class="int70 jsFormatNumber" value="<!--Betrag-->"/> EUR</td>
+        <td><input type="number" step="0.01" name="betrag" class="int70" value="<!--Betrag-->"/> EUR</td>
       </tr>
       <tr>
         <th>&nbsp;</th>
@@ -127,9 +126,7 @@
     <table class="liste txt320">
       <tr>
         <th>Datum:</th>
-        <td>
-        <div class="inputDatum"><input type="text" class="datePicker" name="nk_datum" value="<!--NKDatum-->"
-        size="8" /></div>
+        <td><input type="date" name="nk_datum" value="<!--NKDatum-->" />
         </td>
       </tr>
       <tr>
@@ -161,7 +158,7 @@
       </tr>
       <tr>
         <th>Betrag:</th>
-        <td><input type="text" name="nk_betrag" class="int70 jsFormatNumber" value="<!--NKBetrag-->"/> EUR</td>
+        <td><input type="number" step="0.01" name="nk_betrag" class="int70" value="<!--NKBetrag-->"/> EUR</td>
       </tr>
       <tr>
         <th>&nbsp;</th>

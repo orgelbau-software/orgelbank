@@ -22,7 +22,7 @@
 <table class="liste" style="width: 100%">
 	<tr>
 		<th>Datum:</th>
-		<td><div class="inputDatum"><input class="datePicker" maxlength="10" type="text" name="datum" value="<!--Datum-->" tabindex="1"/></div></td>
+		<td><input type="date" name="datum" value="<!--Datum-->" tabindex="1"/></td>
 		<th>Temperatur:</th>
 		<td><input type="text" maxlength="5" name="temperatur" value="<!--Temperatur-->" class="int50" tabindex="4" /> °C</td>
 		<th>Bemerkung:</th>

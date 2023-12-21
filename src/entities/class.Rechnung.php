@@ -145,7 +145,6 @@ abstract class Rechnung extends SimpleDatabaseStorageObjekt
 
     public function setDatum($datum)
     {
-        $datum = date("Y-m-d", strtotime($datum));
         $this->datum = $datum;
     }
 

@@ -100,8 +100,8 @@ class RechnungController
         $tplRechnung->replace("BruttoBetrag", "");
         
         // Rechnungsdatum & Zahlungsziel
-        $tplRechnung->replace("Rechnungsdatum", date("d.m.Y"));
-        $tplRechnung->replace("Zahlungsziel", date("d.m.Y", strtotime("+" . ConstantLoader::getStandardZahlungsziel() . " day")));
+        $tplRechnung->replace("Rechnungsdatum", date("Y-m-d"));
+        $tplRechnung->replace("Zahlungsziel", date("Y-m-d", strtotime("+" . ConstantLoader::getStandardZahlungsziel() . " day")));
         
         // Rechnungsnummer
         $tplRechnung->replace("Rechnungsjahr", date("y"));
@@ -221,8 +221,8 @@ class RechnungController
         $tplRechnung->replace("Einleitung", "");
         
         // Rechnungsdatum & Zahlungsziel
-        $tplRechnung->replace("Rechnungsdatum", date("d.m.Y"));
-        $tplRechnung->replace("Zahlungsziel", date("d.m.Y", strtotime("+" . ConstantLoader::getStandardZahlungsziel() . " day")));
+        $tplRechnung->replace("Rechnungsdatum", date("Y-m-d"));
+        $tplRechnung->replace("Zahlungsziel", date("Y-m-d", strtotime("+" . ConstantLoader::getStandardZahlungsziel() . " day")));
         
         // Rechnungsnummer
         $tplRechnung->replace("Rechnungsjahr", date("y"));
@@ -332,8 +332,8 @@ class RechnungController
         $tplRechnung->replace("Bemerkung2", ConstantLoader::getStundenRechnungSchlusstext());
         
         // Rechnungsdatum & Zahlungsziel
-        $tplRechnung->replace("Rechnungsdatum", date("d.m.Y"));
-        $tplRechnung->replace("Zahlungsziel", date("d.m.Y", strtotime("+" . ConstantLoader::getStandardZahlungsziel() . " day")));
+        $tplRechnung->replace("Rechnungsdatum", date("Y-m-d"));
+        $tplRechnung->replace("Zahlungsziel", date("Y-m-d", strtotime("+" . ConstantLoader::getStandardZahlungsziel() . " day")));
         
         // Rechnungsnummer
         $tplRechnung->replace("Rechnungsjahr", date("y"));

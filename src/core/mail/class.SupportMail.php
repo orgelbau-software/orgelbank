@@ -5,7 +5,7 @@ class SupportMail
 
     public static function send($betreff, $content)
     {
-        return SupportMail::send(SUPPORT_MAIL_ADDR, $betreff, $content);
+        return SupportMail::sendSupportMail(SUPPORT_MAIL_ADDR, $betreff, $content);
     }
 
     public static function sendSupportMail($to, $betreff, $content)

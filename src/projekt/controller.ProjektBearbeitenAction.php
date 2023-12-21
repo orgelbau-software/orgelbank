@@ -167,8 +167,8 @@ class ProjektBearbeitenAction implements GetRequestHandler, PostRequestHandler, 
             $tpl->replace("Statusmeldung", $htmlStatus->getOutput());
         $tpl->replace("Statusmeldung", "");
         
-        $tpl->replace("Start", ($p->getStart(true) == "01.01.1970" ? "" : $p->getStart(true)));
-        $tpl->replace("Ende", ($p->getEnde(true) == "01.01.1970" ? "" : $p->getEnde(true)));
+        $tpl->replace("Start", ($p->getStart(true) == "01.01.1970" ? "" : $p->getStart()));
+        $tpl->replace("Ende", ($p->getEnde(true) == "01.01.1970" ? "" : $p->getEnde()));
         $tpl->replace("Beschreibung", $p->getBeschreibung());
         $tpl->replace("Bezeichnung", $p->getBezeichnung());
         $tpl->replace("ProjektID", $p->getID());

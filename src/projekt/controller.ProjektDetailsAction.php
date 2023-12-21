@@ -49,8 +49,8 @@ class ProjektDetailsAction implements GetRequestHandler, PostRequestHandler
                 $pRechnung->setProjektID($p->getID());
                 $pRechnung->setAufgabeID($_POST['kostenstelle']);
                 $pRechnung->setKommentar($_POST['kommentar']);
-                $pRechnung->setBetrag(WaehrungUtil::formatWaehrungToDB($_POST['betrag']));
-                $pRechnung->setDatum(date("Y-m-d", strtotime($_POST['datum'])));
+                $pRechnung->setBetrag($_POST['betrag']);
+                $pRechnung->setDatum($_POST['datum']);
                 $pRechnung->setLieferant($_POST['lieferant']);
                 $pRechnung->setNummer($_POST['nummer']);
                 
@@ -73,8 +73,8 @@ class ProjektDetailsAction implements GetRequestHandler, PostRequestHandler
                 }
                 $pNKRechnung->setProjektID($p->getID());
                 $pNKRechnung->setKommentar($_POST['nk_kommentar']);
-                $pNKRechnung->setBetrag(WaehrungUtil::formatWaehrungToDB($_POST['nk_betrag']));
-                $pNKRechnung->setDatum(date("Y-m-d", strtotime($_POST['nk_datum'])));
+                $pNKRechnung->setBetrag($_POST['nk_betrag']);
+                $pNKRechnung->setDatum($_POST['nk_datum']);
                 $pNKRechnung->setLieferant($_POST['nk_lieferant']);
                 $pNKRechnung->setLeistung($_POST['nk_leistung']);
                 $pNKRechnung->setNummer($_POST['nk_nummer']);
@@ -92,7 +92,7 @@ class ProjektDetailsAction implements GetRequestHandler, PostRequestHandler
         }
         
         // Projekt Rechnung
-        $tpl->replace("Datum", ($pRechnung->getID() < 0 ? date("d.m.Y") : $pRechnung->getDatum(true)));
+        $tpl->replace("Datum", ($pRechnung->getID() < 0 ? date("Y-m-d") : $pRechnung->getDatum()));
         $tpl->replace("Kommentar", $pRechnung->getKommentar());
         $tpl->replace("Betrag", WaehrungUtil::formatDoubleToWaehrung($pRechnung->getBetrag()));
         $tpl->replace("PRID", $pRechnung->getID());
@@ -101,7 +101,7 @@ class ProjektDetailsAction implements GetRequestHandler, PostRequestHandler
         $select = new HTMLSelect($ha, "getBezeichnung", $pRechnung->getAufgabeID());
         
         // Nebenkosten Rechnung
-        $tpl->replace("NKDatum", ($pNKRechnung->getID() < 0 ? date("d.m.Y") : $pNKRechnung->getDatum(true)));
+        $tpl->replace("NKDatum", ($pNKRechnung->getID() < 0 ? date("Y-m-d") : $pNKRechnung->getDatum()));
         $tpl->replace("NKKommentar", $pNKRechnung->getKommentar());
         $tpl->replace("NKBetrag", WaehrungUtil::formatDoubleToWaehrung($pNKRechnung->getBetrag()));
         $tpl->replace("NKID", $pNKRechnung->getID());

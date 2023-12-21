@@ -51,7 +51,6 @@ class WartungsListeAction implements GetRequestHandler, PostRequestHandler, Post
         $oWartung = null;
         $htmlStatus = null;
         $tplWartung = new Template("orgel_wartung_details.tpl");
-        
         // Session leeren, damit Ansprechpartner Verwaltung funktioniert
         unset($_SESSION['request']['oid']);
         
@@ -94,7 +93,7 @@ class WartungsListeAction implements GetRequestHandler, PostRequestHandler, Post
                 $oWartung->setMaterial($_POST['material']);
                 $oWartung->setAbrechnungsArtId($_POST['abrechnung']);
                 
-                $oWartung->setDatum(date("Y-m-d HH:ii:ss", strtotime($_POST['datum'])));
+                $oWartung->setDatum($_POST['datum']);
                 $oWartung->setTemperatur($_POST['temperatur']);
                 $oWartung->setLuftfeuchtigkeit($_POST['luftfeuchtigkeit']);
                 $oWartung->setStimmtonHoehe($_POST['stimmtonhoehe']);
@@ -191,7 +190,8 @@ class WartungsListeAction implements GetRequestHandler, PostRequestHandler, Post
         $tplWartung->replace("MitarbeiterListe2", $htmlSelectMitarbeiter2->getOutput());
         $tplWartung->replace("MitarbeiterListe3", $htmlSelectMitarbeiter3->getOutput());
         
-        $tplWartung->replace("Datum", date("d.m.Y"));
+        
+        $tplWartung->replace("Datum", $oWartung->getDatum());
         $tplWartung->replace("Bemerkung", $oWartung->getBemerkung());
         $tplWartung->replace("Temperatur", $oWartung->getTemperatur());
         $tplWartung->replace("Luftfeuchtigkeit", $oWartung->getLuftfeuchtigkeit());

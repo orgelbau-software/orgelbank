@@ -21,17 +21,11 @@
       </tr>
       <tr>
         <th>Startermin:</th>
-        <td>
-        <div class="inputDatum"><input type="text" class="datePicker" name="start" value="<!--Start-->"
-        size="8" /></div>
-        </td>
+        <td><input type="date" name="start" value="<!--Start-->" /></td>
       </tr>
       <tr>
         <th>Endtermin:</th>
-        <td>
-        <div class="inputDatum"><input type="text" class="datePicker" name="ende" value="<!--Ende-->"
-        size="8"/></div>
-        </td>
+        <td><input type="date"name="ende" value="<!--Ende-->" /></td>
       </tr>
        <tr>
         <th>Angebotspreis:</th>

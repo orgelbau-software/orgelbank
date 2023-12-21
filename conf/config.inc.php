@@ -11,7 +11,7 @@ mb_internal_encoding( 'UTF-8' );
 //include_once 'example.php';
 //include_once 'bente.allinkl.conf.php';
 //include_once 'fo.all-inkl.conf.php';
-include_once 'krawinkel.allinkl.conf.php';
+include_once 'krawinkel.lokal.conf.php';
 
 if((!is_dir(ROOTDIR) || !substr(ROOTDIR, -strlen(ROOTDIR)) === "/")) {
     die("Konstante ROOTDIR zeigt auf ein ungueltiges Verzeichnis. Das Verzeichnis muss mit / enden. " . ROOTDIR);
