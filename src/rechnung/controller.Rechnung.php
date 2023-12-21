@@ -252,8 +252,8 @@ class RechnungController
         $oRechnung->setAzubiStd($_POST['azubi_std']);
         $oRechnung->setGeselleLohn($_POST['geselle_lohn']);
         $oRechnung->setGeselleStd($_POST['geselle_std']);
-        $oRechnung->setMaterial($_POST['material']);
-        $oRechnung->setFahrtkosten($_POST['fahrtkosten']);
+        $oRechnung->setMaterial((is_numeric($_POST['material']) ? $_POST['material'] : 0));
+        $oRechnung->setFahrtkosten((is_numeric($_POST['fahrtkosten']) ? $_POST['fahrtkosten'] : 0));
         $oRechnung->errechneGesamtBetrag(true);
         $oRechnung->speichern(true);
         

@@ -19,7 +19,7 @@ if (isset($_REQUEST['key']) && $_REQUEST['key'] == ORGELBANK_API_KEY) {
     ));
     
     
-    if($lastExecutionTimestamp < time() - (24 * 60* 1000)) {
+    if($lastExecutionTimestamp < time() - (24 * 60 * 1000)) {
         $msg = "done";
         
         $statusOK = true;
