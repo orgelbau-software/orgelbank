@@ -24,7 +24,7 @@
 		<th>Datum:</th>
 		<td><input type="date" name="datum" value="<!--Datum-->" tabindex="1"/></td>
 		<th>Temperatur:</th>
-		<td><input type="text" maxlength="5" name="temperatur" value="<!--Temperatur-->" class="int50" tabindex="4" /> °C</td>
+		<td><input type="number" step="0.1" min"0" max="40" name="temperatur" value="<!--Temperatur-->" class="int70" tabindex="4" /> °C</td>
 		<th>Bemerkung:</th>
 	</tr>
 	<tr>
@@ -38,7 +38,7 @@
 			</select>
 		</td>
 		<th>Luftfeuchte:</th>
-		<td><input class="int50" type="text" maxlength="5" name="luftfeuchtigkeit" value="<!--Luftfeuchtigkeit-->" tabindex="5" /> %</td>
+		<td><input class="int70" type="number" min="0" max="100" step="1" name="luftfeuchtigkeit" value="<!--Luftfeuchtigkeit-->" tabindex="5" /> %</td>
 		<th rowspan="2"><textarea name="bemerkung" rows="2" class="txt400" tabindex="7"><!--Bemerkung--></textarea></th>
 	</tr>
 	<tr>
@@ -53,7 +53,7 @@
 			</select>
 		</td>
 		<th>Stimmtonh&ouml;he</th>
-		<td><input class="int50" type="text" maxlength="6" name="stimmtonhoehe" value="<!--Stimmtonhoehe-->" tabindex="6"/> HZ</td>
+		<td><input class="int70" type="number" min="0" max="1000" step="0.1" name="stimmtonhoehe" value="<!--Stimmtonhoehe-->" tabindex="6"/> HZ</td>
 	</tr>
 </table>
 <hr/>

@@ -142,7 +142,7 @@ class WartungsListeAction implements GetRequestHandler, PostRequestHandler, Post
                 $letzteWartung = WartungUtilities::getOrgelLetzteWartung($oWartung->getOrgelid());
                 if ($letzteWartung != null) {
                     $oWartung->setTemperatur($letzteWartung->getTemperatur());
-                    $oWartung->setStimmtonhoehe($letzteWartung->getStimmtonhoehe());
+                    $oWartung->setStimmtonhoehe(str_replace(",", ".", $letzteWartung->getStimmtonhoehe()));
                     $oWartung->setMitarbeiterId1($letzteWartung->getMitarbeiterId1());
                     $letzteWartung->getStimmung() == "0" ? $oWartung->setStimmung("1") : $oWartung->setStimmung("2");
                 }
@@ -195,7 +195,7 @@ class WartungsListeAction implements GetRequestHandler, PostRequestHandler, Post
         $tplWartung->replace("Bemerkung", $oWartung->getBemerkung());
         $tplWartung->replace("Temperatur", $oWartung->getTemperatur());
         $tplWartung->replace("Luftfeuchtigkeit", $oWartung->getLuftfeuchtigkeit());
-        $tplWartung->replace("Stimmtonhoehe", $oWartung->getStimmtonHoehe());
+        $tplWartung->replace("Stimmtonhoehe", str_replace(",", ".", $oWartung->getStimmtonHoehe()));
         $tplWartung->replace("SubmitValue", "Eintragen");
         
         if ($oWartung->getAbrechnungsArtId() == 1) {
