@@ -16,7 +16,6 @@
 
 		<script type="text/javascript" src="<!--InstanceUrl-->lib/jquery/jquery-1.7.2.min.js"></script>
 		<script type="text/javascript" src="<!--InstanceUrl-->lib/jquery-ui/js/jquery-ui-1.8.20.custom.min.js"></script>
-		<script type="text/javascript" src="<!--InstanceUrl-->lib/jquery-ui/js/jquery.ui.datepicker-de.js"></script>
 
 		<script type="text/javascript" src="<!--InstanceUrl-->lib/jquery/dump.js"></script>
 		<script type="text/javascript" src="<!--InstanceUrl-->lib/jquery/prototype-date-ext.js"></script>
