@@ -159,6 +159,7 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
                 $tplDS->replace($s, "");
             }
             
+            $tplDS->replace("ReadOnly", "readonly");
             $tplDS->next();
             
             $tmpProj = $z->getProjektBezeichnung();
@@ -186,6 +187,8 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
         $tpl->replace("FreigebenDisabled", "");
         $tpl->replace("AblehnenDisabled", "");
         $tpl->replace("BearbeitenDisabled", "");
+        
+        $tpl->replace("ReadOnly", "readonly");
         
         return $tpl;
     }

@@ -379,12 +379,12 @@ class ArbeitstagUtilities
     public static function berechneSummeWochenIstStunden($timestamp, $benutzerId)
     {
         $arWochentageTS = Date::berechneArbeitswocheTimestamp($timestamp);
-        $sql = "SELECT sum(at_stunden_ist) as summe FROM arbeitstag WHERE be_id = " . $benutzerId . " AND at_datum >= '" . date("Y-m-d", $arWochentageTS[0]) . "' AND at_datum <= '" . date("Y-m-d", $arWochentageTS[6]) . "'";
+        $sql = "SELECT COALESCE(sum(at_stunden_ist), 0) as summe FROM arbeitstag WHERE be_id = " . $benutzerId . " AND at_datum >= '" . date("Y-m-d", $arWochentageTS[0]) . "' AND at_datum <= '" . date("Y-m-d", $arWochentageTS[6]) . "'";
         Log::sql($sql);
         if (($r = DB::getInstance()->SelectQuery($sql)) != false) {
             return $r[0]['summe'];
         }
-        return - 1;
+        return 0;
     }
 
     public static function berechneSummeWochenIstStundenProProjekt($timestamp, $benutzerId, $pid)

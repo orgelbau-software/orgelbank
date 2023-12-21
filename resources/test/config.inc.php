@@ -39,8 +39,9 @@ set_exception_handler("ExceptionHandler::handle");
 session_set_save_handler(array('OrgelbankSessionHandler', 'open'), array('OrgelbankSessionHandler', 'close'), array('OrgelbankSessionHandler', 'read'), array('OrgelbankSessionHandler', 'write'), array('OrgelbankSessionHandler', 'destroy'), array('OrgelbankSessionHandler', 'gc'));
 
 // Logging
-Log::setLogger(new FirePHPLogger());
+// Log::setLogger(new FirePHPLogger());
 //Log::setLogger(new EchoLogger());
+Log::setLogger(new DoNothingLogger());
 
 // Globale Funktionen
 include_once ROOTDIR . 'conf/functions.inc.php';

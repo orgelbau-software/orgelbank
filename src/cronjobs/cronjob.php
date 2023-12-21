@@ -39,6 +39,10 @@ if (isset($_REQUEST['key']) && $_REQUEST['key'] == ORGELBANK_API_KEY) {
         $retVal['arbeitswoche_korrektur'] = $arbeitswoche_korrektur;
         $statusOK &= ((($arbeitswoche_korrektur->http_status == "200" || $arbeitswoche_korrektur->http_status == "201") ? true : false));
         
+        $arbeitswoche_korrektur = json_decode(file_get_contents(INSTANCE_URL . "/src/cronjobs/cronjob_arbeitswoche_abschliessen.php", false, $context));
+        $retVal['arbeitswoche_abschluss'] = $arbeitswoche_korrektur;
+        $statusOK &= ((($arbeitswoche_korrektur->http_status == "200" || $arbeitswoche_korrektur->http_status == "201") ? true : false));
+        
         $geostatus = json_decode(file_get_contents(INSTANCE_URL . "/src/cronjobs/cronjob_gemeinde_geostatus.php", false, $context));
         $retVal['geostatus'] = $geostatus;
         $statusOK &= ((($geostatus->http_status == "200" || $geostatus->http_status == "201") ? true : false));
