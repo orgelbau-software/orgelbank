@@ -94,7 +94,7 @@ class ProjektDetailsAction implements GetRequestHandler, PostRequestHandler
         // Projekt Rechnung
         $tpl->replace("Datum", ($pRechnung->getID() < 0 ? date("Y-m-d") : $pRechnung->getDatum()));
         $tpl->replace("Kommentar", $pRechnung->getKommentar());
-        $tpl->replace("Betrag", WaehrungUtil::formatDoubleToWaehrung($pRechnung->getBetrag()));
+        $tpl->replace("Betrag", $pRechnung->getBetrag());
         $tpl->replace("PRID", $pRechnung->getID());
         $tpl->replace("Lieferant", $pRechnung->getLieferant());
         $tpl->replace("Nummer", $pRechnung->getNummer());
@@ -103,7 +103,7 @@ class ProjektDetailsAction implements GetRequestHandler, PostRequestHandler
         // Nebenkosten Rechnung
         $tpl->replace("NKDatum", ($pNKRechnung->getID() < 0 ? date("Y-m-d") : $pNKRechnung->getDatum()));
         $tpl->replace("NKKommentar", $pNKRechnung->getKommentar());
-        $tpl->replace("NKBetrag", WaehrungUtil::formatDoubleToWaehrung($pNKRechnung->getBetrag()));
+        $tpl->replace("NKBetrag", $pNKRechnung->getBetrag());
         $tpl->replace("NKID", $pNKRechnung->getID());
         $tpl->replace("NKLieferant", $pNKRechnung->getLieferant());
         $tpl->replace("NKLeistung", $pNKRechnung->getLeistung());
