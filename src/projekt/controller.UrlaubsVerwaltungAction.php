@@ -48,6 +48,7 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
         if (isset($_GET['benutzerId'])) {
             $this->benutzerId = intval($_GET['benutzerId']);
         }
+        $this->jahresauswahl = date("Y");
     }
 
     /**
@@ -94,8 +95,8 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
         }
         
         // Urlaubskontrolle
-        $tpl->replace("DatumVon", "");
-        $tpl->replace("DatumBis", "");
+        $tpl->replace("DatumVon", date("Y-m-d"));
+        $tpl->replace("DatumBis", date("Y-m-d"));
         $tpl->replace("Stunden", "8");
         $tpl->replace("Bemerkung", "");
         $tpl->replace("SubmitValue", "Speichern");
@@ -123,6 +124,7 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
         foreach ($u as $urlaubseintrag) {
             $tplDS->replace("UrlaubsID", $urlaubseintrag->getID());
             $tplDS->replace("DatumVon", date("D, d.m.Y", strtotime($urlaubseintrag->getDatumVon(false))));
+//             $tplDS->replace("DatumVon", $fmt->format($urlaubseintrag->getDatumVon(false)));
             
             if($urlaubseintrag->getDatumBis() == null || $urlaubseintrag->getDatumBis(true) == "01.01.1970") {
                 $tplDS->replace("DatumBis","");
@@ -132,6 +134,15 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
             $tplDS->replace("Benutzername", $urlaubseintrag->getBenutzername());
             $tplDS->replace("Tage",  number_format(doubleval($urlaubseintrag->getStunden()/ 8),0));
             $tplDS->replace("Stunden", number_format(doubleval($urlaubseintrag->getStunden()), 2));
+            if($urlaubseintrag->getStatus() == Urlaub::STATUS_ANGELEGT) {
+                $tplDS->replace("Status", "J");
+            } else if($urlaubseintrag->getStatus() == Urlaub::STATUS_ZEITERFASSUNG) {
+                $tplDS->replace("Status", "Z");
+            } else if($urlaubseintrag->getStatus() == Urlaub::STATUS_MANUELL) {
+                $tplDS->replace("Status", "M");
+            } else {
+                $tplDS->replace("Status", "?".$urlaubseintrag->getStatus()."?");
+            }
             $tplDS->replace("Status", $urlaubseintrag->getStatus());
             $tplDS->replace("Verbleibend", $urlaubseintrag->getVerbleibend());
             $tplDS->replace("VerbleibendTage", intval($urlaubseintrag->getVerbleibend() / 8));
@@ -188,8 +199,15 @@ class UrlaubsVerwaltungAction implements GetRequestHandler, PostRequestHandler, 
      */
     public function executePost()
     {
-        if (isset($_POST['datumvon'])) {
-            $statusOrTrue = UrlaubsUtilities::bucheUrlaub($this->benutzerId, date("Y-m-d", strtotime($_POST['datumvon'])), date("Y-m-d", strtotime($_POST['datumbis'])), $_POST['tage'], $_POST['urlaubstyp'], Urlaub::STATUS_MANUELL, $_POST['bemerkung']);
+        if (isset($_POST['datumvon'],$_POST['tage'],$_POST['urlaubstyp'])) {
+            $statusOrTrue = UrlaubsUtilities::bucheUrlaub($this->benutzerId, 
+                $_POST['datumvon'], 
+                $_POST['datumbis'], 
+                null,
+                $_POST['tage'],
+                $_POST['urlaubstyp'], 
+                Urlaub::STATUS_MANUELL, 
+                $_POST['bemerkung']);
             if($statusOrTrue !== true) {
                 $this->mFehlerMeldung = $statusOrTrue;
             }

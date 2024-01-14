@@ -87,6 +87,7 @@ class BenutzerZeitauswertung implements GetRequestHandler
         $tplDS = new BufferedTemplate("benutzer_urlaub_liste_ds.tpl", "CSS", "td1", "td2");
         foreach ($benutzerUrlaub as $currentUrlaubsTag) {
             $tplDS->replace("Verbleibend", $currentUrlaubsTag->getVerbleibend());
+            $tplDS->replace("VerbleibendInTagen", number_format(doubleval($currentUrlaubsTag->getVerbleibend() / 8)));
             $tplDS->replace("Summe", $currentUrlaubsTag->getSumme());
             $tplDS->replace("Stunden", $currentUrlaubsTag->getstunden());
             $tplDS->replace("Resturlaub", $currentUrlaubsTag->getResturlaub());
