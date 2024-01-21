@@ -59,7 +59,6 @@ class RegisterUtilities
             	x.d_fuss = rg.rg_fuss
     		ORDER BY
     			rg.rg_reihenfolge ASC ";
-        FB::log($sql, "Register TOP");
         return RegisterUtilities::queryDB($sql);
     }
 

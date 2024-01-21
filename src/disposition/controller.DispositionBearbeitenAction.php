@@ -87,7 +87,6 @@ class DispositionBearbeitenAction
                 
                 $htmlStatus = new HTMLStatus("Register wurde gespeichert.", 2);
                 
-                FB::log(RegisterUtilities::getRegisterAnzahl($this->oOrgel->getID(), "Orgel RegisterAnzahl"));
                 $this->oOrgel->setRegisterAnzahl(RegisterUtilities::getRegisterAnzahl($this->oOrgel->getID()));
                 $this->oOrgel->speichern();
             } elseif ($_POST['action'] == "loeschen") {
