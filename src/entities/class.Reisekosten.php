@@ -60,7 +60,7 @@ class Reisekosten extends SimpleDatabaseStorageObjekt
     public function speichern($reload = false)
     {
         $this->summieren();
-        if ($this->getID() > 0 || $this->gesamt > 0) {
+        if ($this->getID() > 0 || $this->gesamt >= 0) {
             parent::speichern($reload);
         }
     }

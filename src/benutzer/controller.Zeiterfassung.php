@@ -294,12 +294,12 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
             }
             
             // Reisekosten speichern
-            $kmKosten = WaehrungUtil::formatWaehrungToDB($_POST['km']) * ConstantLoader::getKilometerpauschale();
+            $kmKosten = $_POST['km'] * ConstantLoader::getKilometerpauschale();
             $rk = ReisekostenUtilities::getReisekosten($benutzer->getID(), $pid, $kw, $jahr);
-            $rk->setKM(WaehrungUtil::formatWaehrungToDB($_POST['km']));
+            $rk->setKM($_POST['km']);
             $rk->setKMKosten($kmKosten);
-            $rk->setHotel(WaehrungUtil::formatWaehrungToDB($_POST['hotel']));
-            $rk->setSpesen(WaehrungUtil::formatWaehrungToDB($_POST['spesen']));
+            $rk->setHotel($_POST['hotel']);
+            $rk->setSpesen($_POST['spesen']);
             $rk->speichern(false);
             
             if ($boSollKomplett) {
@@ -443,11 +443,11 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
         
         // Reisekosten Felder leeren
         $rk = ReisekostenUtilities::getReisekosten($benutzer->getID(), $pid, $kw, $jahr);
-        $tpl->replace("Spesen", WaehrungUtil::formatDoubleToWaehrung($rk->getSpesen()));
-        $tpl->replace("Hotel", WaehrungUtil::formatDoubleToWaehrung($rk->getHotel()));
-        $tpl->replace("KM", WaehrungUtil::formatDoubleToWaehrung($rk->getKM()));
-        $tpl->replace("KMKosten", WaehrungUtil::formatDoubleToWaehrung($rk->getKMKosten()));
-        $tpl->replace("RK", WaehrungUtil::formatDoubleToWaehrung($rk->getGesamt()));
+        $tpl->replace("Spesen", $rk->getSpesen());
+        $tpl->replace("Hotel", $rk->getHotel());
+        $tpl->replace("KM", $rk->getKM());
+        $tpl->replace("KMKosten", $rk->getKMKosten());
+        $tpl->replace("RK", $rk->getGesamt());
         
         // Summen Pro Projekt
         foreach ($wochentagsStunden as $key => $val) {

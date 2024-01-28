@@ -343,19 +343,19 @@ class ProjektMitarbeiterVerwaltung implements GetRequestHandler, PostRequestHand
                 
                 if ($letztesJahr == 0 || $currentData->getJahr() != $letztesJahr) {
                     
-                    // TODO: Hier muss die Option rein ob Stunden genullt werden sollen oder nicht. Elmar will es haben.
+                    // TODO: Hier muss die Option rein ob Stunden genullt werden sollen oder nicht. Krawinkel will es haben.
                     $totalStundenDif = 0;
                 }
 
                 $tplUeberstunden->replace("Kalenderwoche", $currentData->getKalenderWoche());
                 $tplUeberstunden->replace("Jahr", $currentData->getJahr());
                 $tplUeberstunden->replace("WochenStart", $currentData->getWochenStart());
-                $tplUeberstunden->replace("Soll", $currentData->getWochenStundenSoll());
-                $tplUeberstunden->replace("Ist", $currentData->getWochenStundenIst());
-                $tplUeberstunden->replace("Differenz", $currentData->getWochenStundenDif());
-                $tplUeberstunden->replace("TotalDif1", $totalStundenDif);
+                $tplUeberstunden->replace("Soll", $this->formatStunde($currentData->getWochenStundenSoll()));
+                $tplUeberstunden->replace("Ist", $this->formatStunde($currentData->getWochenStundenIst()));
+                $tplUeberstunden->replace("Differenz", $this->formatStunde($currentData->getWochenStundenDif()));
+                $tplUeberstunden->replace("TotalDif1", $this->formatStunde($totalStundenDif));
                 $totalStundenDif += $currentData->getWochenStundenDif();
-                $tplUeberstunden->replace("TotalDif2", $totalStundenDif);
+                $tplUeberstunden->replace("TotalDif2", $this->formatStunde($totalStundenDif));
                 
                 $letztesJahr = $currentData->getJahr();
                 $tplUeberstunden->next();
@@ -399,5 +399,11 @@ class ProjektMitarbeiterVerwaltung implements GetRequestHandler, PostRequestHand
     public function executePost()
     {
         return $this->executeGet();
+    }
+    
+    private function formatStunde($pStunde) {
+        
+        // TODO: Change for PHP8 to Decimals = ","
+        return number_format($pStunde, 2);
     }
 }

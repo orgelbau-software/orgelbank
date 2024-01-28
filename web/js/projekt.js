@@ -150,10 +150,6 @@ function loadMitarbeiterWochenStunden($wochenTag) {
 $(function() {
 	$("#km").change(function(){
 		$("#kmkosten").attr("value", $("#km").attr("value") * kilometerPauschale);
-		$("#kmkosten").attr("value", function() {
-			return this.value.replace(".", ",");
-		});
-		$("#kmkosten").format({format:"#,###.00", locale:"de"});
 	});
 	$(".reisekosten").change(function(){
 		var $summe = 0;
@@ -164,7 +160,6 @@ $(function() {
 		   $summe += tmp * 1;
 	   });
 	   $("#rk").attr("value", $summe);
-	   $("#rk").format({format:"#,###.00", locale:"de"});
 	});
 });
 
@@ -177,7 +172,6 @@ function summiereKosten(){
 	   $summe += tmp * 1;
    });
    $("#rk").attr("value", $summe);
-   $("#rk").format({format:"#,###.00", locale:"de"});
 }
 
 function round(x) {

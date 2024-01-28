@@ -53,14 +53,14 @@
   <tr>
     <td style="width: 200px;">&nbsp;</td>
     <td class="tdLabel alignRight">Spesen:</td>
-    <td><input type="text" name="spesen" value="<!--Spesen-->" class="int50 jsFormatNumber reisekosten rkvalue"/></td>
+    <td><input type="number" name="spesen" value="<!--Spesen-->" class="int70 reisekosten rkvalue" min="0" step="0.01"/></td>
     <td class="tdLabel alignRight">Hotel:</td>
-    <td><input type="text" name="hotel" value="<!--Hotel-->" class="int50 jsFormatNumber reisekosten rkvalue"/></td>
+    <td><input type="number" name="hotel" value="<!--Hotel-->" class="int70 reisekosten rkvalue" min="0" step="0.01"/></td>
     <td class="tdLabel alignRight">Kilometer</td>
-    <td><input type="text" id="km" name="km" value="<!--KM-->" class="int50 reisekosten"/></td>
-    <td><input disabled type="text" id="kmkosten" name="kmkosten" value="<!--KMKosten-->" class="disabled int50 jsFormatNumber reisekosten rkvalue"/></td>
+    <td><input type="number" id="km" name="km" value="<!--KM-->" class="int50 reisekosten" min="0" step="1"/></td>
+    <td><input disabled type="text" id="kmkosten" name="kmkosten" value="<!--KMKosten-->" class="disabled int50 reisekosten rkvalue" min="0" step="0.01"/></td>
     <td class="tdLabel alignRight">Gesamt</td>
-    <td><input disabled type="text" id="rk" name="rk" value="<!--RK-->" class="disabled int60 jsFormatNumber"/></td>
+    <td><input disabled type="number" id="rk" name="rk" value="<!--RK-->" class="disabled int70" min="0" step="0.01"/></td>
   </tr>
   <tr>
     <th colspan="3"><input type="checkbox" name="woche_komplett" <!--WocheKomplettChecked--> <!--WocheKomplettDisabled--> id="woche_komplett"/><label for="woche_komplett">Eingabe vollst&auml;ndig</label> </th>
