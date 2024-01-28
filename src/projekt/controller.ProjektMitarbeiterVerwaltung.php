@@ -292,11 +292,17 @@ class ProjektMitarbeiterVerwaltung implements GetRequestHandler, PostRequestHand
         $tpl->replace("Summe", $benutzer->getID() == - 1 ? ConstantLoader::getStandardWochenstunden() : $benutzer->getStdGesamt());
         
         // Ueberstunden
-        $ueberstunden = 0;
+        $ueberstundenGesamt = 0;
+        $ueberstundenAktuell = 0;
+        $ueberstundenVorjahr = 0;
         if ($benutzer->getID() > 0) {
-            $ueberstunden = ProjektUtilities::countMitarbeiterUeberstunden($benutzer->getID());
+            $ueberstundenGesamt = ProjektUtilities::countMitarbeiterUeberstunden($benutzer->getID());
+            $ueberstundenAktuell = ProjektUtilities::countMitarbeiterUeberstunden($benutzer->getID(), date("Y"));
+            $ueberstundenVorjahr = ProjektUtilities::countMitarbeiterUeberstunden($benutzer->getID(), date("Y") - 1);
         }
-        $tpl->replace("Ueberstunden", $ueberstunden);
+        $tpl->replace("UeberstundenGesamt", $ueberstundenGesamt);
+        $tpl->replace("UeberstundenAktuell", $ueberstundenAktuell);
+        $tpl->replace("UeberstundenVorjahr", $ueberstundenVorjahr);
         
         $urlaub = UrlaubsUtilities::getLetzterUrlaubsEintrag($benutzer->getID());
         if ($urlaub != null) {

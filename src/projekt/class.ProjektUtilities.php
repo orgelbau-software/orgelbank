@@ -179,9 +179,12 @@ class ProjektUtilities
     
     
     
-    public static function countMitarbeiterUeberstunden($pMitarbeiterId)
+    public static function countMitarbeiterUeberstunden($pMitarbeiterId, $pJahr = null)
     {
         $sql = "SELECT sum(aw_stunden_dif) as ueberstunden FROM arbeitswoche WHERE be_id = " . $pMitarbeiterId;
+        if($pJahr != null) {
+            $sql .= " AND aw_jahr = ".$pJahr." ";
+        }
         if (($res = DB::getInstance()->SelectQuery($sql)) !== false) {
             return $res[0]['ueberstunden'];
         } else {
