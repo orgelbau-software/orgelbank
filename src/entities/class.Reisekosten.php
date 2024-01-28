@@ -68,9 +68,17 @@ class Reisekosten extends SimpleDatabaseStorageObjekt
     public function summieren()
     {
         $retVal = 0;
-        $retVal += $this->kmKosten;
-        $retVal += $this->spesen;
-        $retVal += $this->hotel;
+        if($this->kmKosten > 0) {
+            $retVal += $this->kmKosten;
+        }
+        
+        if($this->spesen > 0) {
+            $retVal += $this->spesen;
+        }
+        
+        if($this->hotel > 0) {
+            $retVal += $this->hotel;
+        }
         
         $this->gesamt = $retVal;
         

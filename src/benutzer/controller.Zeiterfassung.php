@@ -294,7 +294,7 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
             }
             
             // Reisekosten speichern
-            $kmKosten = $_POST['km'] * ConstantLoader::getKilometerpauschale();
+            $kmKosten = floatval($_POST['km']) * ConstantLoader::getKilometerpauschale();
             $rk = ReisekostenUtilities::getReisekosten($benutzer->getID(), $pid, $kw, $jahr);
             $rk->setKM($_POST['km']);
             $rk->setKMKosten($kmKosten);
@@ -314,7 +314,10 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
             // Ist Stunden neu berechnen
             $istStunden = ArbeitstagUtilities::berechneSummeWochenIstStunden($woche, $benutzer->getID());
             $awArbeitswoche->setWochenStundenIst($istStunden);
-            $awArbeitswoche->setWochenStundenDif($awArbeitswoche->getWochenStundenIst() - $awArbeitswoche->getWochenStundenSoll());
+            
+            // Bei 40.25 - 40.0 kommt 0,25 raus. Aber die Datenbank benoetigt ein 0.25, und das Problem loest number_format fuer uns.
+            $dif = number_format(($awArbeitswoche->getWochenStundenIst() - $awArbeitswoche->getWochenStundenSoll()), 2);
+            $awArbeitswoche->setWochenStundenDif($dif);
             $awArbeitswoche->speichern(true);
             
             // Projekt Aufgabe Stunden berechnen

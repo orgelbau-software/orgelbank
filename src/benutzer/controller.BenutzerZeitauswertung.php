@@ -49,6 +49,12 @@ class BenutzerZeitauswertung implements GetRequestHandler
         $tpl = new Template("benutzer_zeiten_auswertung.tpl");
         
         $benutzer = new Benutzer($webUser->getID());
+        
+        // Kleiner Hack
+        if($benutzer->isAdmin() && isset($_GET['benutzerid'])) {
+            $benutzer = new Benutzer($_GET['benutzerid']);
+        }
+        
         $eintritt = strtotime($benutzer->getEintrittsDatum());
         $heute = time();
         $dauer = $heute - $eintritt;
@@ -72,9 +78,9 @@ class BenutzerZeitauswertung implements GetRequestHandler
             $tplDS->replace("Soll", $this->formatStunde($currentWoche->getWochenStundenSoll()));
             $tplDS->replace("Ist", $this->formatStunde($currentWoche->getWochenStundenIst()));
             $tplDS->replace("Diff", $this->formatStunde($currentWoche->getWochenStundenDif()));
-            $tplDS->replace("Vorwoche", $this->formatStunde($totalStundenDif.""));
+            $tplDS->replace("Vorwoche", $this->formatStunde($totalStundenDif));
             $totalStundenDif += $currentWoche->getWochenStundenDif();
-            $tplDS->replace("Gesamt", $this->formatStunde($totalStundenDif.""));
+            $tplDS->replace("Gesamt", $this->formatStunde($totalStundenDif));
             
             $tplDS->next();
         }
