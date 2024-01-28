@@ -69,12 +69,12 @@ class BenutzerZeitauswertung implements GetRequestHandler
         foreach ($benutzerStunden as $currentWoche) {            
             $tplDS->replace("KW", $currentWoche->getJahr() . "/" . $currentWoche->getKalenderWoche());
             $tplDS->replace("Woche", date("d.m.Y", strtotime($currentWoche->getWochenStart())));
-            $tplDS->replace("Soll", $currentWoche->getWochenStundenSoll());
-            $tplDS->replace("Ist", $currentWoche->getWochenStundenIst());
-            $tplDS->replace("Diff", $currentWoche->getWochenStundenDif());
-            $tplDS->replace("Vorwoche", $totalStundenDif."");
+            $tplDS->replace("Soll", $this->formatStunde($currentWoche->getWochenStundenSoll()));
+            $tplDS->replace("Ist", $this->formatStunde($currentWoche->getWochenStundenIst()));
+            $tplDS->replace("Diff", $this->formatStunde($currentWoche->getWochenStundenDif()));
+            $tplDS->replace("Vorwoche", $this->formatStunde($totalStundenDif.""));
             $totalStundenDif += $currentWoche->getWochenStundenDif();
-            $tplDS->replace("Gesamt", $totalStundenDif."");
+            $tplDS->replace("Gesamt", $this->formatStunde($totalStundenDif.""));
             
             $tplDS->next();
         }
@@ -86,10 +86,10 @@ class BenutzerZeitauswertung implements GetRequestHandler
         
         $tplDS = new BufferedTemplate("benutzer_urlaub_liste_ds.tpl", "CSS", "td1", "td2");
         foreach ($benutzerUrlaub as $currentUrlaubsTag) {
-            $tplDS->replace("Verbleibend", $currentUrlaubsTag->getVerbleibend());
+            $tplDS->replace("Verbleibend", $this->formatStunde($currentUrlaubsTag->getVerbleibend()));
             $tplDS->replace("VerbleibendInTagen", number_format(doubleval($currentUrlaubsTag->getVerbleibend() / 8)));
-            $tplDS->replace("Summe", $currentUrlaubsTag->getSumme());
-            $tplDS->replace("Stunden", $currentUrlaubsTag->getstunden());
+            $tplDS->replace("Summe", $this->formatStunde($currentUrlaubsTag->getSumme()));
+            $tplDS->replace("Stunden", $this->formatStunde($currentUrlaubsTag->getstunden()));
             $tplDS->replace("Resturlaub", $currentUrlaubsTag->getResturlaub());
             $tplDS->replace("DatumVon", $currentUrlaubsTag->getDatumVon(true));
             $tplDS->replace("DatumBis", $currentUrlaubsTag->getDatumBis(true));
@@ -102,5 +102,11 @@ class BenutzerZeitauswertung implements GetRequestHandler
         
         
         return $tpl;
+    }
+    
+    private function formatStunde($pStunde) {
+        
+        // TODO: Change for PHP8 to Decimals = ","
+        return number_format($pStunde, 2);
     }
 }
