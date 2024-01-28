@@ -138,7 +138,7 @@ class ArbeitstagUtilities
      *            SQL Date $pDatum
      * @return Array mit Key = ProjektID, Value=Summe der Stunden
      */
-    public static function berechneMitarbeiterTagStunden($benutzerID, $pDatum)
+    public static function berechneMitarbeiterTagStunden($benutzerID, $pDatum, $pFormat = false)
     {
         $sql = "SELECT
 					sum(at_stunden_ist) as summe
@@ -154,6 +154,11 @@ class ArbeitstagUtilities
                 $retVal = $curr['summe'];
             }
         }
+        
+        if($pFormat == true) {
+            $retVal = number_format($retVal, 2);
+        }
+        
         return $retVal;
     }
     

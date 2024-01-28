@@ -163,7 +163,7 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
             
             $stundenZusatz = "";
             if (isset($bisherGeleisteteStundenProProjekt[$projekt->getID()])) {
-                $stundenZusatz = " (" . $bisherGeleisteteStundenProProjekt[$projekt->getID()] . " Std.)";
+                $stundenZusatz = " (" . $this->formatStunde($bisherGeleisteteStundenProProjekt[$projekt->getID()]) . " Std.)";
                 $bisherStundenSumme = $bisherStundenSumme + $bisherGeleisteteStundenProProjekt[$projekt->getID()];
             }
             $tplSelect->replace("Name", $gemeindeCache->getValueOf($projekt->getGemeindeID())
@@ -264,8 +264,8 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
                     
                     // Geaendert fuer Orgelbau Bente, dass man Stunden entnehmen kann.
                     // $stunden = abs($stunden); // stellt sicher, dass $stunden positiv ist
-                    $stunden = doubleval($stunden); // muss auch negativ sein um Überstunden abbuchen zu können
-                                                    
+					
+                    //$stunden = doubleval($stunden); // muss auch negativ sein um Überstunden abbuchen zu können                   
                     // Timestamp parsen
                     $timestamp = substr($key, 2, strpos($key, "_") - 2);
                     
@@ -415,7 +415,7 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
                     $wochentagsStunden[date("w", strtotime($arbeitstag['at_datum']))] += $arbeitstag['at_stunden_ist'];
                 }
             }
-            $tplDS->replace("summe_" . $z->getProjektID() . "_" . $z->getUnteraufgabeID(), $iStunden == 0 ? $iStunden = "" : $iStunden);
+            $tplDS->replace("summe_" . $z->getProjektID() . "_" . $z->getUnteraufgabeID(), $iStunden == 0 ? $iStunden = "" : $this->formatStunde($iStunden));
             if ($iStunden > 0) {
                 $wochentagsStunden[7] += $iStunden;
             }
@@ -449,20 +449,22 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
         $tpl->replace("KMKosten", WaehrungUtil::formatDoubleToWaehrung($rk->getKMKosten()));
         $tpl->replace("RK", WaehrungUtil::formatDoubleToWaehrung($rk->getGesamt()));
         
+        // Summen Pro Projekt
         foreach ($wochentagsStunden as $key => $val) {
-            $tpl->replace("Summe" . $key, $val == 0 ? $val = "" : $val);
+            $tpl->replace("Summe" . $key, $val == 0 ? $val = "" : $this->formatStunde($val));
         }
         
         
         // Summen fuer die ganze Woche, Projektuebergreifend.
-        $tpl->replace("SummeAlleProjekte", $bisherStundenSumme);
-        $tpl->replace("MontagAlleProjekte", ArbeitstagUtilities::berechneMitarbeiterTagStunden($benutzer->getID(), date("Y-m-d", $arWochentageTS[0])));
-        $tpl->replace("DienstagAlleProjekte", ArbeitstagUtilities::berechneMitarbeiterTagStunden($benutzer->getID(), date("Y-m-d", $arWochentageTS[1])));
-        $tpl->replace("MittwochAlleProjekte", ArbeitstagUtilities::berechneMitarbeiterTagStunden($benutzer->getID(), date("Y-m-d", $arWochentageTS[2])));
-        $tpl->replace("DonnerstagAlleProjekte", ArbeitstagUtilities::berechneMitarbeiterTagStunden($benutzer->getID(), date("Y-m-d", $arWochentageTS[3])));
-        $tpl->replace("FreitagAlleProjekte", ArbeitstagUtilities::berechneMitarbeiterTagStunden($benutzer->getID(), date("Y-m-d", $arWochentageTS[4])));
-        $tpl->replace("SamstagAlleProjekte", ArbeitstagUtilities::berechneMitarbeiterTagStunden($benutzer->getID(), date("Y-m-d", $arWochentageTS[5])));
-        $tpl->replace("SonntagAlleProjekte", ArbeitstagUtilities::berechneMitarbeiterTagStunden($benutzer->getID(), date("Y-m-d", $arWochentageTS[6])));
+        $formatiert = true;
+        $tpl->replace("SummeAlleProjekte", $this->formatStunde($bisherStundenSumme));
+        $tpl->replace("MontagAlleProjekte", ArbeitstagUtilities::berechneMitarbeiterTagStunden($benutzer->getID(), date("Y-m-d", $arWochentageTS[0]), $formatiert));
+        $tpl->replace("DienstagAlleProjekte", ArbeitstagUtilities::berechneMitarbeiterTagStunden($benutzer->getID(), date("Y-m-d", $arWochentageTS[1]), $formatiert));
+        $tpl->replace("MittwochAlleProjekte", ArbeitstagUtilities::berechneMitarbeiterTagStunden($benutzer->getID(), date("Y-m-d", $arWochentageTS[2]), $formatiert));
+        $tpl->replace("DonnerstagAlleProjekte", ArbeitstagUtilities::berechneMitarbeiterTagStunden($benutzer->getID(), date("Y-m-d", $arWochentageTS[3]), $formatiert));
+        $tpl->replace("FreitagAlleProjekte", ArbeitstagUtilities::berechneMitarbeiterTagStunden($benutzer->getID(), date("Y-m-d", $arWochentageTS[4]), $formatiert));
+        $tpl->replace("SamstagAlleProjekte", ArbeitstagUtilities::berechneMitarbeiterTagStunden($benutzer->getID(), date("Y-m-d", $arWochentageTS[5]), $formatiert));
+        $tpl->replace("SonntagAlleProjekte", ArbeitstagUtilities::berechneMitarbeiterTagStunden($benutzer->getID(), date("Y-m-d", $arWochentageTS[6]), $formatiert));
         $tpl->replace("Datensaetze", $tplDS->getOutput());
         
         // Datensatz / Arbeitswoche gesperrt, dann Eingabemoeglichtkeit sperren
@@ -520,5 +522,11 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
     public function executePost()
     {
         return $this->executeGet();
+    }
+    
+    private function formatStunde($pStunde) {
+        
+        // TODO: Change for PHP8 to Decimals = ","
+        return number_format($pStunde, 2);
     }
 }
