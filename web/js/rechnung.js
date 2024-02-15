@@ -121,6 +121,9 @@ function doAdresse() {
 				jQuery("#letztemwst").attr('value', x.mwst);
 				jQuery("#letztebrutto").attr('value', x.bruttobetrag);
 				jQuery("#letztedatum").html(x.datum);
+				
+				jQuery("#kosten_hauptstimmung").attr('value', x.kosten_hauptstimmung);
+				jQuery("#kosten_nebenstimmung").attr('value', x.kosten_nebenstimmung);
 			} else {
 				jQuery("#anschrift").html("Fehler beim Ermitteln der Daten");
 			}

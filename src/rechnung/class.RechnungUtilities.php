@@ -20,15 +20,19 @@ class RechnungUtilities
         $a = array(
             ConstantLoader::getRechnungPflegeText(),
             ConstantLoader::getRechnungAuftragText(),
-            ConstantLoader::getRechnungAngebotText()
+            ConstantLoader::getRechnungAngebotText(),
+            ConstantLoader::getRechnungPflegeHauptstimmungText(),
+            ConstantLoader::getRechnungPflegeNebenstimmungText()
         );
         $b = array(
             "ScriptPflegeText",
             "ScriptAuftragText",
-            "ScriptAngebotText"
+            "ScriptAngebotText",
+            "ScriptPflegeHaupt",
+            "ScriptPflegeNeben",
         );
         
-        for ($i = 0; $i <= 2; $i ++) {
+        for ($i = 0; $i <= 4; $i ++) {
             $text = $a[$i];
             $text = str_replace("&lt;", "", $text);
             $text = str_replace("&gt;", "", $text);

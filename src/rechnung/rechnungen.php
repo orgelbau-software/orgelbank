@@ -89,11 +89,11 @@ if (isset($_GET['action'])) {
             $retVal['ort'] = $g->getRechnungAdresse()->getOrt();
             $retVal['land'] = $g->getRechnungAdresse()->getLand();
             $retVal['text'] = $titel;
-            $retVal['pflegekosten'] = "unbekannt";
-            $retVal['fahrtkosten'] = "unbekannt";
-            $retVal['nettobetrag'] = "unbekannt";
-            $retVal['bruttobetrag'] = "unbekannt";
-            $retVal['mwst'] = "unbekannt";
+            $retVal['pflegekosten'] = "0.0";
+            $retVal['fahrtkosten'] = "0.0";
+            $retVal['nettobetrag'] = "0.0";
+            $retVal['bruttobetrag'] = "0.0";
+            $retVal['mwst'] = "0.0";
             $retVal['datum'] = "unbekannt";
             
             if ($r != null) {
@@ -108,6 +108,21 @@ if (isset($_GET['action'])) {
                 $retVal['mwst'] = $r->getMwSt();
                 $retVal['datum'] = $r->getDatum(true);
             }
+            
+            // Kosten Haupt und Teilstimmung aber für welche Orgel? Wir nehmen mal die erste
+            $orgeln = OrgelUtilities::getGemeindeOrgeln($g->getID());
+            if($orgeln->getSize() == 1) {
+                $ersteOrgel = $orgeln->getValueOf(0);
+                $retVal['kosten_hauptstimmung'] = $ersteOrgel->getKostenHauptstimmung();
+                $retVal['kosten_nebenstimmung'] = $ersteOrgel->getKostenTeilstimmung();
+            } else {
+                $retVal['kosten_hauptstimmung'] = "0.0";
+                $retVal['kosten_nebenstimmung'] = "0.0";
+            }
+            
+            
+            
+            
             
             foreach ($retVal as $key => $val) {
                 $retVal[$key] = ($val == null ? "" : $val);

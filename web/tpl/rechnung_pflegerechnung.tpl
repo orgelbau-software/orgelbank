@@ -25,6 +25,10 @@
 						<label for="bem2">Aufrag</label>
 					<input id="bem3" style="border: 0px" type="radio" value="3" name="text" onclick="rechnungEinleitung('angebot', 'bemerkung1')" <!--disableForm-->/>
 						<label for="bem3">Angebot</label>
+					<input id="bem4" style="border: 0px" type="radio" value="4" name="text" onclick="rechnungEinleitung('pflegehaupt', 'bemerkung1')" <!--disableForm-->/>
+						<label for="bem4">Hauptstimmung</label>
+					<input id="bem5" style="border: 0px" type="radio" value="5" name="text" onclick="rechnungEinleitung('pflegeneben', 'bemerkung1')" <!--disableForm-->/>
+						<label for="bem5">Nebenstimmung</label>
 				</td>
 			</tr>
 			<tr>
@@ -118,10 +122,25 @@
 				<td>+ <input id="mwst" disabled type="number" min="0" step="0.01"  name="mwst" value="<!--MwSt-->" size="8" class="disabled inputzahl rechnungseingabe"/> EUR</td>
 				<td colspan="2"><input disabled id="letztemwst" type="number" min="0" step="0.01"  name="js_mwst" value="<!--LetzteMwSt-->" size="8" class="disabled inputzahl rechnungseingabe"/> EUR</td>
 			</tr>
-				<tr>
+			<tr>
 				<td class="tdbez">Gesamtbetrag (Brutto):</td>
 				<td>= <input id="jsBruttoBetrag" disabled type="number" min="0" step="0.01"  name="brutto" value="<!--BruttoBetrag-->" size="8" class="disabled inputzahl rechnungseingabe"/> EUR</td>
 				<td colspan="2"><input disabled id="letztebrutto" type="number" min="0" step="0.01"  name="js_brutto" value="<!--LetzteBrutto-->" size="8" class="disabled inputzahl rechnungseingabe"/> EUR</td>
+			</tr>
+			<tr>
+				<td class="tdbez">&nbsp;</td>
+				<td>&nbsp;</td>
+				<td colspan="2">&nbsp;</td>
+			</tr>
+			<tr>
+				<td class="tdbez">Hauptstimmung:</td>
+				<td>&nbsp;</td>
+				<td colspan="2"><input disabled id="kosten_hauptstimmung" type="number" min="0" step="0.01"  name="js_hauptstimmung" value="<!--Hauptstimmung-->" size="8" class="disabled inputzahl rechnungseingabe"/> EUR</td>
+			</tr>
+			<tr>
+				<td class="tdbez">Nebenstimmung:</td>
+				<td>&nbsp;</td>
+				<td colspan="2"><input disabled id="kosten_nebenstimmung" type="number" min="0" step="0.01"  name="js_nebenstimmung" value="<!--Nebenstimmung-->" size="8" class="disabled inputzahl rechnungseingabe"/> EUR</td>
 			</tr>
 		</table>
     

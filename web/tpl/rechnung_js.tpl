@@ -14,6 +14,13 @@
 		if(art == 'angebot') {
 			document.getElementById(zielFeldId).value = "<!--ScriptAngebotText-->";
 		}
+		if(art == 'pflegehaupt') {
+			document.getElementById(zielFeldId).value = "<!--ScriptPflegeHaupt-->";
+		}
+		if(art == 'pflegeneben') {
+			document.getElementById(zielFeldId).value = "<!--ScriptPflegeNeben-->";
+		}
+		
 	}
 </script>
 <script type="text/javascript" src="<!--InstanceUrl-->lib/javascript/dropdown.js"></script>

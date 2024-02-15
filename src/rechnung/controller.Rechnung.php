@@ -492,6 +492,8 @@ class RechnungController
         $tplRechnung->replace("Standardposition9", ConstantLoader::getStandardPflegerechnungPos9());
         $tplRechnung->replace("Standardposition10", ConstantLoader::getStandardPflegerechnungPos10());
         
+        $tplRechnung->replace("Hauptstimmung", "");
+        $tplRechnung->replace("Nebenstimmung", "");
         // Rechnung ausgeben
         $tplRechnung->anzeigen();
     }

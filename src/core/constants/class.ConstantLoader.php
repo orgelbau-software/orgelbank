@@ -159,6 +159,16 @@ class ConstantLoader
     {
         return ConstantLoader::$htValues->getValueOf("rechnung_pflege_text");
     }
+    
+    public static function getRechnungPflegeHauptstimmungText()
+    {
+        return ConstantLoader::$htValues->getValueOf("rechnung_pflege_hauptstimmung_text");
+    }
+    
+    public static function getRechnungPflegeNebenstimmungText()
+    {
+        return ConstantLoader::$htValues->getValueOf("rechnung_pflege_nebenstimmung_text");
+    }
 
     public static function getRechnungAuftragText()
     {
