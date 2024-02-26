@@ -16,10 +16,11 @@ if((!is_dir(ROOTDIR) || !substr(ROOTDIR, -strlen(ROOTDIR)) === "/")) {
 }
 
 if (version_compare(phpversion(), '7.4', '<')) {
-    die("The PHP Version is too low. Required is 7.4");
+    die("The PHP Version is too low (".phpversion()."). Required is 7.4");
 } elseif (version_compare(phpversion(), '8.0', '>')) {
-    die("The PHP Version is too high. Required is 7.4");
+//     die("The PHP Version is too high (".phpversion()."). Required is 7.4");
 }
+
 
 // Konstanten
 define('TRACEENABLED', false);
@@ -55,15 +56,8 @@ set_error_handler("ErrorHandler::handle");
 set_exception_handler("ExceptionHandler::handle");
 
 // Klassen
-
-session_set_save_handler(
-        array('OrgelbankSessionHandler', 'open'), 
-        array('OrgelbankSessionHandler', 'close'), 
-        array('OrgelbankSessionHandler', 'read'), 
-        array('OrgelbankSessionHandler', 'write'), 
-        array('OrgelbankSessionHandler', 'destroy'), 
-        array('OrgelbankSessionHandler', 'gc')
-    );
+$sessionHandler = new OrgelbankSessionHandler();
+session_set_save_handler($sessionHandler, true);
 
 // Logging
 // Log::setLogger(new DoNothingLogger());
@@ -71,4 +65,4 @@ Log::setLogger(new EchoLogger());
 
 // Globale Funktionen
 include_once ROOTDIR . 'conf/functions.inc.php';
-?>
+

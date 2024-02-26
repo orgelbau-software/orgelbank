@@ -11,7 +11,8 @@ class WaehrungUtil
      */
     public static function formatDoubleToWaehrung($double)
     {
-        return number_format($double, 2, ',', '.');
+        $valueToFormat = (empty($double) ? 0: $double);
+        return number_format($valueToFormat, 2, ',', '.');
     }
 
     /**

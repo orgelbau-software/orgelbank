@@ -1,6 +1,6 @@
 <?php
 
-class OrgelbankSessionHandler
+class OrgelbankSessionHandler implements SessionHandlerInterface 
 {
 
     /**
@@ -8,13 +8,12 @@ class OrgelbankSessionHandler
      * Opens a connection to the database and stays open until specifically closed
      * This function is called first and with each page load
      *
-     * @param String $s
+     * @param string $s
      *            Session Path
-     * @param unknown_type $n            
-     * @return unknown
+     * @param string $n            
+     * @return bool
      */
-    public static function open($s, $n)
-    {
+    public function open(string $savePath, string $sessionName) : bool {
         return true;
     }
 
@@ -23,10 +22,10 @@ class OrgelbankSessionHandler
      * Queries the mysql database, unencrypts data, and returns it.
      * This function is called after 'open' with each page load
      *
-     * @param unknown_type $id            
+     * @param unknown_type  $id            
      * @return unknown
      */
-    public static function read($id)
+    public function read(string $id) : false|string
     {
         $query = "SELECT expire, data FROM http_session WHERE id='" . $id . "'";
         $instance = DB::getInstance();
@@ -51,11 +50,11 @@ class OrgelbankSessionHandler
      * Called after 'read'
      * with each page load
      *
-     * @param String $id            
-     * @param Array $data            
+     * @param string $id            
+     * @param string $data            
      * @return TRUE if successul
      */
-    public static function write($id, $data)
+    public function write(string $id, string $data) : bool
     {
         if (! $data) {
             return false;
@@ -81,7 +80,7 @@ class OrgelbankSessionHandler
      *
      * @return TRUE
      */
-    public static function close()
+    public function close() : bool
     {
         return true;
     }
@@ -93,7 +92,7 @@ class OrgelbankSessionHandler
      * @param String $id            
      * @return TRUE
      */
-    public static function destroy($id)
+    public function destroy($id) : bool
     {
         $db = DB::getInstance();
         $db->connect();
@@ -106,15 +105,17 @@ class OrgelbankSessionHandler
     /**
      * Enter description here...
      *
-     * @param unknown_type $expire            
+     * @param int $maxLifeTime            
      */
-    public static function gc($expire)
+    public function gc(int $maxLifeTime) : int|false
     {
         $query = "DELETE FROM http_session WHERE expire < " . time();
         $db = DB::getInstance();
         $db->connect();
         $db->NonSelectQuery($query);
+        $count = $db->getAffectedRows();
         $db->disconnect();
+        return ( $count > 0 ? $count : false);
     }
 }
 ?>

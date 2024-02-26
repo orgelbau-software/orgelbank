@@ -19,8 +19,8 @@ class Template extends Output
      * <code><!--</code> und abschließende Kommentarzeichen <code>--></code>
      * ergänzt
      *
-     * @param String $platzhalter            
-     * @param String $wert            
+     * @param string $platzhalter            
+     * @param mixed $wert            
      */
     public function replace($platzhalter, $wert)
     {

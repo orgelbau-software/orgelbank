@@ -142,7 +142,7 @@ class ArrayList implements Iterator, ArrayAccess
      * 
      * @see Iterator
      */
-    public function rewind()
+    public function rewind() : void
     {
         $this->index = 0;
     }
@@ -153,7 +153,7 @@ class ArrayList implements Iterator, ArrayAccess
      * @see Iterator
      * @return bool Gibt an ob ein weiterer Schleifendurchgang notwendig ist
      */
-    public function valid()
+    public function valid() : bool
     {
         return $this->index < $this->getSize();
     }
@@ -164,7 +164,7 @@ class ArrayList implements Iterator, ArrayAccess
      * @see Iterator
      * @return int $index Gibt den aktuellen Arrayschlüssel zurück
      */
-    public function key()
+    public function key() : mixed
     {
         return $this->index;
     }
@@ -175,7 +175,7 @@ class ArrayList implements Iterator, ArrayAccess
      * @see Iterator
      * @return mixed $value Wert an der aktuellen Position
      */
-    public function current()
+    public function current() : mixed
     {
         return $this->values[$this->index];
     }
@@ -185,7 +185,7 @@ class ArrayList implements Iterator, ArrayAccess
      * 
      * @see Iterator
      */
-    public function next()
+    public function next() : void
     {
         $this->index ++;
     }
@@ -197,7 +197,7 @@ class ArrayList implements Iterator, ArrayAccess
      * @param int $offset
      *            Der angegebene Arrayindex
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset) : bool
     {
         return $offset < $this->getSize() && $offset >= 0;
     }
@@ -210,7 +210,7 @@ class ArrayList implements Iterator, ArrayAccess
      *            Der angegebene Arrayindex
      * @return mixed $value Wert an der ArrayList am Index $offset
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset) : mixed
     {
         if ($this->offsetExists($offset)) {
             return $this->getValueOf($offset);
@@ -228,7 +228,7 @@ class ArrayList implements Iterator, ArrayAccess
      * @param mixed $value
      *            Wert auf der unter dem angegebenen Index gespeichert werden soll
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value) : void
     {
         if ($offset == $this->getSize()) {
             $this->add($value);
@@ -244,7 +244,7 @@ class ArrayList implements Iterator, ArrayAccess
      * @param int $offset
      *            Der angegebene Arrayindex
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset) : void
     {
         if ($this->offsetExists($offset)) {
             $this->remove($offset);

@@ -104,17 +104,17 @@ class HashTable extends ArrayList
      * 
      * @return mixed Schlüssel eines Elementes
      */
-    public function key()
+    public function key() : mixed
     {
         return $this->keys->getValueOf($this->index);
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset) : bool
     {
         return $this->containsKey($offset);
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value) : void
     {
         if ($this->containsKey($offset)) {
             $this->setValueOf($offset, $value);

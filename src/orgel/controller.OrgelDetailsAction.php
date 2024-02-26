@@ -99,7 +99,7 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
         $tplOrgelDetails->replace("StimmungNach", $oOrgel->getStimmung());
         $tplOrgelDetails->replace("Stimmton", $oOrgel->getStimmton());
         $tplOrgelDetails->replace("Register", $oOrgel->getRegisterAnzahl());
-        $tplOrgelDetails->replace("Anmerkung", stripslashes($oOrgel->getAnmerkung()));
+        $tplOrgelDetails->replace("Anmerkung", ($oOrgel->getAnmerkung() == "" ? "" : stripslashes($oOrgel->getAnmerkung())));
         $tplOrgelDetails->replace("AnzahlManualeUndRegister", $anzahlManuale);
         
         // Manuale Checkboxen
@@ -111,12 +111,12 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
         $tplOrgelDetails->replace("m6", $arManuale[6]);
         
         // Manuale Groesse
-        $tplOrgelDetails->replace("m1groesse", stripslashes($oOrgel->getGroesseM1()));
-        $tplOrgelDetails->replace("m2groesse", stripslashes($oOrgel->getGroesseM2()));
-        $tplOrgelDetails->replace("m3groesse", stripslashes($oOrgel->getGroesseM3()));
-        $tplOrgelDetails->replace("m4groesse", stripslashes($oOrgel->getGroesseM4()));
-        $tplOrgelDetails->replace("m5groesse", stripslashes($oOrgel->getGroesseM5()));
-        $tplOrgelDetails->replace("m6groesse", stripslashes($oOrgel->getGroesseM6()));
+        $tplOrgelDetails->replace("m1groesse", ($oOrgel->getGroesseM1() == "" ? "" : stripslashes($oOrgel->getGroesseM1())));
+        $tplOrgelDetails->replace("m2groesse", ($oOrgel->getGroesseM2() == "" ? "" : stripslashes($oOrgel->getGroesseM2())));
+        $tplOrgelDetails->replace("m3groesse", ($oOrgel->getGroesseM3() == "" ? "" : stripslashes($oOrgel->getGroesseM3())));
+        $tplOrgelDetails->replace("m4groesse", ($oOrgel->getGroesseM4() == "" ? "" : stripslashes($oOrgel->getGroesseM4())));
+        $tplOrgelDetails->replace("m5groesse", ($oOrgel->getGroesseM5() == "" ? "" : stripslashes($oOrgel->getGroesseM5())));
+        $tplOrgelDetails->replace("m6groesse", ($oOrgel->getGroesseM6() == "" ? "" : stripslashes($oOrgel->getGroesseM6())));
         
         // Manuale Winddruck
         $tplOrgelDetails->replace("m1wd", $oOrgel->getWinddruckM1());

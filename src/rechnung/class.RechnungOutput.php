@@ -101,7 +101,11 @@ abstract class RechnungOutput
     protected function format($s)
     {
         // $s = str_replace("\\'", "\\rquote", $s); // Zeichen fuer "Fuß" ersetzen. Prio 0!
-        $s = stripslashes($s);
+        if($s == "") {
+            $s = "";
+        } else {
+            $s = stripslashes($s);
+        }
         return $s;
     }
 

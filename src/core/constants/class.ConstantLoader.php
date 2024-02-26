@@ -29,7 +29,11 @@ class ConstantLoader
         $ht = new HashTable();
         
         foreach ($oDSOC as $o) {
-            $value = stripslashes($o->getValue());
+            if($o->getValue() == "") {
+                $value = $o->getValue();
+            } else {
+                $value = stripslashes($o->getValue());
+            }
             $ht->put($o->getName(), $value);
         }
         ConstantLoader::$htValues = $ht;

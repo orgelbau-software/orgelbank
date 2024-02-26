@@ -11,7 +11,7 @@ abstract class SimpleDatabaseStorageObjekt extends DatabaseStorageObjekt
 
     protected $result;
 
-    public function __construct($iID = 0, $primaryKey, $tableName, $tablePrefix)
+    public function __construct($iID, $primaryKey, $tableName, $tablePrefix)
     {
         $this->tableName = $tableName;
         $this->tablePrefix = $tablePrefix;
@@ -48,7 +48,12 @@ abstract class SimpleDatabaseStorageObjekt extends DatabaseStorageObjekt
         foreach ($ht as $key => $val) {
             $iCounter ++;
             $dbFelder .= $key;
-            $dbWerte .= "'" . addslashes($val) . "'";
+            if($val != "") {
+                $dbWerte .= "'" . addslashes($val) . "'";
+            } else {
+                $dbWerte .= "''";
+            }
+            
             if ($iCounter <= $ht->getLength() - 1) {
                 $dbFelder .= ", ";
                 $dbWerte .= ", ";
@@ -64,7 +69,7 @@ abstract class SimpleDatabaseStorageObjekt extends DatabaseStorageObjekt
 					NOW(),";
         $sql .= $dbWerte;
         $sql .= ");";
-        // echo $sql;
+        //echo $sql;
         $this->dbInstance->NonSelectQuery($sql);
     }
 
@@ -76,7 +81,11 @@ abstract class SimpleDatabaseStorageObjekt extends DatabaseStorageObjekt
         
         foreach ($ht as $key => $val) {
             $iCounter ++;
-            $stmt .= $key . " = '" . addslashes($val) . "'";
+            if($val != "") {
+                $stmt .= $key . " = '" . addslashes($val) . "'";
+            } else {
+                $stmt .= $key . " = ''";
+            }
             
             if ($iCounter <= $ht->getLength() - 1) {
                 $stmt .= ", ";
@@ -137,7 +146,7 @@ abstract class SimpleDatabaseStorageObjekt extends DatabaseStorageObjekt
             $rs = $rs[0];
             
             foreach ($rs as $key => $val) {
-                $rs[$key] = stripslashes($val);
+                $rs[$key] = $val == "" ?  $val : stripslashes($val);
             }
             $this->doLoadFromArray($rs);
         } else {

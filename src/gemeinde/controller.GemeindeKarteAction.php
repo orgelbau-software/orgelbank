@@ -75,7 +75,11 @@ class GemeindeKarteAction implements GetRequestHandler, PostRequestHandler
             } else {
                 $tplMarker->replace("LetztePflege", (date("d.m.y", strtotime($current->getLetztePflege()))));
             }
-            $tplMarker->replace("NaechstePflege", (date("d.m.y", strtotime($current->getNaechstePflege()))));
+            if(empty($current->getNaechstePflege())) {
+                $tplMarker->replace("NaechstePflege", "unbekannt");
+            } else {
+                $tplMarker->replace("NaechstePflege", (date("d.m.y", strtotime($current->getNaechstePflege()))));
+            }
             $tplMarker->replace("Bezirk", $current->getBezirkId());
             $tplMarker->replace("Register", $current->getAnzahlRegister());
             $tplMarker->replace("Pflegevertrag", ($current->getPflegevertrag() == "1" ? "Ja" : "Nein"));
@@ -90,10 +94,8 @@ class GemeindeKarteAction implements GetRequestHandler, PostRequestHandler
         $tpl->replace("OrgelAnzahlGesamt", $anzahlAlle);
         
         $firmensitz = new Ansprechpartner(1);
-        $tpl->replace("FirmensitzLat", $firmensitz->getAdresse()
-            ->getLat());
-        $tpl->replace("FirmensitzLng", $firmensitz->getAdresse()
-            ->getLng());
+        $tpl->replace("FirmensitzLat", $firmensitz->getAdresse()->getLat());
+        $tpl->replace("FirmensitzLng", $firmensitz->getAdresse()->getLng());
         $tpl->replace("Marker", $tplMarker->getOutput());
         return $tpl;
     }

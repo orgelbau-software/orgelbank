@@ -81,6 +81,7 @@ class NeueOrgelAnlegen implements GetRequestHandler
         $tplOrgelDetails->replace("KostenHauptstimmung", "");
         $tplOrgelDetails->replace("KostenTeilstimmung", "");
         $tplOrgelDetails->replace("Stimmton", "");
+        $tplOrgelDetails->replace("OID", "");
         
         $htmlIntervalHauptstimmung = new HTMLSelectForArray(Constant::getIntervallHauptstimmung());
         $tplOrgelDetails->replace("IntervallHaupstimmungSelect", $htmlIntervalHauptstimmung->getOutput());

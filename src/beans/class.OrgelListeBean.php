@@ -227,9 +227,13 @@ class OrgelListeBean
     public function getNaechstePflege($formatiert = true)
     {
         if ($formatiert) {
-            $x = date("d.m.Y", strtotime($this->naechstePflege));
-            if ($x == "01.01.1970")
+            if($this->naechstePflege == "") {
                 $x = "unbekannt";
+            } else {
+                $x = date("d.m.Y", strtotime($this->naechstePflege));
+                if ($x == "01.01.1970")
+                    $x = "unbekannt";
+            }
             return $x;
         }
         return $this->naechstePflege;

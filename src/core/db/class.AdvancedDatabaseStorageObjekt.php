@@ -11,7 +11,7 @@ abstract class AdvancedDatabaseStorageObjekt extends DatabaseStorageObjekt
 
     protected $result;
 
-    public function __construct($primaryValues = array(), $primaryKeys, $tableName, $tablePrefix)
+    public function __construct(array $primaryValues, $primaryKeys, $tableName, $tablePrefix)
     {
         if (! is_array($primaryKeys))
             throw new InvalidArgumentException("PrimaryKey must be an array");

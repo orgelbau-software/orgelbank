@@ -22,7 +22,7 @@ class ErrorHandler
         $this->kontext = $kontext;
     }
 
-    public static function handle($code, $text, $datei, $zeile, $kontext)
+    public static function handle($code, $text, $datei = "", $zeile = "", $kontext = "")
     {
         if (error_reporting() < $code)
             return;

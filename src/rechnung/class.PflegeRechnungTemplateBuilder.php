@@ -15,7 +15,7 @@ class PflegeRechnungTemplateBuilder extends RechnungTemplateBuilder
         $colPositionen = RechnungsPositionUtilities::getRechnungsPositionen($this->rechnung->getID(), $this->rechnung->getType());
         $iPosCount = 1;
         foreach ($colPositionen as $currentPos) {
-            $this->template->replace("Standardposition" . $iPosCount ++, stripslashes($currentPos->getText()));
+            $this->template->replace("Standardposition" . $iPosCount ++, ($currentPos->getText() == "" ? "" : stripslashes($currentPos->getText())));
         }
         $this->setPosition1("");
         $this->setPosition2("");

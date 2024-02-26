@@ -54,8 +54,13 @@ abstract class DatabaseStorageObjekt
     public function __construct($iID = 0)
     {
         $this->dbInstance = DB::getInstance();
-        $this->iID = $iID;
-        if ($iID != 0) {
+        if($iID == "") {
+            $this->iID = 0;
+        } else {
+            $this->iID = $iID;
+        }
+        
+        if ($this->iID != 0) {
             $this->load();
         } else {
             $this->newObjekt();

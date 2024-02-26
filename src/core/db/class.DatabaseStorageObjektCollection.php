@@ -90,49 +90,51 @@ class DatabaseStorageObjektCollection implements Iterator, ArrayAccess
         return $retVal;
     }
 
-    public function current()
+    public function current() : mixed
     {
         return $this->list->current();
     }
 
-    public function next()
+    public function next() : void
     {
-        return $this->list->next();
+        //return $this->list->next();
+        $this->list->next();
     }
 
-    public function key()
+    public function key() : mixed
     {
         return $this->list->key();
     }
 
-    public function valid()
+    public function valid() : bool
     {
         return $this->list->valid();
     }
 
-    public function rewind()
+    public function rewind() : void
     {
-        return $this->list->rewind();
+        //return $this->list->rewind();
+        $this->list->rewind();
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset) : bool    
     {
         return $this->list->offsetExists($offset);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset) : mixed
     {
         return $this->list->offsetGet($offset);
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value) : void
     {
         $this->list->offsetSet($offset, $value);
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset) : void
     {
-        return $this->list->offsetUnset($offset);
+         $this->list->offsetUnset($offset);
     }
 
     public function getSize()

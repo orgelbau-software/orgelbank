@@ -18,7 +18,7 @@ if (! defined("ORGELBANK_API_KEY") || ConstantLoader::getOrgelbankAPIKey() != OR
 }
 
 if ($_POST && isset($_POST['loginmodule'])) {
-    $_POST['benutzername'] = filter_var($_POST['benutzername'], FILTER_SANITIZE_STRING);
+    $_POST['benutzername'] = htmlspecialchars($_POST['benutzername']);
     $_SESSION['user']['benutzername'] = $_POST['benutzername'];
     $_SESSION['user']['passwort'] = PasswordUtility::encrypt($_POST['passwort']);
 }

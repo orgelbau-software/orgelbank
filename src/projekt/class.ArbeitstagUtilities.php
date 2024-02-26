@@ -155,7 +155,7 @@ class ArbeitstagUtilities
             }
         }
         
-        if($pFormat == true) {
+        if($pFormat == true && $retVal != "") {
             $retVal = number_format($retVal, 2);
         }
         

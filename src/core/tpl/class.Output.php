@@ -54,7 +54,12 @@ class Output
         $this->hasChanged = true;
         
         if ($this->template != null) {
-            $this->template = str_replace($platzhalter, $wert, $this->template);
+            if($wert == "") { 
+                $this->template = str_replace($platzhalter, "", $this->template);
+            } else {
+                $this->template = str_replace($platzhalter, ($wert != "" ? $wert : ""), $this->template);
+            }
+            
             $boReturn = true;
         }
         return $boReturn;
