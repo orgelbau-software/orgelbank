@@ -143,7 +143,7 @@ class ProjektBearbeitenAction implements GetRequestHandler, PostRequestHandler, 
         // ProjektMitarbeiter
         $c = BenutzerUtilities::getBenutzer();
         $tplBenutzer = new BufferedTemplate("projekt_bearbeiten_mads.tpl");
-        $benutzerKeineZeit = explode(",", $p->getKeineZeitenFuer());
+        $benutzerKeineZeit = ( $p->getKeineZeitenFuer() == null ? array() : explode(",", $p->getKeineZeitenFuer()));
         
         $count = 0;
         foreach ($c as $benutzer) {

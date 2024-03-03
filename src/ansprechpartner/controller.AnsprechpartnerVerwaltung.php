@@ -127,7 +127,11 @@ class AnsprechpartnerVerwaltung implements GetRequestHandler
         $c = AnsprechpartnerUtilities::getSuchAnsprechpartner($strSuchbegriff, $strWhere . " ORDER BY " . $strSQLOrderBy . " " . $strSQLDir);
         foreach ($c as $curAnsprechpartner) {
             if (! isset($_GET['order']) || $_GET['order'] == "name") {
-                $newIndex = strtoupper(substr($curAnsprechpartner->getNachname(), 0, 1));
+                if($curAnsprechpartner->getNachname() == "") {
+                    // nix?
+                } else {
+                    $newIndex = strtoupper(substr($curAnsprechpartner->getNachname(), 0, 1));
+                }
             } else {
                 $newIndex = strtoupper(substr($curAnsprechpartner->getFunktion(), 0, 1));
             }

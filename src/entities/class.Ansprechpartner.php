@@ -44,9 +44,9 @@ class Ansprechpartner extends SimpleDatabaseStorageObjekt
      * Enter description here ...
      *
      * @param int $iID            
-     * @param String $primaryKey            
-     * @param String $tableName            
-     * @param String $tablePrefix            
+     * @param string $primaryKey            
+     * @param string $tableName            
+     * @param string $tablePrefix            
      */
     public function __construct($iID = 0, $primaryKey = "a_id", $tableName = "ansprechpartner", $tablePrefix = "a_")
     {
@@ -193,7 +193,11 @@ class Ansprechpartner extends SimpleDatabaseStorageObjekt
         } else if ($this->getVorname() != "") {
             $retVal .= ", " . $this->getVorname();
         }
-        return trim($retVal);
+
+        if($retVal != "") {
+            $retVal = trim($retVal);
+        }
+        return $retVal;
     }
 
     public function setAktiv($aktiv)
