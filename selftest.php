@@ -49,4 +49,3 @@ echo "Directions: " . $result;
 // finally
 $db->disconnect();
 
-?>

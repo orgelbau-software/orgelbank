@@ -107,7 +107,7 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
         $tplOrgelDetails->replace("m2", $arManuale[2]);
         $tplOrgelDetails->replace("m3", $arManuale[3]);
         $tplOrgelDetails->replace("m4", $arManuale[4]);
-        $tplOrgelDetails->replace("m5", $arManuale[4]);
+        $tplOrgelDetails->replace("m5", $arManuale[5]);
         $tplOrgelDetails->replace("m6", $arManuale[6]);
         
         // Manuale Groesse
@@ -375,6 +375,11 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
         } else {
             $oOrgel->setManual4(0);
         }
+        if (isset($_POST['manual5'])) {
+            $oOrgel->setManual5(1);
+        } else {
+            $oOrgel->setManual5(0);
+        }
         if (isset($_POST['pedal'])) {
             $oOrgel->setPedal(1);
         } else {
@@ -385,12 +390,14 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
         $oOrgel->setGroesseM2($_POST['m2groesse']);
         $oOrgel->setGroesseM3($_POST['m3groesse']);
         $oOrgel->setGroesseM4($_POST['m4groesse']);
+        $oOrgel->setGroesseM5($_POST['m5groesse']);
         $oOrgel->setGroesseM6($_POST['m6groesse']);
         
         $oOrgel->setWinddruckM1($_POST['m1wd']);
         $oOrgel->setWinddruckM2($_POST['m2wd']);
         $oOrgel->setWinddruckM3($_POST['m3wd']);
         $oOrgel->setWinddruckM4($_POST['m4wd']);
+        $oOrgel->setWinddruckM5($_POST['m5wd']);
         $oOrgel->setWinddruckM6($_POST['m6wd']);
         $oOrgel->speichern(true);
         

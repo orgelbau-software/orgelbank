@@ -94,9 +94,9 @@
 				<td><input type="checkbox" name="pedal" id="pedal" <!--m6-->> <label for="pedal">Pedal</label></td>
 				<td><input type="text" name="m6groesse" value="<!--m6groesse-->" class="txt45"></td>
 				<td><input type="text" name="m6wd" value="<!--m6wd-->" class="txt30"> mm/WS</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
+				<td><input type="checkbox" name="manual5" id="manual5" <!--m5-->> <label for="manual5">M V</label></td>
+				<td><input type="text" name="m5groesse" value="<!--m5groesse-->"class="txt45"></td>
+				<td><input type="text" name="m5wd" value="<!--m5wd-->" class="txt30"> mm/WS</td>
 			</tr>
 		</table>
 		<br/>
@@ -158,7 +158,7 @@
             <tr>
 				<td class="tdLabel">Hauptstimmung:</td>
 				<td><input type="text" min="1" step="any"  name="kostenhauptstimmung" maxlength="50" class="width80" value="<!--KostenHauptstimmung-->"> &euro;</td>
-				<td class="tdLabel">Teilstimmung:</td>
+				<td class="tdLabel">Nebenstimmung:</td>
 				<td><input type="text" min="1" step="any" name="kostenteilstimmung" maxlength="50" class="width90" value="<!--KostenTeilstimmung-->">  &euro;</td>
 			</tr>
 			<tr>

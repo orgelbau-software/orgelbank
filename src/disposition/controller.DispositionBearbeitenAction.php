@@ -142,7 +142,7 @@ class DispositionBearbeitenAction
         $htmlSelect = new HTMLSelectForArray($c, $this->oRegister->getManual());
         $tplDisposition->replace("Manuale", $htmlSelect->getOutput());
         
-        if($this->oRegister->getID() == -1) {
+        if($this->oRegister->getFuss() == "") {
             $ausgewaehlteFussGroesse = 8; // Standard bei neuen Registern
         } else {
             $ausgewaehlteFussGroesse = $this->oRegister->getFuss();

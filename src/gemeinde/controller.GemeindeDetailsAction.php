@@ -86,6 +86,7 @@ class GemeindeDetailsAction implements GetRequestHandler, PostRequestHandler
         $tplGemeindeDetails->replace("Lat", $lat);
         $tplGemeindeDetails->replace("Lng", $lng);
         
+        $tplGemeindeDetails->replace("RKundenNr", "");
         $tplGemeindeDetails->replace("RKirchenamt", $oGemeinde->getRAnschrift());
         $tplGemeindeDetails->replace("RGemeinde", $oGemeinde->getRGemeinde());
         $tplGemeindeDetails->replace("RStrasse", $oGemeinde->getRechnungAdresse()

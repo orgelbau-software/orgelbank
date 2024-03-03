@@ -17,10 +17,10 @@ if((!is_dir(ROOTDIR) || !substr(ROOTDIR, -strlen(ROOTDIR)) === "/")) {
     die("Konstante ROOTDIR zeigt auf ein ungueltiges Verzeichnis. Das Verzeichnis muss mit / enden. " . ROOTDIR);
 }
 
-if (version_compare(phpversion(), '7.4', '<')) {
-    die("The PHP Version is too low (".phpversion()."). Required is 7.4");
-} elseif (version_compare(phpversion(), '8.0', '>')) {
-//     die("The PHP Version is too high (".phpversion()."). Required is 7.4");
+if (version_compare(phpversion(), '8.2', '<')) {
+    die("The PHP Version is too low (".phpversion()."). Required is 8.2");
+} elseif (version_compare(phpversion(), '8.3', '>')) {
+     die("The PHP Version is too high (".phpversion()."). Required is 8.2");
 }
 
 

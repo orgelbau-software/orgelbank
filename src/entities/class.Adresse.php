@@ -32,9 +32,9 @@ class Adresse extends SimpleDatabaseStorageObjekt
      * Enter description here ...
      *
      * @param int $iID            
-     * @param String $primaryKey            
-     * @param String $tableName            
-     * @param String $tablePrefix            
+     * @param string $primaryKey            
+     * @param string $tableName            
+     * @param string $tablePrefix            
      */
     public function __construct($iID = 0, $primaryKey = "ad_id", $tableName = "adresse", $tablePrefix = "ad_")
     {

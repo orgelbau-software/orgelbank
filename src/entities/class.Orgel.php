@@ -167,6 +167,7 @@ class Orgel extends SimpleDatabaseStorageObjekt
         $this->setManual3($rs['o_manual3']);
         $this->setManual4($rs['o_manual4']);
         $this->setManual5($rs['o_manual5']);
+        $this->setPedal($rs['o_pedal']);
         $this->setWinddruckM1($rs['o_m1wd']);
         $this->setWinddruckM2($rs['o_m2wd']);
         $this->setWinddruckM3($rs['o_m3wd']);
@@ -179,7 +180,6 @@ class Orgel extends SimpleDatabaseStorageObjekt
         $this->setGroesseM4($rs['o_m4groesse']);
         $this->setGroesseM5($rs['o_m5groesse']);
         $this->setGroesseM6($rs['o_m6groesse']);
-        $this->setPedal($rs['o_pedal']);
         $this->setStimmung($rs['o_stimmung']);
         $this->setStimmton($rs['o_stimmton']);
         $this->setAktiv($rs['o_aktiv']);
