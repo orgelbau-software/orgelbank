@@ -69,10 +69,10 @@ function initialize() {
   <?php
 while ($row = mysql_fetch_assoc($q)) {
     $hoverText = $row['g_kirche'] . ", " . $row['ad_ort'] . " - Bezirk: " . $row['b_id'] . " - Register: " . $row['o_anzahlregister'];
-    $hoverText = utf8_encode($hoverText);
+	$hoverText = mb_convert_encoding($hoverText, 'UTF-8', 'ISO-8859-1');
     ?>
   var marker = new google.maps.Marker({ position: new google.maps.LatLng(<?php echo $row['ad_lat'] ?>,<?php echo $row['ad_lng']?>), map: map, name : <?php echo $row['ad_id']; ?>, title: '<?php echo $hoverText; ?>'  });
-     bindInfoWindow(marker, map, infowindow, createContent(<?php echo "'". utf8_encode($row['g_kirche'])."','".utf8_encode($row['ad_ort'])."','".$row['b_id']."','" .$row['o_anzahlregister']."','" .date("d.m.Y", strtotime($row['o_letztepflege']))."','" .$row['o_pflegevertrag']."','" .$row['o_zyklus']."','" .addslashes(str_replace("\r\n", " ", utf8_encode($row['o_massnahmen'])))."'"; ?>));
+     bindInfoWindow(marker, map, infowindow, createContent(<?php echo "'". mb_convert_encoding($row['g_kirche'], 'UTF-8', 'ISO-8859-1')."','". mb_convert_encoding($row['ad_ort'], 'UTF-8', 'ISO-8859-1')."','".$row['b_id']."','" .$row['o_anzahlregister']."','" .date("d.m.Y", strtotime($row['o_letztepflege']))."','" .$row['o_pflegevertrag']."','" .$row['o_zyklus']."','" .addslashes(str_replace("\r\n", " ", mb_convert_encoding($row['o_massnahmen'], 'UTF-8', 'ISO-8859-1')))."'"; ?>));
   <?php
 }
 ?>

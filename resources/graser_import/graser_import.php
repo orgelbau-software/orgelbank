@@ -237,7 +237,7 @@ foreach ($kunden->Kunden as $kunde) {
             $oAnsprechpartnerSV->setFax(kombiniereNummern($kunde->Vorwahl_SachVfax, $kunde->Telefax_Re));
             $oAnsprechpartnerSV->setMobil(kombiniereNummern($kunde->Vorwahl_Mobil_SachV, $kunde->Mobiltelefon_SachV));
             // $oAnsprechpartnerDiener->setAnrede("keine");
-            $oAnsprechpartnerSV->setFunktion(utf8_encode("Sachverst�ndiger"));
+            $oAnsprechpartnerSV->setFunktion(mb_convert_encoding("Sachverständiger", 'UTF-8', 'ISO-8859-1'));
             handleAnredeNamen($oAnsprechpartnerSV);
             handleNamensteilung($oAnsprechpartnerSV);
             $oAnsprechpartnerSV->speichern(true);

@@ -76,7 +76,7 @@ if (isset($_GET['action'], $_GET['request']) && $_GET['action'] == "ajax") {
         
         // Aufgaben / Kosten Übersicht
         foreach ($s as $benutzername => $data) {
-            $tpl->replace("Benutzername", htmlspecialchars(utf8_encode($benutzername)));
+            $tpl->replace("Benutzername", htmlspecialchars(mb_convert_encoding($benutzername, 'UTF-8', 'ISO-8859-1')));
             $tpl->replace("ProjektID", $p->getID());
             $tpl->replace("ParentID", $_GET['a']);
             $tpl->replace("ParentParentID", $a->getParentID());
@@ -86,10 +86,10 @@ if (isset($_GET['action'], $_GET['request']) && $_GET['action'] == "ajax") {
         }
         
         // fuer AJAX Übertragung muss UTF8 kodiert werden
-        echo utf8_encode($tpl->getOutput());
+        echo mb_convert_encoding($tpl->getOutput(), 'UTF-8', 'ISO-8859-1');
     } elseif (isset($_GET['request'], $_GET['date']) && $_GET['request'] == "mitarbeiterstunden") {
         $tpl = ProjektController::ajaxGetMitarbeiterWochenStunden($_GET['date']);
-        echo utf8_encode($tpl->getOutput());
+        echo mb_convert_encoding($tpl->getOutput(), 'UTF-8', 'ISO-8859-1');
     } elseif (isset($_GET['request'], $_GET['order']) && $_GET['request'] == "projectsort") {
         // echo "projectorder". $_GET['order'];
         header('Content-Type: application/json');

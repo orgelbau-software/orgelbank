@@ -1,4 +1,8 @@
 <?php
+/**
+ * Works - StimmDatei mit LibreOffice oeffnen.
+ * --> Als CSV Datei speicher, UTF8?
+ */
 include "../../conf/config.inc.php";
 
 $db = DB::getInstance();
@@ -181,7 +185,7 @@ if (($handle = fopen("Stim DAT ab 2022.csv", "r")) !== FALSE) {
         
         $oOrgel->setErbauer($data[21]);
         $oOrgel->setBaujahr($data[22]);
-        $oOrgel->setAnmerkung("Opus: " . $data[21] . "\nTermin: " . $data[18] . "\nBemerkung: " . $data[17] . "\nTemperatur: " . $data[20]);
+        $oOrgel->setAnmerkung("Opus: " . $data[21] . "\nTermin: " . $data[18] . "\nWeiteres: ".$data[39]."\nBemerkung: " . $data[17] . "\nTemperatur: " . $data[20]);
         $oOrgel->setRegisterAnzahl($data[7]);
         $oOrgel->setLetztePflege(date("Y-m-d", strtotime($data[38])));
         $oOrgel->setGemeindeId($oGemeinde->getID());
@@ -192,6 +196,11 @@ if (($handle = fopen("Stim DAT ab 2022.csv", "r")) !== FALSE) {
         $oOrgel->setSpieltrakturID(0);
         $oOrgel->setZyklus("0");
         
+        $oOrgel->setKostenHauptstimmung($data[23]);
+        $oOrgel->setKostenTeilstimmung($data[25]);
+
+        $oOrgel->setStimmung($data[20]); // Janke V
+
         $oOrgel->speichern(true);
         
         // Wartung

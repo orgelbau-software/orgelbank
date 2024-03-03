@@ -146,7 +146,7 @@ class ProjektController
         $tplLinksFuerDenDatensatz = $tplLinksNormal;
         foreach ($c as $kw) {
             if ($mitarbeiter[$kw->getBenutzerId()]->getGeloescht() != 1 || ($mitarbeiter[$kw->getBenutzerId()]->getGeloescht() == 1 && $kw->getWochenStundenIst() > 0)) {
-                $tplMaDS->replace("Benutzername", htmlspecialchars(utf8_encode($mitarbeiter[$kw->getBenutzerId()]->getBenutzername())));
+                $tplMaDS->replace("Benutzername", htmlspecialchars(mb_convert_encoding($mitarbeiter[$kw->getBenutzerId()]->getBenutzername(), 'UTF-8', 'ISO-8859-1')));
                 $tplMaDS->replace("BenutzerID", $kw->getBenutzerId());
                 $tplMaDS->replace("StdBisher", $kw->getWochenStundenIst());
                 $tplMaDS->replace("StdGesamt", $kw->getWochenStundenSoll());

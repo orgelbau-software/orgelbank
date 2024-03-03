@@ -12,6 +12,7 @@ if($_POST && isset($_POST['password']) && $_POST['password'] == MYSQL_PASS) {
   $sql[] = "TRUNCATE TABLE arbeitswoche;";
   $sql[] = "TRUNCATE TABLE ansprechpartner;";
   $sql[] = "TRUNCATE TABLE aufgabe_mitarbeiter;";
+  $sql[] = "TRUNCATE TABLE aufgabe;";
   $sql[] = "TRUNCATE TABLE benutzer;";
   $sql[] = "TRUNCATE TABLE benutzerverlauf;";
   $sql[] = "TRUNCATE TABLE disposition;";

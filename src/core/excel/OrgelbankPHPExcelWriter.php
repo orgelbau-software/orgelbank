@@ -21,7 +21,7 @@ class OrgelbankPHPExcelWriter {
 		return null;
 	}
 	public function write($pCoordinates, $pText, $pFormat = null) {
-		$this->mExcel->getActiveSheet ()->setCellValue ( $pCoordinates, utf8_encode($pText) );
+		$this->mExcel->getActiveSheet ()->setCellValue ( $pCoordinates, mb_convert_encoding($pText, 'UTF-8', 'ISO-8859-1'));
 		
 		if ($pFormat == "bold") {
 			$this->mExcel->getActiveSheet ()->getStyle($pCoordinates)->getFont()->setBold(true);
