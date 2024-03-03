@@ -175,7 +175,11 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
         $this->activateFontBold();
         $this->Cell($th, $this->cellheight, 'Pflegevertrag:', $rahmen, 0, $ausrichtungTH);
         $this->activateFontNormal();
-        $this->Cell($td, $this->cellheight, $p[$oOrgel->getPflegevertrag()], $rahmen, 0, $ausrichtungTD);
+        if(isset($p[$oOrgel->getPflegevertrag()])) {
+            $this->Cell($td, $this->cellheight, $p[$oOrgel->getPflegevertrag()], $rahmen, 0, $ausrichtungTD);
+        } else {
+            $this->Cell($td, $this->cellheight, "Unbekannt", $rahmen, 0, $ausrichtungTD);
+        }
         $this->activateFontBold();
         $this->Cell($th, $this->cellheight, 'Zyklus:', $rahmen, 0, $ausrichtungTH);
         $this->activateFontNormal();
@@ -280,13 +284,14 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
         
             foreach ($c as $oWartung) {
                 $b = new Benutzer($oWartung->getMitarbeiterId1());
+                $benutzername = ($b->getBenutzername() != "" ? $b->getBenutzername() : "Unbekannt");
                 $temperatur = ($oWartung->getTemperatur() != "" ? $oWartung->getTemperatur() . " °C" : "");
                 $luftfeuchte = ($oWartung->getLuftfeuchtigkeit() != "" ? $oWartung->getLuftfeuchtigkeit() . " %" : "");
                 $stimmton = ($oWartung->getStimmtonHoehe() != "" ? $oWartung->getStimmtonHoehe() . " Hz" : "");
                 $stimmung = $stimmungen[$oWartung->getStimmung()];
                 
                 $this->Cell(21, $this->cellheight, $oWartung->getDatum(true), 1, 0, "L");
-                $this->Cell(21, $this->cellheight, substr($b->getBenutzername(), 0, 10), 1, 0, "L");
+                $this->Cell(21, $this->cellheight, substr($benutzername, 0, 10), 1, 0, "L");
                 $this->Cell(23, $this->cellheight, $temperatur, 1, 0, "R");
                 $this->Cell(23, $this->cellheight, $luftfeuchte, 1, 0, "R");
                 $this->Cell(18, $this->cellheight, $stimmton, 1, 0, "R");
