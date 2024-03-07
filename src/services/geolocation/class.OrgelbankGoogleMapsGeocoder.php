@@ -108,7 +108,7 @@ class OrgelbankGoogleMapsGeocoder extends GoogleMapsGeocoderService implements I
 
     /**
      *
-     * @return the $resultCount
+     * @return int $resultCount
      */
     public function getResultCount()
     {
@@ -117,7 +117,7 @@ class OrgelbankGoogleMapsGeocoder extends GoogleMapsGeocoderService implements I
 
     /**
      *
-     * @return the $result
+     * @return mixed $result
      */
     public function getPlainResult()
     {
@@ -126,7 +126,7 @@ class OrgelbankGoogleMapsGeocoder extends GoogleMapsGeocoderService implements I
 
     /**
      *
-     * @return the $result
+     * @return mixed $result
      */
     public function getAdresse()
     {
@@ -160,7 +160,6 @@ class OrgelbankGoogleMapsGeocoder extends GoogleMapsGeocoderService implements I
         
         return $retVal;
     }
-
     public function setAddress($pAddress)
     {
         if($pAddress != "") {

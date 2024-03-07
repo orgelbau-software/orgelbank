@@ -8,20 +8,20 @@ interface IDirectionsService extends IGeolocationConstants
      *
      * @param boolean $https            
      * @param boolean $raw            
-     * @return int eine Konstante von IGeolocationConstants
+     * @return string eine Konstante von IGeolocationConstants
      */
     function getDirections($https = false, $raw = false);
 
     /**
      *
-     * @param String $mOrigin
+     * @param string $mOrigin
      *            Formatierte Adress-String
      */
     function setOrigin($mOrigin);
 
     /**
      *
-     * @param String $mDestination
+     * @param string $mDestination
      *            Formatierter Adress-String
      */
     function setDestination($mDestination);

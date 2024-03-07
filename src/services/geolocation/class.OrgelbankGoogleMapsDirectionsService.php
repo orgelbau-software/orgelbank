@@ -11,6 +11,10 @@ class OrgelbankGoogleMapsDirectionsService extends GoogleMapsDirectionsService i
 
     private $result = null;
 
+    private $plainResult = null;
+
+    private $resultCount = null;
+
     public function __construct($format = self::FORMAT_JSON, $sensor = false)
     {
         parent::__construct($format, $sensor);
@@ -53,7 +57,7 @@ class OrgelbankGoogleMapsDirectionsService extends GoogleMapsDirectionsService i
      * @param string $raw            
      * @return string StatusCode
      */
-    public function doGetDirections($https = false, $raw = false)
+    public function doGetDirections($https = false, $raw = false) : string
     {
         $retVal = false;
         $response = parent::getDirections($https, $raw);
@@ -70,7 +74,7 @@ class OrgelbankGoogleMapsDirectionsService extends GoogleMapsDirectionsService i
                     $this->result = $this->mapResponseToResult($this->plainResult);
                     $retVal = self::OK;
                 } else {
-                    $retVal = self::ROUTE_NOT_UNIQUE;
+                    $retVal = self::ADDRESS_NOT_UNIQUE;
                     $this->result = null;
                 }
             } else {
