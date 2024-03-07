@@ -163,11 +163,13 @@ class OrgelbankGoogleMapsGeocoder extends GoogleMapsGeocoderService implements I
 
     public function setAddress($pAddress)
     {
-        $theString = str_replace("ä", "ae", $pAddress);
-        $theString = str_replace("ü", "ue", $theString);
-        $theString = str_replace("ö", "oe", $theString);
-        $theString = str_replace("ß", "ss", $theString);
-        parent::setAddress($theString);
+        if($pAddress != "") {
+            $theString = str_replace("ä", "ae", $pAddress);
+            $theString = str_replace("ü", "ue", $theString);
+            $theString = str_replace("ö", "oe", $theString);
+            $theString = str_replace("ß", "ss", $theString);
+            parent::setAddress($theString);
+        }
         return $this;
     }
 

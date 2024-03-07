@@ -147,7 +147,7 @@ class RechnungController
         // Update der Rechnungsnummer
         $cs = new ConstantSetter();
         $rechnungsNummerOhneJahr = substr($_POST['rechnungsnummer'], 0, strpos($_POST['rechnungsnummer'], "/"));
-        $cs->setAbschlagRechnungsNummerNaechste($rechnungsNummerOhneJahr + 1);
+        $cs->setAbschlagRechnungsNummerNaechste(intval($rechnungsNummerOhneJahr) + 1);
         
         // Template öffnen
         $tplRechnung = new AbschlagRechnungOutput("resources/vorlagen/".RECHNUNG_PREFIX."rechnung_abschlag", $oRechnung);

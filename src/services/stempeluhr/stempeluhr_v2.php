@@ -90,8 +90,10 @@ if (isset($_GET['action']) && $_GET['action'] == "benutzer") {
         setlocale(LC_TIME, "de_DE");
         for($i = -14; $i <= 7; $i++) {
             $theDate = strtotime($i." days");
-            $plainFormatteddate = strftime("%Y-%m-%d", $theDate);
-            $derTagAlsText = strftime("%a., %d.%m.%y", $theDate);
+
+            // PHP8: https://www.php.net/manual/de/intldateformatter.format.php
+            $plainFormatteddate = date("Y-m-d", $theDate);
+            $derTagAlsText = date("a., d.m.y", $theDate);
             if($i == -1) {
                 $derTagAlsText = "Gestern, ".$derTagAlsText;
             } else if($i == 0) {

@@ -118,4 +118,3 @@ try {
 header('Content-Type: application/json');
 http_response_code($retVal['http_status']);
 echo json_encode($retVal);
-?>
