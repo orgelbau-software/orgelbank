@@ -188,5 +188,3 @@ BenutzerVerlaufTracker::track();
 
 // Sessionzeit speichern
 $_SESSION['request']['lastaction'] = time();
-
-?>

@@ -22,6 +22,11 @@ abstract class BasisPDF  extends Fpdi
     
     protected $fontSizeNormal = 10;
 
+    /**
+     * @var DB
+     */
+    protected $mDBInstance;
+
     function __construct()
     {
         parent::__construct();

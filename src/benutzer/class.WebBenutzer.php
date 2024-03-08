@@ -95,14 +95,14 @@ class WebBenutzer
                 
                 if ($this->benutzer->getFailedLoginCount() >= ConstantLoader::getMaxFailedLogins()) {
                     $this->benutzer->setAktiviert(0);
-                    $this->errorTXT = "Ihr Konto wurde aus Sicherheitsgründen gesperrt. Wenden Sie sich an den Systemadministrator.";
+                    $this->errorTXT = "Ihr Konto wurde aus Sicherheitsgründen gesperrt. Das Konto kann vom Chef/Inhaber oder vom Systemadministrator entsperrt werden.";
                     SupportMail::send("Benutzer wurde gesperrt: " . $this->benutzer->getBenutzername(), "");
                     SupportMail::sendSupportMail(CUSTOMER_MAIL_TO, "Benutzer wurde gesperrt: " . $this->benutzer->getBenutzername(), "");
                 }
                 $this->benutzer->speichern();
                 $this->benutzer = null;
             }
-        } else {
+        } else if($this->benutzer->getBenutzername() != "") {
             SupportMail::send("Versuch mit Loginname: " . $this->benutzer->getBenutzername(), "");
         }
         return $retVal;

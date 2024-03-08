@@ -106,7 +106,7 @@ class Output
     /**
      * Gibt das Template zurück, egal ob es NULL oder unverändert ist
      * 
-     * @return String
+     * @return string
      */
     public function forceOutput()
     {
