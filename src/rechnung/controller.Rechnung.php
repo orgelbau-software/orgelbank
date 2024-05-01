@@ -141,6 +141,7 @@ class RechnungController
         $oRechnung->setNettoBetrag($nettoBetrag, true);
         $oRechnung->setGesamtNetto($netto, true);
         $oRechnung->setAbschlagSatz($_POST['satz']);
+        $oRechnung->setMwStSatz(MWST_SATZ);
         
         $oRechnung->speichern(true);
         
@@ -255,6 +256,7 @@ class RechnungController
         $oRechnung->setMaterial((is_numeric($_POST['material']) ? $_POST['material'] : 0));
         $oRechnung->setFahrtkosten((is_numeric($_POST['fahrtkosten']) ? $_POST['fahrtkosten'] : 0));
         $oRechnung->errechneGesamtBetrag(true);
+        $oRechnung->setMwStSatz(MWST_SATZ);
         $oRechnung->speichern(true);
         
         // Update der Rechnungsnummer
@@ -385,6 +387,7 @@ class RechnungController
         $oRechnung->setFahrtkosten($fahrtkosten);
         $oRechnung->setPflegekosten($_POST['pflegebetrag']);
         $oRechnung->errechneGesamtBetrag(true);
+        $oRechnung->setMwStSatz(MWST_SATZ);
         $oRechnung->speichern(true);
         
         // Update der Rechnungsnummer

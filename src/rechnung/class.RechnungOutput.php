@@ -92,10 +92,20 @@ abstract class RechnungOutput
         return $ordner . $dateiname . "." . MSWordOutput::$FILE_EXTENSTION;
     }
 
+    /**
+     * @return string
+     */
     public function convertToEuro($e)
     {
-        $e = round($e, 2);
-        return number_format($e, 2, ",", " ");
+        $retVal = "";
+        // PHP8
+        if($e != null) {
+            $value = round($e, 2);
+            $retVal = number_format($value, 2, ",", " ");
+        } else {
+            $retVal = "";
+        }
+        return $retVal;
     }
 
     protected function format($s)

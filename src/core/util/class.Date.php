@@ -97,7 +97,12 @@ class Date
         
         $arWochentageTS = array();
         for ($i = 0; $i < 7; $i ++) {
-            $arWochentageTS[$i] = strtotime("+" . $iTagDerWoche . " days", $timestampEinesTage);
+            // PHP8 Fix. Hier stand sonst strtotime(+- 4 days)
+            if($iTagDerWoche < 0) {
+                $arWochentageTS[$i] = strtotime($iTagDerWoche . " days", $timestampEinesTage);
+            } else {
+                $arWochentageTS[$i] = strtotime("+" . $iTagDerWoche . " days", $timestampEinesTage);
+            }
             $iTagDerWoche ++;
         }
         

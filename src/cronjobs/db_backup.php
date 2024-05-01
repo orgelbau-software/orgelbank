@@ -99,7 +99,7 @@ try {
             $body = $mime->get();
             $hdrs = $mime->headers($hdrs);
             
-            $mail = & Mail::factory('mail');
+            $mail = Mail::factory('mail');
             $mail->send($bestaetigungsmail_adresse, $hdrs, $body);
             if(CUSTOMER_MAIL_TO != "") {
                 $retVal['kundenmail'] =  "Best&auml;tigungsmail wurde an den Kunden erfolgreich versandt! ";

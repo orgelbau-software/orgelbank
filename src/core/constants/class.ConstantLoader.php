@@ -3,9 +3,7 @@
 /**
  * Stellt wichtige Konstanten zur Laufzeit zur Verfuegung
  * 
- * @author swatermeyer
- * @version $Revision:  $
- *
+ * @author swatermeyer *
  */
 class ConstantLoader
 {
@@ -520,6 +518,10 @@ class ConstantLoader
          }
          return $retVal;
     }
+
+    public static function getFeiertagAutomatischFrei()
+    {
+        return ConstantLoader::$htValues->getValueOf("zeiterfassung_feiertag_frei") == "true";
+    }
     
 }
-?>

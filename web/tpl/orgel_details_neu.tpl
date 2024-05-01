@@ -86,9 +86,9 @@
 				<td><input type="checkbox" name="pedal"> Pedal</td>
 				<td><input type="text" name="m6groesse" value="" class="txt45"></td>
 				<td><input type="text" name="m6wd" value="" class="txt30"> mm/WS</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
+				<td><input type="checkbox" name="manual5" id="manual5"> <label for="manual5">M V</label></td>
+				<td><input type="text" name="m5groesse" value=""class="txt45"></td>
+				<td><input type="text" name="m5wd" value="" class="txt30"> mm/WS</td>
 			</tr>
 		</table>
 		<br/>

@@ -1,9 +1,11 @@
 <?php
-include "../../conf/config.inc.php";
 
+include "../../conf/config.inc.php";
+ini_set('display_errors', 1);
 DB::getInstance()->connect();
 
 session_start();
+
 
 $user = new WebBenutzer();
 if ($user->validateSession() == false) {
@@ -86,7 +88,8 @@ if (isset($_GET['action'], $_GET['request']) && $_GET['action'] == "ajax") {
         }
         
         // fuer AJAX Übertragung muss UTF8 kodiert werden
-        echo mb_convert_encoding($tpl->getOutput(), 'UTF-8', 'ISO-8859-1');
+        $out = $tpl->getOutput();
+        echo mb_convert_encoding($out == null ? "" : $out, 'UTF-8', 'ISO-8859-1');
     } elseif (isset($_GET['request'], $_GET['date']) && $_GET['request'] == "mitarbeiterstunden") {
         $tpl = ProjektController::ajaxGetMitarbeiterWochenStunden($_GET['date']);
         echo mb_convert_encoding($tpl->getOutput(), 'UTF-8', 'ISO-8859-1');
@@ -110,4 +113,6 @@ if (isset($_GET['action'], $_GET['request']) && $_GET['action'] == "ajax") {
 } else {
     echo "unbekannt";
 }
+
+
 ?>

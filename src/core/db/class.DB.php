@@ -71,7 +71,7 @@ class DB implements DBProvider
      *
      * @access public
      * @param string $sqlstring            
-     * @return false oder ResultSet
+     * @return array|false
      */
     public function SelectQuery($sqlstring)
     {

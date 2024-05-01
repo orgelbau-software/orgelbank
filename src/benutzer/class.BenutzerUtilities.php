@@ -29,7 +29,7 @@ class BenutzerUtilities
      * Ermittelt die Soll Stunden abzgl. Feiertage
      *
      * @param int $benutzerID            
-     * @param timestamp $wochenTimeStamp            
+     * @param int $wochenTimeStamp            
      */
     public static function getBenutzerSollWochenStunden($benutzerID, $wochenTimeStamp)
     {
@@ -54,10 +54,11 @@ class BenutzerUtilities
         
         $retVal = array();
         $arWoche = Date::berechneArbeitswocheTimestamp($wochenTimeStamp);
+        
         // TODO: Weihnachten und Silvester jeweils ein halber Tag?? -> Klären!
         $date = new Date();
         for ($i = 0; $i < 7; $i ++) {
-            if ($date->isFeiertag(date("Y-m-d", $arWoche[$i]))) {
+            if (ConstantLoader::getFeiertagAutomatischFrei() &&  $date->isFeiertag(date("Y-m-d", $arWoche[$i]))) {
                 $retVal[$i] = "0.00";
             } else {
                 $retVal[$i] = $benutzerStd[$i];

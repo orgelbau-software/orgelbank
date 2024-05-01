@@ -94,9 +94,9 @@ class ProjektBearbeitenAction implements GetRequestHandler, PostRequestHandler, 
                         $pa = new ProjektAufgabe();
                         $pa->setPKaufgabeID($iAufgabeID);
                         $pa->setPKprojektID($p->getID());
-                        $pa->setPlankosten(WaehrungUtil::formatWaehrungToDB($_POST['aufgabe_betrag_' . $iAufgabeID]));
+                        $pa->setPlankosten($_POST['aufgabe_betrag_' . $iAufgabeID]);
                         $pa->setReihenfolge($projektAufgabeReihenfolge ++);
-                        $pa->setSollMaterial(WaehrungUtil::formatWaehrungToDB($_POST['aufgabe_sollmaterial_'. $iAufgabeID]));
+                        $pa->setSollMaterial($_POST['aufgabe_sollmaterial_'. $iAufgabeID]);
                         $pa->setSollStunden($_POST['aufgabe_sollstd_'. $iAufgabeID]);
                         $pa->speichern(false);
                     }
@@ -132,9 +132,9 @@ class ProjektBearbeitenAction implements GetRequestHandler, PostRequestHandler, 
             $tplAufgaben->replace("readOnly", "readOnly");
             $tplAufgaben->replace("readOnlyClass", "readOnly");
             $tplAufgaben->replace("PaID", $oAufgabe->getPKAufgabeID());
-            $tplAufgaben->replace("Betrag", WaehrungUtil::formatDoubleToWaehrung($oAufgabe->getPlankosten()));
-            $tplAufgaben->replace("SollStd", WaehrungUtil::formatDoubleToWaehrung($oAufgabe->getSollStunden())); // Ja, ich weiß, aber so gehts. 
-            $tplAufgaben->replace("SollMaterial", WaehrungUtil::formatDoubleToWaehrung($oAufgabe->getSollMaterial()));
+            $tplAufgaben->replace("Betrag", $oAufgabe->getPlankosten());
+            $tplAufgaben->replace("SollStd", $oAufgabe->getSollStunden()); // Ja, ich weiß, aber so gehts. 
+            $tplAufgaben->replace("SollMaterial", $oAufgabe->getSollMaterial());
             $tplAufgaben->next();
         }
         

@@ -146,7 +146,6 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
         $arWochentageHeadline = Date::berechneArbeitswoche($woche, "d.m");
         $arWochentageTS = Date::berechneArbeitswocheTimestamp($woche);
         $_SESSION['request']['woche'] = $woche;
-        
         $kw = date("W", $arWochentageTS[4]); // ISO 8601 Der Donnerstag der Woche ist entscheidend. Problemfall 2019
         $jahr = date("Y", $arWochentageTS[4]); // ISO 8601 Der Donnerstag der Woche ist entscheidend. Problemfall 2019
                                                
@@ -248,6 +247,7 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
             unset($_POST['submit']);
             
             $awArbeitswoche = ArbeitswocheUtilities::getOrCreateArbeitswoche($benutzer->getID(), $arWochentageTS[4], $pid);
+
             // ArbeitswocheUtilities::deletePreviousArbeitswoche($awArbeitswoche);
             
             $benSollStunden = BenutzerUtilities::getBenutzerSollWochenStunden($benutzer->getID(), $arWochentageTS[4]);

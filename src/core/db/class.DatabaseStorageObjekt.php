@@ -255,7 +255,7 @@ abstract class DatabaseStorageObjekt
     /**
      * Gibt die ID des Objektes zurueck
      *
-     * @return Integer / PrimaryKey
+     * @return int / PrimaryKey
      */
     public function getID()
     {

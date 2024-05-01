@@ -1,0 +1,1 @@
+INSERT INTO `option_meta` (`option_id`, `option_modul`, `option_name`, `option_value`, `option_autoload`, `option_comment`, `option_editable`, `option_lastchange`, `option_createdate`) VALUES ('', 'Zeiterfassung', 'zeiterfassung_feiertag_frei', 'true', '1', 'Feiertage müssen nicht gebucht werden.', '1', '', '')

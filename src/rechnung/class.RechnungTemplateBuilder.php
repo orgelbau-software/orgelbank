@@ -79,7 +79,10 @@ abstract class RechnungTemplateBuilder
 
     protected function convertToEuro($e)
     {
-        $e = round($e, 2);
+        // PHP8 Change
+        if(is_int($e) || is_float($e)) {
+            $e = round($e, 2);
+        }
         return number_format($e, 2, ",", ".");
     }
 

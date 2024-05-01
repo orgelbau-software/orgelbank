@@ -19,7 +19,7 @@ class ArbeitstagUtilities
         $at->setIstStunden($pIstStunden);
         
         $date = new Date();
-        if ($date->isFeiertag($pTimeStamp)) {
+        if (ConstantLoader::getFeiertagAutomatischFrei() && $date->isFeiertag($pTimeStamp)) {
             $at->setSollStunden(0);
         } else {
             $at->setSollStunden($pSollStunden);
@@ -102,7 +102,7 @@ class ArbeitstagUtilities
      *            SQL Date $wochenStart
      * @param
      *            SQL Date $wochenEnde
-     * @return Array mit Key = ProjektID, Value=Summe der Stunden
+     * @return array mit Key = ProjektID, Value=Summe der Stunden
      */
     public static function getMitarbeiterZeitraumStundenProProjekt($benutzerID, $wochenStart, $wochenEnde)
     {

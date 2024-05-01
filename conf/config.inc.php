@@ -10,6 +10,7 @@ mb_internal_encoding( 'UTF-8' );
 //include_once 'bente.allinkl.conf.php';
 //include_once 'fo.all-inkl.conf.php';//
 include_once 'fo.lokal.conf.php';
+//include_once 'krawinkel.allinkl.conf.php';
 //include_once 'krawinkel.lokal.conf.php';
 
 
@@ -18,9 +19,9 @@ if((!is_dir(ROOTDIR) || !substr(ROOTDIR, -strlen(ROOTDIR)) === "/")) {
 }
 
 if (version_compare(phpversion(), '8.2', '<')) {
-    die("The PHP Version is too low (".phpversion()."). Required is 8.2");
-} elseif (version_compare(phpversion(), '8.3', '>')) {
-     die("The PHP Version is too high (".phpversion()."). Required is 8.2");
+    die("The PHP Version is too low (".phpversion()."). Required is 8.3");
+} elseif (version_compare(phpversion(), '8.4', '>')) {
+     die("The PHP Version is too high (".phpversion()."). Required is 8.3");
 }
 
 

@@ -10,13 +10,12 @@ class ArbeitswocheUtilities
     /**
      * Zentralisiert bei der Einführung der mobilen Zeiterfassung. 
      * 
-     * @param unknown $pBenutzerId Die benutzerId
-     * @param unknown $pTimeStamp das Timestamp der Woche
+     * @param int $pBenutzerId Die benutzerId
+     * @param int $pTimeStamp das Timestamp der Woche
      * @return Arbeitswoche|NULL|DatabaseStorageObjekt
      */
     public static function getOrCreateArbeitswoche($pBenutzerId, $pTimeStamp, $pid = 0) {
         $arWochentageTS = Date::berechneArbeitswocheTimestamp($pTimeStamp);
-        
         $kw = date("W", $arWochentageTS[4]); // ISO 8601 Der Donnerstag der Woche ist entscheidend. Problemfall 2019
         $jahr = date("Y", $arWochentageTS[4]); // ISO 8601 Der Donnerstag der Woche ist entscheidend. Problemfall 2019
         
