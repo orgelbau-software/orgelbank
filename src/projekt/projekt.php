@@ -111,6 +111,3 @@ if (isset($_GET['action'], $_GET['request']) && $_GET['action'] == "ajax") {
 } else {
     echo "unbekannt";
 }
-
-
-?>
