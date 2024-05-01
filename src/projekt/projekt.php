@@ -1,11 +1,9 @@
 <?php
-
 include "../../conf/config.inc.php";
-ini_set('display_errors', 1);
+
 DB::getInstance()->connect();
 
 session_start();
-
 
 $user = new WebBenutzer();
 if ($user->validateSession() == false) {
