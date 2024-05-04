@@ -113,8 +113,8 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
             $counter = $counter + 1;
             
 //             $this->SetXY(85, $starthoehe + $this->cellheight * $counter);
-            $this->Cell(35, $this->cellheight, substr($oAnsprechpartner->getFunktion(), 0, 20), 1);
-            $this->Cell(50, $this->cellheight, substr($oAnsprechpartner->getAnzeigename(), 0, 30), 1);
+            $this->Cell(35, $this->cellheight, ($oAnsprechpartner->getFunktion() == null ? "" : substr($oAnsprechpartner->getFunktion(), 0, 20)), 1);
+            $this->Cell(50, $this->cellheight, ($oAnsprechpartner->getAnzeigename() == null ? "" : substr($oAnsprechpartner->getAnzeigename(), 0, 30)), 1);
             $this->Cell(40, $this->cellheight, $oAnsprechpartner->getTelefon(), 1);
             $this->Cell(40, $this->cellheight, $oAnsprechpartner->getMobil(), 1, WartungsbogenPDF::NEWROW);
         }
