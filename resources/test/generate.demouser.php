@@ -25,7 +25,7 @@ $benutzer->setCreatedAt(date("Y-m-d"));
 
 $f = fopen("demouser.csv", "r");
 
-// Liest Zeile f�r Zeile bis zum Ende der Datei
+// Liest Zeile für Zeile bis zum Ende der Datei
 while(!feof($f)) {
 	$line =  fgets($f);
 	$explode = explode(";", $line);
