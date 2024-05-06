@@ -81,6 +81,7 @@ if (isset($_GET['action'])) {
             $titel = $oKonfession->getGenitiv() . " Kirchengemeinde";
             
             $retVal = array();
+            $retVal['kundennr'] = $g->getKundenNr();
             $retVal['anschrift'] = $g->getRAnschrift();
             $retVal['kirche'] = $g->getRGemeinde();
             $retVal['strasse'] = $g->getRechnungAdresse()->getStrasse();
@@ -113,16 +114,12 @@ if (isset($_GET['action'])) {
             $orgeln = OrgelUtilities::getGemeindeOrgeln($g->getID());
             if($orgeln->getSize() == 1) {
                 $ersteOrgel = $orgeln->getValueOf(0);
-                $retVal['kosten_hauptstimmung'] = $ersteOrgel->getKostenHauptstimmung();
-                $retVal['kosten_nebenstimmung'] = $ersteOrgel->getKostenTeilstimmung();
+                $retVal['kosten_hauptstimmung'] = WaehrungUtil::formatWaehrungToDB($ersteOrgel->getKostenHauptstimmung());
+                $retVal['kosten_nebenstimmung'] = WaehrungUtil::formatWaehrungToDB($ersteOrgel->getKostenTeilstimmung());
             } else {
                 $retVal['kosten_hauptstimmung'] = "0.0";
                 $retVal['kosten_nebenstimmung'] = "0.0";
             }
-            
-            
-            
-            
             
             foreach ($retVal as $key => $val) {
                 $retVal[$key] = ($val == null ? "" : $val);

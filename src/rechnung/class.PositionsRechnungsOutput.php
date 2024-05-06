@@ -5,9 +5,9 @@ abstract class PositionsRechnungsOutput extends RechnungOutput
 
     /**
      * 
-     * @param String $pfad
+     * @param string $pfad
      * @param PositionsRechnung $r
-     * @param String $pUnterordner
+     * @param string $pUnterordner
      */
     public function __construct($pfad, PositionsRechnung $r, $pUnterordner)
     {

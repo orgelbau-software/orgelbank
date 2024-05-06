@@ -21,6 +21,9 @@
 					<th>Anschrift:</th>
 				</tr>
 				<tr>
+					<td id="kundennr"><!--KundenNr--></td>
+				</tr>
+				<tr>
 					<td id="anschrift"><!--Anschrift--></td>
 				</tr>
 				<tr>

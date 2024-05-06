@@ -135,12 +135,12 @@
 			<tr>
 				<td class="tdbez">Hauptstimmung:</td>
 				<td>&nbsp;</td>
-				<td colspan="2"><input disabled id="kosten_hauptstimmung" type="number" min="0" step="0.01"  name="js_hauptstimmung" value="<!--Hauptstimmung-->" size="8" class="disabled inputzahl rechnungseingabe"/> EUR</td>
+				<td colspan="2"><input disabled id="kosten_hauptstimmung" type="number" min="0" step="0.01" name="js_hauptstimmung" value="<!--Hauptstimmung-->" size="8" class="disabled inputzahl rechnungseingabe"/> EUR</td>
 			</tr>
 			<tr>
 				<td class="tdbez">Nebenstimmung:</td>
 				<td>&nbsp;</td>
-				<td colspan="2"><input disabled id="kosten_nebenstimmung" type="number" min="0" step="0.01"  name="js_nebenstimmung" value="<!--Nebenstimmung-->" size="8" class="disabled inputzahl rechnungseingabe"/> EUR</td>
+				<td colspan="2"><input disabled id="kosten_nebenstimmung" type="number" min="0" step="0.01" name="js_nebenstimmung" value="<!--Nebenstimmung-->" size="8" class="disabled inputzahl rechnungseingabe"/> EUR</td>
 			</tr>
 		</table>
     

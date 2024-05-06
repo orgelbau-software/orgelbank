@@ -86,7 +86,7 @@ class GemeindeDetailsAction implements GetRequestHandler, PostRequestHandler
         $tplGemeindeDetails->replace("Lat", $lat);
         $tplGemeindeDetails->replace("Lng", $lng);
         
-        $tplGemeindeDetails->replace("RKundenNr", "");
+        $tplGemeindeDetails->replace("RKundenNr", $oGemeinde->getKundenNr());
         $tplGemeindeDetails->replace("RKirchenamt", $oGemeinde->getRAnschrift());
         $tplGemeindeDetails->replace("RGemeinde", $oGemeinde->getRGemeinde());
         $tplGemeindeDetails->replace("RStrasse", $oGemeinde->getRechnungAdresse()
@@ -255,6 +255,7 @@ class GemeindeDetailsAction implements GetRequestHandler, PostRequestHandler
         $oGemeinde->getKircheAdresse()->setOrt($_POST['ort']);
         $oGemeinde->getKircheAdresse()->setLand($_POST['land']);
         
+        $oGemeinde->setKundenNr($_POST['rkundennr']);
         $oGemeinde->setRAnschrift($_POST['ranschrift']);
         $oGemeinde->setRGemeinde($_POST['rgemeinde']);
         

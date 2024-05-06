@@ -7,7 +7,7 @@ class WaehrungUtil
      * Formatiert einen Double Wert und formatiert in ein deutsches Währungsformat
      *
      * @param double $dbValue            
-     * @return String
+     * @return string
      */
     public static function formatDoubleToWaehrung($double)
     {
@@ -18,8 +18,8 @@ class WaehrungUtil
     /**
      * Formatiert eine Waehrungsangabe in eine Datenbank konforme Zahl
      *
-     * @param String $waehrungsEinheit            
-     * @return double
+     * @param string $waehrungsEinheit            
+     * @return string
      */
     public static function formatWaehrungToDB($waehrungsEinheit)
     {

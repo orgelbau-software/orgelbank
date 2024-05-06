@@ -54,7 +54,7 @@ class PflegeRechnung extends PositionsRechnung
     /**
      * Kosten der Pflege (nur für die Positionen) ohne Fahrtkosten
      *
-     * @return double Kosten der Pflege
+     * @return string Kosten der Pflege
      */
     public function getPflegekosten($formatiert = false)
     {

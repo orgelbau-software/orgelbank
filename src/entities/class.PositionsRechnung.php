@@ -3,8 +3,14 @@
 abstract class PositionsRechnung extends Rechnung
 {
 
+    /**
+     * @var string
+     */
     protected $text1;
 
+    /**
+     * @var string
+     */
     protected $text2;
 
     protected $fahrtkosten;
@@ -34,12 +40,18 @@ abstract class PositionsRechnung extends Rechnung
         $this->setText1($rs[$this->tablePrefix . 'text1']);
         $this->setText2($rs[$this->tablePrefix . 'text2']);
     }
-
+    
+    /**
+     * @return string
+     */
     public function getText1()
     {
         return $this->text1;
     }
 
+    /**
+     * @return string
+     */
     public function getText2()
     {
         return $this->text2;

@@ -37,6 +37,7 @@ abstract class RechnungTemplateBuilder
         
         $this->ersetzeRechnungsTags();
         
+        $this->setKundenNr($this->gemeinde->getKundenNr());
         $this->setGemeindeNamen($this->gemeinde->getRGemeinde());
         $this->setGemeinde($this->gemeinde->getRAnschrift());
         $this->setStrasse($this->gemeinde->getRechnungAdresse()
@@ -150,6 +151,10 @@ abstract class RechnungTemplateBuilder
     {
         $this->template->replace("Zahlungsziel", $s);
     }
+
+    public function setKundenNr($s)
+    {
+        $this->template->replace("Kdnr", $s);
+    }
 }
 
-?>

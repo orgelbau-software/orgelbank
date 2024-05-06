@@ -6,7 +6,7 @@ class PflegeRechnungOutput extends PositionsRechnungsOutput
     public const UNTERORDNER_PFLEGE = "pflege/";
     /**
      * 
-     * @param String $pfad
+     * @param string $pfad
      * @param PflegeRechnung $r
      */
     public function __construct($pfad, PflegeRechnung $r)

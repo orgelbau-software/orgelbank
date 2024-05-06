@@ -24,7 +24,7 @@ class Output
     /**
      * Standardkonstruktor
      *
-     * @param String $templatePfad
+     * @param string $templatePfad
      *            Pfad zum Template
      */
     public function __construct($templatePfad)

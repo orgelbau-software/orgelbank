@@ -5,6 +5,9 @@ abstract class RechnungOutput
 
     protected $template;
 
+    /**
+     * @var Rechnung 
+     */
     protected $rechnung;
 
     protected $gemeinde;
@@ -13,9 +16,9 @@ abstract class RechnungOutput
 
     /**
      *
-     * @param String $pTemplatePfad            
+     * @param string $pTemplatePfad            
      * @param Rechnung $pRechnung            
-     * @param String $unterordner            
+     * @param string $unterordner            
      */
     public function __construct($pTemplatePfad, Rechnung $pRechnung, $pUnterordner)
     {
@@ -35,6 +38,7 @@ abstract class RechnungOutput
         
         $this->ersetzeRechnungsTags();
         
+        $this->setKundenNr($this->gemeinde->getKundenNr());
         $this->setGemeindeNamen($this->gemeinde->getRGemeinde());
         $this->setGemeinde($this->gemeinde->getRAnschrift());
         $this->setStrasse($this->gemeinde->getRechnungAdresse()
@@ -188,6 +192,10 @@ abstract class RechnungOutput
     {
         $this->template->replace("Zahlungsziel", $s);
     }
+
+    public function setKundenNr($s)
+    {
+        $this->template->replace("Kdnr", $s);
+    }
 }
 
-?>

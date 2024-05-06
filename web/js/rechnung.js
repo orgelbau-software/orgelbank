@@ -108,6 +108,7 @@ function doAdresse() {
 		success : function(x) {
 			if(x != null) {
 				jQuery("#anschrift").html(x.anschrift);
+				jQuery("#kundennr").html(x.kundennr);
 				jQuery("#gemeinde").html(x.kirche);
 				jQuery("#strasse").html(x.strasse + ' ' + x.hausnummer);
 				jQuery("#plzort").html(x.plz + ' ' + x.ort);
