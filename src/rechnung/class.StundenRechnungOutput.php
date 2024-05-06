@@ -13,13 +13,13 @@ class StundenRechnungOutput extends PositionsRechnungsOutput
     public function ersetzeRechnungsTags()
     {
         parent::ersetzeRechnungsTags();
-        $this->setAzubiStundenLohn($this->rechnung->getAzubiLohn());
-        $this->setAzubiStd($this->rechnung->getAzubiStd());
-        $this->setAzubiLohn($this->rechnung->getAzubiStd() * $this->rechnung->getAzubiLohn());
-        $this->setGeselleStundenLohn($this->rechnung->getGeselleLohn());
-        $this->setGeselleStd($this->rechnung->getGeselleStd());
-        $this->setGeselleLohn($this->rechnung->getGeselleStd() * $this->rechnung->getGeselleLohn());
-        $this->setMaterial($this->rechnung->getMaterial());
+        $this->setAzubiStundenLohn($this->getRechnung()->getAzubiLohn());
+        $this->setAzubiStd($this->getRechnung()->getAzubiStd());
+        $this->setAzubiLohn($this->getRechnung()->getAzubiStd() * $this->getRechnung()->getAzubiLohn());
+        $this->setGeselleStundenLohn($this->getRechnung()->getGeselleLohn());
+        $this->setGeselleStd($this->getRechnung()->getGeselleStd());
+        $this->setGeselleLohn($this->getRechnung()->getGeselleStd() * $this->getRechnung()->getGeselleLohn());
+        $this->setMaterial($this->getRechnung()->getMaterial());
     }
 
     public function setAzubiStundenLohn($s)

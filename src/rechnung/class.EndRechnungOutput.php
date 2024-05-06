@@ -24,9 +24,9 @@ class EndRechnungOutput extends RechnungOutput
 
     private function loadAbschlagsRechnungen()
     {
-        if ($this->rechnung != null) {
+        if ($this->getRechnung() != null) {
             // START IF -> MSWORD
-            $this->abschlagsRechnungen = AbschlagrechnungUtilities::getAbschlagsRechnungenFuerEndRechnung($this->rechnung->getID());
+            $this->abschlagsRechnungen = AbschlagrechnungUtilities::getAbschlagsRechnungenFuerEndRechnung($this->getRechnung()->getID());
             Log::debug("gefunden abschlagsrechnungen, count=" . count($this->abschlagsRechnungen));
             
             $iCounter = 1;
@@ -47,15 +47,15 @@ class EndRechnungOutput extends RechnungOutput
 
     public function ersetzeRechnungsTags()
     {
-        $this->setTitel($this->rechnung->getTitel());
-        $this->setText($this->rechnung->getText());
-        $this->setGesamtNetto($this->rechnung->getGesamtNetto());
-        $this->setGesamtSteuer($this->rechnung->getGesamtMwSt());
-        $this->setGesamtBrutto($this->rechnung->getGesamtBrutto());
+        $this->setTitel($this->getRechnung()->getTitel());
+        $this->setText($this->getRechnung()->getText());
+        $this->setGesamtNetto($this->getRechnung()->getGesamtNetto());
+        $this->setGesamtSteuer($this->getRechnung()->getGesamtMwSt());
+        $this->setGesamtBrutto($this->getRechnung()->getGesamtBrutto());
         
-        $this->setRestNetto($this->rechnung->getNettoBetrag());
-        $this->setRestSteuer($this->rechnung->getMwSt());
-        $this->setRestBrutto($this->rechnung->getBruttoBetrag());
+        $this->setRestNetto($this->getRechnung()->getNettoBetrag());
+        $this->setRestSteuer($this->getRechnung()->getMwSt());
+        $this->setRestBrutto($this->getRechnung()->getBruttoBetrag());
         
         $this->setAbschlagsRechnungenContent($this->abschlagContent);
     }
@@ -104,5 +104,11 @@ class EndRechnungOutput extends RechnungOutput
     {
         $this->template->replace("RestBetragBrutto", $this->convertToEuro($s));
     }
+
+     /**
+     * @return EndRechnung
+     */
+    protected function getRechnung() {
+        return parent::getRechnung();
+    }
 }
-?>

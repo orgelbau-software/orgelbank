@@ -17,7 +17,7 @@ class PflegeRechnungOutput extends PositionsRechnungsOutput
     public function ersetzeRechnungsTags()
     {
         parent::ersetzeRechnungsTags();
-        $this->setPflegeKosten($this->rechnung->getPflegekosten());
+        $this->setPflegeKosten($this->getRechnung()->getPflegekosten());
     }
 
     public function setPflegeKosten($s)

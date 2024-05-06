@@ -16,16 +16,16 @@ abstract class PositionsRechnungsOutput extends RechnungOutput
 
     public function ersetzeRechnungsTags()
     {
-        $col = RechnungsPositionUtilities::getRechnungsPositionen($this->rechnung->getID(), $this->rechnung->getType());
+        $col = RechnungsPositionUtilities::getRechnungsPositionen($this->getRechnung()->getID(), $this->getRechnung()->getType());
         
         $iPos = 1;
         foreach ($col as $currentPos) {
             $this->template->replace("Position" . $iPos ++ . "", $this->format($currentPos->getText()));
         }
-        $this->setText1($this->rechnung->getText1());
-        $this->setText2($this->rechnung->getText2());
-        $this->setBetrag($this->rechnung->getNettoBetrag());
-        $this->setFahrtkosten($this->rechnung->getFahrtkosten());
+        $this->setText1($this->getRechnung()->getText1());
+        $this->setText2($this->getRechnung()->getText2());
+        $this->setBetrag($this->getRechnung()->getNettoBetrag());
+        $this->setFahrtkosten($this->getRechnung()->getFahrtkosten());
     }
 
     public function setText1($s)
@@ -97,5 +97,11 @@ abstract class PositionsRechnungsOutput extends RechnungOutput
     {
         $this->template->replace("Fahrtkosten", $this->convertToEuro($s));
     }
+
+    /**
+     * @return PflegeRechnung|StundenRechnung
+     */
+    protected function getRechnung() {
+        return parent::getRechnung();
+    }
 }
-?>

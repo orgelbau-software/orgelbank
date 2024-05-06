@@ -12,15 +12,15 @@ class AbschlagRechnungOutput extends RechnungOutput
 
     public function ersetzeRechnungsTags()
     {
-        $this->setANr($this->rechnung->getANr());
-        $this->setTitel($this->rechnung->getTitel());
-        $this->setEinleitung($this->rechnung->getEinleitung());
-        $this->setGesamtNetto($this->rechnung->getGesamtNetto());
-        $this->setGesamtMwSt($this->rechnung->getGesamtMwSt());
-        $this->setGesamtBrutto($this->rechnung->getGesamtBrutto());
-        $this->setAbschlagNetto($this->rechnung->getNettoBetrag());
-        $this->setAbschlagMwSt($this->rechnung->getMwSt());
-        $this->setAbschlagBrutto($this->rechnung->getBruttoBetrag());
+        $this->setANr($this->getRechnung()->getANr());
+        $this->setTitel($this->getRechnung()->getTitel());
+        $this->setEinleitung($this->getRechnung()->getEinleitung());
+        $this->setGesamtNetto($this->getRechnung()->getGesamtNetto());
+        $this->setGesamtMwSt($this->getRechnung()->getGesamtMwSt());
+        $this->setGesamtBrutto($this->getRechnung()->getGesamtBrutto());
+        $this->setAbschlagNetto($this->getRechnung()->getNettoBetrag());
+        $this->setAbschlagMwSt($this->getRechnung()->getMwSt());
+        $this->setAbschlagBrutto($this->getRechnung()->getBruttoBetrag());
     }
 
     public function setANr($s)
@@ -66,6 +66,13 @@ class AbschlagRechnungOutput extends RechnungOutput
     public function setAbschlagBrutto($s)
     {
         $this->template->replace("AKostenBrutto", $this->convertToEuro($s));
+    }
+
+    /**
+     * @return AbschlagsRechnung
+     */
+    public function getRechnung() {
+        return parent::getRechnung();
     }
 }
 ?>

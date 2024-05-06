@@ -8,7 +8,7 @@ abstract class RechnungOutput
     /**
      * @var Rechnung 
      */
-    protected $rechnung;
+    private $rechnung;
 
     protected $gemeinde;
 
@@ -196,6 +196,13 @@ abstract class RechnungOutput
     public function setKundenNr($s)
     {
         $this->template->replace("Kdnr", $s);
+    }
+
+    /**
+     * @return Rechnung
+     */
+    protected function getRechnung() {
+        return $this->rechnung;
     }
 }
 
