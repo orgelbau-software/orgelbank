@@ -39,7 +39,10 @@ try {
     }
     
     // # dump erstellen
-    exec("mysqldump -u $db_name -p'$db_passwd' --quick --allow-keywords --add-drop-table --complete-insert --quote-names $db_name >$sql_file");
+    exec("mariadb-dump -u $db_name -p'$db_passwd' --quick --allow-keywords --add-drop-table --complete-insert --ignore-table=".$db_name.".rechnung_view --quote-names $db_name >$sql_file");
+    if (!file_exists($sql_file) || filesize($sql_file) == 0) {
+        throw new Exception("Failed to create database backup. Either maria-dump command failed or size is 0.");
+    }
     exec("gzip $sql_file");
     
     // ## größe ermitteln

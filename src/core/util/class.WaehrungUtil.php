@@ -23,6 +23,9 @@ class WaehrungUtil
      */
     public static function formatWaehrungToDB($waehrungsEinheit)
     {
+        if($waehrungsEinheit == null || $waehrungsEinheit == "") {
+            return $waehrungsEinheit;
+        }
         $waehrungsEinheit = str_replace(".", "", $waehrungsEinheit);
         $waehrungsEinheit = str_replace(",", ".", $waehrungsEinheit);
         $retVal = number_format($waehrungsEinheit, 2, '.', '');
