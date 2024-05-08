@@ -109,7 +109,7 @@ class Date
         return $arWochentageTS;
     }
 
-    public function isFeiertag($datum)
+    public static function isFeiertag($datum)
     {
         return "" != Date::berechneFeiertage($datum, BUNDESLAND);
     }

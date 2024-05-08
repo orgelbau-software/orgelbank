@@ -18,8 +18,7 @@ class ArbeitstagUtilities
         $at->setProjektID($pProjektID);
         $at->setIstStunden($pIstStunden);
         
-        $date = new Date();
-        if (ConstantLoader::getFeiertagAutomatischFrei() && $date->isFeiertag($pTimeStamp)) {
+        if (ConstantLoader::getFeiertagAutomatischFrei() && Date::isFeiertag($pTimeStamp)) {
             $at->setSollStunden(0);
         } else {
             $at->setSollStunden($pSollStunden);
@@ -54,7 +53,6 @@ class ArbeitstagUtilities
         }
         
         $sql .= ") AND at_datum between CAST('" . $pKalenderjahr . "-01-01' AS DATE) AND CAST('" . $pKalenderjahr . "-12-31' AS DATE)";
-        echo $sql;
         $res = ArbeitstagUtilities::queryDB($sql);
         return $res;
     }
@@ -65,7 +63,7 @@ class ArbeitstagUtilities
      * @param int $benutzerID            
      * @param date $wochenStart            
      * @param date $wochenEnde            
-     * @return Array
+     * @return array
      */
     public static function getMitarbeiterZeitraumStundeAsArray($benutzerID, $wochenStart, $wochenEnde)
     {
@@ -136,7 +134,7 @@ class ArbeitstagUtilities
      *            SQL Date $wochenStart
      * @param
      *            SQL Date $pDatum
-     * @return Array mit Key = ProjektID, Value=Summe der Stunden
+     * @return array mit Key = ProjektID, Value=Summe der Stunden
      */
     public static function berechneMitarbeiterTagStunden($benutzerID, $pDatum, $pFormat = false)
     {
