@@ -57,6 +57,7 @@ class NeueGemeindeAnlegen implements GetRequestHandler
         $tplGemeindeDetails->replace("Hausnummer", "");
         $tplGemeindeDetails->replace("PLZ", "");
         $tplGemeindeDetails->replace("Ort", "");
+        $tplGemeindeDetails->replace("RKundenNr", "");
         $tplGemeindeDetails->replace("RKirchenamt", "");
         $tplGemeindeDetails->replace("RGemeinde", "");
         $tplGemeindeDetails->replace("RStrasse", "");

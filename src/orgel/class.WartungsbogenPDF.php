@@ -115,8 +115,8 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
 //             $this->SetXY(85, $starthoehe + $this->cellheight * $counter);
             $this->Cell(35, $this->cellheight, ($oAnsprechpartner->getFunktion() == null ? "" : substr($oAnsprechpartner->getFunktion(), 0, 20)), 1);
             $this->Cell(50, $this->cellheight, ($oAnsprechpartner->getAnzeigename() == null ? "" : substr($oAnsprechpartner->getAnzeigename(), 0, 30)), 1);
-            $this->Cell(40, $this->cellheight, $oAnsprechpartner->getTelefon(), 1);
-            $this->Cell(40, $this->cellheight, $oAnsprechpartner->getMobil(), 1, WartungsbogenPDF::NEWROW);
+            $this->Cell(40, $this->cellheight, ($oAnsprechpartner->getTelefon() == null ? "" : $oAnsprechpartner->getTelefon()), 1);
+            $this->Cell(40, $this->cellheight, ($oAnsprechpartner->getMobil() == null ? "" : $oAnsprechpartner->getMobil()), 1, WartungsbogenPDF::NEWROW);
         }
         $this->ln(2);
         // Header Bezirk & OrgelId
@@ -374,7 +374,7 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
         $this->Ln(1);
         
         $rahmen = 0;
-        
+        $breiteBezeichnung = 0;
         $counter = 0;
         foreach ($pAnsprechpartner as $oAnsprechpartner) {
             $counter++;
@@ -404,13 +404,9 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
              // Abstandszeile
             $this->Cell($breiteBezeichnung, $this->cellheight, "", $rahmen, 0);
             $this->Cell(60, $this->cellheight, "", $rahmen, 1);
-            
-            
-            
         }
         
         $this->Cell(1, $iHeight, '', 0, 1);
     }
     
 }
-?>

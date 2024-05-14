@@ -32,7 +32,7 @@ class OrgelbankWartungsbogenPDF extends WartungsbogenPDF
         $this->arHeaderMeta = $meta;
         
         foreach ($meta as $key => $val) {
-            $meta[$key] = $val;
+            $meta[$key] = ($val == null ? "" : $val);
         }
         parent::Header();
     }

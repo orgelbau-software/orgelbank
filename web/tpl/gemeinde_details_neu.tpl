@@ -44,6 +44,10 @@
 			<h3>Rechnungsanschrift:</h3>
 			<table class="liste">
 				<tr>
+					<th>KundenNr:</th>
+					<td><input type="text" name="rkundennr" id="kundennr2" maxlength="50" value="<!--RKundenNr-->" class="txt270"></td>
+				</tr>
+				<tr>
 					<th>Kirchenamt:</th>
 					<td><input type="text" name="ranschrift" id="kirchenamt2"size="36" maxlength="50" value="<!--RKirchenamt-->" class="txt270"></td>
 				</tr>

@@ -27,6 +27,7 @@ if (isset($_SESSION['user']['benutzername'], $_SESSION['user']['passwort'])) {
     $webUser = new WebBenutzer();
     $webUser->setBenutzername($_SESSION['user']['benutzername']);
     $webUser->setPasswort($_SESSION['user']['passwort']);
+//    echo $_SESSION['user']['passwort'];
 }
 
 // echo PasswordUtility::encrypt("Gedact2021");
