@@ -86,7 +86,7 @@ class GemeindeListeAction implements GetRequestHandler, PostRequestHandler
         $oldindex = "null";
         $newindex = "foobar";
         
-        // Array, der die Anfangszeichen speichert, damit sie nachher in der Rubrikenliste ausgegeben werden k�nnen
+        // Array, der die Anfangszeichen speichert, damit sie nachher in der Rubrikenliste ausgegeben werden können
         $Anfangszeichen = array();
         foreach ($c as $oGemeinde) {
             
@@ -138,7 +138,7 @@ class GemeindeListeAction implements GetRequestHandler, PostRequestHandler
                 }
             }
             
-            // Platzhalter ersetzen, Datensatz der Variablen anh�ngen, Template zur�cksetzen
+            // Platzhalter ersetzen, Datensatz der Variablen anhängen, Template zurücksetzen
             $tplGemeindeDS->replace("Gemeinde", $oGemeinde->getKirche());
             $tplGemeindeDS->replace("GemeindeID", $oGemeinde->getGemeindeID());
             $tplGemeindeDS->replace("PLZ", $oGemeinde->getGemeindePLZ());
@@ -159,10 +159,10 @@ class GemeindeListeAction implements GetRequestHandler, PostRequestHandler
             $oldindex = $newindex;
         }
         
-        // Gemeinden in Template einf�gen
+        // Gemeinden in Template einfügen
         $tplGemeindeListe->replace("GemeindeListe", $tplGemeindeDS->getOutput());
         
-        $suchbegriff = $handledRequest->getValueOf("SUCHBEGRIFF") == "" ? "Suchbegriff..." : $handledRequest->getValueOf("SUCHBEGRIFF");
+        $suchbegriff = $handledRequest->getValueOf("SUCHBEGRIFF") == "" ? "" : $handledRequest->getValueOf("SUCHBEGRIFF");
         $tplGemeindeListe->replace("Suchbegriff", $suchbegriff);
         
         $lblArray = null;

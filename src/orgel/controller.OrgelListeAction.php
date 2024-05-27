@@ -65,12 +65,8 @@ class OrgelListeAction implements GetRequestHandler, PostRequestHandler
         $suchbegriff = "";
         $boFirst = true;
         
-        $xForQuickJump = OrgelUtilities::getOrgelListe();
         
-        // Bei wenig Kunden immer den Gesamtbestand anzeigen
-        if (! isset($_GET['index']) && $xForQuickJump->getSize() < ConstantLoader::getMindestAnzahlOrgelnFuerGruppierung()) {
-            $_GET['index'] = "all";
-        }
+
         
         $handler = new OrgelRequestHandler();
         $handledRequest = $handler->prepareOrgelListe();
@@ -102,9 +98,11 @@ class OrgelListeAction implements GetRequestHandler, PostRequestHandler
         $tplOrgeldetails->replace("Order", $handledRequest['TPLORDER']);
         $tplOrgeldetails->replace("Index", $handledRequest['INDEX']);
         $c = OrgelUtilities::getOrgelListe($handledRequest['SQLADD']);
-        
+        $xForQuickJump = $c;
+
         $tplOrgeldetails->replace("OrgelAnzahlAnzeige", $c->getSize());
         $tplOrgeldetails->replace("OrgelAnzahlGesamt", OrgelUtilities::getAnzahlOrgeln());
+        
         
         foreach ($c as $oOrgel) {
             // Neue Rubrik einfuegen, wenn neuer Anfangsbuchstabe/Zeichen

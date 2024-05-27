@@ -69,8 +69,8 @@ class OrgelUtilities
     /**
      * Liste aller aktiven Orgeln
      *
-     * @param String $strOrderBy            
-     * @return unknown
+     * @param string $strOrderBy            
+     * @return ArrayList
      */
     public static function getOrgelListe($strOrderBy = null)
     {
@@ -186,8 +186,8 @@ class OrgelUtilities
     /**
      * queried
      *
-     * @param String $sql            
-     * @return DatabaseStorageObjektCollection
+     * @param string $sql            
+     * @return ArrayList
      */
     private static function queryDruckAnsichtOrgeln($sql)
     {
@@ -205,8 +205,8 @@ class OrgelUtilities
     /**
      * queried
      *
-     * @param String $sql            
-     * @return DatabaseStorageObjektCollection
+     * @param string $sql            
+     * @return ArrayList
      */
     private static function queryDBOrgelGemeinde($sql)
     {
@@ -223,4 +223,4 @@ class OrgelUtilities
         return $oCol;
     }
 }
-?>
+

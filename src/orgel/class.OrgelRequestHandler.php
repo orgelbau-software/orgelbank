@@ -11,10 +11,12 @@ class OrgelRequestHandler
         $retVal['suchbegriff']['ost_id-2'] = '';
         $retVal['suchbegriff']['ost_id-3'] = '';
         $retVal['suchbegriff']['nichtzugeordnet'] = '';
+        $retVal['suchbegriff']['suchstring'] = '';
         $retVal['suchbegriff']['submit'] = '';
         $retVal['TPLORDER'] = '';
         $retVal['SQLORDER'] = '';
         $retVal['SQLADD'] = '';
+        
         if ($_POST) {
             $retVal['suchbegriff']['submit'] = $_POST['submit'];
             if ($_POST['submit'] == "Anzeigen") {
@@ -126,32 +128,43 @@ class OrgelRequestHandler
         }
         
         // Suche einschränken
-        if ($retVal['suchbegriff']['ost_id-1'] != '' || $retVal['suchbegriff']['ost_id-2'] != '' || $retVal['suchbegriff']['ost_id-3'] != '' || $retVal['suchbegriff']['nichtzugeordnet']) {
-            $strWhere = " AND (";
-            $isFirst = true;
-            foreach ($retVal['suchbegriff'] as $key => $val) {
-                if ($val != "") {
-                    if ($key != "submit") {
-                        if (! $isFirst) {
-                            $strWhere .= " OR ";
+        if ($retVal['suchbegriff']['ost_id-1'] != '' || $retVal['suchbegriff']['ost_id-2'] != '' || $retVal['suchbegriff']['ost_id-3'] != '' || $retVal['suchbegriff']['nichtzugeordnet'] || $retVal['suchbegriff']['suchstring'] != '') {
+            $strWhere = "";
+            if ($retVal['suchbegriff']['ost_id-1'] != '' || $retVal['suchbegriff']['ost_id-2'] != '' || $retVal['suchbegriff']['ost_id-3'] != '' || $retVal['suchbegriff']['nichtzugeordnet']) {
+                $strWhere .= " AND (";
+                $isFirst = true;
+                foreach ($retVal['suchbegriff'] as $key => $val) {
+                    if ($val != "") {
+                        if ($key != "submit" && $key !="suchstring") {
+                            if (! $isFirst) {
+                                $strWhere .= " OR ";
+                            }
+                            if ($key == "nichtzugeordnet") {
+                                $strWhere .= " o.g_id IS NULL ";
+                            } else {
+                                $strWhere .= " ost_id = " . $val;
+                            }
+                            $isFirst = false;
                         }
-                        if ($key == "nichtzugeordnet") {
-                            $strWhere .= " o.g_id IS NULL ";
-                        } else {
-                            $strWhere .= " ost_id = " . $val;
-                        }
-                        $isFirst = false;
                     }
                 }
+                $strWhere .= ")";
             }
-            $strWhere .= ")";
+
+            if($retVal['suchbegriff']['suchstring'] != '') {
+                $strWhere .= " AND (";
+                $strWhere .= "o_massnahmen LIKE '%".$retVal['suchbegriff']['suchstring']."%' OR ";
+                $strWhere .= "g_kirche LIKE '%".$retVal['suchbegriff']['suchstring']."%' ";
+                $strWhere .= " )";
+            }
+
             $retVal['SQLADD'] = $strWhere . $retVal['SQLADD'];
         }
         $_SESSION['suchbegriff'] = $retVal['suchbegriff'];
         
         // Index hinzufuegen
         $sql = "";
-        if ($retVal['INDEX'] != "all") {
+        if ($retVal['INDEX'] != "all" && $retVal['suchbegriff']['suchstring'] == '') {
             $sql .= " AND " . $retVal['SQLORDER'] . " ";
             if ($retVal['SKALA'] == "NUMERIC") {
                 $sql .= " = " . $retVal['INDEX'];
@@ -163,4 +176,3 @@ class OrgelRequestHandler
         return $retVal;
     }
 }
-?>
