@@ -195,7 +195,8 @@ class WartungsListeAction implements GetRequestHandler, PostRequestHandler, Post
         $tplWartung->replace("Bemerkung", $oWartung->getBemerkung());
         $tplWartung->replace("Temperatur", $oWartung->getTemperatur());
         $tplWartung->replace("Luftfeuchtigkeit", $oWartung->getLuftfeuchtigkeit());
-        $tplWartung->replace("Stimmtonhoehe", str_replace(",", ".", $oWartung->getStimmtonHoehe()));
+        $ton = ($oWartung->getStimmtonHoehe() == null ? "" : str_replace(",", ".", $oWartung->getStimmtonHoehe()));
+        $tplWartung->replace("Stimmtonhoehe", $ton);
         $tplWartung->replace("SubmitValue", "Eintragen");
         
         if ($oWartung->getAbrechnungsArtId() == 1) {

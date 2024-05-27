@@ -164,4 +164,3 @@ class EinstellungController
         RequestHandler::handle(new BenutzerVerlaufUebersichtAction());
     }
 }
-?>

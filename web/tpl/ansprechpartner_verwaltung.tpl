@@ -4,7 +4,7 @@
 			<h3>Ansprechpartnerliste</h3>
 			<form action="index.php?page=3&do=40" method="post">
 				<input type="hidden" name="formid" value="suche" />
-				<input type="text" name="suchbegriff" size="25" value="<!--Suchbegriff-->">
+				<input type="search" name="suchbegriff" size="25" placeholder="Suchbegriff..." value="<!--Suchbegriff-->">
 				<input class="button iconButton searchButton" type="submit" value="Suchen">
 			</form>
 			<hr />

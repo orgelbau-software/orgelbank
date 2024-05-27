@@ -25,7 +25,7 @@ $pcOrgel = new PageController(2, "OrgelController", 5);
 $pcOrgel->addChild(new SubPage(20, "zeigeOrgelListe", 5));
 $pcOrgel->addChild(new SubPage(21, "zeigeOrgelDetails", 5));
 $pcOrgel->addChild(new SubPage(22, "speicherOrgelDetails", 5));
-$pcOrgel->addChild(new SubPage(23, "verwalteOrgelBild", 10));
+$pcOrgel->addChild(new SubPage(23, "verwalteOrgelBild", 5));
 $pcOrgel->addChild(new SubPage(24, "neueOrgelAnlegen", 10));
 $pcOrgel->addChild(new SubPage(25, "neueOrgelGemeindeVerbindung", 10));
 $pcOrgel->addChild(new SubPage(26, "loescheOrgelGemeindeVerbindung", 10));
@@ -145,4 +145,3 @@ if (! $pageApplication->isPageRequested()) {
         $htmlError->anzeigen();
     }
 }
-?>

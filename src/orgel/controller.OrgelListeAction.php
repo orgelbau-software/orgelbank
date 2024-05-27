@@ -62,6 +62,7 @@ class OrgelListeAction implements GetRequestHandler, PostRequestHandler
         $strChecked2 = "";
         $strChecked3 = "";
         $strChecked4 = "";
+        $suchbegriff = "";
         $boFirst = true;
         
         $xForQuickJump = OrgelUtilities::getOrgelListe();
@@ -86,12 +87,16 @@ class OrgelListeAction implements GetRequestHandler, PostRequestHandler
         if (isset($_SESSION['suchbegriff']['nichtzugeordnet']) && $_SESSION['suchbegriff']['nichtzugeordnet'] != "") {
             $strChecked4 = Constant::$HTML_CHECKED_CHECKED;
         }
+        if (isset($_SESSION['suchbegriff']['suchstring']) && $_SESSION['suchbegriff']['suchstring'] != "") {
+            $suchbegriff = $_SESSION['suchbegriff']['suchstring'];
+        }
         
         $tplOrgeldetails->replace("SessionID", session_id());
         $tplOrgeldetails->replace("checked1", $strChecked1);
         $tplOrgeldetails->replace("checked2", $strChecked2);
         $tplOrgeldetails->replace("checked3", $strChecked3);
         $tplOrgeldetails->replace("checked4", $strChecked4);
+        $tplOrgeldetails->replace("Suchbegriff", $suchbegriff);
         
         $tplOrgeldetails->replace("Dir", $handledRequest['TPLDIR']);
         $tplOrgeldetails->replace("Order", $handledRequest['TPLORDER']);

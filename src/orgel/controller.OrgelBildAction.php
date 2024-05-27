@@ -7,6 +7,8 @@ class OrgelBildAction implements GetRequestHandler, PostRequestHandler, PostRequ
 
     private $operationStatusMsg;
 
+    private $action;
+    
     public function preparePost()
     {
         $this->oid = intval($_POST['o_id']);

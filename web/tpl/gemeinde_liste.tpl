@@ -7,7 +7,7 @@
 	</div>
 	Es werden <strong><!--AnzahlGemeindenAnzeige--> von <!--AnzahlGemeindenGesamt--></strong> Gemeinden in der Liste angezeigt.
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="text" name="suchstring" size="20" value="<!--Suchbegriff-->" onclick="clickclear(this, 'Suchbegriff...')" onblur="clickrecall(this,'Suchbegriff...')">
+	<input type="search" name="suchstring" size="20" value="<!--Suchbegriff-->" placeholder="Suchbegriff...">
 	<input class="button iconButton searchButton" type="submit" name="submit" value="Suchen">
 	<input class="button iconButton resetButton" type="submit" name="submit" value="Zur&uuml;cksetzen">
 	</form>

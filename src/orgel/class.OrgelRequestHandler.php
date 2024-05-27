@@ -30,6 +30,9 @@ class OrgelRequestHandler
                 if (isset($_POST['nichtzugeordnet'])) {
                     $retVal['suchbegriff']['nichtzugeordnet'] = '4';
                 }
+                if (isset($_POST['suchstring'])) {
+                    $retVal['suchbegriff']['suchstring'] = $_POST['suchstring'];
+                }
             }
         } elseif (isset($_SESSION['suchbegriff'])) {
             if (isset($_SESSION['suchbegriff']['ost_id-1']) && trim($_SESSION['suchbegriff']['ost_id-1']) != "") {
@@ -43,6 +46,9 @@ class OrgelRequestHandler
             }
             if (isset($_SESSION['suchbegriff']['nichtzugeordnet']) && trim($_SESSION['suchbegriff']['nichtzugeordnet']) != "") {
                 $retVal['suchbegriff']['nichtzugeordnet'] = '4';
+            }
+            if (isset($_SESSION['suchbegriff']['suchstring']) && trim($_SESSION['suchbegriff']['suchstring']) != "") {
+                $retVal['suchbegriff']['suchstring'] = $_SESSION['suchbegriff']['suchstring'];
             }
         }
         
