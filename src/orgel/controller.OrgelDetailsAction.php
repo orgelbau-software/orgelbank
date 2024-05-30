@@ -126,7 +126,7 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
         $tplOrgelDetails->replace("m5wd", $oOrgel->getWinddruckM5());
         $tplOrgelDetails->replace("m6wd", $oOrgel->getWinddruckM6());
         
-        $htmlSelectStatus = new HTMLSelectForArray(Constant::getOrgelStatus(), $oOrgel->getOstID());
+        $htmlSelectStatus = new HTMLSelectForArray(Orgel::getOrgelStatus(), $oOrgel->getOstID());
         $tplOrgelDetails->replace("Orgelstatus", $htmlSelectStatus->getOutput());
         
         $htmlSelectWinlade = new HTMLSelectForArray(Constant::getWindladen(), $oOrgel->getWindladeID());

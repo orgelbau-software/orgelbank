@@ -13,9 +13,9 @@ Zeige <strong><!--OrgelAnzahlAnzeige--> von <!--OrgelAnzahlGesamt--></strong> Or
 <input type="checkbox" class="checkbox" name="neubauten" value="1" id="chkbox1" <!--checked1-->/><label for="chkbox1">Neubauten</label> 
 <input type="checkbox" class="checkbox" name="renoviert" value="2" id="chkbox2" <!--checked2-->/><label for="chkbox2">Renovierte</label> 
 <input type="checkbox" class="checkbox" name="restauriert" value="3" id="chkbox3" <!--checked3-->/><label for="chkbox3">Restaurierte</label>
-<input type="checkbox" class="checkbox" name="nichtzugeordnet" value="4" id="chkbox4" <!--checked4-->/><label for="chkbox4">Nicht-zugeordnete</label> 
 <input type="search" name="suchstring" size="25" value="<!--Suchbegriff-->" placeholder="Suchbegriff...">
 <input type="submit" class="button iconButton searchButton" name="submit" value="Anzeigen" />
+<input type="submit" class="button iconButton resetButton" name="submit" value="Zur&uuml;cksetzen" /></form>
 <hr />
 <form name="orgelliste" action="src/orgel/pdf.php?sid=<!--SessionID-->" method="post"><input type="hidden" name="orgelliste"
   value="orgelliste">

@@ -3,6 +3,16 @@
 class Orgel extends SimpleDatabaseStorageObjekt
 {
 
+    const ORGEL_STATUS_ID_UNBEKANNT = 0;
+
+    const ORGEL_STATUS_ID_NEUBAU = 1;
+
+    const ORGEL_STATUS_ID_RENOVIERT = 2;
+
+    const ORGEL_STATUS_ID_RESTAURIERT = 3;
+
+    const ORGEL_STATUS_ID_REINIGUNG = 4;
+
     private $ostID;
 
     private $gemeindeId;
@@ -781,5 +791,14 @@ class Orgel extends SimpleDatabaseStorageObjekt
         }
     }
     
+    public static function getOrgelStatus()
+    {
+        return array(
+            Orgel::ORGEL_STATUS_ID_UNBEKANNT => "Unbekannt",
+            Orgel::ORGEL_STATUS_ID_NEUBAU => "Neubau",
+            Orgel::ORGEL_STATUS_ID_RENOVIERT => "Renoviert",
+            Orgel::ORGEL_STATUS_ID_RESTAURIERT => "Restauriert",
+            Orgel::ORGEL_STATUS_ID_REINIGUNG => "Reinigung"
+        );
+    }
 }
-?>

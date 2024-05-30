@@ -59,7 +59,7 @@ class NeueOrgelAnlegen implements GetRequestHandler
         $htmlGemeinden->setValueMaxLength(56);
         $tplOrgelDetails->replace("Gemeinden", $htmlGemeinden->getOutput());
         
-        $htmlSelectStatus = new HTMLSelectForArray(Constant::getOrgelStatus(), 0);
+        $htmlSelectStatus = new HTMLSelectForArray(Orgel::getOrgelStatus(), 0);
         $tplOrgelDetails->replace("Orgelstatus", $htmlSelectStatus->getOutput());
         
         $htmlSelectWinlade = new HTMLSelectForArray(Constant::getWindladen(), 0);

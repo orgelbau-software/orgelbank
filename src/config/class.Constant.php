@@ -51,17 +51,6 @@ class Constant
         );
     }
 
-    public static function getOrgelStatus()
-    {
-        return array(
-            0 => "Unbekannt",
-            1 => "Neubau",
-            2 => "Renoviert",
-            3 => "Restauriert",
-            4 => "Reinigung"
-        );
-    }
-
     public static function getWindladen()
     {
         return array(
@@ -168,9 +157,6 @@ class Constant
             case IGeolocationConstants::SERVICE_NOT_AVAILABLE:
                 $retVal = "Bitte versuchen Sie erneut die Route zu berechnen.";
                 break;
-            case IGeolocationConstants::OK:
-                $retVal = "Status OK";
-                break;
             case OrgelbankGoogleMapsGeocoder::ADDRESS_NOT_UNIQUE:
                 $retVal = "Die " . $pType . " kann nicht eindeutig ermittelt werden. Bitte korrigieren Sie die Adressdaten.";
                 break;
@@ -182,4 +168,3 @@ class Constant
     }
     
 }
-?>

@@ -64,45 +64,49 @@ class OrgelListeAction implements GetRequestHandler, PostRequestHandler
         $strChecked4 = "";
         $suchbegriff = "";
         $boFirst = true;
-        
-        
 
-        
         $handler = new OrgelRequestHandler();
         $handledRequest = $handler->prepareOrgelListe();
         
-        if (isset($_SESSION['suchbegriff']['ost_id-1']) && $_SESSION['suchbegriff']['ost_id-1'] != "") {
+        $orgelStatusSelection = $handledRequest->getValueOf('ORGELSTATUS');
+        if (in_array(Orgel::ORGEL_STATUS_ID_NEUBAU, $orgelStatusSelection)) {
             $strChecked1 = Constant::$HTML_CHECKED_CHECKED;
+            $_SESSION['suchbegriff']['neubau'] = "true";
         }
-        if (isset($_SESSION['suchbegriff']['ost_id-2']) && $_SESSION['suchbegriff']['ost_id-2'] != "") {
+        
+        if (in_array(Orgel::ORGEL_STATUS_ID_RENOVIERT, $orgelStatusSelection)) {
             $strChecked2 = Constant::$HTML_CHECKED_CHECKED;
+            $_SESSION['suchbegriff']['removiert'] = "true";
         }
-        if (isset($_SESSION['suchbegriff']['ost_id-3']) && $_SESSION['suchbegriff']['ost_id-3'] != "") {
+       
+        if (in_array(Orgel::ORGEL_STATUS_ID_RESTAURIERT, $orgelStatusSelection)) {
             $strChecked3 = Constant::$HTML_CHECKED_CHECKED;
+            $_SESSION['suchbegriff']['restauriert'] = "true";
         }
-        if (isset($_SESSION['suchbegriff']['nichtzugeordnet']) && $_SESSION['suchbegriff']['nichtzugeordnet'] != "") {
-            $strChecked4 = Constant::$HTML_CHECKED_CHECKED;
-        }
-        if (isset($_SESSION['suchbegriff']['suchstring']) && $_SESSION['suchbegriff']['suchstring'] != "") {
-            $suchbegriff = $_SESSION['suchbegriff']['suchstring'];
-        }
+        
+        //if (isset($_SESSION['suchbegriff']['nichtzugeordnet']) && $_SESSION['suchbegriff']['nichtzugeordnet'] != "") {
+        //   $strChecked4 = Constant::$HTML_CHECKED_CHECKED;
+        //}
+        
+        $suchbegriff = $handledRequest->getValueOf('SUCHBEGRIFF');
+        $_SESSION['suchstring'] = $suchbegriff;
         
         $tplOrgeldetails->replace("SessionID", session_id());
         $tplOrgeldetails->replace("checked1", $strChecked1);
         $tplOrgeldetails->replace("checked2", $strChecked2);
         $tplOrgeldetails->replace("checked3", $strChecked3);
         $tplOrgeldetails->replace("checked4", $strChecked4);
-        $tplOrgeldetails->replace("Suchbegriff", $suchbegriff);
         
-        $tplOrgeldetails->replace("Dir", $handledRequest['TPLDIR']);
-        $tplOrgeldetails->replace("Order", $handledRequest['TPLORDER']);
-        $tplOrgeldetails->replace("Index", $handledRequest['INDEX']);
-        $c = OrgelUtilities::getOrgelListe($handledRequest['SQLADD']);
-        $xForQuickJump = $c;
+        $tplOrgeldetails->replace("Dir", $handledRequest->getValueOf('TPLDIR'));
+        $tplOrgeldetails->replace("Order", $handledRequest->getValueOf('TPLORDER'));
+        $tplOrgeldetails->replace("Index", $handledRequest->getValueOf('INDEX'));
+        $tplOrgeldetails->replace("Suchbegriff", $handledRequest->getValueOf('SUCHBEGRIFF'));
+        
+        $c = OrgelUtilities::getGesuchteOrgeln($handledRequest->getValueOf('SUCHBEGRIFF'), $handledRequest->getValueOf('ORGELSTATUS'), $handledRequest->getValueOf('RESULT'));
+        $xForQuickJump = OrgelUtilities::getGesuchteOrgeln($handledRequest->getValueOf('SUCHBEGRIFF'), $handledRequest->getValueOf('ORGELSTATUS'));
 
         $tplOrgeldetails->replace("OrgelAnzahlAnzeige", $c->getSize());
         $tplOrgeldetails->replace("OrgelAnzahlGesamt", OrgelUtilities::getAnzahlOrgeln());
-        
         
         foreach ($c as $oOrgel) {
             // Neue Rubrik einfuegen, wenn neuer Anfangsbuchstabe/Zeichen
@@ -135,8 +139,8 @@ class OrgelListeAction implements GetRequestHandler, PostRequestHandler
             
             if ($newindex != $oldindex) {
                 $tplOrgellisterubrik->replace("Rubrik", $newindex);
-                $tplOrgellisterubrik->replace("Dir", $handledRequest['TPLDIR']);
-                $tplOrgellisterubrik->replace("Index", $handledRequest['INDEX']);
+                $tplOrgellisterubrik->replace("Dir", $handledRequest->getValueOf('TPLDIR'));
+                $tplOrgellisterubrik->replace("Index", $handledRequest->getValueOf('INDEX'));
                 $tplOrgellisteDs->addToBuffer($tplOrgellisterubrik);
                 if ($boFirst) {
                     $boFirst = false;
@@ -170,7 +174,7 @@ class OrgelListeAction implements GetRequestHandler, PostRequestHandler
         $tplOrgeldetails->replace("Content", $tplOrgellisteDs->getOutput());
         
         // Quickjump einfügen
-        $q = new Quickjump($xForQuickJump, $handledRequest['GETTER'], "index.php?page=2&do=20&order=" . $handledRequest['TPLORDER'] . "&dir=asc&index=<!--Index-->", $handledRequest['SKALA']);
+        $q = new Quickjump($xForQuickJump, $handledRequest->getValueOf('GETTER'), "index.php?page=2&do=20&order=" . $handledRequest->getValueOf('TPLORDER') . "&dir=asc&index=<!--Index-->", $handledRequest->getValueOf('SKALA'));
         
         $tplOrgeldetails->replace("Quickjump", $q->getOutput());
         
@@ -197,6 +201,10 @@ class OrgelListeAction implements GetRequestHandler, PostRequestHandler
      */
     public function executePost()
     {
+        if(isset($_POST['submit']) && $_POST['submit'] == "Zurücksetzen") {
+            $_SESSION['suchbegriff'] = array();
+            $_SESSION['suchstring'] = "";
+        }
         return $this->executeGet();
     }
 }

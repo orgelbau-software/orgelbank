@@ -86,6 +86,48 @@ class OrgelUtilities
         return OrgelUtilities::queryDBOrgelGemeinde($sql);
     }
 
+    /**
+     * Liste aller aktiven Orgeln
+     *
+     * @param string $suchstring
+     * @param array $orgelstatus 
+     * @param string $strOrderBy
+     * @return ArrayList
+     */
+    public static function getGesuchteOrgeln($suchstring, $orgelstatus = array(), $strOrderBy = null)
+    {
+        $sql = "SELECT
+    			o_id, g.g_id, o_baujahr, o_erbauer, o_manual1, o_manual2, o_manual3, o_manual4, o_manual5, o_pedal, o_anzahlregister, o_letztepflege, g_kirche, b_id, ad_ort, ad_plz
+			FROM
+				orgel o
+  					LEFT JOIN (SELECT ge.*, ad.* FROM gemeinde ge, adresse ad WHERE ge.g_kirche_aid = ad.ad_id AND ge.g_aktiv = 1) g ON o.g_id = g.g_id
+			WHERE
+				o.o_aktiv =  1 ";
+        if($suchstring != "") {
+            $sql .= " AND ( 
+                    o_baujahr LIKE '%" . $suchstring . "%' OR
+					o_erbauer LIKE '%" . $suchstring . "%' OR
+                    o_massnahmen LIKE '%" . $suchstring . "%' OR
+					g_kirche LIKE '" . $suchstring . "%' OR
+					ad_ort LIKE '" . $suchstring . "' OR
+					ad_plz LIKE '" . $suchstring . "'
+			) ";
+        }
+
+        if(count($orgelstatus) > 0) {
+            $sql .= " AND ( ";
+            foreach($orgelstatus as $current) {
+                $sql .= "o.ost_id = ".$current." OR ";
+            }
+            $sql = substr($sql,0, -3); // Das letzte OR abschneiden
+            $sql .= " ) ";
+        }
+        if ($strOrderBy != null)
+            $sql .= $strOrderBy;
+
+        return OrgelUtilities::queryDBOrgelGemeinde($sql);
+    }
+
     public static function getOrgelListeAnstehendeWartungen($pSQLAdd = null, $strOrderBy = null)
     {
         $sql = "SELECT 
