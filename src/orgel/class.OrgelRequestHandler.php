@@ -45,7 +45,7 @@ class OrgelRequestHandler
                     break;
                 case "wartung":
                     $retVal->put("SQLORDER", "o_letztepflege");
-                    $retVal->put("GETTER", "getGemeindeOrt");
+                    $retVal->put("GETTER", "getLetztePflege");
                     $retVal->put("SKALA", "FREE");
                     break;
                 case "gemeinde":

@@ -225,7 +225,6 @@ class Quickjump
             }
             
             if ($this->lblArray == null || $this->lblArray != null && $class == "exists") {
-                echo "-->".$entry."<--<br/>";
                 $this->tpl->replace("IndexLabel", $entry);
                 $this->tpl->replace("IndexClass", $class);
                 $this->tpl->replace("Link", $link);
