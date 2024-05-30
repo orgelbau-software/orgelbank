@@ -102,8 +102,13 @@ class OrgelListeAction implements GetRequestHandler, PostRequestHandler
         $tplOrgeldetails->replace("Index", $handledRequest->getValueOf('INDEX'));
         $tplOrgeldetails->replace("Suchbegriff", $handledRequest->getValueOf('SUCHBEGRIFF'));
         
-        $c = OrgelUtilities::getGesuchteOrgeln($handledRequest->getValueOf('SUCHBEGRIFF'), $handledRequest->getValueOf('ORGELSTATUS'), $handledRequest->getValueOf('RESULT'));
         $xForQuickJump = OrgelUtilities::getGesuchteOrgeln($handledRequest->getValueOf('SUCHBEGRIFF'), $handledRequest->getValueOf('ORGELSTATUS'));
+        if (! isset($_GET['index']) && $xForQuickJump->getLength() < ConstantLoader::getMindestAnzahlGemeindenFuerGruppierung()) {
+            $c = $xForQuickJump;
+            $handledRequest->setValueOf("INDEX", "all");
+        } else {
+            $c = OrgelUtilities::getGesuchteOrgeln($handledRequest->getValueOf('SUCHBEGRIFF'), $handledRequest->getValueOf('ORGELSTATUS'), $handledRequest->getValueOf('RESULT'));
+        }        
 
         $tplOrgeldetails->replace("OrgelAnzahlAnzeige", $c->getSize());
         $tplOrgeldetails->replace("OrgelAnzahlGesamt", OrgelUtilities::getAnzahlOrgeln());

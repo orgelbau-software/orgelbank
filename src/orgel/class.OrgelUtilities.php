@@ -108,6 +108,7 @@ class OrgelUtilities
                     o_baujahr LIKE '%" . $suchstring . "%' OR
 					o_erbauer LIKE '%" . $suchstring . "%' OR
                     o_massnahmen LIKE '%" . $suchstring . "%' OR
+                    o_anmerkung LIKE '%" . $suchstring . "%' OR
 					g_kirche LIKE '" . $suchstring . "%' OR
 					ad_ort LIKE '" . $suchstring . "' OR
 					ad_plz LIKE '" . $suchstring . "'
@@ -124,7 +125,7 @@ class OrgelUtilities
         }
         if ($strOrderBy != null)
             $sql .= $strOrderBy;
-
+//echo $sql."<br>";
         return OrgelUtilities::queryDBOrgelGemeinde($sql);
     }
 
