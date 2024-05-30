@@ -23,11 +23,11 @@ class OrgelRequestHandler
         }
 
         $orgelStatus = array();
-        if($_POST && $_POST['submit'] == "Anzeigen") {
+
             if(isset($_POST['neubauten'])   || (empty($_POST) && isset($_SESSION['suchbegriff']['neubau'])))      { $orgelStatus[] = Orgel::ORGEL_STATUS_ID_NEUBAU; }
             if(isset($_POST['renoviert'])   || (empty($_POST) && isset($_SESSION['suchbegriff']['renoviert'])))   { $orgelStatus[] = Orgel::ORGEL_STATUS_ID_RENOVIERT; }
             if(isset($_POST['restauriert']) || (empty($_POST) && isset($_SESSION['suchbegriff']['restauriert']))) { $orgelStatus[] = Orgel::ORGEL_STATUS_ID_RESTAURIERT; }
-        }
+        
         $retVal['ORGELSTATUS'] = $orgelStatus;
 
         if (isset($_GET['order'])) {

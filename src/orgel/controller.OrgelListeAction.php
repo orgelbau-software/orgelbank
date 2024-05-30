@@ -205,6 +205,12 @@ class OrgelListeAction implements GetRequestHandler, PostRequestHandler
             $_SESSION['suchbegriff'] = array();
             $_SESSION['suchstring'] = "";
         }
+        if(isset($_POST['submit']) && $_POST['submit'] == "Anzeigen") {
+            $_SESSION['suchbegriff'] = array();
+            if(isset($_POST['neubauten'])) { $_SESSION['suchbegriff']['neubau'] = ""; };
+            if(isset($_POST['renoviert'])) { $_SESSION['suchbegriff']['renoviert'] = ""; };
+            if(isset($_POST['restauriert'])) { $_SESSION['suchbegriff']['restauriert'] = ""; };
+        }
         return $this->executeGet();
     }
 }
