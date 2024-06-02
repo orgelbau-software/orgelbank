@@ -96,6 +96,9 @@ class Orgel extends SimpleDatabaseStorageObjekt
     private $intervallHauptstimmung;
     
     private $stimmton;
+    private $temperatur;
+
+    private $register;
 
     // Konstruktor
     public function __construct($iID = 0, $primaryKey = "o_id", $tableName = "orgel", $tablePrefix = "o_")

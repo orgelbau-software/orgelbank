@@ -63,12 +63,18 @@ class OrgelbankAuftragsbogenPDF
         $p = Constant::getPflegevertrag();
         $t = Orgel::getOrgelStatus();
 
+        $anzahlManuale = OrgelUtilities::getOrgelManualeUebersicht($orgel);
+        
+        if ($orgel->getRegisterAnzahl() > 0) {
+            $anzahlManuale .= " - " . $orgel->getRegisterAnzahl();
+        }
+
         $pflegevertrag = (isset($p[$orgel->getPflegevertrag()]) ? $p[$orgel->getPflegevertrag()] : "N/A");
         $tpl->replace("Erbauer", $orgel->getErbauer());
         $tpl->replace("Baujahr", $orgel->getBaujahr());
         $tpl->replace("RevisionArt", (isset($t[$orgel->getOstID()]) != "" ? $t[$orgel->getOstID()] : ""));
         $tpl->replace("Revision", $orgel->getRenoviert());
-        $tpl->replace("AnzahlManuale", $orgel->getAnzahlManuale());
+        $tpl->replace("AnzahlManuale", $anzahlManuale);
         $tpl->replace("AnzahlRegister", $orgel->getRegisterAnzahl());
         $tpl->replace("Pflegevertrag", $pflegevertrag);
         $tpl->replace("Zyklus", $z[$orgel->getZyklus()]);
