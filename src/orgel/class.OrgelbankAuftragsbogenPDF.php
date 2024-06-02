@@ -61,10 +61,12 @@ class OrgelbankAuftragsbogenPDF
         $k = Constant::getKoppeln();
         $z = Constant::getZyklus();
         $p = Constant::getPflegevertrag();
+        $t = Orgel::getOrgelStatus();
 
         $pflegevertrag = (isset($p[$orgel->getPflegevertrag()]) ? $p[$orgel->getPflegevertrag()] : "N/A");
         $tpl->replace("Erbauer", $orgel->getErbauer());
         $tpl->replace("Baujahr", $orgel->getBaujahr());
+        $tpl->replace("RevisionArt", (isset($t[$orgel->getOstID()]) != "" ? $t[$orgel->getOstID()] : ""));
         $tpl->replace("Revision", $orgel->getRenoviert());
         $tpl->replace("AnzahlManuale", $orgel->getAnzahlManuale());
         $tpl->replace("AnzahlRegister", $orgel->getRegisterAnzahl());
@@ -81,12 +83,12 @@ class OrgelbankAuftragsbogenPDF
         $tpl->replace("Tonumfang", $orgel->getGroesseM1());
         $tpl->replace("Pedal", $orgel->getGroesseM6());
 
-        $tpl->replace("WinddruckManual1", $orgel->getWinddruckM1());
-        $tpl->replace("WinddruckManual2", $orgel->getWinddruckM2());
-        $tpl->replace("WinddruckManual3", $orgel->getWinddruckM3());
-        $tpl->replace("WinddruckManual4", $orgel->getWinddruckM4());
-        $tpl->replace("WinddruckManual5", $orgel->getWinddruckM5());
-        $tpl->replace("WinddruckPedal", $orgel->getWinddruckM6());
+        $tpl->replace("WinddruckManual1", ($orgel->getWinddruckM1() != "" ? $orgel->getWinddruckM1()." mm" : ""));
+        $tpl->replace("WinddruckManual2", ($orgel->getWinddruckM2() != "" ? $orgel->getWinddruckM2()." mm" : ""));
+        $tpl->replace("WinddruckManual3", ($orgel->getWinddruckM3() != "" ? $orgel->getWinddruckM3()." mm" : ""));
+        $tpl->replace("WinddruckManual4", ($orgel->getWinddruckM4() != "" ? $orgel->getWinddruckM4()." mm" : ""));
+        $tpl->replace("WinddruckManual5", ($orgel->getWinddruckM5() != "" ? $orgel->getWinddruckM5()." mm" : ""));
+        $tpl->replace("WinddruckPedal", ($orgel->getWinddruckM6() != "" ? $orgel->getWinddruckM6()." mm" : ""));
 
         $tpl->replace("AllgemeineAnmerkungen", $orgel->getAnmerkung());
         $tpl->replace("NotwendigeMassnahmen", $orgel->getMassnahmen());

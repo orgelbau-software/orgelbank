@@ -111,7 +111,7 @@
         <td><!--Erbauer--></td>
         <th>Baujahr:</th>
         <td><!--Baujahr--></td>
-        <th>Revision:</th>
+        <th><!--RevisionArt-->:</th>
         <td><!--Revision--></td> 
     </tr>
     <tr>
@@ -150,7 +150,7 @@
         <th>Temperatur:</th>
         <td><!--Temperatur--></td>
         <th>Stimmtonhöhe:</th>
-        <td><!--Stimmtonhoehe--> Hz.</td>
+        <td><!--Stimmtonhoehe--> Hz</td>
         <th>Stimmung nach:</th>
         <td><!--StimmungNach--></td> 
     </tr>
