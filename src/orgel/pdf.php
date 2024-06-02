@@ -4,7 +4,8 @@ include_once 'class.OrgelbankBasisPDF.php';
 include_once 'class.WartungsbogenPDF.php';
 include_once 'class.OrgelbankWartungsbogenPDF.php';
 include_once 'class.DeckblattPDF.php';
-include_once 'class.OrgelbankDeckblattPDF.php';;
+include_once 'class.OrgelbankDeckblattPDF.php';
+include_once 'class.OrgelbankAuftragsbogenPDF.php';
 
 // Kunden spezifisch
 include_once 'class.GraserOrgelbankDeckblattPDF.php';;
@@ -48,12 +49,16 @@ if(strpos($action, "deckbl") === 0) {
         $db->disconnect();
     } else {
         die("Keine Orgel ID uebergeben fuer Deckblatt.");
-    }
-    
-    
-    
+    }    
 } else {
-    $pdf = new OrgelbankWartungsbogenPDF();
+
+    if($action == "auftragsbogen") {
+        $pdf = new OrgelbankAuftragsbogenPDF();
+        $name = "Auftragsbogen.pdf";
+    } else {
+        $pdf = new OrgelbankWartungsbogenPDF();
+        $name = "Wartungsunterlagen.pdf";
+    }
     
     if (isset($_POST['orgelliste'])) {
         SeitenStatistik::count("pdf.php?oid=X,Y,Z", "PDF::printManyOrgel");
@@ -62,12 +67,12 @@ if(strpos($action, "deckbl") === 0) {
                 $pdf->addOrgel(new Orgel($value));
             }
         }
-        $pdf->Output("I", "Wartungsunterlagen.pdf");
+        $pdf->Output("I", $name);
         $db->disconnect();
     } elseif (isset($_GET['oid'])) {
         SeitenStatistik::count("pdf.php?oid=X", "PDF::printSingleOrgel");
         $pdf->addOrgel(new Orgel($_GET['oid']));
-        $pdf->Output("I", "Wartungsunterlagen.pdf");
+        $pdf->Output("I", $name);
         $db->disconnect();
     } else {
         die("Keine Orgel ID uebergeben fuer Wartungsbogen.");

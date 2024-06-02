@@ -68,7 +68,7 @@ class Output
     /**
      * Gibt das Template als String zurueck, sofern es nicht dem Ursprung entspricht
      * 
-     * @return String
+     * @return string
      */
     public function getOutput()
     {

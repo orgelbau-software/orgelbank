@@ -244,5 +244,6 @@
 </form>
 <a class="buttonLink iconButton cancelButton" href="index.php?page=2&do=21&oid=<!--OID-->">Abbrechen</a>
 </div>
-<a class="buttonLink iconButton printButton" target="_blank" href="src/orgel/pdf.php?oid=<!--OID-->&action=wartungsbogen&sid=<!--SessionID-->">Wartungsbogen drucken</a>
-<a class="buttonLink iconButton openDeckblattButton" target="_blank" href="src/orgel/pdf.php?oid=<!--OID-->&action=deckblatt&sid=<!--SessionID-->">Deckblatt drucken</a>
+<a class="buttonLink iconButton printButton" target="_blank" href="src/orgel/pdf.php?oid=<!--OID-->&action=wartungsbogen">Wartungsbogen drucken</a>
+<a class="buttonLink iconButton openDeckblattButton" target="_blank" href="src/orgel/pdf.php?oid=<!--OID-->&action=deckblatt">Deckblatt drucken</a>
+<a class="buttonLink iconButton openAuftragsbogenButton" target="_blank" href="src/orgel/pdf.php?oid=<!--OID-->&action=auftragsbogen">Auftragsbogen drucken</a>

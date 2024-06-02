@@ -89,7 +89,7 @@ class AnsprechpartnerUtilities
     /**
      *
      * @param int $gid            
-     * @param String $strOrderBy            
+     * @param string $strOrderBy            
      * @return DatabaseStorageObjektCollection
      */
     public static function getGemeindeAnsprechpartner($gid, $strOrderBy = null)
@@ -114,7 +114,7 @@ class AnsprechpartnerUtilities
     /**
      * Enter description here...
      *
-     * @param unknown_type $sql            
+     * @param string $sql            
      * @return DatabaseStorageObjektCollection
      */
     private static function queryDB($sql)

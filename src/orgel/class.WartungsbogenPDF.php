@@ -45,7 +45,6 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
         if($oOrgel->getWartungsprotokollID() > 0) {
             $protokoll = new Wartungsprotokoll($oOrgel->getWartungsprotokollID());
             $this->addWartungsprotokoll($protokoll);
-            
         }
     }
     

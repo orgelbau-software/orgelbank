@@ -609,6 +609,10 @@ span.hideContent {
 	background-image: url(../images/icons/hcards.png);
 }
 
+.openAuftragsbogenButton {
+	background-image: url(../images/icons/hcard_add.png);
+}
+
 .contactAdd {
 	background-image: url(../images/icons/contact_grey_add.png);
 }

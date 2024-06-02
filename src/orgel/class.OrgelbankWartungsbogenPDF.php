@@ -50,4 +50,3 @@ class OrgelbankWartungsbogenPDF extends WartungsbogenPDF
         $this->Cell(190, 10, "Installation: " . INSTALLATION_NAME, 0, "L", "C");
     }
 }
-?>
