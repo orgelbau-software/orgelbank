@@ -5,8 +5,24 @@
     <title>Auftragsbogen <!--Kirche--></title>
 
     <style>
+        body {
+            font-family: DejaVu Sans;
+            font-size: 10pt;
+        }
         th {text-align: left;}
         td {padding-right: 20px;}
+
+        table.orgeldetails th {
+            font-weight: normal;
+        }
+
+        table.orgeldetails td {
+            font-weight: bold;
+        }
+
+        h2 {
+            margin-bottom: 3px;
+        }
     </style>
 <head>
 <body>
@@ -89,7 +105,7 @@
 </table>
 
 <h2>Orgel-Daten</h2>
-<table>
+<table class="orgeldetails">
     <tr>
         <th>Erbauer:</th>
         <td><!--Erbauer--></td>
@@ -99,15 +115,15 @@
         <td><!--Revision--></td> 
     </tr>
     <tr>
-        <th>Anzahl Manuale:</th>
+        <th>Anz. Manuale:</th>
         <td><!--AnzahlManuale--></td>
-        <th>Tonumfang Man.:</th>
+        <th>Tonumfang HW:</th>
         <td><!--Tonumfang--></td>
         <th>Pedal:</th>
         <td><!--Pedal--></td> 
     </tr>
     <tr>
-        <th>Anzahl Register:</th>
+        <th>Anz. Register:</th>
         <td><!--AnzahlRegister--></td>
         <th>Registertraktur:</th>
         <td><!--Registertraktur--></td>
@@ -133,14 +149,14 @@
     <tr>
         <th>Temperatur:</th>
         <td><!--Temperatur--></td>
-        <th>Stimmtonhoehe:</th>
+        <th>Stimmtonhöhe:</th>
         <td><!--Stimmtonhoehe--> Hz.</td>
         <th>Stimmung nach:</th>
         <td><!--StimmungNach--></td> 
     </tr>
 </table>
 
-<table>
+<table class="orgeldetails">
     <tr>
         <th>Winddrücke:</th>
         <th>I:</th>

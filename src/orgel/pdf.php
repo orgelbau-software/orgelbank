@@ -83,4 +83,3 @@ if(strpos($action, "deckbl") === 0) {
 // PDF ausgeben
 
 $db->disconnect();
-?>
