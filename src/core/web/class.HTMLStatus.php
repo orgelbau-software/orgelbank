@@ -75,10 +75,21 @@ class HTMLStatus
         echo $this->tpl->forceOutput();
     }
 
+    /**
+     * 
+     
+     * @return string
+     */
     public function getOutput()
     {
         $this->init();
         return $this->tpl->getOutput();
+    }
+
+    public function getTemplate()
+    {
+        $this->init();
+        return $this->tpl;
     }
 
     public function setStatusclass($statusclass)
@@ -99,4 +110,3 @@ class HTMLStatus
     }
 }
 
-?>

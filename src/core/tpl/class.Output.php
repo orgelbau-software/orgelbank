@@ -94,7 +94,7 @@ class Output
     /**
      * Gibt das Template als String zurueck und stellt das Ursprungstemplate wieder her
      *
-     * @return String
+     * @return string
      */
     public function getOutputAndRestore()
     {
@@ -132,7 +132,7 @@ class Output
     /**
      * Ließt ein neues Template ein
      *
-     * @param String $template
+     * @param string $template
      *            Pfadangabe
      */
     public function loadNewTemplate($pfad)
@@ -171,4 +171,3 @@ class Output
         return $s;
     }
 }
-?>

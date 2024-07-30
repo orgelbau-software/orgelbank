@@ -66,4 +66,3 @@ class AbschlagrechnungUtilities
         return $oCol;
     }
 }
-?>

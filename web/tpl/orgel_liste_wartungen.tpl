@@ -13,6 +13,9 @@
 			<option value="1" <!-- Zyklus1 -->>1 Jahr</option>
 			<option value="2" <!-- Zyklus2 -->>2 Jahre</option>
 			<option value="3" <!-- Zyklus3 -->>3 Jahre</option>
+			<option value="4" <!-- Zyklus4 -->>4 Jahre</option>
+			<option value="5" <!-- Zyklus5 -->>5 Jahre</option>
+			<option value="6" <!-- Zyklus6 -->>6 Jahre</option>
 			<!--ZyklusListe-->
 		</select> 
 		<label for="zyklus">Zyklus</label>

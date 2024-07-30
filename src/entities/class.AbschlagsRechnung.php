@@ -19,6 +19,9 @@ class AbschlagsRechnung extends Rechnung
 
     protected $gesamtMwSt;
 
+    protected $endRechnungsId;
+
+
     public function __construct($iRechnungsID = 0)
     {
         parent::__construct($iRechnungsID, "ra_id", "rechnung_abschlag", "ra_");
@@ -35,6 +38,7 @@ class AbschlagsRechnung extends Rechnung
         $ht->add($this->tablePrefix . "gesamtbrutto", $this->getGesamtBrutto());
         $ht->add($this->tablePrefix . "gesamtmwst", $this->getGesamtMwSt());
         $ht->add($this->tablePrefix . "abschlagsatz", $this->getAbschlagSatz());
+        $ht->add("re_id", $this->getEndrechnungsID());
         
         return $ht;
     }
@@ -51,6 +55,7 @@ class AbschlagsRechnung extends Rechnung
         $this->setGesamtBrutto($rs[$this->tablePrefix . 'gesamtbrutto']);
         $this->setGesamtMwSt($rs[$this->tablePrefix . 'gesamtmwst']);
         $this->setAbschlagSatz($rs[$this->tablePrefix . 'abschlagsatz']);
+        $this->setEndrechnungsID($rs['re_id']);
     }
 
     public function errechneGesamtBetrag($speichern = false)
@@ -99,6 +104,20 @@ class AbschlagsRechnung extends Rechnung
             $this->setChanged(true);
         }
     }
+
+    public function getEndrechnungsID()
+    {
+        return $this->endRechnungsId;
+    }
+
+    public function setEndrechnungsID($endRechnungsId)
+    {
+        if ($this->endRechnungsId != $endRechnungsId) {
+            $this->endRechnungsId = $endRechnungsId;
+            $this->setChanged(true);
+        }
+    }
+
 
     public function getGesamtNetto($formatiert = false)
     {

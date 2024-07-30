@@ -112,6 +112,12 @@ abstract class Rechnung extends SimpleDatabaseStorageObjekt
         $this->bruttoBetrag = $betrag;
     }
 
+    
+    /**
+     * 
+     * @param mixed $betrag
+     * @return string
+     */
     public static function toWaehrung($betrag)
     {
         return number_format($betrag, 2, ",", ".");

@@ -76,4 +76,4 @@ class OrgelController
         RequestHandler::handle(new WartungsprotokolleAction());
     }
 }
-?>
+

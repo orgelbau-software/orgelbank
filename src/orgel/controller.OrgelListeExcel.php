@@ -45,7 +45,7 @@ class OrgelListeExcel implements GetRequestHandler
     {
         $requestHandler = new OrgelRequestHandler();
         $handledRequest = $requestHandler->prepareOrgelListe();
-        // error_reporting ( null ); // gibt sonst h�ssliche Fehler im Code
+        // error_reporting ( null ); // gibt sonst hässliche Fehler im Code
         
         $workbook = new OrgelbankPHPSpreadsheetWriter();
         $workbook->setTempDir(TMPDIR);
@@ -57,8 +57,7 @@ class OrgelListeExcel implements GetRequestHandler
         Log::debug("orgel anzahl=" . $cOrgeln->getSize());
         if ($cOrgeln->getSize() == 0) {
             $tpl = new HTMLFehlerseite("Ihre Auswahl enth&auml;lt keine Orgeln");
-            $tpl->anzeigen();
-            return;
+            return $tpl->getTemplate();
         }
         
         $worksheet->write("A1", "Nr.", $frmFett);

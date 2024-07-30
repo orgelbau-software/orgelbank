@@ -1,6 +1,6 @@
 <?php
 
-class OffeneWartungen implements GetRequestHandler
+class OffeneWartungen implements GetRequestHandler, PostRequestHandler
 {
 
     /**
@@ -133,5 +133,15 @@ class OffeneWartungen implements GetRequestHandler
         
         $tpl->replace("Content", $tplDS->getOutput());
         return $tpl;
+    }
+
+    public function preparePost()
+    {
+        return;
+    }
+
+    public function executePost()
+    {
+        return $this->executeGet();
     }
 }

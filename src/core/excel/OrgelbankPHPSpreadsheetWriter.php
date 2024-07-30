@@ -32,7 +32,7 @@ class OrgelbankPHPSpreadsheetWriter
         // ignore
     }
 
-    public function addWorksheet()
+    public function addWorksheet($pWorksheetTitle = "")
     {
         return $this;
     }
