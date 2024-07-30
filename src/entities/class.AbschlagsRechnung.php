@@ -159,4 +159,3 @@ class AbschlagsRechnung extends Rechnung
         return AbschlagsRechnung::$TYPE_ID;
     }
 }
-?>
