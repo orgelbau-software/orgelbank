@@ -71,7 +71,7 @@ class ProjektBearbeitenAction implements GetRequestHandler, PostRequestHandler, 
             $_POST['angebotspreis'] = str_replace(".", "", $_POST['angebotspreis']);
             $p->setAngebotsPreis(WaehrungUtil::formatWaehrungToDB($_POST['angebotspreis']));
             
-            if ($p->getGemeindeID() <= 0 || trim($p->getBezeichnung()) == "" || strtotime($p->getStart()) == false || strtotime($p->getEnde()) == false) {
+            if ($p->getGemeindeID() <= 0 || $p->getBezeichnung() == null || trim($p->getBezeichnung()) == "" || strtotime($p->getStart()) == false || strtotime($p->getEnde()) == false) {
                 $htmlStatus->setText("Bitte Gemeinde, Bezeichnung, Start- und Enddatum ausw&auml;hlen");
                 $htmlStatus->setStatusclass(1);
             } else {

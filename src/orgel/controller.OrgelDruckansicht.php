@@ -88,7 +88,7 @@ class OrgelDruckansicht implements GetRequestHandler
         
         $c = OrgelUtilities::getDruckAnsichtOrgeln("ORDER BY " . $strSQLOrderBy . " " . $strSQLDir);
         
-        // Ausgabe der Datens�tze
+        // Ausgabe der Datensätze
         foreach ($c as $oOrgel) {
             
             // Manuale aus der Datenbank lesen
@@ -109,7 +109,7 @@ class OrgelDruckansicht implements GetRequestHandler
                 $manual = $manual . "/Pedal";
             }
             
-            // Werte ins Template einf�gen
+            // Werte ins Template einfügen
             $tplOrgelDruckDs->replace("Lfnr", ++ $i);
             $tplOrgelDruckDs->replace("OID", $oOrgel->getOrgelID());
             $tplOrgelDruckDs->replace("GID", $oOrgel->getGemeindeID());
@@ -129,11 +129,11 @@ class OrgelDruckansicht implements GetRequestHandler
                 $tplOrgelDruckDs->replace("LetztePflege", "&nbsp;");
             $tplOrgelDruckDs->replace("LetztePflege", $oOrgel->getLetztePflege(true));
             
-            if (trim($oOrgel->getPflegevertrag()) == "")
+            if ($oOrgel->getPflegevertrag() != null && trim($oOrgel->getPflegevertrag()) == "")
                 $tplOrgelDruckDs->replace("Pflegevertrag", "&nbsp;");
             $tplOrgelDruckDs->replace("Pflegevertrag", ($oOrgel->getPflegevertrag() == "1" ? "Ja" : "Nein"));
             
-            if (trim($oOrgel->getZyklus()) == "")
+            if ($oOrgel->getZyklus() != null && trim($oOrgel->getZyklus()) == "")
                 $tplOrgelDruckDs->replace("Zyklus", "&nbsp;");
             $tplOrgelDruckDs->replace("Zyklus", $oOrgel->getZyklus());
             
@@ -151,26 +151,26 @@ class OrgelDruckansicht implements GetRequestHandler
                 $tplOrgelDruckDs->replace("Bezirk", "&nbsp;");
             $tplOrgelDruckDs->replace("Bezirk", $oOrgel->getGemeindeBezirk());
             
-            if (trim($oOrgel->getFunktion()) == "")
+            if ($oOrgel->getFunktion() != null && trim($oOrgel->getFunktion()) == "")
                 $tplOrgelDruckDs->replace("Funktion", "&nbsp;");
             $tplOrgelDruckDs->replace("Funktion", $oOrgel->getFunktion());
             
-            if (trim($oOrgel->getNachname()) == "")
+            if ($oOrgel->getNachname() != null && trim($oOrgel->getNachname()) == "")
                 $tplOrgelDruckDs->replace("Nachname", "---");
             $tplOrgelDruckDs->replace("Nachname", $oOrgel->getNachname());
             
-            if (trim($oOrgel->getVorname()) == "")
+            if ($oOrgel->getVorname() != null && trim($oOrgel->getVorname()) == "")
                 $tplOrgelDruckDs->replace("Vorname", "---");
             $tplOrgelDruckDs->replace("Vorname", $oOrgel->getVorname());
             
-            if (trim($oOrgel->getTelefon()) == "")
+            if ($oOrgel->getTelefon() != null && trim($oOrgel->getTelefon()) == "")
                 $tplOrgelDruckDs->replace("Telefon", "&nbsp;");
             $tplOrgelDruckDs->replace("Telefon", $oOrgel->getTelefon());
             
             $tplOrgelDruckDs->next();
         }
         
-        // Orgeldatens�tze ins Template einf�gen
+        // Orgeldatensätze ins Template einfügen
         $tplOrgelDruck->replace("Content", $tplOrgelDruckDs->getOutput());
         
         // Template ausgeben

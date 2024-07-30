@@ -57,4 +57,4 @@ class StundenRechnungOutput extends PositionsRechnungsOutput
         $this->template->replace("AGesamt", $this->convertToEuro($s));
     }
 }
-?>
+

@@ -22,6 +22,20 @@ abstract class PositionsRechnungsOutput extends RechnungOutput
         foreach ($col as $currentPos) {
             $this->template->replace("Position" . $iPos ++ . "", $this->format($currentPos->getText()));
         }
+
+        // Wenn nicht gesetzt, dann einfach aus dem Template loeschen.
+        $this->template->replace("Position1", " ");
+        $this->template->replace("Position2", " ");
+        $this->template->replace("Position3", " ");
+        $this->template->replace("Position4", " ");
+        $this->template->replace("Position5", " ");
+        $this->template->replace("Position6", " ");
+        $this->template->replace("Position7", " ");
+        $this->template->replace("Position8", " ");
+        $this->template->replace("Position9", " ");
+        $this->template->replace("Position10", " ");
+        $this->template->replace("Gemeindenamen", " ");
+
         $this->setText1($this->getRechnung()->getText1());
         $this->setText2($this->getRechnung()->getText2());
         $this->setBetrag($this->getRechnung()->getNettoBetrag());

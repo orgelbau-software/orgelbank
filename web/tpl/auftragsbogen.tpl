@@ -9,19 +9,34 @@
             font-family: DejaVu Sans;
             font-size: 10pt;
         }
-        th {text-align: left;}
-        td {padding-right: 20px;}
+        
+        th {
+            text-align: left;
+            font-size: 0.875em;
+            vertical-align: top;
+            }
+        
+        td {
+            padding-right: 20px;
+            font-size: 0.875em;
+            vertical-align: top;
+            }
 
         table.orgeldetails th {
             font-weight: normal;
+            vertical-align: top;
+            font-size: 0.875em;
         }
 
         table.orgeldetails td {
             font-weight: bold;
+            vertical-align: top;
+            font-size: 0.875em;
         }
 
         h2 {
             margin-bottom: 3px;
+            font-size: 1.275em;
         }
     </style>
 <head>
@@ -31,7 +46,7 @@
         <td><input type="checkbox" name="stimmauftrag" id="stimmauftrag"><label for="stimmauftrag">Stimmauftrag</label></td>
         <td><input type="checkbox" name="wartungsauftrag" id="wartungsauftrag"><label for="wartungsauftrag">Wartungsauftrag</label></td>
         <td><input type="checkbox" name="reparaturauftrag" id="reparaturauftrag"><label for="reparaturauftrag">Reparaturauftrag</label></td>
-        <td>MA: <input type="text" value="<!--Mitarbeiter-->" placeholder="Mitarbeiter" name="mitarbeiter" /></td>
+        <td><label for="mitarbeiter">MA:</label> <select name="mitarbeiter" type="select"><!--MitarbeiterListe--></select></td>
     </tr>
 </table>
 
@@ -115,7 +130,7 @@
         <td><!--Revision--></td> 
     </tr>
     <tr>
-        <th>Anz. Manuale:</th>
+        <th>Register:</th>
         <td><!--AnzahlManuale--></td>
         <th>Tonumfang HW:</th>
         <td><!--Tonumfang--></td>
@@ -123,34 +138,24 @@
         <td><!--Pedal--></td> 
     </tr>
     <tr>
-        <th>Anz. Register:</th>
-        <td><!--AnzahlRegister--></td>
-        <th>Registertraktur:</th>
-        <td><!--Registertraktur--></td>
+         <th>Windladen:</th>
+        <td><!--Windladen--></td>
+        <th>Spieltraktur:</th>
+        <td><!--Spieltraktur--></td>
         <th>&nbsp;</th>
         <td>&nbsp;</td> 
     </tr>
     <tr>
-        <th>Windladen:</th>
-        <td><!--Windladen--></td>
-        <th>Spieltraktur:</th>
-        <td><!--Spieltraktur--></td>
         <th>Koppeln:</th>
         <td><!--Koppeln--></td> 
+        <th>Registertraktur:</th>
+        <td><!--Registertraktur--></td>
     </tr>
     <tr>
         <th>Pflegevertrag:</th>
         <td><!--Pflegevertrag--></td>
         <th>Zyklus:</th>
         <td><!--Zyklus--></td>
-        <th>&nbsp;</th>
-        <td>&nbsp;</td> 
-    </tr>
-    <tr>
-        <th>Temperatur:</th>
-        <td><!--Temperatur--></td>
-        <th>Stimmtonhöhe:</th>
-        <td><!--Stimmtonhoehe--> Hz</td>
         <th>Stimmung nach:</th>
         <td><!--StimmungNach--></td> 
     </tr>
@@ -210,7 +215,7 @@
     <tr>
         <td><input type="checkbox" id="einhausen" /> <label for="einhausen">Manualkoppel</label></td>
         <td><input type="checkbox" id="aushausen" /> <label for="aushausen">Pedalkoppel</label></td>
-        <td>Werk: <input type="text" placeholder="..." value="<!--Werk-->" /> Ton: <input type="text" placeholder="..." value="<!--Ton-->" /></td>
+        <td>Werk: <input type="text" placeholder="..." value="<!--Werk-->" size="10" /> Ton: <input type="text" placeholder="..." value="<!--Ton-->" size="5"/></td>
     </tr>
     <tr>
         <td colspan="3">Allgemeine Anmerkungen: <!--AllgemeineAnmerkungen--></td>
@@ -219,7 +224,7 @@
         <td colspan="3">Notwendige Maßnahmen: <!--NotwendigeMassnahmen--></td>
     </tr>
     <tr>
-        <td colspan="3">Bemerkung: <!--Bemerkung --></td>
+        <td colspan="3">Bemerkung: <input type="text" placeholder="..." value="<!--Bemerkung-->" id="bemerkung" name="bemerkung" size="75"/></td>
     </tr>
 </table>
 
@@ -233,13 +238,13 @@
     <tr>
         <td><input type="checkbox" id="schimmel" /> <label for="schimmel">Schimmelbefall</label></td>
         <td><input type="checkbox" id="schaedling" /> <label for="schaedling">Schädlingsbefall</label></td>
-        <td>______________________________________</td>
+        <td>___________________________________</td>
     </tr>
 </tabe>
 
 <table>
     <tr>
-        <td>Mitarbeiter: _________________________</td>
+        <td>Mitarbeiter: ____________________</td>
         <td>Fahrzeit: _____ Std.</td>
         <td>Arbeitszeit: _____ Std.</td>
         <td>km: _____</td>

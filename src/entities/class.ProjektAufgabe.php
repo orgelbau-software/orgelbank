@@ -28,7 +28,7 @@ class ProjektAufgabe extends AdvancedDatabaseStorageObjekt
     protected function laden()
     {
         $rs = $this->result;
-        $this->planlkosten = $rs["pa_plankosten"];
+        $this->plankosten = $rs["pa_plankosten"];
         $this->reihenfolge = $rs["pa_reihenfolge"];
         $this->sollStunden = $rs["pa_sollstunden"];
         $this->istStunden = $rs["pa_iststunden"];

@@ -8,8 +8,8 @@ class Utilities
      *
      * Wird u.a. in den Rechnungs-Klassen zur Generierung des Speicherorts verwendet.
      *
-     * @param String $zielpfad            
-     * @return String mit ersetzten Sonderzeichen
+     * @param string $zielpfad            
+     * @return string mit ersetzten Sonderzeichen
      */
     public static function ersetzeZeichen($zielpfad)
     {

@@ -40,6 +40,9 @@ abstract class RechnungOutput
         
         $this->setKundenNr($this->gemeinde->getKundenNr());
         $this->setGemeindeNamen($this->gemeinde->getRGemeinde());
+
+        $this->template->replace("Kirche", $this->gemeinde->getKirche());
+
         $this->setGemeinde($this->gemeinde->getRAnschrift());
         $this->setStrasse($this->gemeinde->getRechnungAdresse()
             ->getStrasse());
@@ -86,7 +89,7 @@ abstract class RechnungOutput
         $ordner = RECHNUNGDIR . $jahr . "/" . $this->unterordner;
         
         $rechNr = str_replace("/", "-", $this->rechnung->getNummer());
-        $kirche = str_replace("/", "-", $this->gemeinde->getKirche());
+        $kirche = str_replace("/", "-", ($this->gemeinde->getKirche() != "" ? $this->gemeinde->getKirche() : "leer"));
         $dateiname = $kirche . "-" . $rechNr;
         $dateiname = Utilities::ersetzeZeichen($dateiname);
         

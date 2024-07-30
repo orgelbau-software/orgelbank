@@ -21,7 +21,7 @@
       </tr>
         <tr>
       <th>Email:</th>
-        <td><input type="text" name="email" class="txt140" value="<!--Email-->" /></td>
+        <td><input type="email" name="email" class="txt140" value="<!--Email-->" /></td>
       </tr>
       <tr>
         <th>Passwort:</th>

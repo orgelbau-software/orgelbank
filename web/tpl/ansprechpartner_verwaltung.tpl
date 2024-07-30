@@ -98,7 +98,7 @@
 				<tr>
 					<th>EMail:</th>
 					<td>
-						<input type="text" name="email" maxlength="50" value="<!--EMail-->" class="txt215">
+						<input type="email" name="email" maxlength="50" value="<!--EMail-->" class="txt215">
 						<a href="mailto:<!--EMail-->" title="Neue Email an <!--EMail-->">
 							<img src="web/images/icons/mail_light_new_1.png" alt="Neue Email"/>
 						</a>
@@ -107,7 +107,7 @@
 				<tr>
 					<th>Webseite:</th>
 					<td>
-						<input type="text" name="webseite" maxlength="50" value="<!--AnsprechpartnerWebseite-->" class="txt215">
+						<input type="url" name="webseite" maxlength="50" value="<!--AnsprechpartnerWebseite-->" class="txt215">
 						<a href="<!--AnsprechpartnerWebseite-->" target="_blank" title="Gehe zu <!--AnsprechpartnerWebseite-->">
 							<img src="web/images/icons/application_osx_right.png" alt="Gehe zu Webseite"/>
 						</a>

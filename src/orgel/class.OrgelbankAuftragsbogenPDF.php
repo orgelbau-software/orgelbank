@@ -27,6 +27,10 @@ class OrgelbankAuftragsbogenPDF
 
         $tpl = new Template("auftragsbogen.tpl");
 
+        $cBenutzer = BenutzerUtilities::getBenutzer();
+        $htmlSelectMitarbeiter1 = new HTMLSelect($cBenutzer, "getBenutzername", "");
+        $tpl->replace("MitarbeiterListe", $htmlSelectMitarbeiter1->getOutput());
+
         $tpl->replace("Mitarbeiter", "");
 
         $tpl->replace("OrgelID", $orgel->getID());
@@ -73,7 +77,7 @@ class OrgelbankAuftragsbogenPDF
         $tpl->replace("Erbauer", $orgel->getErbauer());
         $tpl->replace("Baujahr", $orgel->getBaujahr());
         $tpl->replace("RevisionArt", (isset($t[$orgel->getOstID()]) != "" ? $t[$orgel->getOstID()] : ""));
-        $tpl->replace("Revision", $orgel->getRenoviert());
+        $tpl->replace("Revision", $orgel->getRenoviert() == "" ? "?" : $orgel->getRenoviert());
         $tpl->replace("AnzahlManuale", $anzahlManuale);
         $tpl->replace("AnzahlRegister", $orgel->getRegisterAnzahl());
         $tpl->replace("Pflegevertrag", $pflegevertrag);
@@ -86,19 +90,19 @@ class OrgelbankAuftragsbogenPDF
         $tpl->replace("Registertraktur", $r[$orgel->getRegistertrakturID()]);
         $tpl->replace("Spieltraktur", $s[$orgel->getSpieltrakturID()]);
 
-        $tpl->replace("Tonumfang", $orgel->getGroesseM1());
-        $tpl->replace("Pedal", $orgel->getGroesseM6());
+        $tpl->replace("Tonumfang", ($orgel->getGroesseM1() == "" ? "?" : $orgel->getGroesseM1()));
+        $tpl->replace("Pedal", ($orgel->getGroesseM6() == "" ? "?" : $orgel->getGroesseM6()));
 
-        $tpl->replace("WinddruckManual1", ($orgel->getWinddruckM1() != "" ? $orgel->getWinddruckM1()." mm" : ""));
-        $tpl->replace("WinddruckManual2", ($orgel->getWinddruckM2() != "" ? $orgel->getWinddruckM2()." mm" : ""));
-        $tpl->replace("WinddruckManual3", ($orgel->getWinddruckM3() != "" ? $orgel->getWinddruckM3()." mm" : ""));
-        $tpl->replace("WinddruckManual4", ($orgel->getWinddruckM4() != "" ? $orgel->getWinddruckM4()." mm" : ""));
-        $tpl->replace("WinddruckManual5", ($orgel->getWinddruckM5() != "" ? $orgel->getWinddruckM5()." mm" : ""));
-        $tpl->replace("WinddruckPedal", ($orgel->getWinddruckM6() != "" ? $orgel->getWinddruckM6()." mm" : ""));
+        $tpl->replace("WinddruckManual1", ($orgel->getWinddruckM1() != "" ? $orgel->getWinddruckM1()." mm" : "---"));
+        $tpl->replace("WinddruckManual2", ($orgel->getWinddruckM2() != "" ? $orgel->getWinddruckM2()." mm" : "---"));
+        $tpl->replace("WinddruckManual3", ($orgel->getWinddruckM3() != "" ? $orgel->getWinddruckM3()." mm" : "---"));
+        $tpl->replace("WinddruckManual4", ($orgel->getWinddruckM4() != "" ? $orgel->getWinddruckM4()." mm" : "---"));
+        $tpl->replace("WinddruckManual5", ($orgel->getWinddruckM5() != "" ? $orgel->getWinddruckM5()." mm" : "---"));
+        $tpl->replace("WinddruckPedal", ($orgel->getWinddruckM6() != "" ? $orgel->getWinddruckM6()." mm" : "---"));
 
         $tpl->replace("AllgemeineAnmerkungen", $orgel->getAnmerkung());
         $tpl->replace("NotwendigeMassnahmen", $orgel->getMassnahmen());
-        $tpl->replace("Bemerkung", "???"); // Wo kommt die her?
+        $tpl->replace("Bemerkung", " "); // Wo kommt die her?
 
         // Wartungen
         $stimmungen = Constant::getStimmung();

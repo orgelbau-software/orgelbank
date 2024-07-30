@@ -23,7 +23,7 @@
 	<tr>
 		<th>Email:</th>
 		<td>
-			<input type="text" name="email" size="35" value="<!--Email-->" />
+			<input type="email" name="email" size="35" value="<!--Email-->" />
 		</td>
 	</tr>
 	<tr>
@@ -37,13 +37,13 @@
 	<tr>
 		<th>Passwort:</th>
 		<td>
-			<input type="password" name="passwort" size="20" value="" /> (Mindestens <!--MinPWLength--> Zeichen)
+			<input type="password" name="passwort" size="20" value="" autocomplete="new-password" /> (Mindestens <!--MinPWLength--> Zeichen)
 		</td>
 	</tr>
 	<tr>
 		<th>Best&auml;tigung:</th>
 		<td>
-			<input type="password" name="bestaetigung" size="20" value="" />
+			<input type="password" name="bestaetigung" size="20" value="" autocomplete="new-password" />
 		</td>
 	</tr>
 	<tr>
