@@ -218,6 +218,7 @@ include_once ROOTDIR . 'src/orgel/controller.OrgelListeAction.php';
 include_once ROOTDIR . 'src/orgel/controller.OrgelListeExcel.php';
 include_once ROOTDIR . 'src/orgel/controller.OffeneWartungen.php';
 include_once ROOTDIR . 'src/orgel/controller.OrgelDruckansicht.php';
+include_once ROOTDIR . 'src/orgel/controller.OffeneWartungenDruckansicht.php';
 include_once ROOTDIR . 'src/orgel/controller.NeueOrgelAnlegen.php';
 include_once ROOTDIR . 'src/orgel/controller.OrgelLoeschen.php';
 include_once ROOTDIR . 'src/orgel/controller.OrgelGemeindeVerbindungLoeschen.php';

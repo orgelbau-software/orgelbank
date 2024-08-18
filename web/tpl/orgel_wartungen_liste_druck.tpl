@@ -58,7 +58,7 @@
 <div style="float: right;">
 	<a href="#" id="triggerDruckMenu">Druckmenu Anzeigen / Ausblenden</a>
 </div>
-<h3>Orgel - Druckansicht vom <!--Datum--></h3>
+<h3>Offene Wartungen - Druckansicht vom <!--Datum--></h3>
 
 <div id="druckmenu" style="border: 1px solid black; background-color: c9c9c9; clear: both; padding: 5px; margin: 5px;">
 <ul style="list-style-type: none;">
@@ -73,6 +73,7 @@
 	<li><input type="checkbox" class="jsColumn" id="jsErbauer" value="jsErbauer" checked="checked"/><label for="jsErbauer">Erbauer</label></li>
 	<li><input type="checkbox" class="jsColumn" id="jsBaujahr" value="jsBaujahr" checked="checked"/><label for="jsBaujahr">Baujahr</label></li>
 	<li><input type="checkbox" class="jsColumn" id="jsLetztePflege" value="jsLetztePflege" checked="checked"/><label for="jsLetztePflege">Letzte Pflege</label></li>
+	<li><input type="checkbox" class="jsColumn" id="jsNaechstePflege" value="jsNaechstePflege" checked="checked"/><label for="jsNaechstePflege">Naechste Pflege</label></li>
 	<li><input type="checkbox" class="jsColumn" id="jsPflegevertrag" value="jsPflegevertrag" checked="checked"/><label for="jsPflegevertrag">Pflegevetrag</label></li>
 	<li><input type="checkbox" class="jsColumn" id="jsZyklus" value="jsZyklus" checked="checked"/><label for="jsZyklus">Zyklus</label></li>
 	<li><input type="checkbox" class="jsColumn" id="jsManuale" value="jsManuale" checked="checked"/><label for="jsManuale">Manuale</label></li>
@@ -86,22 +87,23 @@
 </ul>
 </div>
 
-<!--OrgelAnzahl--> Orgeln in der Datenbank gefunden.
+<!--OrgelAnzahl--> Offene Wartungen in der Datenbank gefunden.
 <br /><br />
 <table>
 	<tr>
 		<th>Nr.</th>
-		<th class="jsGemeinde"><a href="orgeln.php?action=druckwartungen&order=gemeinde&dir=<!--Dir-->">Gemeinde</a></th>
-		<th class="jsErbauer"><a href="orgeln.php?action=druckwartungen&order=erbauer&dir=<!--Dir-->">Erbauer</a></th>
-		<th class="jsBaujahr" ><a href="orgeln.php?action=druckwartungen&order=baujahr&dir=<!--Dir-->">Baujahr</a></th>
-		<th class="jsLetztePflege"><a href="orgeln.php?action=druckwartungen&order=wartung&dir=<!--Dir-->">Letzte Pflege</a></th>
-		<th class="jsPflegevertrag"><a href="orgeln.php?action=druckwartungen&order=pflegevertrag&dir=<!--Dir-->">Pflegevertrag</a></th>
-		<th class="jsZyklus"><a href="orgeln.php?action=druckwartungen&order=zyklus&dir=<!--Dir-->">Zyklus</a></th>
+		<th class="jsGemeinde"><a href="orgeln.php?action=druckwartungen&order=gemeinde&dir=<!--Dir-->&zyklus=<!--Zyklus-->">Gemeinde</a></th>
+		<th class="jsErbauer"><a href="orgeln.php?action=druckwartungen&order=erbauer&dir=<!--Dir-->&zyklus=<!--Zyklus-->">Erbauer</a></th>
+		<th class="jsBaujahr" ><a href="orgeln.php?action=druckwartungen&order=baujahr&dir=<!--Dir-->&zyklus=<!--Zyklus-->">Baujahr</a></th>
+		<th class="jsLetztePflege"><a href="orgeln.php?action=druckwartungen&order=wartung&dir=<!--Dir-->&zyklus=<!--Zyklus-->">Letzte Pflege</a></th>
+		<th class="jsNaechstePflege"><a href="orgeln.php?action=druckwartungen&order=naechstepflege&dir=<!--Dir-->&zyklus=<!--Zyklus-->">Naechste Pflege</a></th>
+		<th class="jsPflegevertrag"><a href="orgeln.php?action=druckwartungen&order=pflegevertrag&dir=<!--Dir-->&zyklus=<!--Zyklus-->">Pflegevertrag</a></th>
+		<th class="jsZyklus"><a href="orgeln.php?action=druckwartungen&order=zyklus&dir=<!--Dir-->&zyklus=<!--Zyklus-->">Zyklus</a></th>
 		<th class="jsManuale">Manuale</th>
-		<th class="jsRegister"><a href="orgeln.php?action=druckwartungen&order=register&dir=<!--Dir-->">Register</a></th>
-		<th class="jsPLZ"><a href="orgeln.php?action=druckwartungen&order=plz&dir=<!--Dir-->">PLZ</a></th>
-		<th class="jsOrt"><a href="orgeln.php?action=druckwartungen&order=ort&dir=<!--Dir-->">Ort</a></th>
-		<th class="jsBezirk"><a href="orgeln.php?action=druckwartungen&order=bezirk&dir=<!--Dir-->">Bezirk</a></th>
+		<th class="jsRegister"><a href="orgeln.php?action=druckwartungen&order=register&dir=<!--Dir-->&zyklus=<!--Zyklus-->">Register</a></th>
+		<th class="jsPLZ"><a href="orgeln.php?action=druckwartungen&order=plz&dir=<!--Dir-->&zyklus=<!--Zyklus-->">PLZ</a></th>
+		<th class="jsOrt"><a href="orgeln.php?action=druckwartungen&order=ort&dir=<!--Dir-->&zyklus=<!--Zyklus-->">Ort</a></th>
+		<th class="jsBezirk"><a href="orgeln.php?action=druckwartungen&order=bezirk&dir=<!--Dir-->&zyklus=<!--Zyklus-->">Bezirk</a></th>
 		<th class="jsAFunktion">Funktion</th>
 		<th class="jsNachname">Name</th>
 		<th class="jsATelefon">Telefon</th>

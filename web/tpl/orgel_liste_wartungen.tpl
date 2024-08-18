@@ -1,7 +1,13 @@
 	<div class="export">
 		<ul>
-			<li><a title="Gemeindelist im reinen Druckformat" target="_blank" href="#"><img src="web/images/icon_print.png" /></a></li>
-			<li><a title="Aktuelle Liste nach Excel exportieren" target="_blank" href="#"><img src="web/images/icon_excel.png" /></a></li>
+			<li>
+				<a title="Gemeindelist im reinen Druckformat" target="_blank" href="src/orgel/orgeln.php?action=druckwartungen&sid=<!--SessionID-->&zyklus=<!--ZyklusDruck-->&unbekannt=<!--Unbekannt-->">
+					<img src="web/images/icons/printer.png" /></a>
+			</li>
+			<li>
+				<a title="Aktuelle Liste nach Excel exportieren" target="_blank" href="src/orgel/orgeln.php?action=exportwartungen&format=xls&order=<!--Order-->&dir=<!--Dir-->&index=<!--Index-->&sid=<!--SessionID-->&zyklus=<!--ZyklusDruck-->&unbekannt=<!--Unbekannt-->">
+					<img src="web/images/icon_excel.png" /></a>
+			</li>
 		</ul>
 	</div>
 	

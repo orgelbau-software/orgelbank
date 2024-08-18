@@ -55,24 +55,31 @@ class OrgelbankSessionHandler implements SessionHandlerInterface
      * @return TRUE if successul
      */
     public function write(string $id, string $data) : bool
-    {
+        {
+            
         if (! $data) {
             return false;
         }
-        $expire = time() + SESSION_DEFAULT_EXPIRE;
         
-        $db = DB::getInstance();
-        $data = $db->real_escape_string(base64_encode($data));
-        
-        $query = "SELECT * FROM http_session WHERE id = '" . $id . "'";
-        
-        if ($db->getMysqlNumRows($query) == 1) {
-            $query = "UPDATE http_session SET data='" . $data . "', expire=" . $expire . " WHERE id='" . $id . "'";
-        } else {
-            $query = "INSERT INTO http_session SET id='" . $id . "', data='" . $data . "', expire='" . $expire . "', session_start='" . time() . "'";
+        try {
+            $expire = time() + SESSION_DEFAULT_EXPIRE;
+            
+            $db = DB::getInstance();
+            $data = $db->real_escape_string(base64_encode($data));
+            
+            $query = "SELECT * FROM http_session WHERE id = '" . $id . "'";
+            
+            if ($db->getMysqlNumRows($query) == 1) {
+                $query = "UPDATE http_session SET data='" . $data . "', expire=" . $expire . " WHERE id='" . $id . "'";
+            } else {
+                $query = "INSERT INTO http_session SET id='" . $id . "', data='" . $data . "', expire='" . $expire . "', session_start='" . time() . "'";
+            }
+            $db->NonSelectQuery($query);
+            return true;
+        } catch(Exception $e) {
+            ExceptionHandler::handle($e);
+            return false;
         }
-        $db->NonSelectQuery($query);
-        return true;
     }
 
     /**

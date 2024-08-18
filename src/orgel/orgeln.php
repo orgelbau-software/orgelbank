@@ -14,12 +14,18 @@ if ($user->validateSession() == false) {
 if (isset($_GET['action'])) {
     if ($_GET['action'] == "druck") {
         OrgelController::zeigeOrgelDruckansicht();
+    }  else if ($_GET['action'] == "druckwartungen") {
+        OrgelController::zeigeWartungenDruckansicht();
     } else if ($_GET['action'] == "wartungsplanung") {
         OrgelController::insertOrgelWartung();
     } else {
         if ($_GET['action'] == "export" && isset($_GET['format'])) {
             if ($_GET['format'] == "xls") {
                 OrgelController::exportOrgelListeExcel();
+            }
+        } else if ($_GET['action'] == "exportwartungen" && isset($_GET['format'])) {
+            if ($_GET['format'] == "xls") {
+                OrgelController::exportWartungsListeExcel();
             }
         }
     }

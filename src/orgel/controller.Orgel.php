@@ -46,6 +46,14 @@ class OrgelController
         RequestHandler::handle(new OrgelDruckansicht());
     }
 
+    /**
+     * Zeigt die Offenen Wartungen Druckansicht
+     */
+    public static function zeigeWartungenDruckansicht()
+    {
+        RequestHandler::handle(new OffeneWartungenDruckansicht());
+    }
+
     public static function zeigeOrgelListe()
     {
         RequestHandler::handle(new OrgelListeAction());

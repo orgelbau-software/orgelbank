@@ -151,7 +151,15 @@ class ErrorHandler
 
     private function isOnline()
     {
-        return $_SERVER['REMOTE_ADDR'] != "127.0.0.1";
+        if($_SERVER['REMOTE_ADDR'] == "::1") {
+            return false;
+        }
+
+        if($_SERVER['REMOTE_ADDR'] == "127.0.0.1") {
+            return false;
+        }
+        
+        return true;
     }
 }
 ?>

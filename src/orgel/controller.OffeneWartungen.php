@@ -51,6 +51,7 @@ class OffeneWartungen implements GetRequestHandler, PostRequestHandler
         $handler = new OrgelOffeneWartungenRequestHandler();
         $handler = $handler->handleRequest();
         
+        $tpl->replace("ZyklusDruck", $handler['zyklus']);
         $tpl->replace("Zyklus" . $handler['zyklus'], Constant::$HTML_SELECTED_SELECTED);
         foreach (Constant::getZyklus() as $zahl => $text) {
             $tpl->replace("Zyklus" . $zahl, "");
