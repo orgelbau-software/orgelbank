@@ -1,26 +1,35 @@
 <?php
 include_once '../../conf/config.inc.php';
+$oDB = DB::getInstance();
+$oDB->connect();
+
+session_start();
+
+ConstantLoader::performAutoload();
+
+$user = new WebBenutzer();
+if ($user->validateSession() == false) {
+    die("keine gueltige session");
+}
 
 // Ausgabe in der Orgeldetail ansicht
-if (isset($_GET['ansicht']) && $_GET['ansicht'] == "liste") {
-    DispositionController::zeigeDisposition();
-} elseif (isset($_GET['action'], $_GET['term']) && $_GET['action'] == "ajax") {
-    
-    $db = DB::getInstance();
-    $db->connect();
+if (isset($_GET['action'], $_GET['term']) && $_GET['action'] == "ajax") {
     
     $retVal = array();
-    if ($_GET['term']) {
+    if ($_GET['term'] && $_GET['term'] != "") {
+
+        $term = htmlspecialchars($_GET['term']);
+
         $query = "SELECT DISTINCT 
 	   					d_name
 					FROM 
 						disposition
 					WHERE 
-						d_name LIKE '" . $_GET['term'] . "%' AND
-						d_name <> '" . $_GET['term'] . "'
+						d_name LIKE '" .$term . "%' AND
+						d_name <> '" . $term . "'
 					LIMIT 
 						5";
-        $results = $db->SelectQuery($query);
+        $results = $oDB->SelectQuery($query);
         
         $values = array();
         
@@ -37,4 +46,6 @@ if (isset($_GET['ansicht']) && $_GET['ansicht'] == "liste") {
     $tpl = DispositionController::ajaxSortiereDisposition();
     echo json_encode($tpl);
 }
+
+$oDB->disconnect();
 ?>
