@@ -38,23 +38,29 @@
             margin-bottom: 3px;
             font-size: 1.275em;
         }
+
+        textarea {
+            border:1px solid #999999;
+            width:98%;
+            margin:5px 0;
+            padding:1%;
+        }
     </style>
 <head>
 <body>
 <table>
     <tr>
+        <td><label for="mitarbeiter">MA:</label> <select name="mitarbeiter" type="select"><!--MitarbeiterListe--></select></td>
         <td><input type="checkbox" name="stimmauftrag" id="stimmauftrag"><label for="stimmauftrag">Stimmauftrag</label></td>
         <td><input type="checkbox" name="wartungsauftrag" id="wartungsauftrag"><label for="wartungsauftrag">Wartungsauftrag</label></td>
         <td><input type="checkbox" name="reparaturauftrag" id="reparaturauftrag"><label for="reparaturauftrag">Reparaturauftrag</label></td>
-        <td><label for="mitarbeiter">MA:</label> <select name="mitarbeiter" type="select"><!--MitarbeiterListe--></select></td>
     </tr>
 </table>
 
 <table>
     <tr>
-        <td>Datum: <input type="date" name="stimmauftrag" id="datum"></td>
-        <td>Uhrzeit: <input type="time" name="uhrzeit" id="uhrzeit"> Uhr</td>
-        <td>bis spätestens: <input type="time" name="uhrzeit_spaetestens" id="uhrzeit_spaetestens"> Uhr</td>
+        <td>Von: <input type="date" name="stimmauftrag_von" id="datum_von"> ab <input type="time" name="uhrzeit_von" id="uhrzeit"></td>
+        <td>Bis: <input type="date" name="stimmauftrag_bis" id="datum_bis"> bis spätestens: <input type="time" name="uhrzeit_bis" id="uhrzeit_bis"></td>
     </tr>
 </table>
 
@@ -72,20 +78,20 @@
 </table>
 
 <h2><!--Kirche--></h2>
-<table>
+<table style="width: 100%">
     <tr>
-        <td style="font-weight: bold; padding-right: 20px;">
+        <td style="font-weight: bold; padding-right: 100px;">
             Kirche</br>
             <!--Kirche-->
         </td>
-        <td style=" padding-right: 20px;">
+        <td style="padding-right: 100px;">
             Pfarramt</br>
             <!--RKirche-->
         </td>
         <td>Bezirk: <!--Bezirk--></td>
     </tr>
     <tr>
-        <td>
+        <td style="font-weight: bold;">
             <!--Strasse--> <!--Hsnr-->
         </td>
         <td>
@@ -94,7 +100,7 @@
         <td>Orgel: <!--OrgelID--></td>
     </tr>
     <tr>
-        <td>
+        <td style="font-weight: bold;">
             <!--PLZ--> <!--Ort-->
         </td>
         <td>
@@ -159,6 +165,14 @@
         <th>Stimmung nach:</th>
         <td><!--StimmungNach--></td> 
     </tr>
+    <tr>
+        <th>Kircheschlüssel:</th>
+        <td><!--Kircheschluessel--></td>
+        <th>Orgamat:</th>
+        <td><!--Orgamat--></td>
+        <th></th>
+        <td></td> 
+    </tr>
 </table>
 
 <table class="orgeldetails">
@@ -207,24 +221,22 @@
         <td><input type="checkbox" id="aushausen" /> <label for="aushausen">Aushausen der Orgel</label></td>
         <td><input type="checkbox" id="granulat" /> <label for="granulat">Granulat auswechseln</label></td>
     </tr>
+    <!--<tr>-->
+        <!--<td><input type="checkbox" id="heuler" /> <label for="heuler">Heulerbeseitigung</label></td>-->
+        <!--<td><input type="checkbox" id="versager" /> <label for="versager">Versagerbeseitigung</label></td>-->
+        <!--<td>&nbsp;</td>-->
+    <!--</tr>-->
     <tr>
-        <td><input type="checkbox" id="heuler" /> <label for="heuler">Heulerbeseitigung</label></td>
-        <td><input type="checkbox" id="versager" /> <label for="versager">Versagerbeseitigung</label></td>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
-        <td><input type="checkbox" id="einhausen" /> <label for="einhausen">Manualkoppel</label></td>
-        <td><input type="checkbox" id="aushausen" /> <label for="aushausen">Pedalkoppel</label></td>
-        <td>Werk: <input type="text" placeholder="..." value="<!--Werk-->" size="10" /> Ton: <input type="text" placeholder="..." value="<!--Ton-->" size="5"/></td>
+        <!--<td><input type="checkbox" id="einhausen" /> <label for="einhausen">Manualkoppel</label></td>-->
+        <!--<td><input type="checkbox" id="aushausen" /> <label for="aushausen">Pedalkoppel</label></td>-->
+        <!--<td>Werk: <input type="text" placeholder="..." value="<!--Werk-->" size="10" /> Ton: <input type="text" placeholder="..." value="<!--Ton-->" size="5"/></td>-->
+        <td colspan="3" style="text-align: top;">Fehlerbeschreibung: <textarea id="beschreibung" name="beschreibung"></textarea></td>
     </tr>
     <tr>
         <td colspan="3">Allgemeine Anmerkungen: <!--AllgemeineAnmerkungen--></td>
     </tr>
     <tr>
         <td colspan="3">Notwendige Maßnahmen: <!--NotwendigeMassnahmen--></td>
-    </tr>
-    <tr>
-        <td colspan="3">Bemerkung: <input type="text" placeholder="..." value="<!--Bemerkung-->" id="bemerkung" name="bemerkung" size="75"/></td>
     </tr>
 </table>
 
@@ -248,6 +260,9 @@
         <td>Fahrzeit: _____ Std.</td>
         <td>Arbeitszeit: _____ Std.</td>
         <td>km: _____</td>
+    </tr>
+     <tr>
+        <td colspan="4">Übernachtung: __________________________________</td>
     </tr>
 </table>
 

@@ -157,6 +157,10 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
             $tplOrgelDetails->replace("SelectedPflege" . $zahl, "");
         }
         
+        // Orgamat
+        $tplOrgelDetails->replace("Orgamat", "");
+        $tplOrgelDetails->replace("Kirchenschluessel", "");
+
         // Wartungen
         $cWartungen = WartungUtilities::getOrgelWartungen($oOrgel->getID(), " ORDER BY w_datum DESC");
         $tplWartungen = new BufferedTemplate("orgel_details_wartung_ds.tpl", "CSS", "td1", "td2");
