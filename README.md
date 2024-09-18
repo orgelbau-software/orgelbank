@@ -37,3 +37,16 @@ Delete the pre-configured PHP files, like
 7. Configure Cronjobs
 * Weekly Sunday: Database Backup: https://customer.orgelbau-software.de/src/cronjobs/db_backup.php
 * Weekly Sunday: Weekly Tasks: https://customer.orgelbau-software.de/src/cronjobs/cronjob.php?key=<API KEY DEFINED IN CONFIG.PHP>
+
+# Autoupdate
+Updates via GIT are recommmended.
+```
+    git clone https://github.com/orgelbau-software/orgelbank.git
+    mv orgelbank/.git .
+    mv orgelbank/.gitignore .
+    mv orgelbank/* .
+    cp backup-swa-20240918/conf/xxx.yyy.conf.php conf/
+    vi conf/config.inc.php
+    
+    git pull 
+```
