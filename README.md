@@ -48,5 +48,12 @@ Updates via GIT are recommmended.
     cp backup-swa-20240918/conf/xxx.yyy.conf.php conf/
     vi conf/config.inc.php
     
+    # File needs execute permission to run GIT commands
+    chmod 775 autupdate.php
+    
+    # Call git pull OR
     git pull 
+    
+    # Call 
+    https://yourdomain.de/autupdate.php
 ```
