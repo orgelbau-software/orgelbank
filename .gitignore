@@ -22,4 +22,6 @@ vendor/*
 backup/*.sql.gz
 resources/fo_import/*.csv
 resources/fo_import/*.wdb
+resources/vorlagen/*.sql
 resources/vorlagen/*.docx
+resources/vorlagen/*.rtf
