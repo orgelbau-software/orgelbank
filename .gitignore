@@ -25,3 +25,4 @@ resources/fo_import/*.wdb
 resources/vorlagen/*.sql
 resources/vorlagen/*.docx
 resources/vorlagen/*.rtf
+usage/
