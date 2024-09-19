@@ -110,8 +110,8 @@ class OrgelUtilities
                     o_massnahmen LIKE '%" . $suchstring . "%' OR
                     o_anmerkung LIKE '%" . $suchstring . "%' OR
 					g_kirche LIKE '" . $suchstring . "%' OR
-					ad_ort LIKE '" . $suchstring . "' OR
-					ad_plz LIKE '" . $suchstring . "'
+					ad_ort LIKE '%" . $suchstring . "%' OR
+					ad_plz LIKE '" . $suchstring . "%'
 			) ";
         }
 
