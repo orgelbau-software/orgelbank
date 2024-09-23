@@ -36,10 +36,10 @@ abstract class RechnungOutput
     {
         $this->rechnung->errechneGesamtBetrag();
         
-        $this->ersetzeRechnungsTags();
-        
         $this->setKundenNr($this->gemeinde->getKundenNr());
         $this->setGemeindeNamen($this->gemeinde->getRGemeinde());
+
+        $this->ersetzeRechnungsTags();
 
         $this->template->replace("Kirche", $this->gemeinde->getKirche());
 
