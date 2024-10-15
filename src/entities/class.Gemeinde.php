@@ -267,8 +267,8 @@ class Gemeinde extends SimpleDatabaseStorageObjekt
     /**
      * Gibt die Ansprechpartner der Gemeinde zurück
      *
-     * @param String $strOrderBy            
-     * @return
+     * @param string $strOrderBy            
+     * @return DatabaseStorageObjektCollection
      *
      */
     public function getAnsprechpartner($strOrderBy = null)

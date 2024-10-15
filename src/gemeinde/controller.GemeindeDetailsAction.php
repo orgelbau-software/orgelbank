@@ -134,7 +134,13 @@ class GemeindeDetailsAction implements GetRequestHandler, PostRequestHandler
                 $tplPartnerDS->replace("Funktion", $oAnsprechpartner->getFunktion());
                 $tplPartnerDS->replace("Vorname", $oAnsprechpartner->getVorname());
                 $tplPartnerDS->replace("Nachname", $oAnsprechpartner->getNachname());
-                $tplPartnerDS->replace("Telefon", $oAnsprechpartner->getTelefon());
+                if($oAnsprechpartner->getTelefon() == "") {
+                    $tplPartnerDS->replace("Telefon", $oAnsprechpartner->getTelefon());
+                } else if($oAnsprechpartner->getMobil() != "") {
+                    $tplPartnerDS->replace("Telefon", $oAnsprechpartner->getMobil());
+                } else {
+                    $tplPartnerDS->replace("Telefon", "");
+                }
                 $tplPartnerDS->replace("AID", $oAnsprechpartner->getID());
                 $tplPartnerDS->next();
             }
