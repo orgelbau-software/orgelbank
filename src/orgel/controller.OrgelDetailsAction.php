@@ -158,8 +158,8 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
         }
         
         // Orgamat
-        $tplOrgelDetails->replace("Orgamat", "");
-        $tplOrgelDetails->replace("Kirchenschluessel", "");
+        $tplOrgelDetails->replace("Orgamat", $oOrgel->getOrgamat());
+        $tplOrgelDetails->replace("Kirchenschluessel", $oOrgel->getKirchenschluessel());
 
         // Wartungen
         $cWartungen = WartungUtilities::getOrgelWartungen($oOrgel->getID(), " ORDER BY w_datum DESC");
@@ -354,6 +354,9 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
         $oOrgel->setMassnahmen($_POST['massnahmen']);
         $oOrgel->setGemeindeId($_POST['gemeindeid']);
         $oOrgel->setRegisterAnzahl(isset($_POST['registeranzahl']) ? intval($_POST['registeranzahl']) : 0);
+        
+        $oOrgel->setOrgamat($_POST['orgamat']);
+        $oOrgel->setKirchenSchluessel($_POST['kirchenschluessel']);
         
         if (isset($_POST['wartungsprotokollId'])) {
             $oOrgel->setWartungsprotokollID($_POST['wartungsprotokollId']);

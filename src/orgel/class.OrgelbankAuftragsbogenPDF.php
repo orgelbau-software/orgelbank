@@ -81,6 +81,8 @@ class OrgelbankAuftragsbogenPDF
         $tpl->replace("AnzahlManuale", $anzahlManuale);
         $tpl->replace("AnzahlRegister", $orgel->getRegisterAnzahl());
         $tpl->replace("Pflegevertrag", $pflegevertrag);
+        $tpl->replace("Kirchenschluessel", $orgel->getKirchenschluessel());
+        $tpl->replace("Orgamat", $orgel->getOrgamat());
         $tpl->replace("Zyklus", $z[$orgel->getZyklus()]);
         $tpl->replace("Temperatur", "?");
         $tpl->replace("Stimmtonhoehe", $orgel->getStimmton());

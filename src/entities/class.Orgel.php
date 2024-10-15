@@ -100,6 +100,10 @@ class Orgel extends SimpleDatabaseStorageObjekt
 
     private $register;
 
+    private $orgamat;
+
+    private $kirchenschluessel;
+
     // Konstruktor
     public function __construct($iID = 0, $primaryKey = "o_id", $tableName = "orgel", $tablePrefix = "o_")
     {
@@ -152,6 +156,8 @@ class Orgel extends SimpleDatabaseStorageObjekt
         $ht->add("o_kostenteilstimmung", $this->getKostenTeilstimmung());
         $ht->add("wp_id", $this->getWartungsprotokollID());
         $ht->add("o_intervallhaupstimmung", $this->getIntervallHauptstimmung());
+        $ht->add("o_orgamat", $this->getOrgamat());
+        $ht->add("o_kirchenschluessel", $this->getKirchenschluessel());
         
         return $ht;
     }
@@ -202,6 +208,8 @@ class Orgel extends SimpleDatabaseStorageObjekt
         $this->setKostenTeilstimmung($rs['o_kostenteilstimmung']);
         $this->setWartungsprotokollID($rs['wp_id']);
         $this->setIntervallHauptstimmung($rs['o_intervallhaupstimmung']);
+        $this->setOrgamat($rs['o_orgamat']);
+        $this->setKirchenschluessel($rs['o_kirchenschluessel']);
         
         $this->isPersistent(true);
     }
@@ -803,5 +811,31 @@ class Orgel extends SimpleDatabaseStorageObjekt
             Orgel::ORGEL_STATUS_ID_RESTAURIERT => "Restauriert",
             Orgel::ORGEL_STATUS_ID_REINIGUNG => "Reinigung"
         );
+    }
+
+    public function getKirchenschluessel()
+    {
+        return $this->kirchenschluessel;
+    }
+    
+    public function setKirchenSchluessel($pKirchenSchluessel)
+    {
+        if ($this->kirchenschluessel != $pKirchenSchluessel) {
+            $this->kirchenschluessel = $pKirchenSchluessel;
+            $this->setChanged(true);
+        }
+    }
+
+    public function getOrgamat()
+    {
+        return $this->orgamat;
+    }
+    
+    public function setOrgamat($pOrgamat)
+    {
+        if ($this->orgamat != $pOrgamat) {
+            $this->orgamat = $pOrgamat;
+            $this->setChanged(true);
+        }
     }
 }

@@ -167,7 +167,7 @@
     </tr>
     <tr>
         <th>Kircheschlüssel:</th>
-        <td><!--Kircheschluessel--></td>
+        <td><!--Kirchenschluessel--></td>
         <th>Orgamat:</th>
         <td><!--Orgamat--></td>
         <th></th>
