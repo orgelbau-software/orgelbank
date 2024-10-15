@@ -1,7 +1,13 @@
 <?php
 
-class AnsprechpartnerVerwaltung implements GetRequestHandler
+class AnsprechpartnerVerwaltung implements GetRequestHandler, PostRequestHandler
 {
+
+    public function preparePost() { 
+        return true;
+    }
+
+    public function executePost() { return $this->executeGet(); }
 
     /**
      *
