@@ -125,6 +125,24 @@
 				</td>
 			</tr>
 			<tr>
+				<td class="tdLabel">Kircheschlüssel:</td>
+				<td>
+					<input type="text" name="kirchenschluessel" list="kirchenschluessel" class="width110" value="<!--Kirchenschluessel-->">
+					<datalist id="kirchenschluessel">
+      					<option value="Nein">
+      					<option value="Ja">
+    				</datalist>
+				</td>
+				<td class="tdLabel">Orgamat:</td>
+				<td>
+					<input type="text" name="orgamat" list="orgamat" class="width110" value="<!--Orgamat-->">
+    				<datalist id="orgamat">
+      					<option value="Nein">
+      					<option value="Ja">
+    				</datalist>
+				</td>
+			</tr>
+			<tr>
 				<td class="tdLabel">Register:</td>
 				<td><input type="number" name="registeranzahl" id="registeranzahl" value="<!--Register-->" min="0" max="100" step="1" class="int40"/></td>
 				<td class="tdLabel">Hauptstimmung:</td>
