@@ -45,6 +45,10 @@
             margin:5px 0;
             padding:1%;
         }
+
+        .auftragsbogen-lineabove {
+            border-top: 2px solid black;
+        }
     </style>
 <head>
 <body>
@@ -77,7 +81,7 @@
     </tr>
 </table>
 
-<h2><!--Kirche--></h2>
+<h2 class="auftragsbogen-lineabove"><!--Kirche--></h2>
 <table style="width: 100%">
     <tr>
         <td style="font-weight: bold; padding-right: 100px;">
@@ -125,7 +129,7 @@
     </tbody>
 </table>
 
-<h2>Orgel-Daten</h2>
+<h2 class="auftragsbogen-lineabove">Orgel-Daten</h2>
 <table class="orgeldetails">
     <tr>
         <th>Erbauer:</th>
@@ -240,7 +244,7 @@
     </tr>
 </table>
 
-<h2>Checkliste</h2>
+<h2 class="auftragsbogen-lineabove">Checkliste</h2>
 <table>
     <tr>
         <td>Temperatur: __________ °C</td>
