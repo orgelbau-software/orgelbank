@@ -241,6 +241,16 @@ class ConstantLoader
         return ConstantLoader::$htValues->getValueOf("max_user_username_length");
     }
 
+    /**
+     * Minimale Benutzernamenlänge
+     *
+     * @return int
+     */
+    public static function getBenutzerMinUsernameLength()
+    {
+        return 5;
+    }
+
     public static function getGoogleHTMLBodyProperty()
     {
         return ConstantLoader::$htValues->getValueOf("google_htmlbody_property");

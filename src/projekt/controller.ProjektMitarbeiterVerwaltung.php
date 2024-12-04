@@ -115,13 +115,15 @@ class ProjektMitarbeiterVerwaltung implements GetRequestHandler, PostRequestHand
                 
                 $strText = "";
                 // Benutzername existiert?
-                if (! preg_match("/^[a-zA-Z]/", $benutzer->getBenutzername()))
-                    $strText = "<li>Benutzername darf nur aus Buchstaben bestehen.</li>";
-                if ($benutzer->getBenutzername() == "")
+                if ($benutzer->getBenutzername() == null || $benutzer->getBenutzername() == "")
                     $strText .= "<li>Benutzername darf nicht leer sein.</li>";
-                if (strlen($benutzer->getBenutzername()) > ConstantLoader::getBenutzerMaxUsernameLength())
+                } else if (! preg_match("/^[a-zA-Z]/", $benutzer->getBenutzername())) {
+                    $strText = "<li>Benutzername darf nur aus Buchstaben bestehen.</li>";
+                } else if (strlen($benutzer->getBenutzername()) > ConstantLoader::getBenutzerMaxUsernameLength()) {
                     $strText .= "<li>Benutzername darf höchstens " . ConstantLoader::getBenutzerMaxUsernameLength() . " Zeichen haben.</li>";
-                if ($_POST['email'] != "" && !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                } else if (strlen($benutzer->getBenutzername()) < ConstantLoader::getBenutzerMinUsernameLength()) {
+                    $strText .= "<li>Benutzername muss mindestens " . ConstantLoader::getBenutzerMinUsernameLength() . " Zeichen haben.</li>";
+                } else if ($_POST['email'] != "" && !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
                     $strText .= "<li>Email Adresse ist ungültig: " . $_POST['email'] . "</li>";
                 }
                 
