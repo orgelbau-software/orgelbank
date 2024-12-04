@@ -115,7 +115,7 @@ class ProjektMitarbeiterVerwaltung implements GetRequestHandler, PostRequestHand
                 
                 $strText = "";
                 // Benutzername existiert?
-                if ($benutzer->getBenutzername() == null || $benutzer->getBenutzername() == "")
+                if ($benutzer->getBenutzername() == null || $benutzer->getBenutzername() == "") {
                     $strText .= "<li>Benutzername darf nicht leer sein.</li>";
                 } else if (! preg_match("/^[a-zA-Z]/", $benutzer->getBenutzername())) {
                     $strText = "<li>Benutzername darf nur aus Buchstaben bestehen.</li>";
