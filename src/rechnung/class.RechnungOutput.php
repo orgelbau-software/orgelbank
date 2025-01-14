@@ -23,6 +23,7 @@ abstract class RechnungOutput
     public function __construct($pTemplatePfad, Rechnung $pRechnung, $pUnterordner)
     {
         $this->template = new MSWordOutput($pTemplatePfad);
+        //$this->template = new ZUGFeRDOutput($pTemplatePfad);
         $this->rechnung = $pRechnung;
         $this->gemeinde = new Gemeinde($pRechnung->getGemeindeID());
         
@@ -32,7 +33,7 @@ abstract class RechnungOutput
         $this->unterordner = $pUnterordner;
     }
 
-    public function erstellen()
+    public function erstellen(Output $pTPL)
     {
         $this->rechnung->errechneGesamtBetrag();
         
@@ -44,14 +45,10 @@ abstract class RechnungOutput
         $this->template->replace("Kirche", $this->gemeinde->getKirche());
 
         $this->setGemeinde($this->gemeinde->getRAnschrift());
-        $this->setStrasse($this->gemeinde->getRechnungAdresse()
-            ->getStrasse());
-        $this->setHausnummer($this->gemeinde->getRechnungAdresse()
-            ->getHausnummer());
-        $this->setPLZ($this->gemeinde->getRechnungAdresse()
-            ->getPLZ());
-        $this->setOrt($this->gemeinde->getRechnungAdresse()
-            ->getOrt());
+        $this->setStrasse($this->gemeinde->getRechnungAdresse()->getStrasse());
+        $this->setHausnummer($this->gemeinde->getRechnungAdresse()->getHausnummer());
+        $this->setPLZ($this->gemeinde->getRechnungAdresse()->getPLZ());
+        $this->setOrt($this->gemeinde->getRechnungAdresse()->getOrt());
         $this->setRechNr($this->rechnung->getNummer());
         $this->setDatum($this->rechnung->getDatum(true));
         $this->setZahlungsziel($this->rechnung->getZieldatum(true));
@@ -60,8 +57,7 @@ abstract class RechnungOutput
         $this->setBruttoBetrag($this->rechnung->getBruttoBetrag(false));
         
         $a = new Ansprechpartner(1);
-        $this->setFirmensitz($a->getAdresse()
-            ->getOrt());
+        $this->setFirmensitz($a->getAdresse()->getOrt());
         $this->setSteuerNr($a->getAndere());
     }
 

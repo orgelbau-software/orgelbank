@@ -1,4 +1,6 @@
 <?php
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\Settings;
 
 class MSWordOutput extends Output
 {
@@ -9,6 +11,10 @@ class MSWordOutput extends Output
     {
         $pfad = $pfadOrig . ".docx";
         $pfad = $this->aenderePfad($pfad);
+
+        if(!file_exists($pfad)) {
+            throw new Exception("Template does not exist at: ".$pfad);
+        }
         
         $this->template =  new \PhpOffice\PhpWord\TemplateProcessor($pfad);
         PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
@@ -29,6 +35,22 @@ class MSWordOutput extends Output
     public function save($pPfad) : string
     {
         $this->template->saveAs($pPfad);
+    
+
+
+        // Make sure you have `dompdf/dompdf` in your composer dependencies.
+        //Settings::setPdfRendererName(Settings::PDF_RENDERER_DOMPDF);
+        // Any writable directory here. It will be ignored.
+        //Settings::setPdfRendererPath('.');
+
+
+
+        $phpWord = IOFactory::load($pPfad, 'Word2007');
+        $htmlWriter = new \PhpOffice\PhpWord\Writer\HTML($phpWord);
+        $htmlWriter->save($pPfad.".html");
+
+        //$phpWord->save($pPfad.".pdf", 'PDF');
+
         return $pPfad;
     }
 

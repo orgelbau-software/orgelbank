@@ -14,6 +14,10 @@ abstract class PositionsRechnungsOutput extends RechnungOutput
         parent::__construct($pfad, $r, $pUnterordner);
     }
 
+    /**
+     * 
+     * @return void 
+     */
     public function ersetzeRechnungsTags()
     {
         $col = RechnungsPositionUtilities::getRechnungsPositionen($this->getRechnung()->getID(), $this->getRechnung()->getType());

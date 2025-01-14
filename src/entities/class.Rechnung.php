@@ -112,7 +112,6 @@ abstract class Rechnung extends SimpleDatabaseStorageObjekt
         $this->bruttoBetrag = $betrag;
     }
 
-    
     /**
      * 
      * @param mixed $betrag

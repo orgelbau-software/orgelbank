@@ -146,7 +146,8 @@
     
     <hr class="bottomMenuHR" />
     <div class="bottomMenu">
-      <input <!--disableForm--> type="submit" class="button iconButton saveButton" value="<!--SubmitValue-->"/>
+	  <input type="checkbox" name="xmlrechnung" id="xmlrechnung" <!--XMLRechnungChecked--> /><label for="xmlrechnung">Als XML Rechnung erstellen.</label>
+	  <input <!--disableForm--> type="submit" class="button iconButton saveButton" value="<!--SubmitValue-->"/>
       <!-- <a class="buttonlink iconButton editButton" href="index.php?page=5&do=XX" title="Bearbeiten">Bearbeiten</a>-->
       <a class="buttonlink iconButton cancelButton" href="index.php?page=5&do=89" title="Abbrechen">Abbrechen</a>
     </div>

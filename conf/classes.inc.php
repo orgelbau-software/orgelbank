@@ -38,6 +38,7 @@ include_once ROOTDIR . 'src/core/tpl/class.Output.php';
 include_once ROOTDIR . 'src/core/tpl/class.RTFOutput.php';
 include_once ROOTDIR . 'src/core/tpl/class.ODTOutput.php';
 include_once ROOTDIR . 'src/core/tpl/class.MSWordOutput.php';
+include_once ROOTDIR . 'src/core/tpl/class.ZUGFeRDOutput.php';
 include_once ROOTDIR . 'src/core/tpl/class.Template.php';
 include_once ROOTDIR . 'src/core/tpl/class.TemplateRepeater.php';
 include_once ROOTDIR . 'src/core/tpl/class.BufferedTemplate.php';
@@ -225,6 +226,8 @@ include_once ROOTDIR . 'src/orgel/controller.OrgelGemeindeVerbindungLoeschen.php
 include_once ROOTDIR . 'src/gemeinde/controller.Gemeinde.php';
 include_once ROOTDIR . 'src/orgel/controller.Disposition.php';
 include_once ROOTDIR . 'src/rechnung/controller.Rechnung.php';
+include_once ROOTDIR . 'src/rechnung/controller.PflegeRechnungNeuAction.php';
+include_once ROOTDIR . 'src/rechnung/controller.PflegeRechnungDruckenAction.php';
 include_once ROOTDIR . 'src/projekt/controller.Projekt.php';
 include_once ROOTDIR . 'src/projekt/controller.ProjektBearbeitenAction.php';
 include_once ROOTDIR . 'src/controller/controller.Einstellung.php';

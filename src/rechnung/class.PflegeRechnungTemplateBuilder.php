@@ -3,7 +3,7 @@
 class PflegeRechnungTemplateBuilder extends RechnungTemplateBuilder
 {
 
-    public function __construct(Template $t, PositionsRechnung $r)
+    public function __construct(Output $t, PositionsRechnung $r)
     {
         parent::__construct($t, $r);
     }

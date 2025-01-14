@@ -24,7 +24,7 @@ abstract class RechnungTemplateBuilder
      */
     protected $gemeinde;
 
-    public function __construct(Template $t, Rechnung $r)
+    public function __construct(Output $t, Rechnung $r)
     {
         $this->template = $t;
         $this->rechnung = $r;
@@ -40,14 +40,10 @@ abstract class RechnungTemplateBuilder
         $this->setKundenNr($this->gemeinde->getKundenNr());
         $this->setGemeindeNamen($this->gemeinde->getRGemeinde());
         $this->setGemeinde($this->gemeinde->getRAnschrift());
-        $this->setStrasse($this->gemeinde->getRechnungAdresse()
-            ->getStrasse());
-        $this->setHausnummer($this->gemeinde->getRechnungAdresse()
-            ->getHausnummer());
-        $this->setPLZ($this->gemeinde->getRechnungAdresse()
-            ->getPLZ());
-        $this->setOrt($this->gemeinde->getRechnungAdresse()
-            ->getOrt());
+        $this->setStrasse($this->gemeinde->getRechnungAdresse()->getStrasse());
+        $this->setHausnummer($this->gemeinde->getRechnungAdresse()->getHausnummer());
+        $this->setPLZ($this->gemeinde->getRechnungAdresse()->getPLZ());
+        $this->setOrt($this->gemeinde->getRechnungAdresse()->getOrt());
         $this->setRechNr($this->rechnung->getNummer());
         $this->setDatum($this->rechnung->getDatum(true));
         $this->setZahlungsziel($this->rechnung->getZieldatum(true));
