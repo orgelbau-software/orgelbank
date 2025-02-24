@@ -135,9 +135,9 @@ class OrgelUtilities
 					o.*,
 					g.*,
 					CASE
-						WHEN DATE_ADD(o_letztepflege, INTERVAL o_zyklus YEAR) < '" . date("Y") . "-01-01' 
+						WHEN DATE_ADD(o_letztepflege, INTERVAL o_zyklus MONTH) < '" . date("Y") . "-01-01' 
 							THEN CONCAT(" . date("Y") . ", SUBSTR(o_letztepflege,5))
-							ELSE DATE_ADD(o_letztepflege, INTERVAL o_zyklus YEAR)
+							ELSE DATE_ADD(o_letztepflege, INTERVAL o_zyklus MONTH)
 					END AS naechstepflege
 				FROM 
 					orgel o LEFT JOIN 

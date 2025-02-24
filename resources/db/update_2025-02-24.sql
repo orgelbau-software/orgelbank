@@ -1,0 +1,1 @@
+update orgel set o_zyklus = o_zyklus * 12;

@@ -146,7 +146,13 @@ class OffeneWartungenDruckansicht implements GetRequestHandler
             
             if ($oOrgel->getZyklus() != null && trim($oOrgel->getZyklus()) == "")
                 $tplOrgelDruckDs->replace("Zyklus", "&nbsp;");
-            $tplOrgelDruckDs->replace("Zyklus", $oOrgel->getZyklus());
+            if($oOrgel->getZyklus() == 0){
+                $tplOrgelDruckDs->replace("Zyklus", $oOrgel->getZyklus());
+            } else if($oOrgel->getZyklus() < 12) {
+                $tplOrgelDruckDs->replace("Zyklus", $oOrgel->getZyklus(). " Monate");
+            } else {
+                $tplOrgelDruckDs->replace("Zyklus", ($oOrgel->getZyklus() / 12));
+            }
             
             $tplOrgelDruckDs->replace("Manuale", $manual);
             $tplOrgelDruckDs->replace("Register", $oOrgel->getRegisterAnzahl());

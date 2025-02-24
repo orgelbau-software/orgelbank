@@ -9,7 +9,7 @@
 			<a title="Zur Wartungsliste von <!--Gemeinde-->" href="index.php?page=2&do=28&oid=<!--OID-->">Wartung</a>
 		</td>
 		<td class="<!--Farbwechsel-->"><!--AnzahlRegister--></td>
-		<td class="<!--Farbwechsel-->"><!--Zyklus--> Jahr</td>
+		<td class="<!--Farbwechsel-->"><!--Zyklus--></td>
 		<td class="<!--Farbwechsel-->"><!--LetztePflege--></td>
 		<td class="<!--Farbwechsel-->"><!--NaechstePflege--></td>
 	</tr>

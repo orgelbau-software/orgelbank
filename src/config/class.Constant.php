@@ -90,12 +90,13 @@ class Constant
     {
         return array(
             0 => "Kein Zyklus",
-            1 => "1 Jahr",
-            2 => "2 Jahre",
-            3 => "3 Jahre",
-            4 => "4 Jahre",
-            5 => "5 Jahre",
-            6 => "6 Jahre"
+            6 => "Halbjährlich",
+            12 => "1 Jahr",
+            24 => "2 Jahre",
+            36 => "3 Jahre",
+            48 => "4 Jahre",
+            60 => "5 Jahre",
+            72 => "6 Jahre"
         );
     }
 

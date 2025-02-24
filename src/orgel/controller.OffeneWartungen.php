@@ -79,7 +79,11 @@ class OffeneWartungen implements GetRequestHandler, PostRequestHandler
                 $tplDS->replace("PLZ", $orgel->getGemeindePLZ());
                 $tplDS->replace("Ort", $orgel->getGemeindeOrt());
                 $tplDS->replace("Bezirk", $orgel->getGemeindeBezirk());
-                $tplDS->replace("Zyklus", $orgel->getZyklus());
+                if($orgel->getZyklus() < 12) {
+                    $tplDS->replace("Zyklus", $orgel->getZyklus() ." Monate");
+                } else {
+                    $tplDS->replace("Zyklus", $orgel->getZyklus() / 12);
+                }
                 // Missbrauch des Baujahrs Feld um die WartungsId zu uebertragen
                 $tplDS->replace("NaechstePflege", "<a href=\"index.php?page=2&do=28&oid=134&action=edit&wid=" . $orgel->getBaujahr() . "\">Zur Wartung</a>");
                 $tplDS->replace("AnzahlRegister", $orgel->getRegisterAnzahl());
@@ -124,7 +128,13 @@ class OffeneWartungen implements GetRequestHandler, PostRequestHandler
             $tplDS->replace("PLZ", $orgel->getGemeindePLZ());
             $tplDS->replace("Ort", $orgel->getGemeindeOrt());
             $tplDS->replace("Bezirk", $orgel->getGemeindeBezirk());
-            $tplDS->replace("Zyklus", $orgel->getZyklus());
+            if($orgel->getZyklus() == 0) {
+                $tplDS->replace("Zyklus", "Unbekannt");
+            } else if($orgel->getZyklus() < 12) {
+                $tplDS->replace("Zyklus", $orgel->getZyklus() ." Monate");
+            } else {
+                $tplDS->replace("Zyklus", ($orgel->getZyklus() / 12) . " Jahr");
+            }
             $tplDS->replace("NaechstePflege", $naechstePflege);
             $tplDS->replace("AnzahlRegister", $orgel->getRegisterAnzahl());
             $tplDS->next();

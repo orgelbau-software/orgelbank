@@ -280,7 +280,13 @@ abstract class OrgelbankBasisPDF extends Fpdi
         $cellsize = $this->getDefaultCellSize();
         
         $this->activateFontBold();
-        $this->Cell($cellsize, $this->cellheight, 'Disposition: ' . $strGroesstesManual . $strPedal . " " . $iRegisterAnzahl, 0, 0, "L");
+        
+        $anzahlManuale = OrgelUtilities::getOrgelManualeUebersicht($oOrgel);
+        if ($oOrgel->getRegisterAnzahl() > 0) {
+            $anzahlManuale .= " - " . $oOrgel->getRegisterAnzahl();
+        }
+
+        $this->Cell($cellsize, $this->cellheight, 'Disposition: ' . $anzahlManuale, 0, 0, "L");
         $this->SetFont($this->font, '', 7);
         $this->ln(5);
         
@@ -288,23 +294,23 @@ abstract class OrgelbankBasisPDF extends Fpdi
         $iSizeRegisterBez = 27;
         
         $this->activateFontBold();
-        if (count($manual6name) > 0) {
+        if (count($manual6name) > 0 || $oOrgel->getGroesseM6() != "") {
             $this->Cell($iSizeRegisterBez, $this->cellheight, 'Pedal', 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
         }
-        if (count($manual1name) > 0) {
+        if (count($manual1name) > 0 || $oOrgel->getGroesseM1() != "") {
             $this->Cell($iSizeRegisterBez, $this->cellheight, 'Manual I', 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
         }
-        if (count($manual2name) > 0) {
+        if (count($manual2name) > 0 || $oOrgel->getGroesseM2() != "") {
             $this->Cell($iSizeRegisterBez, $this->cellheight, 'Manual II', 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
         }
-        if (count($manual3name) > 0) {
+        if (count($manual3name) > 0 || $oOrgel->getGroesseM3() != "") {
             $this->Cell($iSizeRegisterBez, $this->cellheight, 'Manual III', 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
         }
-        if (count($manual4name) > 0) {
+        if (count($manual4name) > 0 || $oOrgel->getGroesseM4() != "") {
             $this->Cell($iSizeRegisterBez, $this->cellheight, 'Manual IV', 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
         }
@@ -320,7 +326,7 @@ abstract class OrgelbankBasisPDF extends Fpdi
         $row = $this->mDBInstance->SelectQuery($sql)[0];
         $this->activateFontTextHeadlineSmall();
         $this->activateFontColorGreen();
-        if (count($manual6name) > 0) {
+        if (count($manual6name) > 0 || $row['o_m6wd'] != "" || $oOrgel->getGroesseM6() != "") {
             $text = "";
             if ($row['o_m6wd'] != "" ) {
                 $text = $row['o_m6wd'] . " mm/WS";
@@ -331,7 +337,7 @@ abstract class OrgelbankBasisPDF extends Fpdi
             $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
         }
-        if (count($manual1name) > 0) {
+        if (count($manual1name) > 0|| $row['o_m1wd'] != "" || $oOrgel->getGroesseM1() != "") {
             $text = "";
             if ($row['o_m1wd'] != "" ) {
                 $text = $row['o_m1wd'] . " mm/WS";
@@ -342,7 +348,7 @@ abstract class OrgelbankBasisPDF extends Fpdi
             $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
         }
-        if (count($manual2name) > 0) {
+        if (count($manual2name) > 0 || $row['o_m2wd'] != "" || $oOrgel->getGroesseM2() != "") {
             $text = "";
             if ($row['o_m2wd'] != "" ) {
                 $text = $row['o_m2wd'] . " mm/WS";
@@ -353,7 +359,7 @@ abstract class OrgelbankBasisPDF extends Fpdi
             $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
         }
-        if (count($manual3name) > 0) {            
+        if (count($manual3name) > 0 || $row['o_m3wd'] != "" || $oOrgel->getGroesseM3() != "") {            
             $text = "";
             if ($row['o_m3wd'] != "" ) {
                 $text = $row['o_m3wd'] . " mm/WS";
@@ -364,7 +370,7 @@ abstract class OrgelbankBasisPDF extends Fpdi
             $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
         }
-        if (count($manual4name) > 0) {
+        if (count($manual4name) > 0 || $row['o_m4wd'] != "" || $oOrgel->getGroesseM4() != "") {
             
             $text = "";
             if ($row['o_m4wd'] != "" ) {
