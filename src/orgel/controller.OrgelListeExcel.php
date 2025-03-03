@@ -47,6 +47,9 @@ class OrgelListeExcel implements GetRequestHandler
         $handledRequest = $requestHandler->prepareOrgelListe();
         // error_reporting ( null ); // gibt sonst hässliche Fehler im Code
         
+        $user = new WebBenutzer();
+        $user->validateSession();
+
         $workbook = new OrgelbankPHPSpreadsheetWriter();
         $workbook->setTempDir(TMPDIR);
         $worksheet = $workbook->addWorksheet("Orgelliste");
@@ -101,9 +104,13 @@ class OrgelListeExcel implements GetRequestHandler
                 $worksheet->write("K" . $iZeile, $orgel->getFunktion());
                 $worksheet->write("L" . $iZeile, $name);
                 $worksheet->write("M" . $iZeile, $orgel->getTelefon());
-                
-                $worksheet->write("N" . $iZeile, $orgel->getKostenHauptstimmung());
-                $worksheet->write("O" . $iZeile, $orgel->getKostenTeilstimmung());
+                if($user->isAdmin()) {
+                    $worksheet->write("N" . $iZeile, $orgel->getKostenHauptstimmung());
+                    $worksheet->write("O" . $iZeile, $orgel->getKostenTeilstimmung());
+                } else {
+                    $worksheet->write("N" . $iZeile, "");
+                    $worksheet->write("O" . $iZeile, "");
+                }
                 
                 $worksheet->write("P" . $iZeile, $orgel->getOrgelId());
                 $worksheet->write("Q" . $iZeile, $orgel->getGemeindeId());
