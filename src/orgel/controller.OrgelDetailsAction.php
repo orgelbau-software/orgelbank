@@ -148,8 +148,16 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
         $tplOrgelDetails->replace("IntervallHaupstimmungSelect", $htmlIntervalHauptstimmung->getOutput());
         
         // Kosten Haupt und Teilstimmung
-        $tplOrgelDetails->replace("KostenHauptstimmung", $oOrgel->getKostenHauptstimmung());
-        $tplOrgelDetails->replace("KostenTeilstimmung", $oOrgel->getKostenTeilstimmung());
+        $user = new WebBenutzer();
+        $user->validateSession();
+
+        if($user->isAdmin()) {
+            $tplOrgelDetails->replace("KostenHauptstimmung", $oOrgel->getKostenHauptstimmung());
+            $tplOrgelDetails->replace("KostenTeilstimmung", $oOrgel->getKostenTeilstimmung());
+        } else {
+            $tplOrgelDetails->replace("KostenHauptstimmung", "Ausgeblendet");
+            $tplOrgelDetails->replace("KostenTeilstimmung", "Ausgeblendet");
+        }
         
         // Pflegevertrag
         $tplOrgelDetails->replace("SelectedPflege" . $oOrgel->getPflegevertrag(), Constant::$HTML_SELECTED_SELECTED);
@@ -332,6 +340,9 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
             $oOrgel = new Orgel($_POST['o_id']); // Orgel per ID laden
         }
         
+        $user = new WebBenutzer();
+        $user->validateSession();
+
         // Speichern
         $oOrgel->setAktiv(1);
         $oOrgel->setBaujahr($_POST['baujahr']);
@@ -347,8 +358,13 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
         $oOrgel->setStimmton($_POST['stimmton']);
         $oOrgel->setAnmerkung($_POST['anmerkung']);
         $oOrgel->setPflegevertrag($_POST['pflegevertrag']);
-        $oOrgel->setKostenHauptstimmung($_POST['kostenhauptstimmung']);
-        $oOrgel->setKostenTeilstimmung($_POST['kostenteilstimmung']);
+        
+        if($user->isAdmin()) {
+            $oOrgel->setKostenHauptstimmung($_POST['kostenhauptstimmung']);
+            $oOrgel->setKostenTeilstimmung($_POST['kostenteilstimmung']);
+        } else {
+            // Ignorieren, die Werte sind für den Nicht-Admin ausgeblendet.
+        }
         $oOrgel->setIntervallHauptstimmung($_POST['intervall_hauptstimmung']);
         $oOrgel->setZyklus($_POST['zyklus']);
         $oOrgel->setMassnahmen($_POST['massnahmen']);
