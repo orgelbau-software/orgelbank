@@ -30,8 +30,8 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
     public function addOrgel(Orgel $oOrgel)
     {
         $oGemeinde = new Gemeinde($oOrgel->getGemeindeId());
-        $cAnsprechpartner = AnsprechpartnerUtilities::getGemeindeAnsprechpartner($oGemeinde->getID(), " LIMIT 4");
-        $alleAnsprechpartner = AnsprechpartnerUtilities::getGemeindeAnsprechpartner($oGemeinde->getID());
+        $cAnsprechpartner = AnsprechpartnerUtilities::getGemeindeAnsprechpartner($oGemeinde->getID(), " ORDER BY hauptid DESC LIMIT 4");
+        //$alleAnsprechpartner = AnsprechpartnerUtilities::getGemeindeAnsprechpartner($oGemeinde->getID(), "");
         
         $this->AliasNbPages();
         $this->AddPage();
@@ -129,7 +129,7 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
     private function addOrgelDetails(Orgel $oOrgel)
     {
         $th = 30;
-        $td = 23;
+        $td = 28;
         
         // Ueberschrift
         $this->activateFontTextHeadline();

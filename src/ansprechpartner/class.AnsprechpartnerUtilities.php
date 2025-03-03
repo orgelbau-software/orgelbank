@@ -94,9 +94,10 @@ class AnsprechpartnerUtilities
      */
     public static function getGemeindeAnsprechpartner($gid, $strOrderBy = null)
     {
-        $sql = "SELECT * FROM ansprechpartner a, gemeindeansprechpartner ga WHERE ga.a_id = a.a_id AND a.a_aktiv = 1 AND ga.g_id = " . $gid . " ";
+        $sql = "SELECT a.*, (a.a_id = g.a_hauptid) as hauptid  FROM ansprechpartner a, gemeindeansprechpartner ga, gemeinde g WHERE ga.a_id = a.a_id AND ga.g_id = g.g_id AND a.a_aktiv = 1 AND ga.g_id = " . $gid . " ";
         if ($strOrderBy != null)
             $sql .= $strOrderBy;
+
         return AnsprechpartnerUtilities::queryDB($sql);
     }
 

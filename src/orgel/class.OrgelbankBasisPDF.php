@@ -329,7 +329,7 @@ abstract class OrgelbankBasisPDF extends Fpdi
         if (count($manual6name) > 0 || $row['o_m6wd'] != "" || $oOrgel->getGroesseM6() != "") {
             $text = "";
             if ($row['o_m6wd'] != "" ) {
-                $text = $row['o_m6wd'] . " mm/WS";
+                $text = $row['o_m6wd'] . " mm WS";
             } 
             if ($oOrgel->getGroesseM6() != "") {
                 $text = ($text == "" ? $oOrgel->getGroesseM6() :  $text . " / " . $oOrgel->getGroesseM6());
@@ -340,7 +340,7 @@ abstract class OrgelbankBasisPDF extends Fpdi
         if (count($manual1name) > 0|| $row['o_m1wd'] != "" || $oOrgel->getGroesseM1() != "") {
             $text = "";
             if ($row['o_m1wd'] != "" ) {
-                $text = $row['o_m1wd'] . " mm/WS";
+                $text = $row['o_m1wd'] . " mm WS";
             } 
             if ($oOrgel->getGroesseM1() != "") {
                 $text = ($text == "" ? $oOrgel->getGroesseM1() :  $text . " / " . $oOrgel->getGroesseM1());
@@ -351,7 +351,7 @@ abstract class OrgelbankBasisPDF extends Fpdi
         if (count($manual2name) > 0 || $row['o_m2wd'] != "" || $oOrgel->getGroesseM2() != "") {
             $text = "";
             if ($row['o_m2wd'] != "" ) {
-                $text = $row['o_m2wd'] . " mm/WS";
+                $text = $row['o_m2wd'] . " mm WS";
             } 
             if ($oOrgel->getGroesseM2() != "") {
                 $text = ($text == "" ? $oOrgel->getGroesseM2() :  $text . " / " . $oOrgel->getGroesseM2());
@@ -362,7 +362,7 @@ abstract class OrgelbankBasisPDF extends Fpdi
         if (count($manual3name) > 0 || $row['o_m3wd'] != "" || $oOrgel->getGroesseM3() != "") {            
             $text = "";
             if ($row['o_m3wd'] != "" ) {
-                $text = $row['o_m3wd'] . " mm/WS";
+                $text = $row['o_m3wd'] . " mm WS";
             } 
             if ($oOrgel->getGroesseM3() != "") {
                 $text = ($text == "" ? $oOrgel->getGroesseM3() :  $text . " / " . $oOrgel->getGroesseM3());
@@ -374,7 +374,7 @@ abstract class OrgelbankBasisPDF extends Fpdi
             
             $text = "";
             if ($row['o_m4wd'] != "" ) {
-                $text = $row['o_m4wd'] . " mm/WS";
+                $text = $row['o_m4wd'] . " mm WS";
             } 
             if ($oOrgel->getGroesseM4() != "") {
                 $text = ($text == "" ? $oOrgel->getGroesseM4() :  $text . " / " . $oOrgel->getGroesseM4());
@@ -396,32 +396,32 @@ abstract class OrgelbankBasisPDF extends Fpdi
             
             if (isset($manual6name[$i]) && $manual6name[$i] != "") {
                 $this->Cell($iSizeRegisterBez, $this->cellheight, substr($manual6name[$i], 0, 16), $rahmen, 0);
-                $this->Cell($platzhalter, $this->cellheight, $manual6fuss[$i] . "'", $rahmen, 0);
+                $this->Cell($platzhalter, $this->cellheight, $manual6fuss[$i] . "'", $rahmen, 0, "R");
             } else {
                 $this->Cell($leerzeile, $this->cellheight, '', $rahmen, 0);
             }
             
             if (isset($manual1name[$i]) && $manual1name[$i] != "") {
                 $this->Cell($iSizeRegisterBez, $this->cellheight, substr($manual1name[$i], 0, 16), $rahmen, 0);
-                $this->Cell($platzhalter, $this->cellheight, $manual1fuss[$i] . "'", $rahmen, 0);
+                $this->Cell($platzhalter, $this->cellheight, $manual1fuss[$i] . "'", $rahmen, 0, "R");
             } else {
                 $this->Cell($leerzeile, $this->cellheight, '', $rahmen, 0);
             }
             if (isset($manual2name[$i]) && $manual2name[$i] != "") {
                 $this->Cell($iSizeRegisterBez, $this->cellheight, substr($manual2name[$i], 0, 16), $rahmen, 0);
-                $this->Cell($platzhalter, $this->cellheight, $manual2fuss[$i] . "'", $rahmen, 0);
+                $this->Cell($platzhalter, $this->cellheight, $manual2fuss[$i] . "'", $rahmen, 0, "R");
             } else {
                 $this->Cell($leerzeile, $this->cellheight, '', $rahmen, 0);
             }
             if (isset($manual3name[$i]) && $manual3name[$i] != "") {
                 $this->Cell($iSizeRegisterBez, $this->cellheight, substr($manual3name[$i], 0, 16), $rahmen, 0);
-                $this->Cell($platzhalter, $this->cellheight, $manual3fuss[$i] . "'", $rahmen, 0);
+                $this->Cell($platzhalter, $this->cellheight, $manual3fuss[$i] . "'", $rahmen, 0, "R");
             } else {
                 $this->Cell($leerzeile, $this->cellheight, '', $rahmen, 0);
             }
             if (isset($manual4name[$i]) && $manual4name[$i] != "") {
                 $this->Cell($iSizeRegisterBez, $this->cellheight, substr($manual4name[$i], 0, 16), $rahmen, 0);
-                $this->Cell($platzhalter, $this->cellheight, $manual4fuss[$i] . "'", $rahmen, 0);
+                $this->Cell($platzhalter, $this->cellheight, $manual4fuss[$i] . "'", $rahmen, 0, "R");
             } else {
                 $this->Cell($leerzeile, $this->cellheight, '', $rahmen, 0);
             }
