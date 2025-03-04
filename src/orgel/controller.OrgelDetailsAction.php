@@ -150,6 +150,7 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
         // Kosten Haupt und Teilstimmung
         $user = new WebBenutzer();
         $user->validateSession();
+        $user = BenutzerUtilities::loadByBenutzername($user->getBenutzername());
 
         if($user->isAdmin()) {
             $tplOrgelDetails->replace("KostenHauptstimmung", $oOrgel->getKostenHauptstimmung());
@@ -342,7 +343,8 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
         
         $user = new WebBenutzer();
         $user->validateSession();
-
+        $user = BenutzerUtilities::loadByBenutzername($user->getBenutzername());
+        
         // Speichern
         $oOrgel->setAktiv(1);
         $oOrgel->setBaujahr($_POST['baujahr']);

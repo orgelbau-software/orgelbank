@@ -132,11 +132,9 @@ class WebBenutzer
             $consistentSession = false;
             Log::debug("user->passwort not set");
         }
-        
         if ($consistentSession == true) {
             $this->initBean();
         }
-        
         return $consistentSession;
     }
 

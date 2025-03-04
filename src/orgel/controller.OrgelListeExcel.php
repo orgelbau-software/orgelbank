@@ -49,6 +49,8 @@ class OrgelListeExcel implements GetRequestHandler
         
         $user = new WebBenutzer();
         $user->validateSession();
+        $user = BenutzerUtilities::loadByBenutzername($user->getBenutzername());
+
 
         $workbook = new OrgelbankPHPSpreadsheetWriter();
         $workbook->setTempDir(TMPDIR);
