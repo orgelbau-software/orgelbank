@@ -5,6 +5,8 @@ class GemeindeDruckansicht implements GetRequestHandler, PostRequestHandler
 
     private $strSQLDir = "";
 
+    private $strSQLOrder = "";
+
     private $strTPLDir = "";
 
     public function __construct()
@@ -135,19 +137,19 @@ class GemeindeDruckansicht implements GetRequestHandler, PostRequestHandler
             $tplGemeindeDS->replace("Bezirk", $oGemeindeAnsprechpartner->getGemeindeBezirk());
             $tplGemeindeDS->replace("KM", $oGemeindeAnsprechpartner->getDistanz());
             
-            if (trim($oGemeindeAnsprechpartner->getFunktion()) == "")
+            if ($oGemeindeAnsprechpartner->getFunktion() == "" || trim($oGemeindeAnsprechpartner->getFunktion()) == "")
                 $tplGemeindeDS->replace("AFunktion", "&nbsp;");
             $tplGemeindeDS->replace("AFunktion", $oGemeindeAnsprechpartner->getFunktion());
             
-            if (trim($oGemeindeAnsprechpartner->getNachname()) == "")
+            if ($oGemeindeAnsprechpartner->getNachname() == "" || trim($oGemeindeAnsprechpartner->getNachname()) == "")
                 $tplGemeindeDS->replace("Nachname", "---");
             $tplGemeindeDS->replace("Nachname", $oGemeindeAnsprechpartner->getNachname());
             
-            if (trim($oGemeindeAnsprechpartner->getVorname()) == "")
+            if ($oGemeindeAnsprechpartner->getVorname() == "" || trim($oGemeindeAnsprechpartner->getVorname()) == "")
                 $tplGemeindeDS->replace("Vorname", "---");
             $tplGemeindeDS->replace("Vorname", $oGemeindeAnsprechpartner->getVorname());
             
-            if (trim($oGemeindeAnsprechpartner->getTelefon()) == "")
+            if ($oGemeindeAnsprechpartner->getTelefon() == "" || trim($oGemeindeAnsprechpartner->getTelefon()) == "")
                 $tplGemeindeDS->replace("ATelefon", "&nbsp;");
             $tplGemeindeDS->replace("ATelefon", $oGemeindeAnsprechpartner->getTelefon());
             

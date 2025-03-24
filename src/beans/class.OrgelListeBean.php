@@ -123,6 +123,21 @@ class OrgelListeBean
         return $this->zyklus;
     }
 
+    public function getZyklusAnzeige()
+    {
+        if($this->zyklus == null || $this->zyklus == "") {
+            return $this->zyklus;
+        }
+
+        if($this->zyklus == 0) {
+            return $this->zyklus;
+        } else if($this->zyklus < 12) {
+            return $this->zyklus . " Mon.";
+        } else {
+            return $this->zyklus / 12;
+        }
+    }
+
     public function setRegisterAnzahl($registerAnzahl)
     {
         $this->registerAnzahl = $registerAnzahl;

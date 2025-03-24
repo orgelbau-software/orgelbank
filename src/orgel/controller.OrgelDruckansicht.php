@@ -135,7 +135,7 @@ class OrgelDruckansicht implements GetRequestHandler
             
             if ($oOrgel->getZyklus() != null && trim($oOrgel->getZyklus()) == "")
                 $tplOrgelDruckDs->replace("Zyklus", "&nbsp;");
-            $tplOrgelDruckDs->replace("Zyklus", $oOrgel->getZyklus());
+            $tplOrgelDruckDs->replace("Zyklus", ($oOrgel->getZyklusAnzeige()));
             
             $tplOrgelDruckDs->replace("Manuale", $manual);
             $tplOrgelDruckDs->replace("Register", $oOrgel->getRegisterAnzahl());

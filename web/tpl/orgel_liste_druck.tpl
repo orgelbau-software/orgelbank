@@ -91,17 +91,17 @@
 <table>
 	<tr>
 		<th>Nr.</th>
-		<th class="jsGemeinde"><a href="orgeln.php?action=druckwartungen&order=gemeinde&dir=<!--Dir-->">Gemeinde</a></th>
-		<th class="jsErbauer"><a href="orgeln.php?action=druckwartungen&order=erbauer&dir=<!--Dir-->">Erbauer</a></th>
-		<th class="jsBaujahr" ><a href="orgeln.php?action=druckwartungen&order=baujahr&dir=<!--Dir-->">Baujahr</a></th>
-		<th class="jsLetztePflege"><a href="orgeln.php?action=druckwartungen&order=wartung&dir=<!--Dir-->">Letzte Pflege</a></th>
-		<th class="jsPflegevertrag"><a href="orgeln.php?action=druckwartungen&order=pflegevertrag&dir=<!--Dir-->">Pflegevertrag</a></th>
-		<th class="jsZyklus"><a href="orgeln.php?action=druckwartungen&order=zyklus&dir=<!--Dir-->">Zyklus</a></th>
+		<th class="jsGemeinde"><a href="orgeln.php?action=druck&order=gemeinde&dir=<!--Dir-->">Gemeinde</a></th>
+		<th class="jsErbauer"><a href="orgeln.php?action=druck&order=erbauer&dir=<!--Dir-->">Erbauer</a></th>
+		<th class="jsBaujahr" ><a href="orgeln.php?action=druck&order=baujahr&dir=<!--Dir-->">Baujahr</a></th>
+		<th class="jsLetztePflege"><a href="orgeln.php?action=druck&order=wartung&dir=<!--Dir-->">Letzte Pflege</a></th>
+		<th class="jsPflegevertrag"><a href="orgeln.php?action=druck&order=pflegevertrag&dir=<!--Dir-->">Pflegevertrag</a></th>
+		<th class="jsZyklus"><a href="orgeln.php?action=druck&order=zyklus&dir=<!--Dir-->">Zyklus</a></th>
 		<th class="jsManuale">Manuale</th>
-		<th class="jsRegister"><a href="orgeln.php?action=druckwartungen&order=register&dir=<!--Dir-->">Register</a></th>
-		<th class="jsPLZ"><a href="orgeln.php?action=druckwartungen&order=plz&dir=<!--Dir-->">PLZ</a></th>
-		<th class="jsOrt"><a href="orgeln.php?action=druckwartungen&order=ort&dir=<!--Dir-->">Ort</a></th>
-		<th class="jsBezirk"><a href="orgeln.php?action=druckwartungen&order=bezirk&dir=<!--Dir-->">Bezirk</a></th>
+		<th class="jsRegister"><a href="orgeln.php?action=druck&order=register&dir=<!--Dir-->">Register</a></th>
+		<th class="jsPLZ"><a href="orgeln.php?action=druck&order=plz&dir=<!--Dir-->">PLZ</a></th>
+		<th class="jsOrt"><a href="orgeln.php?action=druck&order=ort&dir=<!--Dir-->">Ort</a></th>
+		<th class="jsBezirk"><a href="orgeln.php?action=druck&order=bezirk&dir=<!--Dir-->">Bezirk</a></th>
 		<th class="jsAFunktion">Funktion</th>
 		<th class="jsNachname">Name</th>
 		<th class="jsATelefon">Telefon</th>
