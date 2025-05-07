@@ -44,12 +44,19 @@ class DispositionController
         $orderPIDs = $_GET['order'];
         $orderPIDs = explode(",", $orderPIDs);
         $currentSortNumber = 0;
+        $altesManual = 0;
         $retVal = array();
         foreach ($orderPIDs as $currentDispositionsID) {
             if (is_numeric($currentDispositionsID)) {
-                $naechsteNummer = $currentSortNumber ++;
-                DispositionsUtilities::updateDispositionsOrder($currentDispositionsID, $naechsteNummer);
+                $currentSortNumber ++;
+                $d = new Register($currentDispositionsID);
+                if($d->getManual() != $altesManual) {
+                    $currentSortNumber = 1;
+                }
+                DispositionsUtilities::updateDispositionsOrder($currentDispositionsID, $currentSortNumber);
                 $retVal[$currentSortNumber] = $currentDispositionsID;
+
+                $altesManual = $d->getManual();
             }
         }
         
