@@ -77,12 +77,15 @@ class DispositionBearbeitenAction
         // POST Verarbeitung
         if ($_POST) {
             if ($_POST['action'] == "speichern" && trim($_POST['register']) != "") {
+
+                $letzteReihenfolgeNummerProOrgelUndManual = RegisterUtilities::getNaechsteRegisterPosition($this->oOrgel->getID(), $this->iManualID);
+
                 $this->oRegister->setOrgelID($this->oOrgel->getID());
                 $this->oRegister->setManual($this->iManualID);
                 $this->oRegister->setName($_POST['register']);
                 $this->oRegister->setFuss($_POST['fuss']);
                 $this->oRegister->setTyp($_POST['typ']);
-                // $this->oRegister->setReihenfolge($_POST['position']);
+                $this->oRegister->setReihenfolge($letzteReihenfolgeNummerProOrgelUndManual);
                 $this->oRegister->speichern(false);
                 
                 $htmlStatus = new HTMLStatus("Register wurde gespeichert.", 2);
@@ -180,7 +183,7 @@ class DispositionBearbeitenAction
             } elseif($this->oRegister->getTyp() == 3) {
                 $name .= " (E)";
             }
-            $tplRegister->replace("Name", $name."");
+            $tplRegister->replace("Name", $name."" . $this->oRegister->getReihenfolge());
             $tplRegister->replace("Fuss", $this->oRegister->getFuss());
             $tplRegister->replace("MID", $this->oRegister->getManual());
             $tplRegister->replace("DID", $this->oRegister->getID());

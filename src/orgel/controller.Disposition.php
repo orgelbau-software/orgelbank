@@ -47,7 +47,8 @@ class DispositionController
         $retVal = array();
         foreach ($orderPIDs as $currentDispositionsID) {
             if (is_numeric($currentDispositionsID)) {
-                DispositionsUtilities::updateDispositionsOrder($currentDispositionsID, $currentSortNumber ++);
+                $naechsteNummer = $currentSortNumber ++;
+                DispositionsUtilities::updateDispositionsOrder($currentDispositionsID, $naechsteNummer);
                 $retVal[$currentSortNumber] = $currentDispositionsID;
             }
         }

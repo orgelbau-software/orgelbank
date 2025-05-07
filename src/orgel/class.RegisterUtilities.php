@@ -104,6 +104,13 @@ class RegisterUtilities
         return $retVal;
     }
 
+    
+    /**
+     * 
+     * @param int $iOrgelID 
+     * @param int $iManualID 
+     * @return int Naechste Reihenfolge Nummer. 
+     */
     public static function getNaechsteRegisterPosition($iOrgelID, $iManualID)
     {
         if ($iManualID == null || $iManualID == 0) {

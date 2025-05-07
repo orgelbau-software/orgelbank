@@ -11,6 +11,7 @@ class DispositionsUtilities
         $db->NonSelectQuery($sql);
         $db->disconnect();
     }
+
 }
 
 ?>
