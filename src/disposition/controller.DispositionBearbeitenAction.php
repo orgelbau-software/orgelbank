@@ -183,7 +183,7 @@ class DispositionBearbeitenAction
             } elseif($this->oRegister->getTyp() == 3) {
                 $name .= " (E)";
             }
-            $tplRegister->replace("Name", $name."" . $this->oRegister->getReihenfolge());
+            $tplRegister->replace("Name", $name."");
             $tplRegister->replace("Fuss", $this->oRegister->getFuss());
             $tplRegister->replace("MID", $this->oRegister->getManual());
             $tplRegister->replace("DID", $this->oRegister->getID());
