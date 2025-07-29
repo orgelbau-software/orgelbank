@@ -170,7 +170,7 @@
         <td><!--StimmungNach--></td> 
     </tr>
     <tr>
-        <th>Kircheschlüssel:</th>
+        <th>Kirchenschlüssel:</th>
         <td><!--Kirchenschluessel--></td>
         <th>Orgamat:</th>
         <td><!--Orgamat--></td>
@@ -249,7 +249,7 @@
     <tr>
         <td>Temperatur: __________ °C</td>
         <td>Luftfeuchte: __________ %</td>
-        <td>Stimmon: __________  Hz</td>
+        <td>Stimmton: __________  Hz</td>
     </tr>
     <tr>
         <td><input type="checkbox" id="schimmel" /> <label for="schimmel">Schimmelbefall</label></td>
