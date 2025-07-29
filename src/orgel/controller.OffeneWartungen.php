@@ -132,8 +132,10 @@ class OffeneWartungen implements GetRequestHandler, PostRequestHandler
                 $tplDS->replace("Zyklus", "Unbekannt");
             } else if($orgel->getZyklus() < 12) {
                 $tplDS->replace("Zyklus", $orgel->getZyklus() ." Monate");
-            } else {
+            } else if($orgel->getZyklus() == 12) {
                 $tplDS->replace("Zyklus", ($orgel->getZyklus() / 12) . " Jahr");
+            } else {
+                $tplDS->replace("Zyklus", ($orgel->getZyklus() / 12) . " Jahre");
             }
             $tplDS->replace("NaechstePflege", $naechstePflege);
             $tplDS->replace("AnzahlRegister", $orgel->getRegisterAnzahl());
