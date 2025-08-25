@@ -240,7 +240,8 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
             if (file_exists($bildpfad)) {
                 $img = getimagesize($bildpfad);
                 if ($img[0] < $img[1]) {
-                    $this->Image($bildpfad, 140, 69, 30);
+                    // Hochkannt
+                    $this->Image($bildpfad, 160, 69, 30);
                 } else {
                     $this->Image($bildpfad, 140, 69, 50);
                 }
