@@ -27,9 +27,13 @@ class GemeindeUtilities
 		WHERE
     		o.o_aktiv = 1 AND
 			o.g_id = g.g_id AND
-			g.g_kirche_aid = a.ad_id AND
-            o.o_letztepflege < '" . date("Y") . "-01-01' AND
-			(a.ad_geostatus = 'OK' OR a.ad_geostatus = 'PARTIAL_OK') ";
+			g.g_kirche_aid = a.ad_id AND ";
+
+        if ($pOffeneWartungen == 1) {
+            $sql .= "o.o_letztepflege < '" . date("Y") . "-01-01' AND ";
+        }
+
+		$sql .=" (a.ad_geostatus = 'OK' OR a.ad_geostatus = 'PARTIAL_OK') ";
         if ($pBezirkId != "") {
             $sql .= " AND b_id = " . $pBezirkId . " ";
         }
