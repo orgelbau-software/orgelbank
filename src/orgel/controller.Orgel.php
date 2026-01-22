@@ -83,5 +83,10 @@ class OrgelController
     {
         RequestHandler::handle(new WartungsprotokolleAction());
     }
+
+    public static function exportWartungsListeExcel()
+    {
+        RequestHandler::handle(new WartungsListeExcel());
+    }
 }
 

@@ -216,6 +216,7 @@ include_once ROOTDIR . 'src/orgel/controller.OrgelWartungAction.php';
 include_once ROOTDIR . 'src/orgel/controller.Orgel.php';
 include_once ROOTDIR . 'src/orgel/controller.OrgelListeAction.php';
 include_once ROOTDIR . 'src/orgel/controller.OrgelListeExcel.php';
+include_once ROOTDIR . 'src/orgel/controller.WartungsListeExcel.php';
 include_once ROOTDIR . 'src/orgel/controller.OffeneWartungen.php';
 include_once ROOTDIR . 'src/orgel/controller.OrgelDruckansicht.php';
 include_once ROOTDIR . 'src/orgel/controller.OffeneWartungenDruckansicht.php';

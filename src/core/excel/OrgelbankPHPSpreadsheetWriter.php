@@ -56,6 +56,10 @@ class OrgelbankPHPSpreadsheetWriter
         // echo $pCoordinates . ": " . $pText . "<br>";
     }
 
+    public function getActiveSheet() {
+        return $this->mExcel->getActiveSheet();
+    }
+    
     public function send($pName)
     {
         $objWriter = PHPExcel_IOFactory::createWriter($this->mExcel, 'Xlsx');
