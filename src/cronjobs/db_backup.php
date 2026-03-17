@@ -66,8 +66,11 @@ try {
     
     if($groesse > 0) {
         // ## nachricht erstellen
-        $message = "Ihr Backup der Datenbank <b>" . $db_name . "</b> wurde durchgeführt.<br>";
-        $message .= "Die Größe des erstellten Dumps beträgt <b>" . $groesse . "</b>.<br>";
+        $message = "Guten Tag,<br/>";
+        $message .= "das ist das automatische Backup der Daten Ihrer Orgelbau Software f&uuml;r Ihre eigene Verwendung.<br/>";
+        $message .= "<br/>";
+        $message .= "Ihr Backup der Datenbank <b>" . $db_name . "</b> wurde durchgef&uuml;hrt.<br>";
+        $message .= "Die Gr&ouml;&szlig;e des erstellten Backups betr&auml;gt <b>" . $groesse . "</b>.<br>";
         
         if ($downloadlink_erstellen == "yes" or $downloadlink_erstellen == "ja" or $downloadlink_erstellen == "1") {
             $link = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
@@ -82,9 +85,9 @@ try {
     $retVal['message'] =  $message;
     
     // ## mail versenden
-    $message = str_replace("<br>", "\r\n", $message);
-    $message = str_replace("<b>", "", $message);
-    $message = str_replace("</b>", "", $message);
+    //$message = str_replace("<br>", "\r\n", $message);
+    //$message = str_replace("<b>", "", $message);
+    //$message = str_replace("</b>", "", $message);
     if ($bestaetigungsmail_senden == "yes" or $bestaetigungsmail_senden == "ja" or $bestaetigungsmail_senden == "1") {
         if (! preg_match('/^([a-zA-Z0-9])+([.a-zA-Z0-9_-])*@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-]+)+/', $bestaetigungsmail_adresse)) {
             $retVal['mail'] =  "FEHLER: Mail konnte nicht versendet werden, da die Adresse ung&uuml;ltig ist!";
@@ -94,8 +97,8 @@ try {
                 'From' => SUPPORT_MAIL_FROM,
                 'Subject' => $bestaetigungsmail_betreff
             );
-            $mime = new Mail_mime("\n");
-            $mime->setTXTBody($message);
+            $mime = new Mail_mime(array('eol' => "\n"));
+            $mime->setHTMLBody($message);
             $mime->addAttachment($datei, 'application/x-zip');
             
             // do not ever try to call these lines in reverse order
