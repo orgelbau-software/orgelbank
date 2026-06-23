@@ -134,7 +134,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tdLabel">Kircheschlüssel:</td>
+				<td class="tdLabel">Kirchenschlüssel:</td>
 				<td>
 					<input type="text" name="kirchenschluessel" list="kirchenschluessel" class="width110" value="<!--Kirchenschluessel-->">
 					<datalist id="kirchenschluessel">
