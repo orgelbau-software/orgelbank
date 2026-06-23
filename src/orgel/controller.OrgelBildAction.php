@@ -59,7 +59,7 @@ class OrgelBildAction implements GetRequestHandler, PostRequestHandler, PostRequ
             $filetemp = $_FILES['probe']['tmp_name'];
             $filename = $_FILES['probe']['name'];
             $filesize = $_FILES['probe']['size'];
-            $fileendung = strtolower(substr(strchr($filename, "."), 1, 5));
+            $fileendung = pathinfo($filename, PATHINFO_EXTENSION);
             
             if (! file_exists($filetemp)) {
                 $this->operationStatusMsg = new HTMLStatus("Bitte w&auml;hlen Sie ein Bild aus.", 1);
@@ -73,13 +73,14 @@ class OrgelBildAction implements GetRequestHandler, PostRequestHandler, PostRequ
                     unlink($thumbPfad);
                 
                 $imagesize = getimagesize($filetemp);
+                pre($imagesize);
                 if ($imagesize['0'] > 5000 || $imagesize['1'] > 5000 || strtolower($fileendung) != "jpg") {
                     $this->operationStatusMsg = new HTMLStatus("Die Datei entspricht nicht den Vorgaben von einem JPG mit max 5000 x 5000 Pixeln.", 1);
                 } else {
                     copy($filetemp, $bildPfad);
-                    CreateImage(800, $bildPfad, $bildPfad, 0);
+                    CreateImage(800, $bildPfad, $bildPfad);
                     // CreateImage($zielId > 1 ? 100 : 300, $bildPfad, $thumbPfad, 0);
-                    CreateImage(100, $bildPfad, $thumbPfad, 0);
+                    CreateImage(100, $bildPfad, $thumbPfad);
                     $this->operationStatusMsg = new HTMLStatus("Bild erfolgreich hochgeladen", 2);
                 }
             }
