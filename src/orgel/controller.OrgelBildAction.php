@@ -73,7 +73,6 @@ class OrgelBildAction implements GetRequestHandler, PostRequestHandler, PostRequ
                     unlink($thumbPfad);
                 
                 $imagesize = getimagesize($filetemp);
-                pre($imagesize);
                 if ($imagesize['0'] > 5000 || $imagesize['1'] > 5000 || strtolower($fileendung) != "jpg") {
                     $this->operationStatusMsg = new HTMLStatus("Die Datei entspricht nicht den Vorgaben von einem JPG mit max 5000 x 5000 Pixeln.", 1);
                 } else {
