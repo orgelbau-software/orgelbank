@@ -5,14 +5,34 @@ class StundenRechnung extends PositionsRechnung
 
     public static $TYPE_ID = 2;
     
+    /**
+     * 
+     * @var float
+     */
     protected $azubiLohn;
 
+    /**
+     * 
+     * @var float
+     */
     protected $azubiStd;
 
+    /**
+     * 
+     * @var float
+     */
     protected $geselleLohn;
 
+    /**
+     * 
+     * @var float
+     */
     protected $geselleStd;
 
+    /**
+     * 
+     * @var float
+     */
     protected $material;
 
     public function __construct($iRechnungsID = 0)

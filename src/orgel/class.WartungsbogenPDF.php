@@ -209,7 +209,7 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
         $anmerkungen = $oOrgel->getAnmerkung() != "" ? $oOrgel->getAnmerkung() : "(keine)";
 
         // Zeilenumbrueche und doppelte Spaces entfernen.
-        $anmerkungen = preg_replace('/\s+/', ' ', $anmerkungen);
+        $anmerkungen = preg_replace('/\s+/', '', $anmerkungen);
         
         $this->ln(3);
         $this->activateFontBold();
@@ -282,9 +282,9 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
             //$this->Cell(23, $this->cellheight, 'Temperatur', $thRamen, 0, "L");
             //$this->Cell(23, $this->cellheight, 'Luftfeuchte', $thRamen, 0, "L");
             //$this->Cell(18, $this->cellheight, 'Stimmton', $thRamen, 0, "L");
-            $this->Cell(36, $this->cellheight, 'Daten', $thRamen, 0, "L");
+            $this->Cell(43, $this->cellheight, 'Daten', $thRamen, 0, "L");
             $this->Cell(22, $this->cellheight, 'Stimmung', $thRamen, 0, "L");
-            $this->Cell(70, $this->cellheight, 'Bemerkung', $thRamen, 1, "L");
+            $this->Cell(60, $this->cellheight, 'Bemerkung', $thRamen, 1, "L");
             
             $this->activateFontNormal();
         
@@ -302,9 +302,9 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
                 //$this->Cell(23, $this->cellheight, $temperatur, 1, 0, "R");
                 //$this->Cell(23, $this->cellheight, $luftfeuchte, 1, 0, "R");
                 //$this->Cell(18, $this->cellheight, $stimmton, 1, 0, "R");
-                $this->Cell(36, $this->cellheight, $temperatur ." / " . $luftfeuchte ." / " . $stimmton, 1, 0, "L");
+                $this->Cell(43, $this->cellheight, $temperatur ." / " . $luftfeuchte ." / " . $stimmton, 1, 0, "L");
                 $this->Cell(22, $this->cellheight, $stimmung, 1, 0, "L");
-                $this->Cell(70, $this->cellheight, $bemerkung, 1, 1, "L");
+                $this->Cell(60, $this->cellheight, $bemerkung, 1, 1, "L");
             }
         } else {
             

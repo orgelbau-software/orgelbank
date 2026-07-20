@@ -13,9 +13,21 @@ abstract class PositionsRechnung extends Rechnung
      */
     protected $text2;
 
+    /**
+     * 
+     * @var double
+     */
     protected $fahrtkosten;
 
-    public function __construct($iRechnungsID, $primaryKey, $tableName, $prefix)
+    /**
+     * 
+     * @param int $iRechnungsID 
+     * @param int $primaryKey 
+     * @param string $tableName 
+     * @param string $prefix 
+     * @return void 
+     */
+    public function __construct($iRechnungsID, $primaryKey, $tableName, $prefix) 
     {
         parent::__construct($iRechnungsID, $primaryKey, $tableName, $prefix);
     }
@@ -27,7 +39,7 @@ abstract class PositionsRechnung extends Rechnung
         $ht->add($this->tablePrefix . "fahrtkosten", $this->getFahrtkosten());
         $ht->add($this->tablePrefix . "text1", $this->getText1());
         $ht->add($this->tablePrefix . "text2", $this->getText2());
-        $this->isPersistent(true);
+        $this->setPersistent(true);
         
         return $ht;
     }
@@ -57,6 +69,11 @@ abstract class PositionsRechnung extends Rechnung
         return $this->text2;
     }
 
+    /**
+     * 
+     * @param string $text1 
+     * @return void 
+     */
     public function setText1($text1)
     {
         if ($this->text1 != $text1) {
@@ -65,6 +82,11 @@ abstract class PositionsRechnung extends Rechnung
         }
     }
 
+    /**
+     * 
+     * @param string $text2 
+     * @return void 
+     */
     public function setText2($text2)
     {
         if ($this->text2 != $text2) {
@@ -80,6 +102,11 @@ abstract class PositionsRechnung extends Rechnung
         return $this->fahrtkosten;
     }
 
+    /**
+     * 
+     * @param float $fahrtkosten 
+     * @return void 
+     */
     public function setFahrtkosten($fahrtkosten)
     {
         $this->fahrtkosten = $fahrtkosten;

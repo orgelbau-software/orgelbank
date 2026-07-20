@@ -3,12 +3,28 @@
 class RechnungsPosition extends SimpleDatabaseStorageObjekt
 {
 
+    /**
+     * 
+     * @var int
+     */
     private $rechnungsID;
     
+    /**
+     * 
+     * @var string
+     */
     private $type;
 
+    /**
+     * 
+     * @var int
+     */
     private $position;
 
+    /**
+     * 
+     * @var string
+     */
     private $text;
 
     public function __construct($iID = 0, $primaryKey = "rpos_id", $tableName = "rechnung_position", $tablePrefix = "rpos_")
@@ -57,21 +73,41 @@ class RechnungsPosition extends SimpleDatabaseStorageObjekt
         return $this->type;
     }
 
+    /**
+     * 
+     * @param int $id 
+     * @return void 
+     */
     public function setRechnungsID($id)
     {
         $this->rechnungsID = $id;
     }
 
+    /**
+     * 
+     * @param string $position 
+     * @return void 
+     */
     public function setPosition($position)
     {
         $this->position = $position;
     }
     
+    /**
+     * 
+     * @param int $type 
+     * @return void 
+     */
     public function setType($type)
     {
         $this->type = $type;
     }
 
+    /**
+     * 
+     * @param string $text 
+     * @return void 
+     */
     public function setText($text)
     {
         $this->text = $text;

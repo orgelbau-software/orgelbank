@@ -3,6 +3,10 @@
 class PflegeRechnung extends PositionsRechnung
 {
 
+    /**
+     * 
+     * @var double
+     */
     protected $pflegekosten;
 
     public static $TYPE_ID = 1;
@@ -17,7 +21,7 @@ class PflegeRechnung extends PositionsRechnung
         $ht = parent::generateHashtable();
         
         $ht->add($this->tablePrefix . "pflegekosten", $this->getPflegekosten());
-        $this->isPersistent(true);
+        $this->setPersistent(true);
         
         return $ht;
     }
