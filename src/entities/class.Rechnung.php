@@ -41,7 +41,7 @@ abstract class Rechnung extends SimpleDatabaseStorageObjekt
 
     /**
      * 
-     * @var string
+     * @var timestamp
      */
     protected $datum;
 
@@ -129,6 +129,12 @@ abstract class Rechnung extends SimpleDatabaseStorageObjekt
         return $this->nettoBetrag;
     }
 
+    /**
+     * 
+     * @param float $betrag 
+     * @param bool $berechneBrutto 
+     * @return void 
+     */
     public function setNettoBetrag($betrag, $berechneBrutto = false)
     {
         $this->nettoBetrag = $betrag;
@@ -151,6 +157,11 @@ abstract class Rechnung extends SimpleDatabaseStorageObjekt
         return $this->bruttoBetrag;
     }
 
+    /**
+     * 
+     * @param float $betrag 
+     * @return void 
+     */
     public function setBruttoBetrag($betrag)
     {
         $this->bruttoBetrag = $betrag;
