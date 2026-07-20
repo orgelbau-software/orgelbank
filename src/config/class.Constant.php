@@ -18,6 +18,18 @@ class Constant
             5 => "Reparatur"
         );
     }
+
+    public static function getStimmungKurzform()
+    {
+        return array(
+            0 => "Keine",
+            1 => "Neben",
+            2 => "Haupt",
+            3 => "Zungen",
+            4 => "Wartung",
+            5 => "Reparatur"
+        );
+    }
     
     public static function getDispositionTyp()
     {
