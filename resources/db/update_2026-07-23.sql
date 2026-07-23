@@ -1,0 +1,1 @@
+ALTER TABLE `benutzer` ADD `be_2faaktiv` INT(1) NOT NULL DEFAULT '0' AFTER `be_sortierung`, ADD `be_2fasecret` VARCHAR(128) NULL DEFAULT NULL AFTER `be_2faaktiv`;

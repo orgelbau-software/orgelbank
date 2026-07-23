@@ -6,7 +6,7 @@ class PasswordUtility
     /**
      * Erstellen des Passwort Hashes
      * 
-     * @param unknown $pPasswordKlartext            
+     * @param string $pPasswordKlartext            
      */
     public static function encrypt($pPasswordKlartext)
     {

@@ -25,7 +25,7 @@ class OrgelbankCalDavAuthBackend extends Sabre\DAV\Auth\Backend\AbstractBasic im
         $webUser->setBenutzername($username);
         $webUser->setPasswort(PasswordUtility::encrypt($password));
         
-        if ($webUser != null && $webUser->login()) {
+        if ($webUser != null && $webUser->passwordLogin()) {
             $this->logger->log(__CLASS__, "login succcessful");
             $this->username = $username;
             return true;

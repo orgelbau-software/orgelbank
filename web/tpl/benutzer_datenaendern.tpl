@@ -51,5 +51,22 @@
 		<td style="text-align: right"><input type="submit" name="submit" value="Speichern"/></td>
 	</tr>
 </table>
+
+<h3>2 - Faktor Authentifizierung</h3>
+<table class="liste">
+	<tr>
+		<th><label for="2fastatus">Status</label>:</th>
+		<td>
+			<select name="2fastatus">
+				<!-- 2FAStatus -->
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th>&nbsp;</th>
+		<td style="text-align: right"><input type="submit" name="submit" value="Speichern"/></td>
+	</tr>
+</table>
 </form>
 <!--Statusmeldung-->
+</form>

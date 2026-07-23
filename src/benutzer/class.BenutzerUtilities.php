@@ -1,10 +1,52 @@
 <?php
-
+use OTPHP\TOTP;
 /**
  * @author swatermeyer
  */
 class BenutzerUtilities
 {
+
+    /**
+     * 
+     * @param string $pBenutzerName 
+     * @param string $pBenutzerOTP 
+     * @param boolean $pIncreaseBadPasswordCount
+     * @return bool 
+     */
+    public static function validateOTP($pBenutzerName, $pBenutzerOTP, $pIncreaseBadPasswordCount = false): bool
+    {
+        if($pBenutzerName == "" || $pBenutzerOTP == "") {
+            return false;
+        }
+
+        $clock = new OrgelbankClock();
+        $otp = TOTP::generate($clock);
+        $benutzer = BenutzerUtilities::loadByBenutzername($pBenutzerName);
+        if($benutzer->isAktiviert() == false) {
+            return false;
+        }
+        
+        if($benutzer->get2FASecret() == "") {
+            return false;
+        }
+        
+        $generatedOTP = TOTP::createFromSecret($benutzer->get2FASecret(), $clock)->now();
+        $retVal = false;
+        if($generatedOTP == $pBenutzerOTP) {
+            $retVal = true;
+        } else if($pIncreaseBadPasswordCount == true) {
+            $retVal = false;
+            $benutzer->setFailedLoginCount(($benutzer->getFailedLoginCount() + 1));
+            $benutzer->setFailedLoginLast(date("Y-m-d H:i:s"));
+            if($benutzer->getFailedLoginCount() >= ConstantLoader::getMaxFailedLogins()) {
+                $benutzer->setAktiviert(false);
+            }
+            $benutzer->speichern(false);
+        } else {
+            $retVal = false;
+        }
+        return $retVal;
+    }
 
     /**
      * Ermittelt die Benutzer Soll-Wochenstunden aus der Datenbank
@@ -82,6 +124,11 @@ class BenutzerUtilities
         return BenutzerUtilities::queryDBforAufgabeMitarbeiter($sql);
     }
 
+    /**
+     * 
+     * @param string $benutzername 
+     * @return Benutzer 
+     */
     public static function loadByBenutzername($benutzername)
     {
         $sql = "SELECT 
@@ -146,15 +193,60 @@ class BenutzerUtilities
 					be_aktiviert = 1";
         return DB::getInstance()->getMysqlNumRows($sql) == 1;
     }
+    
+    /**
+     * 
+     * @param string $pUsername 
+     * @return bool 
+     */
+    public static function valid($pUsername) {
+        $retVal = false;
+        if ($pUsername == null || $pUsername == "") {
+            $retVal = false;
+        } else if (! preg_match('/^[a-z]+$/', $pUsername)) {
+            $retVal = false;
+        } else if (strlen($pUsername) > ConstantLoader::getBenutzerMaxUsernameLength()) {
+            $retVal = false;
+        } else if (strlen($pUsername) < ConstantLoader::getBenutzerMinUsernameLength()) {
+            $retVal = false;
+        } else {
+            $retVal = true;
+        }
+        return $retVal;
+    }
 
-    public static function exists($username)
+    /**
+     * 
+     * @param string $pPassword 
+     * @return bool 
+     */
+    public static function validatePassword($pPassword) {
+        $retVal = false;
+        if ($pPassword == null || $pPassword == "") {
+            $retVal = false;
+        } else if (strlen($_POST['passwort']) < ConstantLoader::getBenutzerMinPasswortLength()) {
+            $retVal = false;
+        } else if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.!?@_-])[A-Za-z\d.!?@_-]+$/', $pPassword)) {
+            $retVal = false;
+        } else {
+            $retVal = true;
+        }
+        return $retVal;
+    }
+    
+    /**
+     * 
+     * @param string $pUsername 
+     * @return bool 
+     */
+    public static function exists($pUsername)
     {
         $sql = "SELECT
 					* 
 					FROM 
 						benutzer 
 					WHERE 
-						be_benutzername = '" . $username . "'";
+						be_benutzername = '" . $pUsername . "'";
         return DB::getInstance()->getMysqlNumRows($sql) == 1;
     }
 

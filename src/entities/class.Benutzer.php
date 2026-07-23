@@ -2,6 +2,9 @@
 
 class Benutzer extends SimpleDatabaseStorageObjekt
 {
+    public static $ZWEIFAKTOR_STATUS_AKTIVIERT = 0;
+
+    public static $ZWEIFAKTOR_STATUS_DEAKTIVIERT = 1;
 
     private $vorname;
 
@@ -57,6 +60,18 @@ class Benutzer extends SimpleDatabaseStorageObjekt
     
     private $email;
 
+    /**
+     * 
+     * @var bool
+    */
+    private $zweiFaktorAktiv;
+
+    /**
+     * 
+     * @var string
+     */
+    private $zweiFaktorSecret;
+
     public function __construct($iID = 0)
     {
         parent::__construct($iID, "be_id", "benutzer", "be_");
@@ -94,6 +109,9 @@ class Benutzer extends SimpleDatabaseStorageObjekt
         $this->setZeiterfassung($rs['be_zeiterfassung']);
         $this->setVerrechnungsSatz($rs['be_verrechnungssatz']);
         $this->setSortierung($rs['be_sortierung']);
+
+        $this->set2FAAktiv($rs['be_2faaktiv']);
+        $this->set2FASecret($rs['be_2fasecret']);
         
         $this->setDemo($rs['be_demo']);
     }
@@ -131,6 +149,9 @@ class Benutzer extends SimpleDatabaseStorageObjekt
         $ht->add("be_zeiterfassung", $this->isZeiterfassung());
         $ht->add("be_verrechnungssatz", $this->getVerrechnungsSatz());
         $ht->add("be_sortierung", $this->getSortierung());
+
+        $ht->add("be_2faaktiv", $this->get2FAAktiv());
+        $ht->add("be_2fasecret", $this->get2FASecret());
         
         $ht->add("be_demo", $this->getDemo());
         
@@ -251,7 +272,11 @@ class Benutzer extends SimpleDatabaseStorageObjekt
         return false;
     }
 
-    public function isAktiviert()
+    /**
+     * 
+     * @return bool 
+     */
+    public function isAktiviert(): bool
     {
         if (1 == $this->getAktiviert())
             return true;
@@ -509,5 +534,50 @@ class Benutzer extends SimpleDatabaseStorageObjekt
             $this->setChanged(true);
         }
     }
+
+    /**
+     * 
+     * @return int 
+     */
+    public function get2FAAktiv(): int
+    {
+        return $this->zweiFaktorAktiv;
+    }
+
+    /**
+     * 
+     * @param int $pZweiFaktorAktiv 
+     * @return void 
+     */
+    public function set2FAAktiv($pZweiFaktorAktiv): void
+    {
+        if ($this->zweiFaktorAktiv != $pZweiFaktorAktiv) {
+            $this->zweiFaktorAktiv = $pZweiFaktorAktiv;
+            $this->setChanged(true);
+        }
+    }
+
+      /**
+     * 
+     * @return string 
+     */
+    public function get2FASecret(): string|null
+    {
+        return $this->zweiFaktorSecret;
+    }
+
+    /**
+     * 
+     * @param string $pSecret 
+     * @return void 
+     */
+    public function set2FASecret($pSecret): void
+    {
+        if ($this->zweiFaktorSecret != $pSecret) {
+            $this->zweiFaktorSecret = $pSecret;
+            $this->setChanged(true);
+        }
+    }
 }
 ?>
+

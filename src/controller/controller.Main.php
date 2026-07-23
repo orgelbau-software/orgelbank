@@ -122,6 +122,7 @@ $pcBenutzer->addChild(new SubPage(142, "zeigeZeiterfassung", 0));
 $pcBenutzer->addChild(new SubPage(143, "datumsTest", 0));
 $pcBenutzer->addChild(new SubPage(144, "benutzerZeitauswertung", 0));
 $pcBenutzer->addChild(new SubPage(145, "benutzerZeitauswertung", 0));
+$pcBenutzer->addChild(new SubPage(146, "zeige2FADialog", 0));
 $pcBenutzer->addChild(new SubPage(200, "doHilfeRufen", 0));
 $pageApplication->addController($pcBenutzer);
 

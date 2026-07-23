@@ -10,61 +10,14 @@ class BenutzerController
 
     public static function benutzerdatenAendern()
     {
-        global $webUser;
-        
-        if (! $webUser->isAuthed())
-            die("Forbidden!");
-        
-        $tpl = new Template("benutzer_datenaendern.tpl");
-        $tplStatus = null;
-        $benutzer = new Benutzer($webUser->getID());
-        
-        $iMinPWLength = ConstantLoader::getBenutzerMinPasswortLength();
-        $tpl->replace("MinPWLength", $iMinPWLength);
-        
-        // wird auch direkt nach dem Login aufgerufen, deshalb pruefen ob das Feld "bestaetigung" gesetzt ist
-        if ($_POST && isset($_POST['bestaetigung'])) {
-            $tplStatus = new HTMLStatus("", 3);
-            
-            if ($_POST['passwort'] != "" && strlen($_POST['passwort']) < $iMinPWLength) {
-                $tplStatus->setText("Passwort ist zu kurz. Mindestens " . $iMinPWLength . " Zeichen");
-                $tplStatus->setStatusclass(1);
-            } elseif ($_POST['passwort'] != "" && $_POST['passwort'] != $_POST['bestaetigung']) {
-                $tplStatus->setText("Zwei verschiedene Passw&ouml;rter eingegeben!");
-                $tplStatus->setStatusclass(1);
-            } elseif ($_POST['passwort'] != "" && ($_POST['passwort'] == $benutzer->getVorname() || $_POST['passwort'] == $benutzer->getNachname() || $_POST['passwort'] == $benutzer->getBenutzername())) {
-                $tplStatus->setText("Passwort darf weder Vor- Nach- noch dem Benutzernamen entsprechen!" . $_POST['passwort']);
-                $tplStatus->setStatusclass(1);
-            } else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-                $tplStatus->setText("Email Adresse ungültig: " . $_POST['email']);
-                $tplStatus->setStatusclass(1);
-            } else {
-                // Benutzer laden
-                $benutzer->setVorname($_POST['vorname']);
-                $benutzer->setNachname($_POST['nachname']);
-                $benutzer->setEmail($_POST['email']);
-                
-                if ($_POST['passwort'] != "") {
-                    $benutzer->setPasswort(md5(PASSWORD_SALT . $_POST['passwort']));
-                }
-                
-                $tplStatus->setText("Benutzerdaten gespeichert");
-                $tplStatus->setStatusclass(2);
-                
-                $benutzer->speichern(false);
-            }
-        }
-        
-        $tpl->replace("Vorname", $benutzer->getVorname());
-        $tpl->replace("Nachname", $benutzer->getNachname());
-        $tpl->replace("Benutzername", $benutzer->getBenutzername());
-        $tpl->replace("Email", $benutzer->getEmail());
-        
-        if ($tplStatus != null) {
-            $tpl->replace("Statusmeldung", $tplStatus->getOutput());
-        }
-        $tpl->anzeigen();
+        RequestHandler::handle(new BenutzerDatenAendernAction());
     }
+
+      public static function zeige2FADialog()
+    {
+        RequestHandler::handle(new BenutzerDaten2FAAction());
+    }
+
 
     public static function benutzerLogout()
     {

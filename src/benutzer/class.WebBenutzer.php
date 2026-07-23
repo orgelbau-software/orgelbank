@@ -27,6 +27,12 @@ class WebBenutzer
      */
     private $errorTXT;
 
+    /**
+     * 
+     * @var string
+     */
+    private $zweiFaktorStatus;
+
     public function __construct()
     {
         $this->benutzer = new Benutzer();
@@ -86,10 +92,28 @@ class WebBenutzer
         $this->benutzer->speichern(); // Siehe Guarding Clause in Main, auto commit!
     }
 
-    public function login()
+    /**
+     * Check if a new 2FA is required.
+     * 
+     * @return bool true if new 2FA must be done.
+     */
+    public function isNew2FARequired(): bool {
+        if($this->benutzer == null) {
+            return false;
+        }
+
+        // Benutzer hat 2FA aktiv aber noch nicht durchgefuehrt.
+        if($this->benutzer->get2FAAktiv() == Benutzer::$ZWEIFAKTOR_STATUS_AKTIVIERT && $this->zweiFaktorStatus == "") {
+            return true;
+        }
+        // default
+        return false;
+    }
+
+    public function passwordLogin()
     {
         $retVal = false;
-        if (BenutzerUtilities::exists($this->benutzer->getBenutzername()) == true) {
+        if (BenutzerUtilities::valid($this->benutzer->getBenutzername()) && BenutzerUtilities::exists($this->benutzer->getBenutzername()) == true) {
             
             if (BenutzerUtilities::authorisiereBenutzerdaten($this->getBenutzername(), $this->getPasswort())) {
                 $retVal = true;
@@ -225,6 +249,21 @@ class WebBenutzer
     public function getErrorMessage()
     {
         return $this->errorTXT;
+    }
+
+     public function getZweiFaktorStatus(): string
+    {
+        return $this->zweiFaktorStatus;
+    }
+
+    /**
+     * 
+     * @param string $status 
+     * @return void 
+     */
+    public function setZweiFaktorStatus($status): void
+    {
+        $this->zweiFaktorStatus = $status;
     }
 }
 ?>

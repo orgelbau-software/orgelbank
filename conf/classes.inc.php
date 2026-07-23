@@ -27,6 +27,7 @@ include_once ROOTDIR . 'src/core/log/class.DoNothingLogger.php';
 include_once ROOTDIR . 'src/core/log/class.Log.php';
 include_once ROOTDIR . 'src/core/util/class.Utilities.php';
 include_once ROOTDIR . 'src/core/util/class.WaehrungUtil.php';
+include_once ROOTDIR . 'src/core/util/class.OrgelbankClock.php';
 
 include_once ROOTDIR . 'src/core/session/class.OrgelbankSessionHandler.php';
 
@@ -230,6 +231,8 @@ include_once ROOTDIR . 'src/projekt/controller.Projekt.php';
 include_once ROOTDIR . 'src/projekt/controller.ProjektBearbeitenAction.php';
 include_once ROOTDIR . 'src/controller/controller.Einstellung.php';
 include_once ROOTDIR . 'src/benutzer/controller.Benutzer.php';
+include_once ROOTDIR . 'src/benutzer/controller.BenutzerDatenAendernAction.php';
+include_once ROOTDIR . 'src/benutzer/controller.BenutzerDaten2FAAction.php';
 
 include_once ROOTDIR . 'src/disposition/class.DispositionsUtilities.php';
 include_once ROOTDIR . 'src/disposition/controller.DispositionBearbeitenAction.php';

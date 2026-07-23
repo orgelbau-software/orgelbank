@@ -8,7 +8,7 @@ if(isset($_GET['action']) && $_GET['action'] == "stundenzettel") {
     $webUser->setPasswort($_SESSION['user']['passwort']);
     
     ConstantLoader::performAutoload();
-    if($webUser->login()) {
+    if($webUser->passwordLogin()) {
         
         if(isset($_GET['jahr']) && $_GET['jahr'] == "vorheriges") {
             $jahr = date("Y") - 1;

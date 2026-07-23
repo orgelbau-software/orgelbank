@@ -79,6 +79,8 @@ class ProjektMitarbeiterVerwaltung implements GetRequestHandler, PostRequestHand
                 if ($_POST['passwort'] != "") {
                     $benutzer->setPasswort(PasswordUtility::encrypt($_POST['passwort']));
                     $benutzer->setFailedLoginCount(0); // Bei Neuvergabe auch den FehlerCount zurücksetzen.
+                    $benutzer->set2FASecret("");
+                    $benutzer->set2FAAktiv(Benutzer::$ZWEIFAKTOR_STATUS_DEAKTIVIERT);
                 }
                 
                 // Wochenstunden speichern
@@ -115,21 +117,22 @@ class ProjektMitarbeiterVerwaltung implements GetRequestHandler, PostRequestHand
                 
                 $strText = "";
                 // Benutzername existiert?
-                if ($benutzer->getBenutzername() == null || $benutzer->getBenutzername() == "") {
+                if (BenutzerUtilities::valid($benutzer->getBenutzername()) == false) {
                     $strText .= "<li>Benutzername darf nicht leer sein.</li>";
-                } else if (! preg_match("/^[a-zA-Z]/", $benutzer->getBenutzername())) {
-                    $strText = "<li>Benutzername darf nur aus Buchstaben bestehen.</li>";
-                } else if (strlen($benutzer->getBenutzername()) > ConstantLoader::getBenutzerMaxUsernameLength()) {
+                    $strText .= "<li>Benutzername darf nur aus Kleinbuchstaben bestehen.</li>";
                     $strText .= "<li>Benutzername darf höchstens " . ConstantLoader::getBenutzerMaxUsernameLength() . " Zeichen haben.</li>";
-                } else if (strlen($benutzer->getBenutzername()) < ConstantLoader::getBenutzerMinUsernameLength()) {
                     $strText .= "<li>Benutzername muss mindestens " . ConstantLoader::getBenutzerMinUsernameLength() . " Zeichen haben.</li>";
                 } else if ($_POST['email'] != "" && !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
                     $strText .= "<li>Email Adresse ist ungültig: " . $_POST['email'] . "</li>";
                 }
+                echo "a";
                 
                 if ($_POST['passwort'] != "") {
-                    if (strlen($_POST['passwort']) > 0 && strlen($_POST['passwort']) < ConstantLoader::getBenutzerMinPasswortLength()) {
+                    if (BenutzerUtilities::validatePassword($_POST['passwort']) == false) {
                         $strText .= "<li>Passwort muss mindestens " . ConstantLoader::getBenutzerMinPasswortLength() . " Zeichen haben.</li>";
+                        $strText .= "<li>Passwort muss mindestens einen Großbuchstaben haben</li>";
+                        $strText .= "<li>Passwort muss mindestens einen Kleinbuchstaben haben</li>";
+                        $strText .= "<li>Passwort muss mindestens ein Sonderzeichen aus Punkt, Komma, Ausrufezeichen, Fragezeichen, @, Bindestrich oder Unterstrich.</li>";
                     }
                     if ($_POST['passwort'] == $benutzer->getVorname() || $_POST['passwort'] == $benutzer->getNachname() || $_POST['passwort'] == $benutzer->getBenutzername()) {
                         $strText .= "<li>Passwort darf nicht dem Vor- Nach- oder Benutzernamen entsprechen.</li>";
