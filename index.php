@@ -35,6 +35,8 @@ if ($webUser != null && $webUser->login() && ! $webUser->isLoginExpired()) {
 
     if($webUser->isDemo()) {
         SupportMail::send("Orgelbank Demo - Benutzer eingeloggt: " . $webUser->getBenutzername(), "Demo Benutzer eingeloggt: " . $webUser->getBenutzername());
+    } else {
+        echo "no demo";
     }
     $tplKopf = new Template("indexkopf.tpl");
     $tplFuss = new Template("indexfuss.tpl");
