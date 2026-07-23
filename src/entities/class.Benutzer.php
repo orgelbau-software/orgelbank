@@ -162,6 +162,10 @@ class Benutzer extends SimpleDatabaseStorageObjekt
         return $this->nachname;
     }
 
+    /**
+     * 
+     * @return string 
+     */
     public function getPasswort()
     {
         return $this->passwort;

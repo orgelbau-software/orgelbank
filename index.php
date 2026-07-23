@@ -32,6 +32,10 @@ if (isset($_SESSION['user']['benutzername'], $_SESSION['user']['passwort'])) {
 
 // echo PasswordUtility::encrypt("Gedact2021");
 if ($webUser != null && $webUser->login() && ! $webUser->isLoginExpired()) {
+
+    if($webUser->isDemo()) {
+        SupportMail::send("Orgelbank Demo - Benutzer eingeloggt: " . $webUser->getBenutzername(), "Demo Benutzer eingeloggt: " . $webUser->getBenutzername());
+    }
     $tplKopf = new Template("indexkopf.tpl");
     $tplFuss = new Template("indexfuss.tpl");
     $tplSubMenu = null;

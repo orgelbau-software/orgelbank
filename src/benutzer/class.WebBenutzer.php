@@ -3,12 +3,28 @@
 class WebBenutzer
 {
 
+    /**
+     * 
+     * @var Benutzer
+     */
     private $benutzer;
 
+    /**
+     * 
+     * @var bool
+     */
     private $isAuthed;
 
+    /**
+     * 
+     * @var int
+     */
     private $errorCount;
 
+    /**
+     * 
+     * @var string
+     */
     private $errorTXT;
 
     public function __construct()
@@ -27,18 +43,28 @@ class WebBenutzer
         return ($this->benutzer == null ? "" : $this->benutzer->getBenutzername());
     }
 
-    public function setBenutzername($benutzername)
+    /**
+     * 
+     * @param string $benutzername 
+     * @return void 
+     */
+    public function setBenutzername($benutzername): void
     {
         $this->benutzer->setBenutzername($benutzername);
         $this->isAuthed = false;
     }
 
-    public function getPasswort()
+    public function getPasswort(): string
     {
         return $this->benutzer->getPasswort();
     }
 
-    public function setPasswort($passwort)
+    /**
+     * 
+     * @param string $passwort 
+     * @return void 
+     */
+    public function setPasswort($passwort): void
     {
         $this->benutzer->setPasswort($passwort);
         $this->isAuthed = false;
@@ -146,6 +172,15 @@ class WebBenutzer
     public function isMonteur()
     {
         return $this->benutzer->isMonteur();
+    }
+
+    /**
+     * 
+     * @return bool
+     */
+    public function isDemo(): bool
+    {
+        return $this->benutzer->isDemo();
     }
 
     public function logout()
