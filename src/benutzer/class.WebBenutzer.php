@@ -96,10 +96,6 @@ class WebBenutzer
                 
                 // Benutzer erst nach Authorisierungsprüfung laden
                 $this->benutzer = BenutzerUtilities::loadByBenutzername($this->benutzer->getBenutzername());
-                
-                if($this->benutzer->isDemo()) {
-                    SupportMail::send("Orgelbank Demo - Benutzer eingeloggt: " . $this->benutzer->getBenutzername(), "Demo Benutzer eingeloggt: " . $this->benutzer->getBenutzername());
-                }
 
                 // Benutzerdaten in Session speichern
                 $this->initSessionData();
