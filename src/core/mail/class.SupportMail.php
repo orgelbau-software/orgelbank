@@ -30,7 +30,7 @@ class SupportMail
         return $retVal;
     }
 
-    private static function isOnline()
+    private static function isOnline(): bool
     {
         return $_SERVER['REMOTE_ADDR'] != "127.0.0.1";
     }

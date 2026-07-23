@@ -26,8 +26,6 @@ if (version_compare(phpversion(), '8.2', '<')) {
 // Konstanten
 define('TRACEENABLED', false);
 
-define('SUPPORT_MAIL_ADDR', "admin@company.com");
-
 define("ORGELBILD_BILD_PFAD", ROOTDIR . "store/orgelpics/");
 define("ORGELBILD_THUMB_PFAD", ORGELBILD_BILD_PFAD . "thumbs/");
 define('RECHNUNGDIR', ROOTDIR . 'store/rechnungen/');
