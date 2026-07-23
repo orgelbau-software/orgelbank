@@ -3,12 +3,25 @@
 class SupportMail
 {
 
-    public static function send($betreff, $content)
+    /**
+     * 
+     * @param string $betreff
+     * @param string $content 
+     * @return bool 
+     */
+    public static function send($betreff, $content): bool
     {
         return SupportMail::sendSupportMail(SUPPORT_MAIL_ADDR, $betreff, $content);
     }
 
-    public static function sendSupportMail($to, $betreff, $content)
+    /**
+     * 
+     * @param string $to 
+     * @param string $betreff 
+     * @param string $content 
+     * @return bool 
+     */
+    public static function sendSupportMail($to, $betreff, $content): bool
     {
         $retVal = false;
         if (SupportMail::isOnline() && SUPPORT_MAIL_ENABLED) {
