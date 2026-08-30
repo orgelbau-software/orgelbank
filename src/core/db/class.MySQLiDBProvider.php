@@ -113,7 +113,7 @@ class MySQLiDBProvider implements DBProvider
                 throw new Exception("failed to insert into database: '" . $sqlstring . "', Error: " . $this->getInstance()->errno);
             }
         } else {
-            throw new Exception("Kein NON-SELECT-Query (Update, Insert, Delete): " . $sqlstring . "', Error: " . $this->getInstance()->errno());
+            throw new Exception("Kein NON-SELECT-Query (Update, Insert, Delete): " . $sqlstring . "', Error: " . $this->getInstance()->errno);
         }
         return $retVal;
     }

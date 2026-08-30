@@ -14,14 +14,33 @@ abstract class DatabaseStorageObjekt
 
     const MYSQL_DATETIME_FORMAT = "Y-m-d H:i:s";
     
+    /**
+     * 
+     * @var int
+     */
     protected $iID;
 
+    /**
+     * 
+     * @var string
+     */
     protected $strChangeBy;
 
+    /**
+     * 
+     * @var string
+     */
     protected $strCreatedAt;
 
+    /**
+     * 
+     * @var string
+     */
     protected $dtChangeAt;
 
+    /**
+     * @var bool
+     */
     protected $boObjektHasChanged;
 
     /**
@@ -32,7 +51,7 @@ abstract class DatabaseStorageObjekt
      *
      * Die Variable wird nicht gespeichert.
      *
-     * @var unknown_type
+     * @var bool
      */
     protected $boSelected;
 
@@ -43,6 +62,10 @@ abstract class DatabaseStorageObjekt
      */
     protected $isPersistent;
 
+    /**
+     * 
+     * @var DBProvider
+     */
     protected $dbInstance;
 
     /**
@@ -70,8 +93,7 @@ abstract class DatabaseStorageObjekt
     /**
      * Stoesst den Ladevorgang eines Datensatzes an
      *
-     * @access public
-     * @param int/sql $iID            
+     * @access public      
      */
     public function load()
     {
@@ -82,8 +104,7 @@ abstract class DatabaseStorageObjekt
     /**
      * Laedt den Datensatz aus der Datenbank
      *
-     * @access protected
-     * @param int/sql $iID            
+     * @access protected        
      */
     protected abstract function doLoad();
 
@@ -255,7 +276,7 @@ abstract class DatabaseStorageObjekt
     /**
      * Gibt die ID des Objektes zurueck
      *
-     * @return int / PrimaryKey
+     * @return int
      */
     public function getID()
     {
@@ -304,7 +325,7 @@ abstract class DatabaseStorageObjekt
      * Datum der letzten Veraenderung
      *
      * @param boolean $formatiert            
-     * @return sqlDate / Datum
+     * @return string
      */
     public function getChangeAt($formatiert = false)
     {
@@ -316,7 +337,7 @@ abstract class DatabaseStorageObjekt
     /**
      * Setzt das Datum der letzten Veraenderung
      *
-     * @param sqlDate $dtChangeAt            
+     * @param string $dtChangeAt            
      * @access public
      */
     public function setChangeAt($dtChangeAt = 0)
@@ -377,7 +398,7 @@ abstract class DatabaseStorageObjekt
      * Datum wann der Datensatz erstellt wurde
      *
      * @access public
-     * @return sqlDate
+     * @return string
      */
     public function getCreatedAt()
     {
@@ -388,7 +409,7 @@ abstract class DatabaseStorageObjekt
      * Setzt das Erstellungsdatum
      *
      * @access public
-     * @param string $strChangeAt            
+     * @param string $strCreatedAt            
      */
     public function setCreatedAt($strCreatedAt)
     {
@@ -398,6 +419,11 @@ abstract class DatabaseStorageObjekt
         }
     }
 
+    /**
+     * 
+     * @param string $status 
+     * @return void 
+     */
     public function setSelected($status)
     {
         $this->boSelected = $status;

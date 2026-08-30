@@ -8,9 +8,9 @@ class OrgelbankSessionHandler implements SessionHandlerInterface
      * Opens a connection to the database and stays open until specifically closed
      * This function is called first and with each page load
      *
-     * @param string $s
+     * @param string $savePath
      *            Session Path
-     * @param string $n            
+     * @param string $sessionName
      * @return bool
      */
     public function open(string $savePath, string $sessionName) : bool {
@@ -22,8 +22,8 @@ class OrgelbankSessionHandler implements SessionHandlerInterface
      * Queries the mysql database, unencrypts data, and returns it.
      * This function is called after 'open' with each page load
      *
-     * @param unknown_type  $id            
-     * @return unknown
+     * @param string  $id            
+     * @return string
      */
     public function read(string $id) : false|string
     {
@@ -57,7 +57,11 @@ class OrgelbankSessionHandler implements SessionHandlerInterface
     public function write(string $id, string $data) : bool
         {
             
-        if (! $data) {
+//        if (! $data) {
+//            return false;
+//        }
+
+        if (! $id) {
             return false;
         }
         
@@ -76,7 +80,7 @@ class OrgelbankSessionHandler implements SessionHandlerInterface
             }
             $db->NonSelectQuery($query);
             return true;
-        } catch(Exception $e) {
+        } catch(Throwable $e) {
             ExceptionHandler::handle($e);
             return false;
         }

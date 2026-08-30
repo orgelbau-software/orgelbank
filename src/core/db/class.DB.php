@@ -2,15 +2,15 @@
 
 /**
  * Stellt Verbindung zu einer  MySQL DB her, Sendet Querys, Returnt Results
- * 
- * @author swatermeyer
- * @since 09.05.2006
- * @version $Revision: 1.5 $
  *
  */
 class DB implements DBProvider
 {
 
+    /**
+     * 
+     * @var int
+     */
     public static $num_queries;
 
     // zaehlt die abgesendeten Queries ueber die DB-Klasse
@@ -34,7 +34,6 @@ class DB implements DBProvider
      */
     public function __construct()
     {
-        // $this->mInstance = new MySQLDBProvider();
         $this->mInstance = new MySQLiDBProvider();
         $this->connect();
     }
