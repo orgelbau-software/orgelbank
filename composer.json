@@ -6,6 +6,7 @@
         "setasign/fpdi": "^2.6",
         "dompdf/dompdf": "^3.0",
         "spomky-labs/otphp": "^11.5",
-        "psr/clock": "^1.0"
+        "psr/clock": "^1.0",
+        "web-auth/webauthn-lib": "^5.3"
     }
 }
