@@ -87,8 +87,7 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
         // Benutzer fuer Zeiterfassung zugelassen?
         if ($benutzer->isZeiterfassung() == false) {
             $html = new HTMLStatus("Keine Zulassung für Zeiterfassung", 1);
-            $html->anzeigen();
-            return;
+            return $html;
         } else {
             // ProjektId in Session merken fuer Vorauswahl in Zeiterfassungsdialogen / Benutzerübergreifend
             $_SESSION['letzte_projekt_id'] = $pid;
