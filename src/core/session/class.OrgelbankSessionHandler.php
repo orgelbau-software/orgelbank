@@ -72,8 +72,13 @@ class OrgelbankSessionHandler implements SessionHandlerInterface
             $id = $db->real_escape_string($id);
             $data = $db->real_escape_string(base64_encode($data));
             
-            $query = "INSERT INTO http_session SET id='" . $id . "', data='" . $data . "', expire='" . $expire . "', session_start='" . time() . "'"
-                . " ON DUPLICATE KEY UPDATE data=VALUES(data), expire=VALUES(expire)";
+            $query = "SELECT * FROM http_session WHERE id = '" . $id . "'";
+            
+            if ($db->getMysqlNumRows($query) == 1) {
+                $query = "UPDATE http_session SET data='" . $data . "', expire=" . $expire . " WHERE id='" . $id . "'";
+            } else {
+                $query = "INSERT INTO http_session SET id='" . $id . "', data='" . $data . "', expire='" . $expire . "', session_start='" . time() . "'";
+            }
             $db->NonSelectQuery($query);
             return true;
         } catch(Throwable $e) {
