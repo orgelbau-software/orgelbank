@@ -96,6 +96,7 @@ if($_POST && isset($_POST['password']) && $_POST['password'] == MYSQL_PASS) {
   ?>
 <form action="reset.database.php" method="post">
 	<h1>Datenbank zuruecksetzen</h1>
+  <p>Use your database password here.</p>
 	<input type="password" name="password" value="" /> <input type="submit"
 		name="submit" value="Datenbank zuruecksetzen" />
 </form>

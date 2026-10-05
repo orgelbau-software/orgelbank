@@ -517,7 +517,11 @@ class ConstantLoader
         return "true" == ConstantLoader::$htValues->getValueOf("projekt_stunden_nur_gebucht");
     }
     
-    public static function getBenutzerAutomatischerLogoutInSekunden()
+    /**
+     * 
+     * @return int 
+     */
+    public static function getBenutzerAutomatischerLogoutInSekunden(): int
     {
 //         return 600;
 

@@ -222,12 +222,10 @@ class WebBenutzer
 
     public function isLoginExpired()
     {
-        if (! isset($_SESSION['request']['lastaction'])) {
-            return false;
+        if (isset($_SESSION['request']['lastaction']) && $_SESSION['request']['lastaction'] >= strtotime("+" . ConstantLoader::getMaximumIdleTime() . " Minute")) {
+            return true;
         }
-
-        $elapsedSeconds = time() - (int) $_SESSION['request']['lastaction'];
-        return $elapsedSeconds >= ConstantLoader::getMaximumIdleTimeInSeconds();
+        return false;
     }
 
     public function getErrorMessage()
