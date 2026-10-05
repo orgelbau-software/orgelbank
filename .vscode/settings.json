@@ -1,0 +1,12 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^cd 'c:\\\\dev\\\\app-server\\\\xampp-202502\\\\htdocs\\\\orgelbank'; php -l src/core/constants/class\\.ConstantLoader\\.php; php -l src/benutzer/class\\.WebBenutzer\\.php$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^php -r \"echo number_format\\(round\\(\\(float\\) '1234\\.567', 2\\), 2, ',', '\\.'\\);\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
