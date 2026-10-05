@@ -28,10 +28,13 @@ class AnsprechpartnerController
         if (! isset($_GET['gid'], $_GET['aid']))
             return;
         
-        AnsprechpartnerUtilities::loescheGemeindeAnsprechpartner($_GET['aid'], $_GET['gid']);
+        $iAnsprechpartnerID = filter_var($_GET['aid'], FILTER_VALIDATE_INT);
+        $iGemeindeID = filter_var($_GET['gid'], FILTER_VALIDATE_INT);
         
-        $oA = new Ansprechpartner($_GET['aid']);
-        $oG = new Gemeinde($_GET['gid']);
+        AnsprechpartnerUtilities::loescheGemeindeAnsprechpartner($iAnsprechpartnerID, $iGemeindeID);
+        
+        $oA = new Ansprechpartner($iAnsprechpartnerID);
+        $oG = new Gemeinde($iGemeindeID);
         
         $redirect = "index.php?page=3&do=40&aid=" . $oA->getID();
         
@@ -45,8 +48,8 @@ class AnsprechpartnerController
 
     /**
      *
-     * @param unknown $iAnsprechpartnerID            
-     * @param unknown $iGemeindeID            
+     * @param int $iAnsprechpartnerID            
+     * @param int $iGemeindeID            
      * @return boolean
      */
     public static function addAnsprechpartnerZuGemeinde($iAnsprechpartnerID, $iGemeindeID)

@@ -24,7 +24,7 @@ class Date
      *
      * @param unknown_type $timestamp            
      */
-    public static function getTagDerWoche($timestamp = "now")
+    public static function getTagDerWoche($timestamp = "now"): int|float
     {
         if ($timestamp == "now")
             $timestamp = time();
@@ -33,45 +33,66 @@ class Date
         return $t == 0 ? 6 : ($t - 1);
     }
 
-    public static function getMonatsnamen($iMonat)
+    /**
+     * 
+     * @param int|float $iMonat 
+     * @return string Name des Monats
+     */
+    public static function getMonatsnamen($iMonat): string
     {
         return Date::$monatsName[$iMonat];
     }
 
-    public function getTime()
+    public function getTime(): string
     {
         return date("H:i");
     }
 
-    public static function getDate($timestamp = null)
+    public static function getDate($timestamp = null): string
     {
         if ($timestamp == null)
             $timestamp = time();
         return date("d.m.Y", $timestamp);
     }
 
-    public static function getSQLDate($timestamp = null)
+    public static function getSQLDate($timestamp = null): string
     {
         if ($timestamp == null)
             $timestamp = time();
         return date("Y-m-d", $timestamp);
     }
 
-    public function getKW($timestamp)
+    /**
+     * 
+     * @param int $timestamp 
+     * @return string Kalenderwoche
+     */
+    public function getKW($timestamp): string
     {
         return date("W", $timestamp);
     }
 
-    public function getYear($timestamp)
+    /**
+     * 
+     * @param int $timestamp 
+     * @return string Jahr
+     */
+    public function getYear($timestamp): string
     {
         return date("Y", $timestamp);
     }
 
-    public function getMonthDate()
+    public function getMonthDate(): string
     {
         return date("d") . ". " . Date::$monatsName[date("n")] . " " . date("Y");
     }
 
+    /**
+     * 
+     * @param int $timestampEinesTage 
+     * @param string $format 
+     * @return string[] String Array mit den 7 Tagen der Arbeitswoche. Montag = 0, Sonntag = 6
+     */
     public static function berechneArbeitswoche($timestampEinesTage, $format = "d.m.Y")
     {
         $c = Date::berechneArbeitswocheTimestamp($timestampEinesTage);
@@ -109,16 +130,32 @@ class Date
         return $arWochentageTS;
     }
 
+    /**
+     * 
+     * @param string $datum 
+     * @return bool true wenn das Datum ein Feiertag ist.
+     */
     public static function isFeiertag($datum)
     {
         return "" != Date::berechneFeiertage($datum, BUNDESLAND);
     }
 
+    /**
+     * 
+     * @param string $datum 
+     * @return false|string 
+     */
     public static function getFeiertagsBezeichnung($datum)
     {
         return Date::berechneFeiertage($datum, BUNDESLAND);
     }
 
+    /**
+     * 
+     * @param string $datum 
+     * @param string $bundesland 
+     * @return false|string 
+     */
     public static function berechneFeiertage($datum, $bundesland = 'nrw')
     {
         if (false == is_numeric($datum)) {
@@ -192,7 +229,7 @@ class Date
         for ($monat = 1; $monat <= 12; $monat ++) {
             echo '<strong>' . $monat . '</strong><br>';
             for ($tag = 1; $tag <= 31; $tag ++) {
-                $tmp = Date::berechneFeiertage('2021-' . $monat . '-' . $tag, 'noe');
+                $tmp = Date::berechneFeiertage('2026-' . $monat . '-' . $tag, 'noe');
                 if ($tmp == 'Arbeitstag' || $tmp == 'Wochenende' || $tmp == "") {
                     // echo $tag.'.'.$monat.': '.$tmp.'<br>';
                 } else {

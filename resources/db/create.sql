@@ -513,7 +513,7 @@ CREATE TABLE `gemeindeansprechpartner` (
 
 CREATE TABLE `http_session` (
   `id2` int(11) NOT NULL,
-  `id` text CHARACTER SET latin1 NOT NULL,
+  `id` varchar(256) CHARACTER SET latin1 NOT NULL,
   `data` text CHARACTER SET latin1,
   `expire` int(11) NOT NULL,
   `session_start` varchar(15) CHARACTER SET latin1 NOT NULL
@@ -1243,6 +1243,7 @@ ALTER TABLE `gemeindeansprechpartner`
 --
 ALTER TABLE `http_session`
   ADD PRIMARY KEY (`id2`),
+  ADD UNIQUE KEY `id` (`id`),
   ADD KEY `expire` (`expire`);
 
 --
@@ -1539,5 +1540,4 @@ CREATE VIEW `rechnung_view`  AS  select `r`.`rp_id` AS `r_id`,`r`.`rp_nummer` AS
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
 

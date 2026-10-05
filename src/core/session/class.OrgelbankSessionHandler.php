@@ -37,7 +37,7 @@ class OrgelbankSessionHandler implements SessionHandlerInterface
         
         if ($session_read['expire'] < time()) {
             Log::debug("session has expired");
-            OrgelbankSessionHandler::destroy($id);
+            $this->destroy($id);
             return "";
         } else {
             return base64_decode($session_read['data']);
@@ -69,15 +69,11 @@ class OrgelbankSessionHandler implements SessionHandlerInterface
             $expire = time() + SESSION_DEFAULT_EXPIRE;
             
             $db = DB::getInstance();
+            $id = $db->real_escape_string($id);
             $data = $db->real_escape_string(base64_encode($data));
             
-            $query = "SELECT * FROM http_session WHERE id = '" . $id . "'";
-            
-            if ($db->getMysqlNumRows($query) == 1) {
-                $query = "UPDATE http_session SET data='" . $data . "', expire=" . $expire . " WHERE id='" . $id . "'";
-            } else {
-                $query = "INSERT INTO http_session SET id='" . $id . "', data='" . $data . "', expire='" . $expire . "', session_start='" . time() . "'";
-            }
+            $query = "INSERT INTO http_session SET id='" . $id . "', data='" . $data . "', expire='" . $expire . "', session_start='" . time() . "'"
+                . " ON DUPLICATE KEY UPDATE data=VALUES(data), expire=VALUES(expire)";
             $db->NonSelectQuery($query);
             return true;
         } catch(Throwable $e) {
@@ -126,7 +122,7 @@ class OrgelbankSessionHandler implements SessionHandlerInterface
         $db->NonSelectQuery($query);
         $count = $db->getAffectedRows();
         $db->disconnect();
-        return ( $count > 0 ? $count : false);
+        return ( $count >= 0 ? $count : false);
     }
 }
 ?>

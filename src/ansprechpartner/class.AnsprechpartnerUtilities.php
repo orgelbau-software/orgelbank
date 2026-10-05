@@ -37,6 +37,10 @@ class AnsprechpartnerUtilities
      */
     public static function loescheGemeindeAnsprechpartner($iAnsprechpartnerID, $iGemeindeID)
     {
+        if ($iAnsprechpartnerID === false || $iAnsprechpartnerID <= 0 || $iGemeindeID === false || $iGemeindeID <= 0) {
+            throw new IllegalArgumentException("Ansprechpartner- und Gemeinde-ID müssen positive Ganzzahlen sein");
+        }
+
         $oDB = DB::getInstance();
         $sql = "DELETE FROM gemeindeansprechpartner WHERE g_id = " . $iGemeindeID . " AND a_id = " . $iAnsprechpartnerID;
         $oDB->NonSelectQuery($sql);
