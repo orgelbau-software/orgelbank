@@ -27,6 +27,7 @@ Then manually execute the script in the browser to re-generate the files. Maybe 
 6. Database Modifications
 - Reset Database: http://customer.yourdomain.de/resources/reset/reset.database.php
 - Align API_KEY from your config.php file with the API key in OPTION_META table
+- Re-Create Rechnungs-View with resources/db/create_rechnung_view.sql
 7. Reset the Fonts
 Delete the pre-configured PHP files, like
 * https://customer.orgelbau-software.de/vendor/setasign/tfpdf/font/unifont/
