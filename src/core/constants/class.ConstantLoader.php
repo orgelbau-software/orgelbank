@@ -208,17 +208,17 @@ class ConstantLoader
     }
 
     /**
-     * @deprecated 
+     * @deprecated
      * @return number
      */
     public static function getMaximumIdleTime()
     {
-        return self::getBenutzerAutomatischerLogoutInSekunden() * 60;
+        return self::getBenutzerAutomatischerLogoutInSekunden();
     }
 
     public static function getMaximumIdleTimeInSeconds()
     {
-        return ConstantLoader::getMaximumIdleTime() * 60;
+        return ConstantLoader::getMaximumIdleTime();
     }
 
     /**

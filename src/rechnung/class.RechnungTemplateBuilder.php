@@ -78,13 +78,23 @@ abstract class RechnungTemplateBuilder
 
     public abstract function ersetzeRechnungsTags();
 
+    /**
+     * 
+     * @param mixed $e 
+     * @return string 
+     */
     protected function convertToEuro($e)
     {
+        $format = null;
         // PHP8 Change
         if(is_int($e) || is_float($e)) {
-            $e = round($e, 2);
+            $format = round($e, 2);
+        } else if(is_string($e)) {
+            $format = floatval($e);
+        } else {
+            $format = $e;
         }
-        return number_format($e, 2, ",", ".");
+        return number_format($format, 2, ",", ".");
     }
 
     public function setGemeinde($s)

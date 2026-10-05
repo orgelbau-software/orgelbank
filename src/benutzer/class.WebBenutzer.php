@@ -97,6 +97,11 @@ class WebBenutzer
                 // Benutzer erst nach Authorisierungsprüfung laden
                 $this->benutzer = BenutzerUtilities::loadByBenutzername($this->benutzer->getBenutzername());
 
+                if ($this->benutzer->isDemo() && empty($_SESSION['user']['demo_login_mail_sent'])) {
+                    SupportMail::send("Orgelbank Demo - Benutzer eingeloggt: " . $this->benutzer->getBenutzername(), "Demo Benutzer eingeloggt: " . $this->benutzer->getBenutzername());
+                    $_SESSION['user']['demo_login_mail_sent'] = true;
+                }
+
                 // Benutzerdaten in Session speichern
                 $this->initSessionData();
                 
@@ -185,7 +190,8 @@ class WebBenutzer
 
     public function logout()
     {
-        $this->benutzer = null;
+        $this->benutzer = new Benutzer();
+        $this->isAuthed = false;
         session_destroy();
     }
 
@@ -198,7 +204,7 @@ class WebBenutzer
         $_SESSION['request']['lastaction'] = time();
     }
 
-    public function initBean()
+    private function initBean()
     {
         $this->setBenutzername($_SESSION['user']['benutzername']);
         $this->setPasswort($_SESSION['user']['passwort']);
@@ -216,10 +222,12 @@ class WebBenutzer
 
     public function isLoginExpired()
     {
-        if (isset($_SESSION['request']['lastaction']) && $_SESSION['request']['lastaction'] >= strtotime("+" . ConstantLoader::getMaximumIdleTime() . " Minute")) {
-            return true;
+        if (! isset($_SESSION['request']['lastaction'])) {
+            return false;
         }
-        return false;
+
+        $elapsedSeconds = time() - (int) $_SESSION['request']['lastaction'];
+        return $elapsedSeconds >= ConstantLoader::getMaximumIdleTimeInSeconds();
     }
 
     public function getErrorMessage()

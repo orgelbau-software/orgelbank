@@ -133,6 +133,13 @@ class BenutzerUtilities
      */
     public static function authorisiereBenutzerdaten($benutzernamen, $passwort, $pKlarText = false)
     {
+        if ($benutzernamen === null || trim((string) $benutzernamen) === "") {
+            return false;
+        }
+        if ($passwort === null || trim((string) $passwort) === "") {
+            return false;
+        }
+
         if($pKlarText == true) {
             $passwort = PasswordUtility::encrypt($passwort);
         }
