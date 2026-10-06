@@ -278,7 +278,7 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
         if($c->getSize() > 0) {
             
             $this->Cell(21, $this->cellheight, 'Datum', $thRamen, 0, "L");
-            $this->Cell(21, $this->cellheight, 'Mitarbeiter', $thRamen, 0, "L");
+            $this->Cell(21, $this->cellheight, 'MA', $thRamen, 0, "L");
             //$this->Cell(23, $this->cellheight, 'Temperatur', $thRamen, 0, "L");
             //$this->Cell(23, $this->cellheight, 'Luftfeuchte', $thRamen, 0, "L");
             //$this->Cell(18, $this->cellheight, 'Stimmton', $thRamen, 0, "L");
@@ -304,7 +304,7 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
                 //$this->Cell(18, $this->cellheight, $stimmton, 1, 0, "R");
                 $this->Cell(36, $this->cellheight, $temperatur ." / " . $luftfeuchte ." / " . $stimmton, 1, 0, "L");
                 $this->Cell(22, $this->cellheight, $stimmung, 1, 0, "L");
-                $this->Cell(70, $this->cellheight, $bemerkung, 1, 1, "L");
+                $this->MultiCell(85, $this->cellheight, $bemerkung, 1, 1, false);
             }
         } else {
             

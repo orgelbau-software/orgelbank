@@ -297,6 +297,9 @@ abstract class OrgelbankBasisPDF extends Fpdi
         if (count($manual6name) > 0 || $oOrgel->getGroesseM6() != "") {
             $this->Cell($iSizeRegisterBez, $this->cellheight, 'Pedal', 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
+        } else {
+            $this->Cell($iSizeRegisterBez, $this->cellheight, '', 0, 0);
+            $this->Cell(10, $this->cellheight, '', 0, 0);
         }
         if (count($manual1name) > 0 || $oOrgel->getGroesseM1() != "") {
             $this->Cell($iSizeRegisterBez, $this->cellheight, 'Manual I', 0, 0);
@@ -335,6 +338,9 @@ abstract class OrgelbankBasisPDF extends Fpdi
                 $text = ($text == "" ? $oOrgel->getGroesseM6() :  $text . " / " . $oOrgel->getGroesseM6());
             }
             $this->Cell($iSizeRegisterBez, $this->cellheight, ($text == "" ? "Unbekannt" : $text), 0, 0);
+            $this->Cell(10, $this->cellheight, '', 0, 0);
+        } else {
+          $this->Cell($iSizeRegisterBez, $this->cellheight, "", 0, 0);
             $this->Cell(10, $this->cellheight, '', 0, 0);
         }
         if (count($manual1name) > 0|| $row['o_m1wd'] != "" || $oOrgel->getGroesseM1() != "") {
