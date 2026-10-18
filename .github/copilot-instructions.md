@@ -19,6 +19,7 @@ Orgelbank is a server-rendered PHP application for managing organ maintenance, c
 - Follow the existing filename patterns, such as `class.Name.php`, `controller.Name.php`, and the corresponding `src/<feature>/` grouping. Classes are globally named and loaded by explicit includes.
 - Keep route registration, implementation, view, and any browser-side assets in sync: route IDs and permissions in `src/controller/controller.Main.php`, controller/action code in the feature directory, templates in `web/tpl`, and JavaScript/CSS in `web/js` or `web/css`.
 - Views use the project’s `Template`/`BufferedTemplate` classes and named placeholder replacement rather than a modern framework templating engine.
+- Do not generate HTML markup in PHP controller classes. Put markup in templates and use controller code only to provide data for template placeholders.
 - Database options loaded through `ConstantLoader` are application settings stored in the database; use its existing accessors/setters rather than introducing duplicate hard-coded configuration.
 - Treat `vendor/` and bundled third-party code under `lib/` as dependencies, not application source.
 

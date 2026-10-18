@@ -1352,7 +1352,7 @@ ALTER TABLE `register_groessen`
 --
 ALTER TABLE `reisekosten`
   ADD PRIMARY KEY (`rk_id`),
-  ADD UNIQUE KEY `proj_id_datum` (`proj_id`,`be_id`,`rk_datum`);
+  ADD UNIQUE KEY `be_id_datum` (`be_id`,`rk_datum`);
 
 --
 -- Indizes für die Tabelle `seitenstatistik`

@@ -148,48 +148,51 @@ function loadMitarbeiterWochenStunden($wochenTag) {
 }
 
 $(function() {
-	$("#km").change(function(){
-		$("#kmkosten").attr("value", $("#km").attr("value") * kilometerPauschale);
-	});
-	$(".reisekosten").change(function(){
-		var $row = $(this).closest(".reisekostenTag");
-		if ($row.length) {
-			var km = parseFloat($row.find(".reisekosten-km").val().replace(",", "."));
-			var $kmKosten = round((isNaN(km) ? 0 : km) * kilometerPauschale);
-			$row.find(".reisekosten-kmkosten").val($kmKosten);
-			var $summeTag = 0;
-			$row.find(".rkvalue").each(function() {
-				var wert = parseFloat($(this).val().replace(",", "."));
-				$summeTag += isNaN(wert) ? 0 : wert;
+	$(".reisekosten[data-rk-date][data-rk-field]").change(function(){
+		var datum = $(this).attr("data-rk-date");
+		var $km = $(".reisekosten[data-rk-date='" + datum + "'][data-rk-field='km']");
+		var km = parseReisekostenWert($km.val());
+		var kmKosten = (isNaN(km) ? 0 : km) * kilometerPauschale;
+		$(".reisekosten[data-rk-date='" + datum + "'][data-rk-field='kmkosten']").val(formatReisekostenWert(kmKosten));
+
+		var summeTag = 0;
+		$(".reisekosten[data-rk-date='" + datum + "'][data-rk-field]").each(function() {
+			var wert = parseReisekostenWert($(this).val());
+			var feld = $(this).attr("data-rk-field");
+			if (!isNaN(wert) && feld != "gesamt" && feld != "kmkosten" && feld != "km") {
+				summeTag += wert;
+			}
+		});
+		summeTag += kmKosten;
+		$(".reisekosten[data-rk-date='" + datum + "'][data-rk-field='gesamt']").val(formatReisekostenWert(summeTag));
+
+		$(".reisekosten-wochensumme").each(function() {
+			var feld = $(this).attr("data-rk-field");
+			var summeWoche = 0;
+			$(".reisekosten[data-rk-date][data-rk-field='" + feld + "']").each(function() {
+				var wert = parseReisekostenWert($(this).val());
+				summeWoche += isNaN(wert) ? 0 : wert;
 			});
-			$row.find(".reisekosten-gesamt").val(round($summeTag));
-			return;
-		}
-		var $summe = 0;
-	   $(".rkvalue").each(function() {
-		   tmp = $(this).val();
-		   tmp = tmp.replace((/,/g), ".");
-		   tmp = round(tmp);
-		   $summe += tmp * 1;
-	   });
-	   $("#rk").attr("value", $summe);
+			$(this).val(formatReisekostenWert(summeWoche));
+		});
 	});
 });
-
-function summiereKosten(){
-	var $summe = 0;
-   $(".reisekosten").each(function() {
-	   tmp = $(this).val();
-	   tmp = tmp.replace((/,/g), ".");
-	   tmp = round(tmp);
-	   $summe += tmp * 1;
-   });
-   $("#rk").attr("value", $summe);
-}
 
 function round(x) {
 	var a = Math.pow(10, 2);
 	return (Math.round(x * a) / a).toFixed(2);
+}
+
+function formatReisekostenWert(x) {
+	return round(x);
+}
+
+function parseReisekostenWert(x) {
+	var value = String(x || "0");
+	if (value.indexOf(",") !== -1) {
+		value = value.replace(/\./g, "").replace(",", ".");
+	}
+	return parseFloat(value);
 }
 
 

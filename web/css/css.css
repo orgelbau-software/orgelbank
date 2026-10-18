@@ -291,6 +291,7 @@ input,select,textarea,.buttonlink,.inputKalender,.zeiteingabe,.fakeinput
 
 .zeiteingabe {
 	width: 60px;
+	text-align: right;
 }
 
 checkbox {

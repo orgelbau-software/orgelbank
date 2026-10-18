@@ -1,5 +1,6 @@
 <?php
 
+/** @package  */
 class ReisekostenUtilities
 {
 
@@ -38,12 +39,11 @@ class ReisekostenUtilities
     /**
      * Gibt ein Reisekosten Objekt mit den übergebenen Parametern zurück
      *
-     * @param int $benutzerID            
-     * @param int $projektID            
+     * @param int $benutzerID                    
      * @param string $datum
      * @return Reisekosten
      */
-    public static function getReisekosten($benutzerID, $projektID, $datum)
+    public static function ladeReisekostenEintrag($benutzerID, $datum)
     {
         $sql = "SELECT 
     			* 
@@ -51,17 +51,12 @@ class ReisekostenUtilities
     			reisekosten 
     		WHERE 
     			be_id = " . $benutzerID . " AND 
-    			proj_id = " . $projektID . " AND
                 rk_datum = '" . $datum . "'";
         $res = DB::getInstance()->SelectQuery($sql);
         $retVal = null;
+        
         if ($res === false) {
-            $retVal = new Reisekosten();
-            $retVal->setProjektID($projektID);
-            $retVal->setBenutzerID($benutzerID);
-            $retVal->setDatum($datum);
-            $retVal->setKW(date("W", strtotime($datum)));
-            $retVal->setJahr(date("o", strtotime($datum)));
+            $retVal = null;
         } else {
             $x = $res[0];
             $retVal = new Reisekosten();
@@ -82,45 +77,43 @@ class ReisekostenUtilities
     public static function getReisekostenSummeProKW($benutzerID, $kw, $jahr)
     {
         $sql = "SELECT
-    			sum(rk_hotel) as rk_hotel,
-                sum(rk_spesen) as rk_spesen,
-                sum(rk_kmkosten) as rk_kmkosten,
-                sum(rk_km) as rk_km,
-                sum(rk_gesamt) as rk_gesamt
-
-    		FROM
-    			reisekosten
-    		WHERE
-    			be_id = " . $benutzerID . " AND
-                rk_kw = '" . $kw . "' AND
-                rk_jahr = '" . $jahr . "'
-            GROUP BY
-                be_id, rk_kw, rk_jahr";
+                    COALESCE(SUM(rk_hotel), 0) AS rk_hotel,
+                    COALESCE(SUM(rk_spesen), 0) AS rk_spesen,
+                    COALESCE(SUM(rk_kmkosten), 0) AS rk_kmkosten,
+                    COALESCE(SUM(rk_km), 0) AS rk_km,
+                    COALESCE(SUM(rk_gesamt), 0) AS rk_gesamt
+                FROM
+                    reisekosten
+                WHERE
+                    be_id = " . intval($benutzerID) . " AND
+                    rk_kw = '" . intval($kw) . "' AND
+                    rk_jahr = '" . intval($jahr) . "'";
         $res = DB::getInstance()->SelectQuery($sql);
-        $retVal = null;
         if ($res === false) {
-            $retVal = new Reisekosten();
-            $retVal->setProjektID("");
-            $retVal->setBenutzerID($benutzerID);
-            $retVal->setKW($kw);
-            $retVal->setJahr($jahr);
-            $retVal->setHotel(0);
-            $retVal->setSpesen(0);
-            $retVal->setKM(0);
-            $retVal->setKMKosten(0);
-            $retVal->setGesamt(0);
-        } else {
-            $x = $res[0];
-            $retVal = new Reisekosten();
-            $retVal->setBenutzerID($benutzerID);
-            $retVal->setHotel($x['rk_hotel']);
-            $retVal->setSpesen($x['rk_spesen']);
-            $retVal->setKMKosten($x['rk_kmkosten']);
-            $retVal->setGesamt($x['rk_gesamt']);
-            $retVal->setKM($x['rk_km']);
-            $retVal->setPersistent(false);
+            throw new RuntimeException("Die Reisekostensummen konnten nicht geladen werden.");
         }
+        $x = $res[0];
+        $retVal = new Reisekosten();
+        $retVal->setBenutzerID($benutzerID);
+        $retVal->setHotel($x['rk_hotel']);
+        $retVal->setSpesen($x['rk_spesen']);
+        $retVal->setKMKosten($x['rk_kmkosten']);
+        $retVal->setGesamt($x['rk_gesamt']);
+        $retVal->setKM($x['rk_km']);
+        $retVal->setPersistent(false);
         return $retVal;
+    }
+
+    /**
+     * Löscht einen Reisekosten-Datensatz für einen Benutzer an einem bestimmten Datum.
+     *
+     * @param int $benutzerID
+     * @param string $datum
+     */
+    public static function loescheReisekostenDatensatz($benutzerID, $datum)
+    {
+        $sql = "DELETE FROM reisekosten WHERE be_id = " . intval($benutzerID) . " AND rk_datum = '" . $datum . "'";
+        DB::getInstance()->NonSelectQuery($sql);
     }
 
     /**

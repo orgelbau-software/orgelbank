@@ -1,4 +1,4 @@
-<tr>
+  <tr>
     <th colspan="2" rowspan="2" class="projdesc"><!--ProjektBezeichnung--></th>
     <th class="projth">&nbsp;</th>
     <th class="projth">Montag</th>
