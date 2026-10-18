@@ -9,7 +9,7 @@ class HTMLFehlerseite extends HTMLStatus
         $this->pfad = "status_html_fehlerseite.tpl";
     }
 
-    protected function init()
+    protected function init(): void
     {
         parent::init();
         $this->tpl->replace("InstanceUrl", INSTANCE_URL);

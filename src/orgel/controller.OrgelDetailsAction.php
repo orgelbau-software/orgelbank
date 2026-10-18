@@ -3,8 +3,16 @@
 class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
 {
 
+    /**
+     * OrgelId
+     * @var float|int
+     */
     private $mOrgelId;
     
+    /**
+     * 
+     * @var HTMLStatus
+     */
     private $mStatus;
 
     /**
@@ -13,7 +21,7 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
      *
      * @see GetRequestHandler::validateGetRequest()
      */
-    public function validateGetRequest()
+    public function validateGetRequest(): bool
     {
         if (! isset($_GET['oid'])) {
             return false;
@@ -27,7 +35,7 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
      *
      * @see GetRequestHandler::handleInvalidGet()
      */
-    public function handleInvalidGet()
+    public function handleInvalidGet(): HTMLStatus
     {
         return new HTMLStatus("Hier ist etwas schief gelaufen.", HTMLStatus::$STATUS_ERROR, false);
     }
@@ -38,7 +46,7 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
      *
      * @see GetRequestHandler::prepareGet()
      */
-    public function prepareGet()
+    public function prepareGet(): void
     {
         $this->mOrgelId = intval($_GET['oid']);
     }
@@ -49,7 +57,7 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
      *
      * @see GetRequestHandler::executeGet()
      */
-    public function executeGet()
+    public function executeGet(): Template
     {
         $tplOrgelDetails = new Template("orgel_details.tpl");
         $tplSelectOption = new Template("select_option.tpl");
@@ -193,6 +201,10 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
                     $tplWartungen->replace("Hauptstimmung", "Haupt");
                 } else if ($oWartung->getStimmung() == 1) {
                     $tplWartungen->replace("Hauptstimmung", "Neben");
+                } else if ($oWartung->getStimmung() == 3) {
+                    $tplWartungen->replace("Hauptstimmung", "Zungen");
+                } else if ($oWartung->getStimmung() == 5) {
+                    $tplWartungen->replace("Hauptstimmung", "Reparatur");
                 } else {
                     $tplWartungen->replace("Hauptstimmung", "Wartung");
                 }
@@ -319,7 +331,7 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
      *
      * @see PostRequestHandler::preparePost()
      */
-    public function preparePost()
+    public function preparePost(): void
     {
         // TODO Auto-generated method stub
     }
@@ -330,10 +342,12 @@ class OrgelDetailsAction implements GetRequestHandler, PostRequestHandler
      *
      * @see PostRequestHandler::executePost()
      */
-    public function executePost()
+    public function executePost(): Template
     {
-        if (! isset($_POST['o_id']))
-            return;
+        if (! isset($_POST['o_id'])) {
+            $status =  new HTMLStatus("Keine Orgel ID angegeben.", HTMLStatus::$STATUS_ERROR, false);
+            return $status->getTemplate();
+        }
         
         if ($_POST['o_id'] == 0) {
             $oOrgel = new Orgel(); // Bei neuer Orgel wird 0 uebergeben

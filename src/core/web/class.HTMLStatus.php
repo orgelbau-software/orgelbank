@@ -20,8 +20,16 @@ class HTMLStatus
     
     protected $pfad = "status_nachricht_small.tpl";
 
+    /**
+     * 
+     * @var Template
+     */
     protected $tpl;
 
+    /**
+     * 
+     * @var string
+     */
     protected $text;
 
     protected $classes = array(
@@ -40,18 +48,29 @@ class HTMLStatus
         4 => "statusinfopic"
     );
 
+    /**
+     * @var string
+     */
     protected $statusPic;
 
+    /**
+     * 
+     * @var string
+     */
     protected $statusclass;
 
+    /**
+     * 
+     * @var bool
+     */
     protected $noFadeClass;
 
     /**
      *
      * @param string $nachricht            
-     * @param number $level
+     * @param int|float $level
      *            0=EMPTY|1=ERROR|2=OK|3=WARNING|4=INFO
-     * @param string $fadeMessage            
+     * @param bool $fadeMessage            
      */
     public function __construct($nachricht = "", $level = 4, $fadeMessage = true)
     {
@@ -80,13 +99,13 @@ class HTMLStatus
      
      * @return string
      */
-    public function getOutput()
+    public function getOutput(): string
     {
         $this->init();
         return $this->tpl->getOutput();
     }
 
-    public function getTemplate()
+    public function getTemplate(): Template
     {
         $this->init();
         return $this->tpl;
