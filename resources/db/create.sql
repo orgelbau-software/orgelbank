@@ -1060,7 +1060,6 @@ CREATE TABLE `reisekosten` (
   `proj_id` int(10) NOT NULL,
   `be_id` int(10) NOT NULL,
   `rk_datum` date NOT NULL,
-  `rk_timestamp` int(11) NOT NULL,
   `rk_jahr` int(4) NOT NULL,
   `rk_kw` int(2) NOT NULL,
   `rk_spesen` double(10,2) NOT NULL,
@@ -1353,8 +1352,7 @@ ALTER TABLE `register_groessen`
 --
 ALTER TABLE `reisekosten`
   ADD PRIMARY KEY (`rk_id`),
-  ADD UNIQUE KEY `proj_id` (`proj_id`,`be_id`,`rk_jahr`,`rk_kw`),
-  ADD UNIQUE KEY `proj_id_2` (`proj_id`,`be_id`,`rk_jahr`,`rk_kw`);
+  ADD UNIQUE KEY `proj_id_datum` (`proj_id`,`be_id`,`rk_datum`);
 
 --
 -- Indizes für die Tabelle `seitenstatistik`
@@ -1540,4 +1538,3 @@ CREATE VIEW `rechnung_view`  AS  select `r`.`rp_id` AS `r_id`,`r`.`rp_nummer` AS
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-

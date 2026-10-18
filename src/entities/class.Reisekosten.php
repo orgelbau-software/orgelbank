@@ -17,6 +17,8 @@ class Reisekosten extends SimpleDatabaseStorageObjekt
 
     private $gesamt;
 
+    private $datum;
+
     private $kw;
 
     private $jahr;
@@ -36,6 +38,7 @@ class Reisekosten extends SimpleDatabaseStorageObjekt
         $this->setKM($rs['rk_km']);
         $this->setKMKosten($rs['rk_kmkosten']);
         $this->setGesamt($rs['rk_gesamt']);
+        $this->setDatum($rs['rk_datum']);
         $this->setKW($rs['rk_kw']);
         $this->setJahr($rs['rk_jahr']);
     }
@@ -51,6 +54,7 @@ class Reisekosten extends SimpleDatabaseStorageObjekt
         $ht->add("rk_km", $this->getKM());
         $ht->add("rk_kmkosten", $this->getKMKosten());
         $ht->add("rk_gesamt", $this->getGesamt());
+        $ht->add("rk_datum", $this->getDatum());
         $ht->add("rk_kw", $this->getKW());
         $ht->add("rk_jahr", $this->getJahr());
         
@@ -95,6 +99,11 @@ class Reisekosten extends SimpleDatabaseStorageObjekt
         return $this->gesamt;
     }
 
+    public function getDatum()
+    {
+        return $this->datum;
+    }
+
     public function getHotel()
     {
         return $this->hotel;
@@ -128,6 +137,11 @@ class Reisekosten extends SimpleDatabaseStorageObjekt
     public function setGesamt($gesamt)
     {
         $this->gesamt = $gesamt;
+    }
+
+    public function setDatum($datum)
+    {
+        $this->datum = $datum;
     }
 
     public function setHotel($hotel)

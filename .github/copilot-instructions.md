@@ -12,6 +12,7 @@ Orgelbank is a server-rendered PHP application for managing organ maintenance, c
 - Controllers in each feature area typically pass work to an action through `RequestHandler::handle()`. Actions implement the applicable GET/POST handler and validator interfaces, then validate, prepare, and execute the request; the resulting `Template` is rendered by the request handler.
 - Keep feature code together in its existing `src/<feature>/` area. Persistent domain objects live in `src/entities/` and generally extend the database storage base classes in `src/core/db/`; these objects explicitly map database columns to properties in their load/save methods. Update the matching SQL schema or migration under `resources/db/` when changing persistent fields or tables.
 - Runtime settings and database credentials are supplied by the site-local configuration included from `conf/config.inc.php`. The local config files are git-ignored; do not replace them with committed credentials.
+- Never perform database/schema changes directly against the running test instance. Document every database change only in an appropriate update script under `resources/db/`; do not apply the script to the test database.
 
 ## Repository conventions
 

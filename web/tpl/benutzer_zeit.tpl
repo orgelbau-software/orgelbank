@@ -48,32 +48,37 @@
 </table>
 <table class="liste size100">
   <tr>
-    <td colspan="10"><hr/></td>
+    <th colspan="6">Reisekosten pro Arbeitstag</th>
   </tr>
   <tr>
-    <td style="width: 200px;">&nbsp;</td>
-    <td class="tdLabel alignRight">Spesen:</td>
-    <td><input type="number" name="spesen" value="<!--Spesen-->" class="int70 reisekosten rkvalue" min="0" step="0.01"/></td>
-    <td class="tdLabel alignRight">Hotel:</td>
-    <td><input type="number" name="hotel" value="<!--Hotel-->" class="int70 reisekosten rkvalue" min="0" step="0.01"/></td>
-    <td class="tdLabel alignRight">Kilometer</td>
-    <td><input type="number" id="km" name="km" value="<!--KM-->" class="int50 reisekosten" min="0" step="1"/></td>
-    <td><input disabled type="text" id="kmkosten" name="kmkosten" value="<!--KMKosten-->" class="disabled int50 reisekosten rkvalue" min="0" step="0.01"/></td>
-    <td class="tdLabel alignRight">Gesamt</td>
-    <td><input disabled type="number" id="rk" name="rk" value="<!--RK-->" class="disabled int70" min="0" step="0.01"/></td>
+    <td colspan="6"><hr/></td>
   </tr>
   <tr>
-    <th colspan="3"><input type="checkbox" name="woche_komplett" <!--WocheKomplettChecked--> <!--WocheKomplettDisabled--> id="woche_komplett"/><label for="woche_komplett">Eingabe vollst&auml;ndig</label> </th>
-    <th>&nbsp;</td>
-    <th colspan="4"></th>
-    <th colspan="3"style="text-align: right"><input class="button iconButton saveButton"  type="submit" name="submit" value="Speichern" <!--SpeichernDisabled-->/></th>
+    <th>Arbeitstag</th>
+    <th>Spesen</th>
+    <th>Hotel</th>
+    <th>Kilometer</th>
+    <th>Kilometerkosten</th>
+    <th>Gesamt</th>
+  </tr>
+  <!--ReisekostenTage-->
+  <tr class="reisekostenWochensumme">
+    <th>Wochensumme</th>
+    <th><!--SummeReisekostenSpesen--></th>
+    <th><!--SummeReisekostenHotel--></th>
+    <th><!--SummeReisekostenKM--></th>
+    <th></th>
+    <th><!--SummeReisekostenGesamt--></th>
   </tr>
   <tr>
-    <th colspan="3"><input class="button iconButton backButton" type="submit" name="submit" value="Vorherige Woche" /></th>
-    <th>&nbsp;</td>
-    <th colspan="4"><input class="button iconButton refreshButton"  type="submit" name="submit" value="Aktuelle Woche" /></th>
-    <th>&nbsp;</td>
-    <th style="text-align: right" colspan="2"><input class="button iconButton forwardButton"  type="submit" name="submit" value="N&auml;chste Woche" /></th>
+    <th colspan="2"><input type="checkbox" name="woche_komplett" <!--WocheKomplettChecked--> <!--WocheKomplettDisabled--> id="woche_komplett"/><label for="woche_komplett">Eingabe vollst&auml;ndig</label></th>
+    <th colspan="2"></th>
+    <th colspan="2" style="text-align: right"><input class="button iconButton saveButton" type="submit" name="submit" value="Speichern" <!--SpeichernDisabled-->/></th>
+  </tr>
+  <tr>
+    <th colspan="2"><input class="button iconButton backButton" type="submit" name="submit" value="Vorherige Woche" /></th>
+    <th colspan="2" style="text-align: center"><input class="button iconButton refreshButton" type="submit" name="submit" value="Aktuelle Woche" /></th>
+    <th style="text-align: right" colspan="2"><input class="button iconButton forwardButton" type="submit" name="submit" value="N&auml;chste Woche" /></th>
   </tr>
   </table>
 

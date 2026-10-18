@@ -292,15 +292,45 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
                 unset($_POST['woche_komplett']);
             }
             
-            // Reisekosten speichern
-            $kmKosten = floatval($_POST['km']) * ConstantLoader::getKilometerpauschale();
-            $rk = ReisekostenUtilities::getReisekosten($benutzer->getID(), $pid, $kw, $jahr);
-            $rk->setKM($_POST['km']);
-            $rk->setKMKosten($kmKosten);
-            $rk->setHotel($_POST['hotel']);
-            $rk->setSpesen($_POST['spesen']);
-            $rk->speichern(false);
-            
+            // Reisekosten pro Arbeitstag speichern
+            $reiseKostenProTag = isset($_POST['reisekosten']) && is_array($_POST['reisekosten'])
+                ? $_POST['reisekosten']
+                : array();
+            if (! isset($_POST['reisekosten']) && isset($_POST['spesen'], $_POST['hotel'], $_POST['km'])) {
+                $montag = date("Y-m-d", $arWochentageTS[0]);
+                $reiseKostenProTag[$montag] = array(
+                    "spesen" => $_POST['spesen'],
+                    "hotel" => $_POST['hotel'],
+                    "km" => $_POST['km']
+                );
+            }
+            foreach ($arWochentageTS as $tagTimestamp) {
+                $datum = date("Y-m-d", $tagTimestamp);
+                if (! isset($reiseKostenProTag[$datum]) || ! is_array($reiseKostenProTag[$datum])) {
+                    continue;
+                }
+                $tageskosten = $reiseKostenProTag[$datum];
+                $km = isset($tageskosten['km']) && is_scalar($tageskosten['km'])
+                    ? floatval(str_replace(",", ".", (string) $tageskosten['km']))
+                    : 0;
+                $hotel = isset($tageskosten['hotel']) && is_scalar($tageskosten['hotel'])
+                    ? floatval(str_replace(",", ".", (string) $tageskosten['hotel']))
+                    : 0;
+                $spesen = isset($tageskosten['spesen']) && is_scalar($tageskosten['spesen'])
+                    ? floatval(str_replace(",", ".", (string) $tageskosten['spesen']))
+                    : 0;
+
+                $rk = ReisekostenUtilities::getReisekosten($benutzer->getID(), $pid, $datum);
+                $rk->setKM($km);
+                $rk->setKMKosten($km * ConstantLoader::getKilometerpauschale());
+                $rk->setHotel($hotel);
+                $rk->setSpesen($spesen);
+                $rk->setKW(date("W", $tagTimestamp));
+                $rk->setJahr(date("o", $tagTimestamp));
+                if ($rk->isPersistent() || $km > 0 || $hotel > 0 || $spesen > 0) {
+                    $rk->speichern(false);
+                }
+            }
             if ($boSollKomplett) {
                 $awArbeitswoche->markKomplett();
             } else {
@@ -443,13 +473,29 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
             $tmpHaupt = $z->getHauptaufgabeBezeichnung();
         }
         
-        // Reisekosten Felder leeren
-        $rk = ReisekostenUtilities::getReisekosten($benutzer->getID(), $pid, $kw, $jahr);
-        $tpl->replace("Spesen", $rk->getSpesen());
-        $tpl->replace("Hotel", $rk->getHotel());
-        $tpl->replace("KM", $rk->getKM());
-        $tpl->replace("KMKosten", $rk->getKMKosten());
-        $tpl->replace("RK", $rk->getGesamt());
+        $wochenReisekosten = ReisekostenUtilities::getReisekostenSummeProKW($benutzer->getID(), $kw, $jahr);
+        $tpl->replace("SummeReisekostenSpesen", WaehrungUtil::formatDoubleToWaehrung($wochenReisekosten->getSpesen()));
+        $tpl->replace("SummeReisekostenHotel", WaehrungUtil::formatDoubleToWaehrung($wochenReisekosten->getHotel()));
+        $tpl->replace("SummeReisekostenKM", number_format($wochenReisekosten->getKM(), 2, ',', '.'));
+        $tpl->replace("SummeReisekostenGesamt", WaehrungUtil::formatDoubleToWaehrung($wochenReisekosten->getGesamt()));
+
+        // Reisekosten pro Arbeitstag anzeigen
+        $tplReisekosten = new BufferedTemplate("benutzer_zeit_reisekosten_ds.tpl");
+        $wochentage = array("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag");
+        foreach ($arWochentageTS as $tagIndex => $tagTimestamp) {
+            $datum = date("Y-m-d", $tagTimestamp);
+            $rk = ReisekostenUtilities::getReisekosten($benutzer->getID(), $pid, $datum);
+            $tplReisekosten->replace("Wochentag", $wochentage[$tagIndex]);
+            $tplReisekosten->replace("Datum", date("d.m.Y", $tagTimestamp));
+            $tplReisekosten->replace("DatumISO", $datum);
+            $tplReisekosten->replace("Spesen", $rk->getSpesen());
+            $tplReisekosten->replace("Hotel", $rk->getHotel());
+            $tplReisekosten->replace("KM", $rk->getKM());
+            $tplReisekosten->replace("KMKosten", $rk->getKMKosten());
+            $tplReisekosten->replace("RK", $rk->getGesamt());
+            $tplReisekosten->next();
+        }
+        $tpl->replace("ReisekostenTage", $tplReisekosten->getOutput());
         
         // Summen Pro Projekt
         foreach ($wochentagsStunden as $key => $val) {

@@ -40,10 +40,10 @@ class ReisekostenUtilities
      *
      * @param int $benutzerID            
      * @param int $projektID            
-     * @param int $wochenStart            
+     * @param string $datum
      * @return Reisekosten
      */
-    public static function getReisekosten($benutzerID, $projektID, $kw, $jahr)
+    public static function getReisekosten($benutzerID, $projektID, $datum)
     {
         $sql = "SELECT 
     			* 
@@ -52,16 +52,16 @@ class ReisekostenUtilities
     		WHERE 
     			be_id = " . $benutzerID . " AND 
     			proj_id = " . $projektID . " AND
-                rk_kw = '" . $kw . "' AND
-                rk_jahr = '" . $jahr . "'";
+                rk_datum = '" . $datum . "'";
         $res = DB::getInstance()->SelectQuery($sql);
         $retVal = null;
         if ($res === false) {
             $retVal = new Reisekosten();
             $retVal->setProjektID($projektID);
             $retVal->setBenutzerID($benutzerID);
-            $retVal->setKW($kw);
-            $retVal->setJahr($jahr);
+            $retVal->setDatum($datum);
+            $retVal->setKW(date("W", strtotime($datum)));
+            $retVal->setJahr(date("o", strtotime($datum)));
         } else {
             $x = $res[0];
             $retVal = new Reisekosten();
@@ -104,6 +104,11 @@ class ReisekostenUtilities
             $retVal->setBenutzerID($benutzerID);
             $retVal->setKW($kw);
             $retVal->setJahr($jahr);
+            $retVal->setHotel(0);
+            $retVal->setSpesen(0);
+            $retVal->setKM(0);
+            $retVal->setKMKosten(0);
+            $retVal->setGesamt(0);
         } else {
             $x = $res[0];
             $retVal = new Reisekosten();

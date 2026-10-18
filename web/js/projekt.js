@@ -152,9 +152,22 @@ $(function() {
 		$("#kmkosten").attr("value", $("#km").attr("value") * kilometerPauschale);
 	});
 	$(".reisekosten").change(function(){
+		var $row = $(this).closest(".reisekostenTag");
+		if ($row.length) {
+			var km = parseFloat($row.find(".reisekosten-km").val().replace(",", "."));
+			var $kmKosten = round((isNaN(km) ? 0 : km) * kilometerPauschale);
+			$row.find(".reisekosten-kmkosten").val($kmKosten);
+			var $summeTag = 0;
+			$row.find(".rkvalue").each(function() {
+				var wert = parseFloat($(this).val().replace(",", "."));
+				$summeTag += isNaN(wert) ? 0 : wert;
+			});
+			$row.find(".reisekosten-gesamt").val(round($summeTag));
+			return;
+		}
 		var $summe = 0;
 	   $(".rkvalue").each(function() {
-		   tmp = $(this).attr("value");
+		   tmp = $(this).val();
 		   tmp = tmp.replace((/,/g), ".");
 		   tmp = round(tmp);
 		   $summe += tmp * 1;
@@ -166,7 +179,7 @@ $(function() {
 function summiereKosten(){
 	var $summe = 0;
    $(".reisekosten").each(function() {
-	   tmp = $(this).attr("value");
+	   tmp = $(this).val();
 	   tmp = tmp.replace((/,/g), ".");
 	   tmp = round(tmp);
 	   $summe += tmp * 1;
