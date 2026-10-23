@@ -61,3 +61,30 @@ Updates via GIT are recommmended.
     # Call 
     https://yourdomain.de/autoupdate.php
 ```
+
+# Ubuntu 
+Install LAMP stack on Ubuntu 26.04 to run the software
+```
+sudo apt install php83
+sudo apt install libapache2-mod-php
+sudo apt install php-mbstring
+sudo apt install php8.3 php8.3-cli php8.3-common php8.3-mbstring
+sudo apt install php-cli php-mbstring php-xml php-curl
+sudo apt install php-gd
+sudo apt install php-zip unzip
+sudo apt install php-mysql
+sudo systemctl restart apache2
+
+cd /tmp
+curl -sS https://getcomposer.org/installer -o composer-setup.php
+sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+cd
+cd sandboxes/orgelbank/
+
+php /usr/local/bin/composer update
+
+sudo apt install phpmyadmin -y
+mysql -u root
+
+mysql -u swatermeyer -p
+```

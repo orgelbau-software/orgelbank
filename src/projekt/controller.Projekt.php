@@ -52,7 +52,7 @@ class ProjektController
             $p = new Projekt(intval($_POST['objektid']));
             $htmlStatus = new HTMLRedirect();
             
-            $p->setArchviert(1);
+            $p->setArchiviert(1);
             $p->setArchivdatum(0);
             $p->speichern(true);
             $htmlStatus->setLink("index.php?page=6&do=100");

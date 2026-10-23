@@ -57,7 +57,7 @@ class ProjektArchiv implements GetRequestHandler
                 $htmlStatus->setText("Projekt gel&ouml;scht.");
                 $htmlStatus->setStatusclass(2);
             } elseif ($_GET['a'] == "r") {
-                $p->setArchviert(0);
+                $p->setArchiviert(0);
                 $p->setArchivdatum(0);
                 $p->speichern(true);
                 $htmlStatus->setText("Projekt wiederhergestellt.");

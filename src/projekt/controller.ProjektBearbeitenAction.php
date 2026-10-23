@@ -62,7 +62,11 @@ class ProjektBearbeitenAction implements GetRequestHandler, PostRequestHandler, 
         if ($_POST) {
             $htmlStatus = new HTMLStatus();
             
-            $p->setBeschreibung($_POST['beschreibung']);
+            if($_POST['beschreibung'] == "") {
+                $p->setBeschreibung("(Keine Beschreibung)");
+            } else {
+                $p->setBeschreibung($_POST['beschreibung']);
+            }   
             $p->setBezeichnung($_POST['bezeichnung']);
             $p->setStart($_POST['start']);
             $p->setEnde($_POST['ende']);

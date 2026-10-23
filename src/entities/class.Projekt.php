@@ -17,7 +17,7 @@ class Projekt extends SimpleDatabaseStorageObjekt
 
     private $geloescht;
 
-    private $archviert;
+    private $archiviert;
 
     private $archivdatum;
 
@@ -28,6 +28,9 @@ class Projekt extends SimpleDatabaseStorageObjekt
     public function __construct($iID = 0)
     {
         parent::__construct($iID, "proj_id", "projekt", "proj_");
+        $this->geloescht = 0;
+        $this->archiviert = 0;
+        $this->archivdatum = null;
     }
 
     protected function laden()
@@ -40,7 +43,7 @@ class Projekt extends SimpleDatabaseStorageObjekt
         $this->setGemeindeID($rs['g_id']);
         $this->setGeloescht($rs['proj_geloescht']);
         $this->setArchivdatum($rs['proj_archivdatum']);
-        $this->setArchviert($rs['proj_archiviert']);
+        $this->setArchiviert($rs['proj_archiviert']);
         $this->setAngebotsPreis($rs['proj_angebotspreis']);
         $this->setKeineZeitenFuer($rs['proj_keinezeitenfuer']);
         $this->setSortierung($rs['proj_sortierung']);
@@ -56,7 +59,7 @@ class Projekt extends SimpleDatabaseStorageObjekt
         $ht->add("proj_ende", $this->getEnde());
         $ht->add("g_id", $this->getGemeindeID());
         $ht->add("proj_geloescht", $this->getGeloescht());
-        $ht->add("proj_archiviert", $this->isArchviert());
+        $ht->add("proj_archiviert", $this->getArchiviert());
         $ht->add("proj_archivdatum", $this->getArchivdatum());
         $ht->add("proj_angebotspreis", $this->getAngebotsPreis());
         $ht->add("proj_keinezeitenfuer", $this->getKeineZeitenFuer());
@@ -172,9 +175,14 @@ class Projekt extends SimpleDatabaseStorageObjekt
         return $this->archivdatum;
     }
 
-    public function isArchviert()
+    public function getArchiviert()
     {
-        if ($this->archviert == 1)
+        return $this->archiviert;
+    }
+
+    public function isArchiviert()
+    {
+        if ($this->archiviert == 1)
             return true;
         return false;
     }
@@ -189,10 +197,10 @@ class Projekt extends SimpleDatabaseStorageObjekt
         }
     }
 
-    public function setArchviert($archviert)
+    public function setArchiviert($archiviert)
     {
-        if ($this->archviert != $archviert) {
-            $this->archviert = $archviert;
+        if ($this->archiviert != $archiviert) {
+            $this->archiviert = $archiviert;
             $this->setChanged(true);
         }
     }

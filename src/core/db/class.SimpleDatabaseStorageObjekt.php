@@ -50,6 +50,8 @@ abstract class SimpleDatabaseStorageObjekt extends DatabaseStorageObjekt
             $dbFelder .= $key;
             if($val != "") {
                 $dbWerte .= "'" . addslashes($val) . "'";
+            } else if($val == null) {
+                $dbWerte .= "NULL";
             } else {
                 $dbWerte .= "''";
             }
@@ -83,6 +85,8 @@ abstract class SimpleDatabaseStorageObjekt extends DatabaseStorageObjekt
             $iCounter ++;
             if($val != "") {
                 $stmt .= $key . " = '" . addslashes($val) . "'";
+            } else if($val == null) {
+                $stmt .= $key . " = NULL";
             } else {
                 $stmt .= $key . " = ''";
             }

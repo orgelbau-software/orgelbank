@@ -23,6 +23,7 @@ class ProjektAufgabe extends AdvancedDatabaseStorageObjekt
             "au_id",
             "proj_id"
         ), "projekt_aufgabe", "pa_");
+
     }
 
     protected function laden()

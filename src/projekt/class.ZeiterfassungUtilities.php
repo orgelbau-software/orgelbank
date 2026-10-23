@@ -8,7 +8,11 @@ class ZeiterfassungUtilities
     private static function createExcludeBenutzerStatement($pid)
     {
         $p = new Projekt($pid);
-        $b = explode(",", $p->getKeineZeitenFuer());
+        if($p->getKeineZeitenFuer() != null) {
+            $b = explode(",", $p->getKeineZeitenFuer());
+        } else {
+            $b = array();
+        }
         $strWhere = "";
         foreach ($b as $id) {
             if ($id != "")
