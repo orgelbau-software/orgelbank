@@ -63,13 +63,13 @@
     <td class="td1" style="width: 200px;">&nbsp;</td>
     <td class="td1">Spesen</td>
     <td class="td1"><input type="number" disabled class="disabled zeiteingabe reisekosten reisekosten-wochensumme" data-rk-field="spesen" value="<!--RKSpesenSumme-->"/></td>
-    <td class="td1"><input type="number" name="reisekosten[<!--RKDatum0-->][spesen]" value="<!--RKSpesenTag0-->" class="zeiteingabe reisekosten<!--RKDisabledClass--> <!--RKTagDisabledClass0-->" data-rk-date="<!--RKDatum0-->" data-rk-field="spesen" min="0" step="0.01" <!--RKDisabled--> <!--RKTagDisabled0--> /></td>
-    <td class="td1"><input type="number" name="reisekosten[<!--RKDatum1-->][spesen]" value="<!--RKSpesenTag1-->" class="zeiteingabe reisekosten<!--RKDisabledClass--> <!--RKTagDisabledClass1-->" data-rk-date="<!--RKDatum1-->" data-rk-field="spesen" min="0" step="0.01" <!--RKDisabled--> <!--RKTagDisabled1--> /></td>
-    <td class="td1"><input type="number" name="reisekosten[<!--RKDatum2-->][spesen]" value="<!--RKSpesenTag2-->" class="zeiteingabe reisekosten<!--RKDisabledClass--> <!--RKTagDisabledClass2-->" data-rk-date="<!--RKDatum2-->" data-rk-field="spesen" min="0" step="0.01" <!--RKDisabled--> <!--RKTagDisabled2--> /></td>
-    <td class="td1"><input type="number" name="reisekosten[<!--RKDatum3-->][spesen]" value="<!--RKSpesenTag3-->" class="zeiteingabe reisekosten<!--RKDisabledClass--> <!--RKTagDisabledClass3-->" data-rk-date="<!--RKDatum3-->" data-rk-field="spesen" min="0" step="0.01" <!--RKDisabled--> <!--RKTagDisabled3--> /></td>
-    <td class="td1"><input type="number" name="reisekosten[<!--RKDatum4-->][spesen]" value="<!--RKSpesenTag4-->" class="zeiteingabe reisekosten<!--RKDisabledClass--> <!--RKTagDisabledClass4-->" data-rk-date="<!--RKDatum4-->" data-rk-field="spesen" min="0" step="0.01" <!--RKDisabled--> <!--RKTagDisabled4--> /></td>
-    <td class="zeiterfassungWochenende td1"><input type="number" name="reisekosten[<!--RKDatum5-->][spesen]" value="<!--RKSpesenTag5-->" class="zeiteingabe reisekosten<!--RKDisabledClass--> <!--RKTagDisabledClass5-->" data-rk-date="<!--RKDatum5-->" data-rk-field="spesen" min="0" step="0.01" <!--RKDisabled--> <!--RKTagDisabled5--> /></td>
-    <td class="zeiterfassungWochenende td1"><input type="number" name="reisekosten[<!--RKDatum6-->][spesen]" value="<!--RKSpesenTag6-->" class="zeiteingabe reisekosten<!--RKDisabledClass--> <!--RKTagDisabledClass6-->" data-rk-date="<!--RKDatum6-->" data-rk-field="spesen" min="0" step="0.01" <!--RKDisabled--> <!--RKTagDisabled6--> /></td>
+    <td class="td1"><!--Verpflegungskosten0--></td>
+    <td class="td1"><!--Verpflegungskosten1--></td>
+    <td class="td1"><!--Verpflegungskosten2--></td>
+    <td class="td1"><!--Verpflegungskosten3--></td>
+    <td class="td1"><!--Verpflegungskosten4--></td>
+    <td class="zeiterfassungWochenende td1"><!--Verpflegungskosten5--></td>
+    <td class="zeiterfassungWochenende td1"><!--Verpflegungskosten6--></td>
     <td class="td1">&nbsp;</td>
   </tr>
   <tr>

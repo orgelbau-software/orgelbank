@@ -294,6 +294,11 @@ input,select,textarea,.buttonlink,.inputKalender,.zeiteingabe,.fakeinput
 	text-align: right;
 }
 
+.speseneingabe {
+	width: 60px;
+	text-align: left;
+}
+
 checkbox {
 	border: 2px solid red;
 }

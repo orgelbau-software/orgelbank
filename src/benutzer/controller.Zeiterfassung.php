@@ -496,7 +496,7 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
             $tmpHaupt = $z->getHauptaufgabeBezeichnung();
         }
         
-        // Reisekosten Tabelle ausgeben
+        // Start Reisekosten
         $wochenReisekosten = ReisekostenUtilities::getReisekostenSummeProKW($benutzer->getID(), $kw, $jahr);
         $reisekostenGesperrt = $boGebucht || $boIstKomplett;
 
@@ -524,22 +524,37 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
             "Gesamt" => array("field" => "gesamt", "sum" => $wochenReisekosten->getGesamt())
         );
 
+        // TODO: Spesensaetze abhängig nach Datum. Gelten jedes Jahr andere?
+        // TODO: Spesensaetze abhängig nach Land. In DE gelten andere Sätze als in AT. In AT gibt es keine Pauschale für KM, sondern nur für Spesen und Hotel.
+        $tplVerpflegungsPauschale = new Template("benutzer_zeit_verpflegung_deutschland.tpl");
+
         foreach ($reisekostenFelder as $placeholder => $feld) {
+            $tplVerpflegungsPauschale->replace("RK" . $placeholder . "Summe", $feld["sum"]);
             $tpl->replace("RK" . $placeholder . "Summe", $feld["sum"]);
             foreach ($reisekostenProTag as $tagIndex => $tageskosten) {
+                $tplVerpflegungsPauschale->replace("RKDatumTagNr", $tageskosten['datum']);
                 $wert = ($tageskosten[$feld["field"]] != null ? $tageskosten[$feld["field"]] : "");
+                $tplVerpflegungsPauschale->replace("RK" . $placeholder . "TagNr", $wert);
                 $tpl->replace("RK" . $placeholder . "Tag" . $tagIndex, $wert);
-
                 // Datensatz sperren, wenn das aktuelle Projekt nicht das Projekt des Reisekosten-Datensatzes ist.
                 if($pid == $tageskosten['projekt'] || $tageskosten['projekt'] == "") {
+                    $tplVerpflegungsPauschale->replace("RKTagDisabledClassTagNr", "");
+                    $tplVerpflegungsPauschale->replace("RKTagDisabledTagNr", "");
                     $tpl->replace("RKTagDisabled" . $tagIndex, "");
                     $tpl->replace("RKTagDisabledClass" . $tagIndex, "");
                 } else {
+                    $tplVerpflegungsPauschale->replace("RKTagDisabledClassTagNr", 'disabled="disabled"');
+                    $tplVerpflegungsPauschale->replace("RKTagDisabledTagNr", "disabled");
                     $tpl->replace("RKTagDisabled" . $tagIndex, 'disabled="disabled"');
                     $tpl->replace("RKTagDisabledClass" . $tagIndex, "disabled");
                 }
+            
+                $tplVerpflegungsPauschale->replace("RK" . $placeholder . "Summe", $feld["sum"]);
+                $verpflegungsPauschaleOutput = $tplVerpflegungsPauschale->getOutputAndRestore();
+                $tpl->replace("Verpflegungskosten". $tagIndex, $verpflegungsPauschaleOutput);
             }
         }
+
         if ($reisekostenGesperrt) {
             $tpl->replace("RKDisabled", 'disabled="disabled"');
             $tpl->replace("RKDisabledClass", " disabled");
@@ -547,6 +562,8 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
             $tpl->replace("RKDisabled", "");
             $tpl->replace("RKDisabledClass", "");
         }
+
+        // Ende Reisekosten
         
         // Stunden Summen Pro Projekt
         foreach ($wochentagsStunden as $key => $val) {
