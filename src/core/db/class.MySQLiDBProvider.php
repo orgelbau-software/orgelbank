@@ -81,18 +81,27 @@ class MySQLiDBProvider implements DBProvider
             DB::$num_queries ++;
             Log::sql($sqlstring);
             
-            $result = $this->getInstance()->query($sqlstring);
-            if ($result && $result->num_rows) {
-                $retVal = array();
-                while ($row = $result->fetch_assoc()) {
-                    $retVal[] = $row;
+            try {
+                $result = $this->getInstance()->query($sqlstring);
+                if ($result && $result->num_rows) {
+                    $retVal = array();
+                    while ($row = $result->fetch_assoc()) {
+                        $retVal[] = $row;
+                    }
                 }
-            } else if ($this->getInstance()->errno == 0) {
-                // just no results
-            } else {
-                // $this->errormsg = $this->getInstance()->errno;
-                throw new Exception("failed to query database: '" . $sqlstring . "', Error: " . $this->getInstance()->errno);
+            } catch(Exception $e) {
+                if ($e->getCode() === 1146) {
+                    // An dieser Stelle moechten wir nicht weitermachen und nicht mehr verraten.
+                    die("Stop processing. The table does not exist. Message: " . $e->getMessage());
+                } else {
+                    throw $e;
+                }
             }
+        } else if ($this->getInstance()->errno == 0) {
+            // just no results
+        } else {
+            // $this->errormsg = $this->getInstance()->errno;
+            throw new Exception("failed to query database: '" . $sqlstring . "', Error: " . $this->getInstance()->errno);
         }
         return $retVal;
     }

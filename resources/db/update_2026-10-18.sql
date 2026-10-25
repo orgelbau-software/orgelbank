@@ -8,8 +8,10 @@ GROUP BY `be_id`, `rk_datum`
 HAVING COUNT(*) > 1;
 
 UPDATE `reisekosten`
-SET `rk_datum` = STR_TO_DATE(CONCAT(`rk_jahr`, ' ', LPAD(`rk_kw`, 2, '0'), ' Monday'), '%x %v %W')
-WHERE `rk_datum` = '0000-00-00';
+SET `rk_datum` = STR_TO_DATE(CONCAT(`rk_jahr`, ' ', LPAD(`rk_kw`, 2, '0'), ' Monday'), '%x %v %W');
+
+ALTER TABLE `reisekosten` DROP INDEX `proj_id`;
+ALTER TABLE `reisekosten` DROP INDEX `proj_id_2`;
 
 ALTER TABLE `reisekosten`
   ADD UNIQUE KEY `be_id_datum` (`be_id`, `rk_datum`);

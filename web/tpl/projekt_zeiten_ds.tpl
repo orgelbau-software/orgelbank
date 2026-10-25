@@ -3,9 +3,11 @@
   <td class="<!--CSS-->"><b><!--KW-->/<!--Jahr--></b></td>
   <td class="<!--CSS-->"><!--DatumVon--> - <!--DatumBis--></td>
   <td colspan="2" class="<!--CSS-->">&nbsp;</td>
+  <td class="<!--CSS-->" style="text-align: right;"><!--Reisekosten--></td>
   <td class="<!--CSS-->">
     <div class="<!--WocheGesamtStatusClass-->"><!--WocheGesamtStatus--></div>
   </td>
+  
   <td class="<!--CSS-->">
     <!--<input type="submit" name="submit_<!--TSWoche-->" value="Buchen" class="button iconButton saveButton"<!--BuchenDisabled--> />-->
   </td>

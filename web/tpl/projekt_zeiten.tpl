@@ -21,6 +21,7 @@ $(function() {
     <th>Datum</th>
     <th>Mitarbeiter</th>
     <th>Bisher eingetragen</th>
+    <th>Reisekosten</th>
     <th>Status</th>
     <th><!-- Buchen--></th>
   </tr>

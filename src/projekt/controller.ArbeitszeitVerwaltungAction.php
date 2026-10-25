@@ -76,6 +76,12 @@ class ArbeitszeitVerwaltungAction implements GetRequestHandler
                         $tplDS->replace("TSWoche", strtotime($kw->getWochenstart()));
                         $tplDS->replace("DatumVon", $arbeitswoche[0]);
                         $tplDS->replace("DatumBis", $arbeitswoche[6]);
+
+                        // Reisekosten
+                        $reisekosten = ReisekostenUtilities::getReisekostenSummeProKW( $kw->getKalenderWoche(), $kw->getJahr());
+                        $reisekostenSumme = WaehrungUtil::formatDoubleToWaehrung($reisekosten->getGesamt()) ;
+                        $tplDS->replace("Reisekosten", $reisekostenSumme. "EUR");
+
                         $rowId = $kw->getID();
                         $tplDS->replace("RowID", $rowId);
                         $tplDS->next();

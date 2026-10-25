@@ -115,10 +115,16 @@ class ProjektController
             $ts = substr($ts, strpos($ts, "_"));
         }
         
-        ArbeitswocheUtilities::bucheArbeitswoche($ts);
+        //ArbeitswocheUtilities::bucheArbeitswoche($ts);
     }
 
-    public static function ajaxGetMitarbeiterWochenStunden($wochenTag)
+    /**
+     * 
+     * @param int $wochenTag 
+     * @return BufferedTemplate 
+     * @throws IllegalArgumentException wenn die woche nicht numerisch ist.
+     */
+    public static function ajaxGetMitarbeiterWochenStunden($wochenTag): BufferedTemplate
     {
         if (! is_numeric($wochenTag)) {
             throw new IllegalArgumentException("wochenTag must be a timestamp, is='" . $wochenTag . "'");
@@ -152,6 +158,18 @@ class ProjektController
                 $tplMaDS->replace("StdGesamt", $kw->getWochenStundenSoll());
                 $tplMaDS->replace("TSWoche", $wochenTag); // CSS Klasse setzen, damit jQuery Child Elemente finden und löschen kann
                 $tplMaDS->replace("Datum", strtotime($kw->getWochenstart()));
+
+                // Reiseksoten Start
+                $reisekosten = ReisekostenUtilities::getReisekostenMitarbeiterProKW($kw->getBenutzerId(), $kw->getKalenderWoche(), $kw->getJahr());
+                $reisekostenSumme = WaehrungUtil::formatDoubleToWaehrung($reisekosten->getGesamt()) ;
+                if($reisekosten->getGesamt() > 0) {
+                    $tplMaDS->replace("Reisekosten", $reisekostenSumme . " EUR");
+                } else {
+                    $tplMaDS->replace("Reisekosten", "Keine");
+                }
+
+
+                // Reisekosten Ende
                 
                 $tplMaDS->replace("RowID", $rowId);
                 

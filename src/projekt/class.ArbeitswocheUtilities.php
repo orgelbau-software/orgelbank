@@ -113,7 +113,12 @@ class ArbeitswocheUtilities
     }
     
 
-    public static function getArbeitswochen($wochenStart)
+    /**
+     * 
+     * @param string $wochenStart 
+     * @return DatabaseStorageObjektCollection 
+     */
+    public static function getArbeitswochen($wochenStart): DatabaseStorageObjektCollection
     {
         $sql = "SELECT * FROM arbeitswoche WHERE aw_wochenstart = '" . $wochenStart . "'";
         return ArbeitswocheUtilities::queryDB($sql);
@@ -131,7 +136,12 @@ class ArbeitswocheUtilities
         return ArbeitswocheUtilities::$dbInstance;
     }
 
-    private static function queryDB($sql)
+    /**
+     * 
+     * @param string $sql 
+     * @return DatabaseStorageObjektCollection 
+     */
+    private static function queryDB($sql): DatabaseStorageObjektCollection
     {
         $oDSOC = new DatabaseStorageObjektCollection();
         if (($res = DB::getInstance()->SelectQuery($sql)) !== false) {
