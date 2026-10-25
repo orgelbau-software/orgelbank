@@ -29,3 +29,4 @@ resources/vorlagen/*.docx
 resources/vorlagen/*.rtf
 usage/
 .htaccess
+index.htm
