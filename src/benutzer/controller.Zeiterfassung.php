@@ -311,6 +311,8 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
                 }
                 return floatval($wert);
             };
+
+
             foreach ($arWochentageTS as $tagTimestamp) {
                 $datum = date("Y-m-d", $tagTimestamp);
                 if (! isset($reiseKostenProTag[$datum]) || ! is_array($reiseKostenProTag[$datum])) {
@@ -323,9 +325,9 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
                 $hotel = isset($tageskosten['hotel']) && is_scalar($tageskosten['hotel'])
                     ? $parseReisekostenWert($tageskosten['hotel'])
                     : 0;
-                $spesen = isset($tageskosten['spesen']) && is_scalar($tageskosten['spesen'])
-                    ? $parseReisekostenWert($tageskosten['spesen'])
-                    : 0;
+                    
+                // Werden bereits mit . statt , übergeben, daher keine Umwandlung nötig.
+                $spesen = floatval(str_replace(",", ".", $tageskosten['spesen']));
 
                 $rk = ReisekostenUtilities::ladeReisekostenEintrag($benutzer->getID(), $datum);
                 if($rk == null) {
@@ -549,6 +551,14 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
                     $tpl->replace("RKTagDisabledClass" . $tagIndex, "disabled");
                 }
             
+                $tplVerpflegungsPauschale->replace("SpesenAuswahlSelected_".$tageskosten["spesen"], 'selected="selected"');
+
+                // array mit string, da ansonsten bei glatten zahlen die .00 abgeschnitten werden und die Auswahl nicht mehr funktioniert.
+                $spesenSaetze = array("2.80", "8.40", "14.00", "5.60", "11.20", "14.00", "16.80", "22.40", "28.00"); 
+                foreach($spesenSaetze as $satz) {
+                    $tplVerpflegungsPauschale->replace("SpesenAuswahlSelected_".$satz, "");
+                }
+                $tplVerpflegungsPauschale->replace("SpesenAuswahlSelected_".$tageskosten["spesen"], "");                
                 $tplVerpflegungsPauschale->replace("RK" . $placeholder . "Summe", $feld["sum"]);
                 $verpflegungsPauschaleOutput = $tplVerpflegungsPauschale->getOutputAndRestore();
                 $tpl->replace("Verpflegungskosten". $tagIndex, $verpflegungsPauschaleOutput);
