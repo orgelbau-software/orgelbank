@@ -70,21 +70,24 @@ class XRechnungsAction  implements GetRequestHandler
         $document->setDocumentInformation($rechnung->getNummer(), "380", $rechnungsDatum, $waehrung);
         $document->addDocumentPaymentTerm("Zahlbar innerhalb von 14 Tagen ohne Abzuege.", new DateTime($rechnung->getZieldatum(false)));
         $document->addDocumentPaymentMean(58, null, null, null, null, null, $unsereIBAN, $unserKontoinhaber, null, null);
-
+        $document->setDocumentSupplyChainEvent($rechnungsDatum);
 
         // Verkaeufer - Wir
         $document->setDocumentSeller($unsereFirma->getAnzeigeName(), $lieferantenNummer);
-        //$document->addDocumentSellerGlobalId("4000001123452", "0088");
-        $document->addDocumentSellerTaxRegistration("FC", $unsereSteuerNummer);
+        
+        // CoPilot sagt, brauchen wir nicht: $document->addDocumentSellerTaxRegistration("FC", $unsereSteuerNummer);
         $document->addDocumentSellerTaxRegistration("VA", $unsereUmsatzsteuerIdentifikationsnummer);
         $document->setDocumentSellerAddress($unsereFirma->getAdresse()->getStrasse(), "", "", $unsereFirma->getAdresse()->getPlz(), $unsereFirma->getAdresse()->getOrt(), $laenderCodeISO_3166_1_Alpha_2);
         $document->setDocumentSellerContact($unsereFirma->getAnzeigeName(), "Buchhaltung", $unsereFirma->getTelefon(), $unsereFirma->getMobil(), $unsereFirma->getEmail());
+        $document->setDocumentSellerCommunication('EM', $unsereFirma->getEmail());
         
         // Kaeufer - Kunde
         $document->setDocumentBuyer($gemeinde->getRGemeinde(), $gemeinde->getKundenNr());
         $document->setDocumentBuyerReference($leitwegId);
         $document->setDocumentBuyerAddress($gemeindeRechnungsAnschrift->getStrasse(), "", "", $gemeindeRechnungsAnschrift->getPlz(), $gemeindeRechnungsAnschrift->getOrt(), $laenderCodeISO_3166_1_Alpha_2);
-        $document->setDocumentBuyerContact($kundeAnsprechpartnerName, $kundeAnsprechpartnerAbteilung, $kundeAnsprechpartnerTelefon, $kundeAnsprechpartnerFax, $kundeAnsprechpartnerEMail);
+        // CoPilot sagt, brauchen wir nicht
+        //$document->setDocumentBuyerContact($kundeAnsprechpartnerName, $kundeAnsprechpartnerAbteilung, $kundeAnsprechpartnerTelefon, $kundeAnsprechpartnerFax, $kundeAnsprechpartnerEMail);
+        $document->setDocumentBuyerCommunication("EM", $kundeAnsprechpartnerEMail);
 
         // Einleitungstext
         $document->addDocumentNote($rechnung->getText1());
