@@ -497,6 +497,7 @@ class RechnungController
         
         $tplRechnung->replace("Hauptstimmung", "");
         $tplRechnung->replace("Nebenstimmung", "");
+        
         // Rechnung ausgeben
         $tplRechnung->anzeigen();
     }
@@ -896,6 +897,11 @@ class RechnungController
     public static function sucheRechnungsPosition()
     {
         RequestHandler::handle(new RechnungsPositionsSuggestionAction());
+    }
+
+    public static function erstelleXRechnung()
+    {
+        RequestHandler::handle(new XRechnungsAction());
     }
 }
 ?>

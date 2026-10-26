@@ -15,6 +15,8 @@
 			<img style="border: 0px solid black;" src="web/images/icons/document_a4_locked.png" /></a>
 		<a href="index.php?page=5&do=91&typid=<!--TypID-->&id=<!--RID-->" title="Rechnung l&ouml;schen">
 			<img style="border: 0px solid black;" src="web/images/icons/document_a4_remove.png" /></a>
+		<a href="index.php?page=5&do=92&typid=<!--TypID-->&id=<!--RID-->" title="XRechnung anzeigen">
+			<img style="border: 0px solid black;" src="web/images/icons/document_a4_upload.png" /></a>
 			<input type="hidden" id="jsBruttoBetrag_<!--JSRechnungsID-->" value="<!--Brutto-->"/>	
 			<input type="hidden" id="jsEingangsAnmerkung_<!--JSRechnungsID-->" value="<!--EingangsAnmerkung-->"/>	
 			<input type="hidden" id="jsEingangsBetrag_<!--JSRechnungsID-->" value="<!--EingangsBetrag-->"/>	

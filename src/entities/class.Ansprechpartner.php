@@ -314,6 +314,10 @@ class Ansprechpartner extends SimpleDatabaseStorageObjekt
         return $this->adressId;
     }
 
+    /**
+     * 
+     * @return Adresse
+     */
     public function getAdresse()
     {
         if ($this->adresse == null) {

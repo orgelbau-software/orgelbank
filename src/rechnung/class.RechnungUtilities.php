@@ -42,6 +42,12 @@ class RechnungUtilities
         }
     }
 
+    /**
+     * 
+     * @param Rechnung|null $oRechnung 
+     * @param Output|null $tplRechnungsKopf 
+     * @return Template 
+     */
     public static function baueRechnungsAuswahlKopf(Rechnung $oRechnung = null, Output $tplRechnungsKopf = null)
     {
         $tplSelect = new Template("select_option.tpl");

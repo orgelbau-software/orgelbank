@@ -175,6 +175,7 @@ include_once ROOTDIR . 'src/beans/class.RechnungView.php';
 include_once ROOTDIR . 'src/rechnung/class.RechnungViewUtilities.php';
 include_once ROOTDIR . 'src/rechnung/class.RechnungsPositionsSuggestionAction.php';
 include_once ROOTDIR . 'src/rechnung/class.RechnungsListeRequestHandler.php';
+include_once ROOTDIR . 'src/rechnung/controller.XRechnungsAction.php';
 
 include_once ROOTDIR . 'src/rechnung/class.RechnungOutput.php';
 include_once ROOTDIR . 'src/rechnung/class.RechnungTemplateBuilder.php';

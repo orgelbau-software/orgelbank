@@ -3,6 +3,12 @@
 class AbschlagrechnungUtilities
 {
 
+    /**
+     * 
+     * @param int $iGemeindeID 
+     * @param string $strOrderBy 
+     * @return DatabaseStorageObjektCollection 
+     */
     public static function getGemeindeAbschlagsRechnungen($iGemeindeID, $strOrderBy = null)
     {
         $sql = "SELECT 
@@ -53,6 +59,11 @@ class AbschlagrechnungUtilities
         $instance->NonSelectQuery($sql);
     }
 
+    /**
+     * 
+     * @param string $sql 
+     * @return DatabaseStorageObjektCollection 
+     */
     private static function queryDB($sql)
     {
         $oCol = new DatabaseStorageObjektCollection();

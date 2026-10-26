@@ -74,6 +74,7 @@ $pcRechnung->addChild(new SubPage(88, "druckeEndrechnung", 10));
 $pcRechnung->addChild(new SubPage(89, "zeigeRechnungsListe", 10));
 $pcRechnung->addChild(new SubPage(90, "zeigeReadOnlyRechnung", 10));
 $pcRechnung->addChild(new SubPage(91, "loescheRechnung", 10));
+$pcRechnung->addChild(new SubPage(92, "erstelleXRechnung", 10));
 $pageApplication->addController($pcRechnung);
 
 /**

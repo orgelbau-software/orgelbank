@@ -3,26 +3,70 @@
 abstract class Rechnung extends SimpleDatabaseStorageObjekt
 {
 
+    /**
+     * 
+     * @var string
+     */
     protected $nummer;
 
+    /**
+     * 
+     * @var float
+     */
     protected $nettoBetrag;
 
+    /**
+     * 
+     * @var float
+     */
     protected $bruttoBetrag;
 
+    /**
+     * 
+     * @var float
+     */
     protected $MwSt;
 
+    /**
+     * 
+     * @var float
+     */
     protected $MwStSatz = MWST_SATZ;
 
+    /**
+     * 
+     * @var int
+     */
     protected $gemeindeID;
 
+    /**
+     * 
+     * @var string
+     */
     protected $datum;
 
+    /**
+     * 
+     * @var string
+     */
     protected $zieldatum;
 
+    /**
+     * 
+     * @var string
+     */
     protected $eingangsDatum;
 
+    /**
+     * 
+     * @var string
+     */
     protected $eingangsBetrag;
 
+    /**
+     * 
+     * @var string
+     */
     protected $eingangsAnmerkung;
 
     // Konstruktor
@@ -192,6 +236,12 @@ abstract class Rechnung extends SimpleDatabaseStorageObjekt
         $this->MwSt = $MwSt;
     }
 
+    /**
+     * 
+     * @param float $MwStSatz 
+     * @return void 
+     * @throws IllegalArgumentException 
+     */
     public function setMwStSatz($MwStSatz)
     {
         if ($MwStSatz >= 1) {
