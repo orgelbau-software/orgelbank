@@ -4,6 +4,14 @@ class ProjektBearbeitenAction implements GetRequestHandler, PostRequestHandler, 
 {
 
     /**
+     * 
+     * @var HTMLStatus
+     */
+    private $htmlStatus = null;
+
+    private $postValid = false;
+
+    /**
      *
      * {@inheritdoc}
      *
@@ -56,60 +64,9 @@ class ProjektBearbeitenAction implements GetRequestHandler, PostRequestHandler, 
             $tpl->replace("Disabled", "disabled");
         }
         
-        $htmlStatus = null;
-        $strTmp = "";
         
-        if ($_POST) {
-            $htmlStatus = new HTMLStatus();
-            
-            if($_POST['beschreibung'] == "") {
-                $p->setBeschreibung("(Keine Beschreibung)");
-            } else {
-                $p->setBeschreibung($_POST['beschreibung']);
-            }   
-            $p->setBezeichnung($_POST['bezeichnung']);
-            $p->setStart($_POST['start']);
-            $p->setEnde($_POST['ende']);
-            $p->setGemeindeID(intval($_POST['gemeinde']));
-            
-            $_POST['angebotspreis'] = str_replace(".", "", $_POST['angebotspreis']);
-            $p->setAngebotsPreis(WaehrungUtil::formatWaehrungToDB($_POST['angebotspreis']));
-            
-            if ($p->getGemeindeID() <= 0 || $p->getBezeichnung() == null || trim($p->getBezeichnung()) == "" || strtotime($p->getStart()) == false || strtotime($p->getEnde()) == false) {
-                $htmlStatus->setText("Bitte Gemeinde, Bezeichnung, Start- und Enddatum ausw&auml;hlen");
-                $htmlStatus->setStatusclass(1);
-            } else {
-                
-                $keineZeitenFuer = "";
-                foreach ($_POST as $key => $val) {
-                    if (substr($key, 0, 3) == "be_") {
-                        $iBenutzerID = substr($key, 3);
-                        $keineZeitenFuer .= $iBenutzerID . ",";
-                    }
-                }
-                $p->setKeineZeitenFuer($keineZeitenFuer);
-                $p->speichern(true);
-                
-                ProjektAufgabeUtilities::resetProjektAufgaben($p->getID());
-                $projektAufgabeReihenfolge = 0;
-                foreach ($_POST as $key => $val) {
-                    if (substr($key, 0, 11) == "aufgabe_id_") {
-                        $iAufgabeID = substr($key, 11);
-                        $pa = new ProjektAufgabe();
-                        $pa->setPKaufgabeID($iAufgabeID);
-                        $pa->setPKprojektID($p->getID());
-                        $pa->setPlankosten($_POST['aufgabe_betrag_' . $iAufgabeID]);
-                        $pa->setReihenfolge($projektAufgabeReihenfolge ++);
-                        $pa->setSollMaterial($_POST['aufgabe_sollmaterial_'. $iAufgabeID]);
-                        $pa->setSollStunden($_POST['aufgabe_sollstd_'. $iAufgabeID]);
-                        $pa->speichern(false);
-                    }
-                }
-                
-                $htmlStatus->setText("Projektdetails gespeichert");
-                $htmlStatus->setStatusclass(2);
-            }
-        }
+        $strTmp = "";
+        $htmlStatus = $this->htmlStatus;
         
         // Gemeindeauswahl
         $standardSortierung = ConstantLoader::getGemeindeListeStandardSortierung();
@@ -200,6 +157,58 @@ class ProjektBearbeitenAction implements GetRequestHandler, PostRequestHandler, 
      */
     public function executePost()
     {
+        if($this->postValid) {
+            $this->htmlStatus = new HTMLStatus();
+            $p = new Projekt($_POST['pid']);
+
+            if($_POST['beschreibung'] == "") {
+                $p->setBeschreibung("(Keine Beschreibung)");
+            } else {
+                $p->setBeschreibung($_POST['beschreibung']);
+            }   
+            $p->setBezeichnung($_POST['bezeichnung']);
+            $p->setStart($_POST['start']);
+            $p->setEnde($_POST['ende']);
+            $p->setGemeindeID(intval($_POST['gemeinde']));
+            
+            $_POST['angebotspreis'] = str_replace(".", "", $_POST['angebotspreis']);
+            $p->setAngebotsPreis(WaehrungUtil::formatWaehrungToDB($_POST['angebotspreis']));
+            
+            if ($p->getGemeindeID() <= 0 || $p->getBezeichnung() == null || trim($p->getBezeichnung()) == "" || strtotime($p->getStart()) == false || strtotime($p->getEnde()) == false) {
+                $this->htmlStatus->setText("Bitte Gemeinde, Bezeichnung, Start- und Enddatum ausw&auml;hlen");
+                $this->htmlStatus->setStatusclass(1);
+            } else {
+                
+                $keineZeitenFuer = "";
+                foreach ($_POST as $key => $val) {
+                    if (substr($key, 0, 3) == "be_") {
+                        $iBenutzerID = substr($key, 3);
+                        $keineZeitenFuer .= $iBenutzerID . ",";
+                    }
+                }
+                $p->setKeineZeitenFuer($keineZeitenFuer);
+                $p->speichern(true);
+                
+                ProjektAufgabeUtilities::resetProjektAufgaben($p->getID());
+                $projektAufgabeReihenfolge = 0;
+                foreach ($_POST as $key => $val) {
+                    if (substr($key, 0, 11) == "aufgabe_id_") {
+                        $iAufgabeID = substr($key, 11);
+                        $pa = new ProjektAufgabe();
+                        $pa->setPKaufgabeID($iAufgabeID);
+                        $pa->setPKprojektID($p->getID());
+                        $pa->setPlankosten($_POST['aufgabe_betrag_' . $iAufgabeID]);
+                        $pa->setReihenfolge($projektAufgabeReihenfolge ++);
+                        $pa->setSollMaterial($_POST['aufgabe_sollmaterial_'. $iAufgabeID]);
+                        $pa->setSollStunden($_POST['aufgabe_sollstd_'. $iAufgabeID]);
+                        $pa->speichern(false);
+                    }
+                }
+                
+                $this->htmlStatus->setText("Projektdetails gespeichert");
+                $this->htmlStatus->setStatusclass(2);
+            }
+        }
         return $this->executeGet();
     }
 
@@ -211,7 +220,19 @@ class ProjektBearbeitenAction implements GetRequestHandler, PostRequestHandler, 
      */
     public function validatePostRequest()
     {
-        return isset($_POST['pid']);
+        if(!isset($_POST['pid'])) {
+            $this->postValid = false;
+        } else if($_POST['bezeichnung'] == null || trim($_POST['bezeichnung']) == "") {
+            $this->postValid = false;
+        } else if($_POST['start'] == null || trim($_POST['start']) == "") {
+            $this->postValid = false;
+        } else if($_POST['ende'] == null || trim($_POST['ende']) == "") {
+            $this->postValid = false;
+        } else {
+            $this->postValid = true;
+        }
+        
+        return $this->postValid;
     }
 
     /**
@@ -222,6 +243,8 @@ class ProjektBearbeitenAction implements GetRequestHandler, PostRequestHandler, 
      */
     public function handleInvalidPost()
     {
-        // TODO Auto-generated method stub
+        $this->htmlStatus = new HTMLStatus();
+        $this->htmlStatus->setText("Bitte Gemeinde, Bezeichnung, Start- und Enddatum ausw&auml;hlen");
+        $this->htmlStatus->setStatusclass(HTMLStatus::$STATUS_ERROR);
     }
 }

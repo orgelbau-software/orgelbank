@@ -57,7 +57,9 @@ class ProjektListeAction implements GetRequestHandler
         foreach ($c as $projekt) {
             $tplDS->replace("ProjektID", $projekt->getID());
             $g = new Gemeinde($projekt->getGemeindeID());
+            $ort = new Adresse($g->getKircheAdressId());
             $tplDS->replace("GemeindeBezeichnung", $g->getKirche());
+            $tplDS->replace("Ort", $ort->getOrt());
             $tplDS->replace("Bezeichnung", $projekt->getBezeichnung());
             $tplDS->replace("Starttermin", $projekt->getStart(true, true));
             $tplDS->replace("Endtermin", $projekt->getEnde(true, true));

@@ -109,9 +109,11 @@ class ReisekostenUtilities
      *
      * @param int $kw
      * @param int $jahr
+     * @param int $benutzerId
+     * @param int $projektId
      * @return Reisekosten
      */
-    public static function getReisekostenSummeProKW($kw, $jahr)
+    public static function getReisekostenSummeProKW($kw, $jahr, $benutzerId = -1, $projektId = -1): Reisekosten
     {
         $sql = "SELECT
                     COALESCE(SUM(rk_hotel), 0) AS rk_hotel,
@@ -124,6 +126,15 @@ class ReisekostenUtilities
                 WHERE
                     rk_kw = '" . intval($kw) . "' AND
                     rk_jahr = '" . intval($jahr) . "'";
+        
+        if ($benutzerId !== -1) {
+            $sql .= " AND be_id = " . intval($benutzerId);
+        }
+
+        if ($projektId !== -1) {
+            $sql .= " AND proj_id = " . intval($projektId);
+        }
+
         $res = DB::getInstance()->SelectQuery($sql);
         if ($res === false) {
             throw new RuntimeException("Die Reisekostensummen konnten nicht geladen werden.");

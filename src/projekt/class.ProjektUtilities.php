@@ -114,7 +114,7 @@ class ProjektUtilities
      *
      * @return DatabaseStorageObjektCollection
      */
-    public static function getAnzeigeProjekte($where = "")
+    public static function getAnzeigeProjekte($where = ""): DatabaseStorageObjektCollection
     {
         $sql = "SELECT
 					p.*
@@ -140,10 +140,10 @@ class ProjektUtilities
     /**
      * Interner Query
      *
-     * @param String $sql            
+     * @param string $sql            
      * @return DatabaseStorageObjektCollection
      */
-    private static function queryDB($sql)
+    private static function queryDB($sql): DatabaseStorageObjektCollection
     {
         $oDSOC = new DatabaseStorageObjektCollection();
         if (($res = DB::getInstance()->SelectQuery($sql)) !== false) {

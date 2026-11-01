@@ -386,6 +386,8 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
             Log::debug("Daten werden nicht gespeichert.");
         }
         
+        
+
         // Nach den Inserts nochmal die Statusvariablen aktualisieren
         $boIstKomplett = ArbeitstagUtilities::isBenutzerArbeitswocheKomplett($woche, $benutzer->getID());
         
@@ -499,7 +501,7 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
         }
         
         // Start Reisekosten
-        $wochenReisekosten = ReisekostenUtilities::getReisekostenSummeProKW($benutzer->getID(), $kw, $jahr);
+        $wochenReisekosten = ReisekostenUtilities::getReisekostenSummeProKW($kw, $jahr, $benutzer->getID(), $pid);
         $reisekostenGesperrt = $boGebucht || $boIstKomplett;
 
         $reisekostenProTag = array();
@@ -572,6 +574,11 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
             $tpl->replace("RKDisabled", "");
             $tpl->replace("RKDisabledClass", "");
         }
+
+        //$tpl->replace("RKSpesenSumme", $wochenReisekosten->getSpesen());
+        //$tpl->replace("RKHotelSumme", $wochenReisekosten->getHotel());
+        //$tpl->replace("RKKmSumme", $wochenReisekosten->getKm());
+        //$tpl->replace("RKKmKostenSumme", $wochenReisekosten->getKmKosten());
 
         // Ende Reisekosten
         

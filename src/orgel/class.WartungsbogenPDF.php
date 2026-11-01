@@ -291,9 +291,9 @@ abstract class WartungsbogenPDF extends OrgelbankBasisPDF
             foreach ($c as $oWartung) {
                 $b = new Benutzer($oWartung->getMitarbeiterId1());
                 $benutzername = ($b->getBenutzername() != "" ? $b->getBenutzername() : "Unbekannt");
-                $temperatur = ($oWartung->getTemperatur() != "" ? $oWartung->getTemperatur() . " °C" : "");
-                $luftfeuchte = ($oWartung->getLuftfeuchtigkeit() != "" ? $oWartung->getLuftfeuchtigkeit() . " %" : "");
-                $stimmton = ($oWartung->getStimmtonHoehe() != "" ? $oWartung->getStimmtonHoehe() . " Hz" : "");
+                $temperatur = ($oWartung->getTemperatur() != "" ? $oWartung->getTemperatur() . " °C" : "k.A");
+                $luftfeuchte = ($oWartung->getLuftfeuchtigkeit() != "" ? $oWartung->getLuftfeuchtigkeit() . " %" : "k.A");
+                $stimmton = ($oWartung->getStimmtonHoehe() != "" ? $oWartung->getStimmtonHoehe() . " Hz" : "k.A");
                 $stimmung = $stimmungen[$oWartung->getStimmung()];
                 $bemerkung = $oWartung->getBemerkung();
                 

@@ -8,9 +8,9 @@ class ProjektListeRequestHandler
      * Wertet den Request aus und versucht Sortierreihenfolge für SQL und das TPL herauszufinden.<br/>
      * Ermittelt außerdem einen Suchbegriff und führt dann anhand der Parameter den Query aus <br/>
      *
-     * @return array
+     * @return HashTable
      */
-    public function prepareRequest()
+    public function prepareRequest(): HashTable
     {
         $retVal = new HashTable();
         // Sortierüberschriften ausgeben

@@ -6,7 +6,7 @@
 	</td>
 	<td class="<!--CSS-->">
 		<a href="index.php?page=6&do=110&pid=<!--ProjektID-->" title="Projektdetails anzeigen">
-			<!--GemeindeBezeichnung-->
+			<!--GemeindeBezeichnung-->, <!--Ort-->
 		</a>
 	</td>
 	<td class="<!--CSS-->" style="padding-right: 15px;"><!--Starttermin--></td>

@@ -87,9 +87,16 @@ if($_POST && isset($_POST['password']) && $_POST['password'] == MYSQL_PASS) {
   $admin->setAktiviert(1);
   $admin->speichern();
   
-   ConstantSetter::updateOption("orgelbank_api_key", ORGELBANK_API_KEY);
-   ConstantSetter::updateOption("site_title", INSTALLATION_NAME);
+  ConstantSetter::updateOption("orgelbank_api_key", ORGELBANK_API_KEY);
+  ConstantSetter::updateOption("site_title", INSTALLATION_NAME);
   
+  $ansprechpartner = new Ansprechpartner();
+  $ansprechpartner->setNachname(INSTALLATION_NAME);
+  $ansprechpartner->speichern();
+
+  $gemeinde = new Gemeinde();
+  $gemeinde->setKirche("(Intern)");
+  $gemeinde->speichern();
   $db->disconnect();
   echo "<h2>Datenbank zurueckgesetzt</h2>";
 } else {

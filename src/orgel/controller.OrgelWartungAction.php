@@ -3,6 +3,10 @@
 class OrgelWartungAction implements GetRequestHandler
 {
 
+    /**
+     * 
+     * @var int
+     */
     private $mOrgelId;
 
     private $mDatum;
