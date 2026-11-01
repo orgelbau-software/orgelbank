@@ -13,8 +13,9 @@
     <td><input disabled class="disabled" type="text" name="summe_mittwoch" value="<!--Summe3-->" size="3" /></td>
     <td><input disabled class="disabled" type="text" name="summe_donnerstag" value="<!--Summe4-->" size="3" /></td>
     <td><input disabled class="disabled" type="text" name="summe_freitag" value="<!--Summe5-->" size="3" /></td>
-    <td><input disabled class="disabled" type="text" name="summe_samstag" value="<!--Summe6-->" size="3" /></td>
-    <td><input disabled class="disabled" type="text" name="summe_sonntag" value="<!--Summe0-->" size="3" /></td>
+    <td class="zeiterfassungWochenende"><input disabled class="disabled" type="text" name="summe_samstag" value="<!--Summe6-->" size="3" /></td>
+    <td class="zeiterfassungWochenende"><input disabled class="disabled" type="text" name="summe_sonntag" value="<!--Summe0-->" size="3" /></td>
+    <td>&nbsp;</td>
   </tr>
   </table>
   
@@ -24,3 +25,9 @@
   		<a class="buttonlink iconButton saveButton" href="index.php?page=6&do=114&uid=<!--BenutzerID-->&date=<!--WocheTS-->&status=3" title="Bearbeiten">Freigabe & Buchung</a>
 	</div>
 </form>
+
+<style>
+.zeiterfassungWochenende {
+    display: table-cell !important;
+}
+</style>

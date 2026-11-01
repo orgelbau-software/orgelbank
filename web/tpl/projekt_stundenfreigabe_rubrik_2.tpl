@@ -6,6 +6,7 @@
     <th class="projth">Mittwoch</th>
     <th class="projth">Donnerstag</th>
     <th class="projth">Freitag</th>
-    <th class="projth">Samstag</th>
-    <th class="projth">Sonntag</th>
+    <th class="projth zeiterfassungWochenende">Samstag</th>
+    <th class="projth zeiterfassungWochenende">Sonntag</th>
+    <th class="projth">&nbsp;</th>
 </tr>
