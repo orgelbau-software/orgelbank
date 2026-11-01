@@ -97,6 +97,21 @@ if($_POST && isset($_POST['password']) && $_POST['password'] == MYSQL_PASS) {
   $gemeinde = new Gemeinde();
   $gemeinde->setKirche("(Intern)");
   $gemeinde->speichern();
+
+  $aufgabe = new Aufgabe();
+  $aufgabe->setBezeichnung("(Intern)");
+  $aufgabe->speichern();
+
+  $aufgabe = new Aufgabe();
+  $aufgabe->setParentID(1);
+  $aufgabe->setBezeichnung("Urlaub");
+  $aufgabe->speichern();
+
+  $aufgabe = new Aufgabe();
+  $aufgabe->setParentID(1);
+  $aufgabe->setBezeichnung("Krank");
+  $aufgabe->speichern();
+
   $db->disconnect();
   echo "<h2>Datenbank zurueckgesetzt</h2>";
 } else {

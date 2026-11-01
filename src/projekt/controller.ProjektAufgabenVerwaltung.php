@@ -61,12 +61,19 @@ class ProjektAufgabenVerwaltung implements GetRequestHandler, PostRequestHandler
             $ProjektAufgabe = new Aufgabe($paID);
             
             if ($_POST['form'] == "hauptaufgabe") {
+                // Loeschen nur für Aufgaben > 1, da das die Verwaltungsaufgabe ist
                 if ($_POST['submit'] == "Ja, Aufgabe löschen" && isset($_POST['paid'])) {
-                    $ProjektAufgabe->loeschen();
-                    $ProjektAufgabe->speichern(false);
-                    AufgabeUtilities::loescheUnteraufgaben($_POST['paid']);
-                    $htmlStatus->setText("Projektaufgabe gel&ouml;scht");
-                    $htmlStatus->setStatusclass(2);
+                    if(intval($_POST['paid']) > 1) {
+                        $ProjektAufgabe->loeschen();
+                        $ProjektAufgabe->speichern(false);
+                        AufgabeUtilities::loescheUnteraufgaben($_POST['paid']);
+                        $htmlStatus->setText("Projektaufgabe gel&ouml;scht");
+                        $htmlStatus->setStatusclass(2);
+                    } else {
+                        $htmlStatus->setText("Interne Aufgabe kann nicht gelöscht werden.");
+                        $htmlStatus->setStatusclass(1);
+                    }
+                    
                 } else {
                     if (trim($_POST['bezeichnung']) != "") {
                         $ProjektAufgabe->setBeschreibung($_POST['beschreibung']);
@@ -112,12 +119,17 @@ class ProjektAufgabenVerwaltung implements GetRequestHandler, PostRequestHandler
                         $p->speichern(true);
                     }
                 } elseif ($_POST['submit'] == "Ja, löschen" && isset($_POST['unteraufgabeid'])) {
-                    $p = new Aufgabe(intval($_POST['unteraufgabeid']));
-                    $p->loeschen();
-                    $p->speichern(false);
-                    
-                    $htmlStatus->setText("Unteraufgabe gel&ouml;scht.");
-                    $htmlStatus->setStatusclass(2);
+                    if(intval($_POST['unteraufgabeid']) > 2) {
+                        $p = new Aufgabe(intval($_POST['unteraufgabeid']));
+                        $p->loeschen();
+                        $p->speichern(false);
+                        
+                        $htmlStatus->setText("Unteraufgabe gel&ouml;scht.");
+                        $htmlStatus->setStatusclass(2);
+                    } else {
+                        $htmlStatus->setText("Interne Unteraufgabe kann nicht gelöscht werden.");
+                        $htmlStatus->setStatusclass(1);
+                    }
                 }
             } elseif ($_POST['form'] == "mitarbeiter") {
                 AufgabeUtilities::resetAufgabeMitarbeiterZuordnung($ProjektAufgabe->getID());

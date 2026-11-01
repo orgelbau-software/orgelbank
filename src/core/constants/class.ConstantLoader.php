@@ -291,18 +291,16 @@ class ConstantLoader
         return ConstantLoader::$htValues->getValueOf("rechnung_abschlag3_prozent");
     }
 
-    public static function getUrlaubUnteraufgaben()
+    public static function getUrlaubUnteraufgaben(): array
     {
-        return array(
-            260
-        );
+        
+        return explode(",", ConstantLoader::$htValues->getValueOf("zeiterfassung_aufgabe_id_urlaub"));
     }
+        
 
-    public static function getKrankProjekte()
+    public static function getKrankProjekte(): array
     {
-        return array(
-            35
-        );
+        return explode(",", ConstantLoader::$htValues->getValueOf("zeiterfassung_aufgabe_id_krank"));
     }
 
     public static function getVerwaltungsProjekte()
