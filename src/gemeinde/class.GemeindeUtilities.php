@@ -62,7 +62,13 @@ class GemeindeUtilities
         return $tpl;
     }
 
-    public static function getAnsprechpartnerGemeinden($iAnsprechpartnerID, $strOrderBy = null)
+    /**
+     * 
+     * @param int $iAnsprechpartnerID 
+     * @param string $strOrderBy 
+     * @return ArrayList 
+     */
+    public static function getAnsprechpartnerGemeinden($iAnsprechpartnerID, $strOrderBy = null): ArrayList
     {
         $sql = "SELECT 
     		  g.g_id, g.g_kirche, a.ad_ort
@@ -79,7 +85,12 @@ class GemeindeUtilities
         return GemeindeUtilities::queryDBForKircheOrtBean($sql);
     }
 
-    public static function getDruckAnsichtGemeinden($strOrderBy = null)
+    /**
+     * 
+     * @param string $strOrderBy 
+     * @return ArrayList 
+     */
+    public static function getDruckAnsichtGemeinden($strOrderBy = null): ArrayList
     {
         $sql = "SELECT
 					g.*, ad.*, a.*
@@ -88,6 +99,7 @@ class GemeindeUtilities
     		        adresse ad 
 				WHERE 
     		        g.g_kirche_aid = ad.ad_id AND
+                    g_id > 1 AND
 					g_aktiv = 1 ";
         if ($strOrderBy != null)
             $sql .= $strOrderBy;
@@ -103,13 +115,20 @@ class GemeindeUtilities
                     adresse a 
                 WHERE 
                     g.g_kirche_aid = a.ad_id AND 
+                    g.g_id > 1 AND
                     g.g_aktiv = 1 ";
         if ($strOrderBy != null)
             $sql .= $strOrderBy;
         return GemeindeUtilities::queryDBForKircheOrtBean($sql);
     }
 
-    public static function getGemeindenAusserVonAnsprechpartner($ansprechpartnerID, $strOrderBy = null)
+    /**
+     * 
+     * @param int $ansprechpartnerID 
+     * @param string $strOrderBy 
+     * @return ArrayList 
+     */
+    public static function getGemeindenAusserVonAnsprechpartner($ansprechpartnerID, $strOrderBy = null): ArrayList
     {
         $sql = "SELECT DISTINCT
     			g.g_id, g.g_kirche, a.ad_ort 
@@ -125,6 +144,12 @@ class GemeindeUtilities
         return GemeindeUtilities::queryDBForKircheOrtBean($sql);
     }
 
+    /**
+     * 
+     * @param string $suchstring 
+     * @param string $strOrderBy 
+     * @return ArrayList 
+     */
     public static function getGesuchteGemeinden($suchstring, $strOrderBy = null)
     {
         $sql = "SELECT
@@ -133,6 +158,7 @@ class GemeindeUtilities
 					gemeinde g, adresse ad
 				WHERE
   			        g_kirche_aid = ad.ad_id AND 
+                    g_id > 1 AND
 					g_aktiv = 1 AND (
 					g_kirche LIKE '%" . $suchstring . "%' OR
 					ad_ort LIKE '%" . $suchstring . "%' OR
@@ -147,7 +173,7 @@ class GemeindeUtilities
 
     public static function getAnzahlGemeinden()
     {
-        $sql = "SELECT COUNT(*) as anzahl FROM gemeinde WHERE g_aktiv = 1";
+        $sql = "SELECT COUNT(*) as anzahl FROM gemeinde WHERE g_aktiv = 1 AND g_id > 1";
         $oDB = DB::getInstance();
         if (($r = $oDB->SelectQuery($sql)) !== false) {
             return $r[0]['anzahl'];
@@ -190,7 +216,12 @@ class GemeindeUtilities
         return $oCol;
     }
 
-    private static function queryDBForKircheOrtBean($sql)
+    /**
+     * 
+     * @param string $sql 
+     * @return ArrayList 
+     */
+    private static function queryDBForKircheOrtBean($sql): ArrayList
     {
         $oCol = new ArrayList();
         if (($res = DB::getInstance()->SelectQuery($sql)) !== false) {
@@ -203,7 +234,12 @@ class GemeindeUtilities
         return $oCol;
     }
 
-    private static function queryGemeindeListeBean($sql)
+    /**
+     * 
+     * @param string $sql 
+     * @return ArrayList 
+     */
+    private static function queryGemeindeListeBean($sql): ArrayList
     {
         $oCol = new ArrayList();
         if (($res = DB::getInstance()->SelectQuery($sql)) !== false) {
@@ -216,6 +252,11 @@ class GemeindeUtilities
         return $oCol;
     }
 
+    /**
+     * 
+     * @param string $sql 
+     * @return ArrayList 
+     */
     private static function queryGemeindeKarteBean($sql)
     {
         $oCol = new ArrayList();
@@ -229,7 +270,12 @@ class GemeindeUtilities
         return $oCol;
     }
 
-    private static function queryDBmitHAP($sql)
+    /**
+     * 
+     * @param string $sql 
+     * @return ArrayList 
+     */
+    private static function queryDBmitHAP($sql): ArrayList
     {
         $oCol = new ArrayList();
         if (($res = DB::getInstance()->SelectQuery($sql)) !== false) {
