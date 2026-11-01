@@ -166,13 +166,31 @@ class ProjektStundenFreigabeAction implements GetRequestHandler
             $tmpHaupt = $z->getHauptaufgabeBezeichnung();
         }
         
-        // Reisekosten Felder leeren
-        $rk = ReisekostenUtilities::getReisekostenSummeProKW($benutzer->getID(), $kw, $jahr);
-        $tpl->replace("Spesen", WaehrungUtil::formatDoubleToWaehrung($rk->getSpesen()));
-        $tpl->replace("Hotel", WaehrungUtil::formatDoubleToWaehrung($rk->getHotel()));
-        $tpl->replace("KM", WaehrungUtil::formatDoubleToWaehrung($rk->getKM()));
-        $tpl->replace("KMKosten", WaehrungUtil::formatDoubleToWaehrung($rk->getKMKosten()));
-        $tpl->replace("RK", WaehrungUtil::formatDoubleToWaehrung($rk->getGesamt()));
+        // Reisekosten Start
+        $reisekostenProTag = array();
+        $tag = 0;
+        foreach ($arWochentageTS as $tagIndex => $tagTimestamp) {
+            $datum = date("Y-m-d", $tagTimestamp);
+            $rk = ReisekostenUtilities::ladeReisekostenEintrag($benutzer->getID(), $datum);
+            if($rk == null) {
+                $rk = new Reisekosten();
+            }
+            $tpl->replace("Verpflegungskosten" . $tagIndex, $rk->getSpesen());
+            $tpl->replace("RKHotelTag" . $tagIndex, $rk->getHotel());
+            $tpl->replace("RKKmKostenTag" . $tagIndex, $rk->getKMKosten());
+            $tpl->replace("RKKmTag" . $tagIndex, $rk->getKM());
+            $tpl->replace("RKGesamtTag" . $tagIndex, $rk->getGesamt());
+        }
+
+        // Reisekosten Summen
+        $rkSumme = ReisekostenUtilities::getReisekostenSummeProKW($kw, $jahr, $benutzer->getID());
+        $tpl->replace("RKSpesenSumme", $rkSumme->getSpesen());
+        $tpl->replace("RKHotelSumme", $rkSumme->getHotel());
+        $tpl->replace("RKKmKostenSumme", $rkSumme->getKMKosten());
+        $tpl->replace("RKKmSumme", $rkSumme->getKM());
+        $tpl->replace("RKGesamtSumme", $rkSumme->getGesamt());  
+
+        // Reisekosten Ende
         
         foreach ($wochentagsStunden as $key => $val) {
             $tpl->replace("Summe" . $key, $val == 0 ? $val = "" : $val);
