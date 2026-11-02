@@ -23,3 +23,7 @@ ALTER TABLE `projekt` CHANGE `proj_keinezeitenfuer` `proj_keinezeitenfuer` VARCH
 ALTER TABLE `projekt` CHANGE `proj_sortierung` `proj_sortierung` INT(11) NULL;
 ALTER TABLE `projekt_aufgabe` CHANGE `pa_lastchange` `pa_lastchange` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE `projekt_aufgabe` CHANGE `pa_createdate` `pa_createdate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+
+INSERT INTO `option_meta` (`option_id`, `option_modul`, `option_name`, `option_value`, `option_autoload`, `option_comment`, `option_editable`, `option_lastchange`, `option_createdate`) VALUES (NULL, 'Zeiterfassung', 'zeiterfassung_aufgabe_id_urlaub', '2', '1', 'Interne ID für Urlaubs Aufgabe', '', '2026-11-01 21:27:02.000000', '2026-11-01 21:27:02.000000');
+INSERT INTO `option_meta` (`option_id`, `option_modul`, `option_name`, `option_value`, `option_autoload`, `option_comment`, `option_editable`, `option_lastchange`, `option_createdate`) VALUES (NULL, 'Zeiterfassung', 'zeiterfassung_aufgabe_id_krank', '3', '1', 'Interne ID für Krank Aufgabe', '', '2026-11-01 21:27:02.000000', '2026-11-01 21:27:02.000000');

@@ -150,22 +150,38 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
                                                
         // Projekte für SelectBox
         $gemeindeCache = new HashTable();
+        $ortCache = new HashTable();
         $c = ProjektUtilities::getBenutzerAufgaben($benutzer->getID());
         $tplSelect = new BufferedTemplate("select_option.tpl");
         $bisherGeleisteteStundenProProjekt = ArbeitstagUtilities::getMitarbeiterZeitraumStundenProProjekt($benutzer->getID(), date("Y-m-d", $arWochentageTS[0]), date("Y-m-d", $arWochentageTS[6]));
         $bisherStundenSumme = 0;
         foreach ($c as $projekt) {
             if (! $gemeindeCache->containsKey($projekt->getGemeindeID())) {
-                $gemeindeCache->put($projekt->getGemeindeID(), new Gemeinde($projekt->getGemeindeID()));
+                $gemeinde = new Gemeinde($projekt->getGemeindeID());
+                $gemeindeCache->put($projekt->getGemeindeID(), $gemeinde);
+
+                
+                if (! $ortCache->containsKey($projekt->getGemeindeID())) {
+                    $ortCache->put($projekt->getGemeindeID(), new Adresse($gemeinde->getKircheAdressId()));
+                }
             }
+            
             
             $stundenZusatz = "";
             if (isset($bisherGeleisteteStundenProProjekt[$projekt->getID()])) {
                 $stundenZusatz = " (" . $this->formatStunde($bisherGeleisteteStundenProProjekt[$projekt->getID()]) . " Std.)";
                 $bisherStundenSumme = $bisherStundenSumme + $bisherGeleisteteStundenProProjekt[$projekt->getID()];
             }
-            $tplSelect->replace("Name", $gemeindeCache->getValueOf($projekt->getGemeindeID())
-                ->getKirche() . ", " . $projekt->getBezeichnung() . $stundenZusatz);
+            
+            $standardSortierung = ConstantLoader::getGemeindeListeStandardSortierung();
+            if ($standardSortierung == "ort") {
+                $tplSelect->replace("Name", $ortCache->getValueOf($projekt->getGemeindeID())
+                    ->getKirche() . ", " . $projekt->getBezeichnung() . $stundenZusatz);
+            } else {
+                $tplSelect->replace("Name", $gemeindeCache->getValueOf($projekt->getGemeindeID())
+                    ->getKirche() . ", " . $projekt->getBezeichnung() . $stundenZusatz);
+            }
+            
             $tplSelect->replace("Value", $projekt->getID());
             if ($pid == $projekt->getID()) {
                 $tplSelect->replace("Selected", Constant::$HTML_SELECTED_SELECTED);
