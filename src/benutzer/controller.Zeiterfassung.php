@@ -176,7 +176,7 @@ class ZeiterfassungsAction implements GetRequestHandler, PostRequestHandler
             $standardSortierung = ConstantLoader::getGemeindeListeStandardSortierung();
             if ($standardSortierung == "ort") {
                 $tplSelect->replace("Name", $ortCache->getValueOf($projekt->getGemeindeID())
-                    ->getKirche() . ", " . $projekt->getBezeichnung() . $stundenZusatz);
+                    ->getOrt() . ", " . $projekt->getBezeichnung() . $stundenZusatz);
             } else {
                 $tplSelect->replace("Name", $gemeindeCache->getValueOf($projekt->getGemeindeID())
                     ->getKirche() . ", " . $projekt->getBezeichnung() . $stundenZusatz);
